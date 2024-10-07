@@ -27,24 +27,23 @@ Example : xcode examples project in: /examples/Simple
 
 - Load and display a sprite :
 ```bash
-KGraphic * test;
-test = new KGraphic();
-test->loadPicture("box.png");
-test->srcX = 0;
-test->srcY = 0;
-test->destX = 0;
-test->destY = 0;
-test->sizeW = 640;
-test->sizeH = 480;
-test->angle = 0;
-test->zoom = 1.0;
-test->blend = 1.0;
-test->render();
+	test = new KGraphic();
+	test->loadPicture("box.png");
+	test->srcX = 0;
+	test->srcY = 0;
+	test->destX = 0;
+	test->destY = 0;
+	test->sizeW = 640;
+	test->sizeH = 480;
+	test->angle = 0;
+	test->zoom = 1.0;
+	test->blend = 1.0;
+	test->render();
 ```
 
 - Load and play a sound or music :
 ```bash
-    sound1 = new KSound;
+    sound1 = new KSound();
     sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
     sound1->setVolume(50);
     

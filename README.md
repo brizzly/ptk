@@ -28,16 +28,16 @@ Usage :
 KGraphic * test;
 test = new KGraphic();
 test->loadPicture("box.png");
-testGraphic7->srcX = 0;
-testGraphic7->srcY = 0;
-testGraphic7->destX = 0;
-testGraphic7->destY = 0;
-testGraphic7->sizeW = 640;
-testGraphic7->sizeH = 480;
-testGraphic7->angle = 0;
-testGraphic7->zoom = 1.0;
-testGraphic7->blend = 1.0;
-testGraphic7->render();
+test->srcX = 0;
+test->srcY = 0;
+test->destX = 0;
+test->destY = 0;
+test->sizeW = 640;
+test->sizeH = 480;
+test->angle = 0;
+test->zoom = 1.0;
+test->blend = 1.0;
+test->render();
 ```
 
 ### Games prowered by PTK

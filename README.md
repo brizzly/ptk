@@ -23,7 +23,9 @@ Your project will be buildable for Android, PC, Web, and not only iOS.
 
 Example : xcode examples project in: /examples/Simple
 
-Usage : 
+## Usage : 
+
+- Load and display a sprite :
 ```bash
 KGraphic * test;
 test = new KGraphic();
@@ -38,6 +40,16 @@ test->angle = 0;
 test->zoom = 1.0;
 test->blend = 1.0;
 test->render();
+```
+
+- Load and play a sound or music :
+```bash
+    sound1 = new KSound;
+    sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
+    sound1->setVolume(50);
+    
+    music1 = new KMusic();
+    music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
 ```
 
 ### Games prowered by PTK

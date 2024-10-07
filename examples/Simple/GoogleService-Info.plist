@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCIj3QvHyDEA52uEMyNpiibghorADfmzNY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>906908904182</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jadegame.grizzzly</string>
+	<key>PROJECT_ID</key>
+	<string>scanticket-844ee</string>
+	<key>STORAGE_BUCKET</key>
+	<string>scanticket-844ee.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:906908904182:ios:5c667b9faa8becd29cdad7</string>
+	<key>DATABASE_URL</key>
+	<string>https://scanticket-844ee.firebaseio.com</string>
+</dict>
+</plist>

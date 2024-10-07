@@ -51,6 +51,22 @@ Example : xcode examples project in: /examples/Simple
 	music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
 ```
 
+
+### Requirements
+
+- C++11 compiler / xCode or Visual C++
+- OpenGL ES2
+- GLFM
+
+### Build Instructions
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/brizzly/ptk.git
+   include /iPTKSources into your xcode project
+   ```
+
+
 ### Games prowered by PTK
 
 - GRIZZLY (macos) https://apps.apple.com/us/app/grizzly-retro-platformer/id413938360?mt=12
@@ -77,22 +93,6 @@ Example : xcode examples project in: /examples/Simple
 - ULTRANIUM5 (macos) https://apps.apple.com/us/app/ultranium-5-crazy-arcade-game/id431295311
 - ULTRANIUM5 (pc) https://brizzlyy.itch.io/ultranium-5
 
-
-
-
-### Requirements
-
-- C++11 compiler / xCode or Visual C++
-- OpenGL ES2
-- GLFM
-
-### Build Instructions
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/brizzly/ptk.git
-   include /iPTKSources into your xcode project
-   ```
 
 
 

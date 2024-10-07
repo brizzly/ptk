@@ -63,8 +63,8 @@ Example : xcode examples project in: /examples/Simple
 1. Clone this repository:
    ```bash
    git clone https://github.com/brizzly/ptk.git
-   include /iPTKSources into your xcode project
    ```
+2. include /iPTKSources into your xcode project   
 
 
 ### Games prowered by PTK

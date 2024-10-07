@@ -43,12 +43,12 @@ Example : xcode examples project in: /examples/Simple
 
 - Load and play a sound or music :
 ```bash
-    sound1 = new KSound();
-    sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
-    sound1->setVolume(50);
-    
-    music1 = new KMusic();
-    music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
+	sound1 = new KSound();
+	sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
+	sound1->setVolume(50);
+
+	music1 = new KMusic();
+	music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
 ```
 
 ### Games prowered by PTK

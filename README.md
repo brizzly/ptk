@@ -18,6 +18,31 @@ Your project will be buildable for Android, PC, Web, and not only iOS.
 
 ## Getting Started
 
+Example : xcode examples project in: /examples/Simple
+
+Usage : 
+```bash
+KGraphic * test;
+test = new KGraphic();
+test->loadPicture("box.png");
+testGraphic7->srcX = 0;
+testGraphic7->srcY = 0;
+testGraphic7->destX = 0;
+testGraphic7->destY = 0;
+testGraphic7->sizeW = 640;
+testGraphic7->sizeH = 480;
+testGraphic7->angle = 0;
+testGraphic7->zoom = 1.0;
+testGraphic7->blend = 1.0;
+testGraphic7->render();
+```
+
+### Games prowered by PTK
+
+- GRIZZLY (macos) https://apps.apple.com/us/app/grizzly-retro-platformer/id413938360?mt=12
+- GRIZZLY https://apps.apple.com/us/app/grizzly-adventures-crazy-bear-platformer/id357410945
+
+
 ### Requirements
 
 - C++11 compiler
@@ -28,4 +53,9 @@ Your project will be buildable for Android, PC, Web, and not only iOS.
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repo-url.git
+   git clone https://github.com/brizzly/ptk.git
+   include /iPTKSources into your xcode project
+	```bash
+
+
+

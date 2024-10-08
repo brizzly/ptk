@@ -71,6 +71,13 @@
 		FF1CFFA12CA6076B008CB8C2 /* CoreHaptics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1CFFA02CA6076B008CB8C2 /* CoreHaptics.framework */; };
 		FF1CFFA32CA6079D008CB8C2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1CFFA22CA6079D008CB8C2 /* CoreMotion.framework */; };
 		FF1CFFA52CA607D0008CB8C2 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1CFFA42CA607D0008CB8C2 /* MetalKit.framework */; };
+		FF3757652CB45B5A0012C4B0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF3757642CB45B5A0012C4B0 /* Accelerate.framework */; };
+		FF3757662CB45B660012C4B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48731130A7D900105C50 /* AudioToolbox.framework */; };
+		FF3757672CB45B6C0012C4B0 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48751130A7D900105C50 /* CoreAudio.framework */; };
+		FF3757692CB45B730012C4B0 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF3757682CB45B730012C4B0 /* CoreServices.framework */; };
+		FF37576B2CB45B7B0012C4B0 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF37576A2CB45B7B0012C4B0 /* IOKit.framework */; };
+		FF37576C2CB45B7F0012C4B0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48771130A7D900105C50 /* OpenAL.framework */; };
+		FF37576D2CB45B840012C4B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E487B1130A7D900105C50 /* QuartzCore.framework */; };
 		FF4C06182CB1CF5300BEC9CE /* MainControler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF4C06172CB1CF5300BEC9CE /* MainControler.mm */; };
 		FF76319F2CB1C39F006672CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF76319E2CB1C39A006672CE /* main.m */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
@@ -163,6 +170,9 @@
 		FF1CFFA02CA6076B008CB8C2 /* CoreHaptics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreHaptics.framework; path = System/Library/Frameworks/CoreHaptics.framework; sourceTree = SDKROOT; };
 		FF1CFFA22CA6079D008CB8C2 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		FF1CFFA42CA607D0008CB8C2 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		FF3757642CB45B5A0012C4B0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		FF3757682CB45B730012C4B0 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		FF37576A2CB45B7B0012C4B0 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		FF4B990A2CB2013300DA591B /* SimpleTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleTest.entitlements; sourceTree = "<group>"; };
 		FF4C06162CB1CECA00BEC9CE /* MainController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		FF4C06172CB1CF5300BEC9CE /* MainControler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainControler.mm; sourceTree = "<group>"; };
@@ -188,16 +198,23 @@
 				F98E5B0A1D3CCA3200FC4879 /* CoreMedia.framework in Frameworks */,
 				F98E5B081D3CC99000FC4879 /* EventKit.framework in Frameworks */,
 				F98E5B061D3CC98000FC4879 /* CFNetwork.framework in Frameworks */,
+				FF3757652CB45B5A0012C4B0 /* Accelerate.framework in Frameworks */,
 				F98E5B041D3CC97500FC4879 /* CoreTelephony.framework in Frameworks */,
 				069D6CE314C0F69A00B463A9 /* SystemConfiguration.framework in Frameworks */,
 				F98E5B021D3CC95F00FC4879 /* CoreBluetooth.framework in Frameworks */,
 				F98E5B001D3CC95500FC4879 /* WebKit.framework in Frameworks */,
+				FF37576C2CB45B7F0012C4B0 /* OpenAL.framework in Frameworks */,
+				FF3757662CB45B660012C4B0 /* AudioToolbox.framework in Frameworks */,
+				FF37576B2CB45B7B0012C4B0 /* IOKit.framework in Frameworks */,
+				FF37576D2CB45B840012C4B0 /* QuartzCore.framework in Frameworks */,
 				F98E5AFE1D3CC94A00FC4879 /* MediaPlayer.framework in Frameworks */,
+				FF3757692CB45B730012C4B0 /* CoreServices.framework in Frameworks */,
 				F98E5AFC1D3CC94100FC4879 /* SafariServices.framework in Frameworks */,
 				F98E5AFA1D3CC92A00FC4879 /* EventKitUI.framework in Frameworks */,
 				069D6CE514C0F6FD00B463A9 /* MessageUI.framework in Frameworks */,
 				062771A614E121F9000E1B57 /* GameKit.framework in Frameworks */,
 				D71E48741130A7D900105C50 /* AudioToolbox.framework in Frameworks */,
+				FF3757672CB45B6C0012C4B0 /* CoreAudio.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -264,6 +281,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF37576A2CB45B7B0012C4B0 /* IOKit.framework */,
+				FF3757682CB45B730012C4B0 /* CoreServices.framework */,
+				FF3757642CB45B5A0012C4B0 /* Accelerate.framework */,
 				FF1CFFA42CA607D0008CB8C2 /* MetalKit.framework */,
 				FF1CFFA22CA6079D008CB8C2 /* CoreMotion.framework */,
 				FF1CFFA02CA6076B008CB8C2 /* CoreHaptics.framework */,

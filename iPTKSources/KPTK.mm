@@ -175,6 +175,7 @@ bool KPTK::isEyeRetina()
 
 bool KPTK::isEyeRetina_4()
 {
+    return true;
 	UIScreen* mainscr = [UIScreen mainScreen];
 	int w = mainscr.currentMode.size.width;
 	int h = mainscr.currentMode.size.height;
@@ -191,6 +192,7 @@ bool KPTK::isEyeRetina_4()
 
 bool KPTK::isEyeRetina_45()
 {
+    return true;
 	UIScreen* mainscr = [UIScreen mainScreen];
 	int w = mainscr.currentMode.size.width;
 	int h = mainscr.currentMode.size.height;
@@ -203,6 +205,7 @@ bool KPTK::isEyeRetina_45()
 
 bool KPTK::isEyeRetina_5()
 {
+    return true;
 	UIScreen* mainscr = [UIScreen mainScreen];
 	int w = mainscr.currentMode.size.width;
 	int h = mainscr.currentMode.size.height;

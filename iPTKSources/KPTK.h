@@ -45,6 +45,7 @@ enum screenOrientation
 	K_480x320,
     
     K_640x480,
+    K_640x1136,
 	
 	// IPHONE6
 	

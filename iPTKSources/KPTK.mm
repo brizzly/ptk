@@ -101,6 +101,9 @@ int KPTK::getGameW()
     else if ( _screenOrientation == K_640x480 ) {
         return 640;
     }
+    else if ( _screenOrientation == K_640x1136 ) {
+        return 640;
+    }
 	else if ( _screenOrientation == K_621x1104 ) {
 		return 621;//414;
 	}
@@ -135,6 +138,9 @@ int KPTK::getGameH()
     }
     else if ( _screenOrientation == K_640x480 ) {
         return 480;
+    }
+    else if ( _screenOrientation == K_640x1136 ) {
+        return 1136;
     }
 	else if ( _screenOrientation == K_621x1104 ) {
 		return 1104;//736*2;

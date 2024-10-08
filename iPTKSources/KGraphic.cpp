@@ -251,6 +251,11 @@ void KGraphic::setProjectionMatrix(int window_width, int window_height, float di
 {
     float scale2 = display_width / display_height;
     float scale3 = 1.0;
+    
+//    if(scale2 < 1.0) {
+//        scale2 = 1.0;
+//        scale3 = display_width / display_height;
+//    }
 
     mat4 orthoMatrix;
     orthographicMatrix(orthoMatrix, 0.0, 0.0 + scale2, scale3, 0.0f, -1.0f, 1.0f);
@@ -278,7 +283,9 @@ void KGraphic::render()
    
    
     float offsetX = (_screenW - _gameW*2) / 2.0f;
-    glViewport(offsetX, 0, _gameW*2, _gameH*2);
+    if(offsetX >= 0) {
+        glViewport(offsetX, 0, _gameW*2, _gameH*2);
+    }
     
     
     glUseProgram(_shaderProgram);   // Use the shader
@@ -322,7 +329,6 @@ void KGraphic::render()
     float zoomCopy = zoom;
     zoom = sizeH / _gameH;
     zoom *= 0.5;
-    //zoom = (sizeW / _screenW);
     float sizeRatio = sizeW / sizeH;
     
     // PREVENT IMAGE TO BE DISTRORDED BY SCREEN RATIO

@@ -11,6 +11,7 @@ class KGraphic {
 public:
     
     KGraphic(int game_width, int game_height, int screen_width, int screen_height);
+    ~KGraphic();
     
     void printGLError(const char * label);
     void render();

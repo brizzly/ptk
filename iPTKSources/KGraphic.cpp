@@ -9,6 +9,20 @@
 #include "stb_image.h"
 
 
+KGraphic::~KGraphic()
+{
+    glDeleteBuffers(1, &vertexBuffer);
+    vertexBuffer = NULL;
+
+    glDeleteBuffers(1, &indexBuffer);
+    indexBuffer = NULL;
+    
+    if(shader) {
+        delete shader;
+        shader = NULL;
+    }
+}
+
 KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen_height)
 {
     _gameW = (float) game_width;
@@ -21,7 +35,6 @@ KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen
         return;
     }
     
-    // Vertex and fragment shader source for OpenGL ES 2.0
     const char * vertexShaderSource =
         "attribute vec4 a_position;"
         "attribute vec2 a_texCoord;"
@@ -34,14 +47,20 @@ KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen
         "uniform float u_sizeH;"
         "uniform float u_texWidth;"
         "uniform float u_texHeight;"
+        "uniform float u_epsilon;"  // UV epsilon offset
         "void main() {"
         "    gl_Position = u_projectionMatrix * u_matrix * a_position;"
-        "    float texLeft = u_srcX / u_texWidth;"
-        "    float texRight = (u_srcX + u_sizeW) / u_texWidth;"
-        "    float texBottom = (u_srcY + u_sizeH) / u_texHeight;"
-        "    float texTop = u_srcY / u_texHeight;"
+
+        // Calculate tex coordinates with added epsilon
+        "    float texLeft = (u_srcX / u_texWidth) + u_epsilon;"
+        "    float texRight = ((u_srcX + u_sizeW) / u_texWidth) - u_epsilon;"
+        "    float texBottom = ((u_srcY + u_sizeH) / u_texHeight) - u_epsilon;"
+        "    float texTop = (u_srcY / u_texHeight) + u_epsilon;"
+
+        // Use mix to interpolate between the adjusted UVs based on a_texCoord
         "    v_texCoord = mix(vec2(texLeft, texTop), vec2(texRight, texBottom), a_texCoord);"
         "}";
+
 
     const char * fragmentShaderSource =
         "precision mediump float;"
@@ -87,23 +106,21 @@ KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen
     printf("Texture Location: %d\n", textureSamplerLoc);
     printGLError("shader6");
     
+    GLfloat epsilon = 0.0008f; // Small UV offset to avoid bleeding
+    glUniform1f(glGetUniformLocation(_shaderProgram, "u_epsilon"), epsilon);
 
+    
     // Vertex data: 2 triangles forming a rectangle (x, y positions + texture coordinates)
 
+    GLfloat UV_EPSILON = 0.001f; // Small offset to avoid sampling adjacent pixels
+
     GLfloat vertices[] = {
-        -1.0f,  1.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, 0.0f, 0.0f,
-         1.0f, -1.0f, 1.0f, 0.0f,
-         1.0f,  1.0f, 1.0f, 1.0f
+        // Positions        // UV Coordinates (adjusted by UV_EPSILON)
+        -1.0f,  1.0f, 0.0f, 1.0f - UV_EPSILON,   // Top-left corner
+        -1.0f, -1.0f, 0.0f, 0.0f + UV_EPSILON,   // Bottom-left corner
+         1.0f, -1.0f, 1.0f - UV_EPSILON, 0.0f + UV_EPSILON,   // Bottom-right corner
+         1.0f,  1.0f, 1.0f - UV_EPSILON, 1.0f - UV_EPSILON    // Top-right corner
     };
-    
-    /*
-    GLfloat vertices[] = {
-        -1.0f,  1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f, 0.0f, 1.0f,
-         1.0f, -1.0f, 1.0f, 1.0f,
-         1.0f,  1.0f, 1.0f, 0.0f
-    };*/
     
     GLuint indices[] = { 0, 1, 2, 0, 2, 3 };
     
@@ -228,25 +245,6 @@ void KGraphic::orthographicMatrix(mat4 m, float left, float right, float bottom,
     m[15] = 1.0f;  // Ensure the last element is 1.0 for homogeneous coordinates
 }
 
-
-/*
-void KGraphic::setProjectionMatrix(int window_width, int window_height, float display_width, float display_height)
-{
-    float aspect_ratio_window = (float)window_width / (float)window_height;
-    float aspect_ratio_display = display_width / display_height;
-
-    // Calculer l'offset horizontal pour centrer l'affichage
-    float offsetX = 0.5f; //-0.5f; //(aspect_ratio_window - aspect_ratio_display) / 2.0f;
-
-    mat4 orthoMatrix;
-    orthographicMatrix(orthoMatrix, offsetX, offsetX + aspect_ratio_display + 0.5f, 1.0f, 0.0f, -1.0f, 1.0f);
-
-    GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
-    glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, orthoMatrix);
-}
-*/
-
-
 void KGraphic::setProjectionMatrix(int window_width, int window_height, float display_width, float display_height)
 {
     float scale2 = display_width / display_height;
@@ -263,8 +261,6 @@ void KGraphic::setProjectionMatrix(int window_width, int window_height, float di
     GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
     glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, orthoMatrix);
 }
-
-
 
 void KGraphic::render()
 {

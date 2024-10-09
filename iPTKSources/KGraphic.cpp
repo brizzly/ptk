@@ -106,13 +106,13 @@ KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen
     printf("Texture Location: %d\n", textureSamplerLoc);
     printGLError("shader6");
     
-    GLfloat epsilon = 0.0008f; // Small UV offset to avoid bleeding
+    GLfloat epsilon = 0.00001f; // Small UV offset to avoid bleeding
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_epsilon"), epsilon);
 
     
     // Vertex data: 2 triangles forming a rectangle (x, y positions + texture coordinates)
 
-    GLfloat UV_EPSILON = 0.001f; // Small offset to avoid sampling adjacent pixels
+    GLfloat UV_EPSILON = 0;//0.001f; // Small offset to avoid sampling adjacent pixels
 
     GLfloat vertices[] = {
         // Positions        // UV Coordinates (adjusted by UV_EPSILON)

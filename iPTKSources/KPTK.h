@@ -21,16 +21,16 @@
  THE SOFTWARE.
  */
 
-#ifndef API_KPTK__
-#define API_KPTK__
+#ifndef KPTK_H
+#define KPTK_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "KWindow.h"
-#include "KGraphic.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include "KWindow.h"
+//#include "KGraphic.h"
 
+class KWindow;
 
-#define	PTK_FREEPTR(x)   if(x)  { delete x ; x = NULL ; }
 
 enum screenOrientation
 {
@@ -69,21 +69,19 @@ enum screenOrientation
 };
 
 
-
 class KPTK
 {
 public:
-	
-	static	screenOrientation	_screenOrientation;
-    
-    static float _screenW, _screenH;
-    
 
-//	static	float				_X(float value);
-//	static	float				_Y(float value);
-//	static	float				inv_X(float value);
-//	static	float				inv_Y(float value);
-//	static	int					_H(int value);
+    static int _screenW;
+    static int _screenH;
+    static screenOrientation _screenOrientation;
+
+    static void setScreenSize(int width, int height);
+    static void setScreenOrientation(screenOrientation orientation);
+    
+public:
+
 	static	KWindow			*	createKWindow(screenOrientation orientation);
 #ifndef __ANDROID__
 	static	KGraphic		*	createKGraphic();
@@ -92,9 +90,7 @@ public:
 	static	int					getGameH();
     static  int                 getScreenW();
     static  int                 getScreenH();
-     
 };
 
-
-#endif // API_KPTK__
+#endif // KPTK_H
 

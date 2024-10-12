@@ -3,7 +3,6 @@
 
 #include "MainController.h"
 
-
 // Singleton instance initialization
 MainController* MainController::instance = nullptr;
 
@@ -42,12 +41,16 @@ void MainController::initialize(int w, int h)
     // Set the viewport to match the screen size
     glViewport(0, 0, width, height);
 
+    //KPTK::_screenOrientation;
+    //KPTK::createKWindow(0); //K_960x1440
 
+    KPTK::setScreenSize(width, height);
 
-
+    /*
     KPTK::_screenW = width;
     KPTK::_screenH = height;
     KPTK::_screenOrientation = K_960x1440;
+*/
 /*
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();

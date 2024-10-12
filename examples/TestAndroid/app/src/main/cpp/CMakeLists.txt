@@ -27,6 +27,12 @@ list(REMOVE_ITEM SHARED_SOURCE_FILES
         ${PTK_SOURCE_DIR}/GLTextureHelper.h
 )
 
+# Output the list of files collected
+message(STATUS "Shared source files:")
+foreach(file ${SHARED_SOURCE_FILES})
+    message(STATUS "${file}")
+endforeach()
+
 
 # Specify source files
 set(SOURCE_FILES

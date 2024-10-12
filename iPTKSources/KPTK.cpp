@@ -23,42 +23,25 @@
 
 #include "KPTK.h"
 #include "KGraphic.h"
-#include "KLogFile.h"
+//#include "KLogFile.h"
 #include "KWindow.h"
-#include "KMiscTools.h"
+//#include "KMiscTools.h"
 
 
+
+int KPTK::_screenW = 0;
+int KPTK::_screenH = 0;
 screenOrientation KPTK::_screenOrientation = K_960x1440;
 
-float KPTK::_screenW, KPTK::_screenH;
 
-
-
-/*
-int KPTK::_H(int value)
-{
-    return value;
+void KPTK::setScreenSize(int width, int height) {
+    _screenW = width;
+    _screenH = height;
 }
 
-float KPTK::_X(float value)
-{
-	return value;
+void KPTK::setScreenOrientation(screenOrientation orientation) {
+    _screenOrientation = orientation;
 }
-float KPTK::inv_X(float value)
-{
-	return value;
-}
-
-float KPTK::_Y(float value)
-{
-	return value;
-}
-float KPTK::inv_Y(float value)
-{
-	return value;
-}
-*/
-
 
 
 int KPTK::getScreenW()

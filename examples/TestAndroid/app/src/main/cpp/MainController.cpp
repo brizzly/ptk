@@ -32,8 +32,8 @@ void MainController::initialize(int w, int h)
     //int width = 960;//1080;
     //int height = 1440;//2192;
 
-    int gameW = 960;//width;
-    int gameH = 1440;//height;
+    //int gameW = 960;//width;
+    //int gameH = 1440;//height;
 
     int screenW = width;
     int screenH = height;
@@ -45,18 +45,12 @@ void MainController::initialize(int w, int h)
     //KPTK::createKWindow(0); //K_960x1440
 
     KPTK::setScreenSize(width, height);
+    KPTK::setScreenOrientation(K_960x1440);
 
-    /*
-    KPTK::_screenW = width;
-    KPTK::_screenH = height;
-    KPTK::_screenOrientation = K_960x1440;
-*/
-/*
+
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
-    int screenW = width;
-    int screenH = height;
-*/
+
     //KMiscTools::initMiscTools();
 
 

@@ -33,7 +33,7 @@ KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen
 #else
 KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen_height)
 {
-    $this->init(game_width, game_height, screen_width, screen_height);
+    this->init(game_width, game_height, screen_width, screen_height);
 }
 #endif
 

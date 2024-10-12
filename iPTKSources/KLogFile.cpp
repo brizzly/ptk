@@ -61,9 +61,18 @@ void KLogFile::Close()
 
 void KLogFile::logDebug(const char *msg, ...)
 {
-#ifdef NOLOG
-	return;
-#endif
+#ifdef __ANDROID__
+    va_list args;
+    va_start(args, msg);
+    __android_log_vprint(ANDROID_LOG_DEBUG, "ptk", msg, args);
+    va_end(args);
+#else
+    printf("%s\n", msg);
+
+
+//#ifdef NOLOG
+//	return;
+//#endif
 	
 	Init();
 	if(f == NULL) {
@@ -79,7 +88,7 @@ void KLogFile::logDebug(const char *msg, ...)
 	
 	fprintf(f, "%s\n", buf);	
 	fflush(f);
-	
+#endif
 }
 
 

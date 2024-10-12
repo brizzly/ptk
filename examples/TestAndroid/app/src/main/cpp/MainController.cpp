@@ -84,14 +84,19 @@ void MainController::draw() {
     static float z = 0.0;
     static float a = 0.0;
 
+#ifdef __ANDROID__
+    r += 10000.0f * (frameTime / 1000.0f) * 0.0005f;
+    a += 10000.0f * (frameTime / 1000.0f) * 0.0005f;
+#else
     r += (frameTime / 1000.0f) * 0.0005f;
     a += (frameTime / 1000.0f) * 0.0005f;
+#endif
     z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
 
     static float debugval = 0.0;
     debugval += 0.4f;
 
-    printf("a: %f, z: %f\n", z, z);
+    KLogFile::logDebug("a: %f, z: %f", a, z);
 
 
     // FULL SCREEN IMAGE : 960x1440

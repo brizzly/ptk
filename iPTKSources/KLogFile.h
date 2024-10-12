@@ -27,6 +27,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
 
 class KLogFile
 {

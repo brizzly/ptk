@@ -3,6 +3,7 @@
 #include "glfm.h"
 #include "KGraphic.h"
 #include "KMiscTools.h"
+#include "KLogFile.h"
 #include "KPTK.h"
 //#include "KSound.h"
 //#include "KMusic.h"

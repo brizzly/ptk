@@ -6,8 +6,15 @@
 #include "KPTK.h"
 //#include "KSound.h"
 //#include "KMusic.h"
+#include <GLES2/gl2.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <android/asset_manager_jni.h>
 
 class MainController {
+
+private:
+    AAssetManager* assetManager;
 
 public:
 
@@ -19,6 +26,8 @@ public:
 
 public:
     static MainController* getInstance();
+
+    void setAssetManager(AAssetManager* assetManager);
     void initialize(GLFMDisplay *display);
     void update(double frameTime);
     void draw();

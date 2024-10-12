@@ -5,6 +5,7 @@
 #include "KShader.h"
 #ifdef __ANDROID__
 #include <GLES2/gl2.h>
+#include <android/asset_manager_jni.h>
 #else
 #include <OpenGLES/ES2/gl.h>
 #endif
@@ -13,32 +14,43 @@
 typedef float mat4[16];
 
 class KGraphic {
+
+private:
+#ifdef __ANDROID__
+    AAssetManager* g_assetManager = nullptr;
+#endif
+
 public:
-    
+
+#ifdef __ANDROID__
+    KGraphic(int game_width, int game_height, int screen_width, int screen_height, AAssetManager * value);
+#else
     KGraphic(int game_width, int game_height, int screen_width, int screen_height);
+#endif
     ~KGraphic();
-    
+
+    void init(int game_width, int game_height, int screen_width, int screen_height);
     void printGLError(const char * label);
     void render();
     void setOrientation(bool isLandscape);  // Call this to switch between landscape and portrait
-    
+
     // New functions as requested
     void freePicture();
     bool loadPicture(const char *filename);
-    
+
     float getTextureWidth();
     float getTextureHeight();
     float getTextureSizeW();
     float getTextureSizeH();
-    
+
     void setLineWidth(short lineWidth);
-    
+
     void blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int destY , bool flipx=false, bool flipy=false);
     void blitAlphaRectFx(int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend , bool flipx=false, bool flipy=false );
 
 
 public:
-    
+
     float srcX, srcY, destX, destY, sizeW, sizeH, angle, zoom, blend;
 
 
@@ -62,7 +74,7 @@ private:
     GLuint blendColorLocation;
     KShader * shader;
     GLuint _texture;
-    
+
 
 
     // Matrix helper functions
@@ -70,9 +82,9 @@ private:
 //    void translateMatrix(float* matrix, float x, float y, float z);
 //    void rotateMatrix(float* matrix, float angle, float x, float y, float z);
 //    void scaleMatrix(float* matrix, float scaleX, float scaleY, float scaleZ);
-    
+
     void printMatrix(mat4 m);
-    
+
     void orthographicMatrix(mat4 m, float left, float right, float bottom, float top, float nearVal, float farVal);
 
     void setProjectionMatrix(int window_width, int window_height, float display_width, float display_height);
@@ -80,14 +92,14 @@ private:
 
     // Translation matrix
     void translateMatrix(mat4 m, float x, float y);
- 
+
     // Scaling matrix
     void scaleMatrix(mat4 m, float scaleX, float scaleY);
 
     // Rotation matrix (angle in radians)
     void rotateMatrix(mat4 m, float angle);
-        
-        
+
+
 };
 
 

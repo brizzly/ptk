@@ -2,9 +2,7 @@
 // Implemented minor changes for code clarity, corrected improper singleton pattern usage.
 
 #include "MainController.h"
-#include <GLES2/gl2.h>
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
+
 
 // Singleton instance initialization
 MainController* MainController::instance = nullptr;
@@ -16,9 +14,11 @@ MainController* MainController::getInstance() {
     return instance;
 }
 
+void MainController::setAssetManager(AAssetManager* assetManager) {
+    this->assetManager = assetManager; // Assuming you have a member variable AAssetManager* assetManager;
+}
+
 void MainController::initialize(GLFMDisplay *display) {
-    // Set up OpenGL or GLFM state
-    glClearColor(1.0f, 0.5f, 0.0f, 1.0f);
 
     int width = 1080;
     int height = 2192;
@@ -31,6 +31,9 @@ void MainController::initialize(GLFMDisplay *display) {
 
     // Set the viewport to match the screen size
     glViewport(0, 0, width, height);
+
+    //return;
+
 /*
     KPTK::_screenW = width;
     KPTK::_screenH = height;
@@ -44,13 +47,13 @@ void MainController::initialize(GLFMDisplay *display) {
     //KMiscTools::initMiscTools();
 
 
-    testGraphic = new KGraphic(gameW, gameH, screenW, screenH);
+    testGraphic = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);
     testGraphic->loadPicture("box.png");
 
-    testGraphic2 = new KGraphic(gameW, gameH, screenW, screenH);
+    testGraphic2 = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);
     testGraphic2->loadPicture("box2.png");
 
-    testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH);
+    testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);
     testGraphic3->loadPicture("960_1440.png");
 
     /*
@@ -69,8 +72,11 @@ void MainController::update(double frameTime) {
 
 void MainController::draw() {
 
-    // Clear the screen
+    // Set up OpenGL or GLFM state
+    glClearColor(1.0f, 0.5f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    //return;
 
     float frameTime = 16.666;
 
@@ -84,6 +90,8 @@ void MainController::draw() {
 
     static float debugval = 0.0;
     debugval += 0.4f;
+
+    printf("a: %f, z: %f\n", z, z);
 
 
     // FULL SCREEN IMAGE : 960x1440

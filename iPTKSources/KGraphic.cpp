@@ -23,7 +23,21 @@ KGraphic::~KGraphic()
     }
 }
 
+
+#ifdef __ANDROID__
+KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen_height, AAssetManager * value)
+{
+    this->g_assetManager = value;
+    this->init(game_width, game_height, screen_width, screen_height);
+}
+#else
 KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen_height)
+{
+    $this->init(game_width, game_height, screen_width, screen_height);
+}
+#endif
+
+void KGraphic::init(int game_width, int game_height, int screen_width, int screen_height)
 {
     _gameW = (float) game_width;
     _gameH = (float) game_height;
@@ -387,23 +401,48 @@ void KGraphic::freePicture() {
 
 bool KGraphic::loadPicture(const char *filename)
 {
-    char * filename2 = NULL;
+    unsigned char *data = NULL;
+    int width, height, nrChannels;
+    int isBGR = 1;
+
 #ifdef __ANDROID__
-    filename2 = (char *)filename;
+
+    if (this->g_assetManager == nullptr) {
+        printf("AssetManager not set\n");
+        return false;
+    }
+
+    // Ouvrir le fichier à partir du répertoire des assets
+    AAsset* asset = AAssetManager_open(g_assetManager, filename, AASSET_MODE_BUFFER);
+    if (asset == nullptr) {
+        printf("Failed to open asset: %s\n", filename);
+        return false;
+    }
+
+    // Obtenir la taille du fichier et lire les données
+    off_t assetLength = AAsset_getLength(asset);
+    unsigned char* assetBuffer = new unsigned char[assetLength];
+    AAsset_read(asset, assetBuffer, assetLength);
+    AAsset_close(asset);
+
+    // Utiliser stb_image pour charger l'image depuis le buffer
+    data = stbi_load_from_memory(assetBuffer, assetLength, &width, &height, &nrChannels, STBI_rgb_alpha);
+    delete[] assetBuffer;  // Libérer le buffer d'assets
+
+    isBGR = 0; //detectRGBorBGR(data, width, height);
+
 #else
     GLTextureHelper helper;
-    filename2 = helper.loadFileDatas(filename);
+    filename = helper.loadFileDatas(filename);
+    data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);  // Load as RGBA
 #endif
-    
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load(filename2, &width, &height, &nrChannels, STBI_rgb_alpha);  // Load as RGBA
+
     if (!data) {
         printf("Failed to load texture: %s\n", filename);
         return false;
     }
 
     // Detect whether the image is RGB or BGR
-    int isBGR = 1; //detectRGBorBGR(data, width, height);
     if (isBGR) {
         printf("Detected BGR format: Swapping red and blue channels.\n");
         // Perform channel swapping if needed (red and blue)

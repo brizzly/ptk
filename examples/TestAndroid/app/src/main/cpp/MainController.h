@@ -15,6 +15,9 @@
 class MainController {
 
 private:
+
+    int width;
+    int height;
     AAssetManager* assetManager;
 
 public:
@@ -29,7 +32,7 @@ public:
     static MainController* getInstance();
 
     void setAssetManager(AAssetManager* assetManager);
-    void initialize(GLFMDisplay *display);
+    void initialize(int w, int h);
     void update(double frameTime);
     void draw();
 

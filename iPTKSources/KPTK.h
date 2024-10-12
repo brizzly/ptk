@@ -79,17 +79,15 @@ public:
     static float _screenW, _screenH;
     
 
-	static	float				_X(float value);
-	static	float				_Y(float value);
-	static	float				inv_X(float value);
-	static	float				inv_Y(float value);
-	static	bool				isEyeRetina();
-	static	bool				isEyeRetina_4();
-	static bool					isEyeRetina_45();
-	static bool 				isEyeRetina_5();
-	static	int					_H(int value);
+//	static	float				_X(float value);
+//	static	float				_Y(float value);
+//	static	float				inv_X(float value);
+//	static	float				inv_Y(float value);
+//	static	int					_H(int value);
 	static	KWindow			*	createKWindow(screenOrientation orientation);
+#ifndef __ANDROID__
 	static	KGraphic		*	createKGraphic();
+#endif
 	static	int					getGameW();
 	static	int					getGameH();
     static  int                 getScreenW();

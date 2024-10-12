@@ -24,8 +24,6 @@
 #include "KGraphic.h"
 #include "KWindow.h"
 
-#include <UIKit/UIKit.h>
-
 
 KWindow::KWindow()
 {
@@ -47,12 +45,12 @@ bool KWindow::createGameWindow(int w, int h, int bpp, bool windowed, char *name)
 {
 	window_width = w;
 	window_height = h;
-	float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-	if(version >= 4.0) 
-	{
+	//float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+	//if(version >= 4.0)
+	//{
 		window_width *= 2;
 		window_height *= 2;
-	}		
+	//}
 	return true;
 }
 

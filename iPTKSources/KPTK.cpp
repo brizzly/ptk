@@ -27,49 +27,39 @@
 #include "KWindow.h"
 #include "KMiscTools.h"
 
-#import <UIKit/UIKit.h>
 
-
-screenOrientation	KPTK::_screenOrientation;
+screenOrientation KPTK::_screenOrientation = K_960x1440;
 
 float KPTK::_screenW, KPTK::_screenH;
 
 
+
+/*
+int KPTK::_H(int value)
+{
+    return value;
+}
+
 float KPTK::_X(float value)
 {
-	/*if(KMiscTools::iPad() == true) {
-		value *= 2.40f; // * 768 / 320
-	}*/
 	return value;
 }
 float KPTK::inv_X(float value)
 {
-	if(KMiscTools::iPad() == true) {
-		value /= 2.40f;
-	}
 	return value;
 }
 
 float KPTK::_Y(float value)
 {
-	/*if(KPTK::isEyeRetina_4() == true) {
-		value *= 1.183f; // * 568 / 480
-	}
-	else if(KMiscTools::iPad() == true) {
-		value *= 2.13f; // * 1024 / 480
-	}*/
 	return value;
 }
 float KPTK::inv_Y(float value)
 {
-	if(KPTK::isEyeRetina_4() == true) {
-		value /= 1.183f; // * 568 / 480
-	}
-	else if(KMiscTools::iPad() == true) {
-		value /= 2.13f; // * 1024 / 480
-	}
 	return value;
 }
+*/
+
+
 
 int KPTK::getScreenW()
 {
@@ -163,71 +153,6 @@ int KPTK::getGameH()
 	return 0;
 }
 
-//GLuint KPTK::getShaderProgram()
-//{
-//    return _shaderProgram;
-//}
-
-bool KPTK::isEyeRetina()
-{
-	float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-	UIScreen* mainscr = [UIScreen mainScreen];
-	int w = mainscr.currentMode.size.width;
-	int h = mainscr.currentMode.size.height;
-	if (w == 640 && h == 960) // 3.5" Retina display detected
-	{
-		return true;
-	}
-	if (w == 640 && h == 1136) // 4" Retina display detected
-	{
-		return true;
-	}
-	return false;
-}
-
-bool KPTK::isEyeRetina_4()
-{
-    return true;
-	UIScreen* mainscr = [UIScreen mainScreen];
-	int w = mainscr.currentMode.size.width;
-	int h = mainscr.currentMode.size.height;
-	if (w == 640 && h == 960) // 3.5" Retina display detected
-	{
-		return false;
-	}
-	if (w == 640 && h == 1136) // 4" Retina display detected
-	{
-		return true;
-	}
-	return false;
-}
-
-bool KPTK::isEyeRetina_45()
-{
-    return true;
-	UIScreen* mainscr = [UIScreen mainScreen];
-	int w = mainscr.currentMode.size.width;
-	int h = mainscr.currentMode.size.height;
-	if (w == 750 && h == 1334) // 4" Retina display detected
-	{
-		return true;
-	}
-	return false;
-}
-
-bool KPTK::isEyeRetina_5()
-{
-    return true;
-	UIScreen* mainscr = [UIScreen mainScreen];
-	int w = mainscr.currentMode.size.width;
-	int h = mainscr.currentMode.size.height;
-	if (w == 1242 && h == 2208) // 5" Retina display detected
-	{
-		return true;
-	}
-	return false;
-}
-
 KWindow * KPTK::createKWindow(screenOrientation orientation)
 {
 	int debug = (int)orientation;
@@ -242,31 +167,15 @@ KWindow * KPTK::createKWindow(screenOrientation orientation)
 	return ptk_Window;
 }
 
-int KPTK::_H(int value)
-{
-	if(KPTK::isEyeRetina_4() == true)
-	{
-		return 568;
-	}
-	return value;
-}
+#ifdef __ANDROID__
 
+#else
 KGraphic * KPTK::createKGraphic()
 {
-    //_shaderProgram = shaderprogram;
-    
     // Create an instance of KGraphic
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
     KGraphic * graphic = new KGraphic(gameW, gameH, _screenW, _screenH);
-
-    // Set properties for the rendering
-//    graphic.destX = 100;      // Destination X
-//    graphic.destY = 150;      // Destination Y
-//    graphic.angle = 45.0f;    // Rotation angle in degrees
-//    graphic.zoom = 1.0f;      // Scale (1.0 = no scaling)
-//    graphic.blend = 0.8f;     // Alpha blending value (0.0 - 1.0)
-//    
-    return graphic;
+   return graphic;
 }
-
+#endif

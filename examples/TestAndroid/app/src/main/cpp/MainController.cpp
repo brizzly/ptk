@@ -10,6 +10,8 @@ MainController* MainController::instance = nullptr;
 MainController* MainController::getInstance() {
     if (instance == nullptr) {
         instance = new MainController();
+        instance->width = 0;
+        instance->height = 0;
     }
     return instance;
 }
@@ -18,27 +20,35 @@ void MainController::setAssetManager(AAssetManager* assetManager) {
     this->assetManager = assetManager; // Assuming you have a member variable AAssetManager* assetManager;
 }
 
-void MainController::initialize(GLFMDisplay *display) {
+void MainController::initialize(int w, int h)
+{
+    if (width != 0 && height != 0) {
+        return;
+    }
 
-    int width = 1080;
-    int height = 2192;
+    width = w;
+    height = h;
+    KLogFile::logDebug("Initialize with screen: %d %d", width, height);
 
-    int gameW = 1080;
-    int gameH = 2192;
+    //int width = 960;//1080;
+    //int height = 1440;//2192;
 
-    int screenW = 1080;
-    int screenH = 2192;
+    int gameW = 960;//width;
+    int gameH = 1440;//height;
+
+    int screenW = width;
+    int screenH = height;
 
     // Set the viewport to match the screen size
     glViewport(0, 0, width, height);
 
-    //return;
 
-/*
+
+
     KPTK::_screenW = width;
     KPTK::_screenH = height;
     KPTK::_screenOrientation = K_960x1440;
-
+/*
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
     int screenW = width;
@@ -76,8 +86,6 @@ void MainController::draw() {
     glClearColor(1.0f, 0.5f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //return;
-
     float frameTime = 16.666;
 
     static float r = 0.0;
@@ -96,7 +104,7 @@ void MainController::draw() {
     static float debugval = 0.0;
     debugval += 0.4f;
 
-    KLogFile::logDebug("a: %f, z: %f", a, z);
+    //KLogFile::logDebug("a: %f, z: %f", a, z);
 
 
     // FULL SCREEN IMAGE : 960x1440

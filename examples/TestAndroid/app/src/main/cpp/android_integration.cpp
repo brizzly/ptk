@@ -23,7 +23,7 @@ void onAppInit(GLFMDisplay *display) {
     // Set render function
     glfmSetRenderFunc(display, onRender);
     // Initialize the main controller
-    MainController::getInstance()->initialize(display);
+    //MainController::getInstance()->initialize(display);
 }
 
 extern "C" {
@@ -38,6 +38,11 @@ extern "C" {
     // Main GLFM function
     void glfmMain(GLFMDisplay *display) {
 
+        if (!display) {
+            //KLogFile::logDebug(("GLFMDisplay is null");
+            return;
+        }
+
         // Configure display preferences
         glfmSetDisplayConfig(display,
                              GLFMRenderingAPIOpenGLES2,
@@ -50,24 +55,22 @@ extern "C" {
         onAppInit(display);
     }
 
-    JNIEXPORT void JNICALL
-    Java_com_jmapp_testandroid_MainActivity_nativeFunction(JNIEnv *env, jobject thiz) {
-        LOGE("nativeFunction called");
-        // Your native logic here, such as invoking OpenGL functionality or other native processes
-    }
 
     JNIEXPORT void JNICALL
     Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceCreated(JNIEnv *env, jobject thiz) {
-        //LOGE("nativeOnSurfaceCreated called");
-        MainController::getInstance()->initialize(nullptr);
+        LOGE("nativeOnSurfaceCreated called");
+        //MainController::getInstance()->initialize(thiz);
     }
 
     JNIEXPORT void JNICALL
     Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceChanged(JNIEnv *env, jobject thiz, jint width, jint height) {
         LOGE("nativeOnSurfaceChanged called with width: %d, height: %d", width, height);
 
+        MainController::getInstance()->initialize(width, height);
+
         // Update the OpenGL viewport
-        glViewport(0, 0, width, height);
+        //glViewport(0, 0, width, height);
+
     }
 
     // JNI function for rendering each frame

@@ -11,9 +11,6 @@ public class MainActivity extends Activity {
         System.loadLibrary("android_game_lib");
     }
 
-    // Declare the native method
-    private native void nativeFunction();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

@@ -1,7 +1,8 @@
 
 #include "KGraphic.h"
+#ifndef __ANDROID__
 #include "GLTextureHelper.h"
-//#include <OpenGLES/ES2/gl.h>
+#endif
 #include <cmath>
 #include <cstring>
 #include <cstdio> // printf

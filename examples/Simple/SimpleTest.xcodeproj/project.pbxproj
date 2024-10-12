@@ -52,18 +52,6 @@
 		F98E5B0A1D3CCA3200FC4879 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5B091D3CCA3200FC4879 /* CoreMedia.framework */; };
 		F98E5B0B1D3CCA3900FC4879 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48711130A7D900105C50 /* AVFoundation.framework */; };
 		F98E5B0C1D3CCA3F00FC4879 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		FF1487272CB3FBF600C42D4C /* KGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1487112CB3FBF600C42D4C /* KGraphic.cpp */; };
-		FF1487282CB3FBF600C42D4C /* KSpline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1487212CB3FBF600C42D4C /* KSpline.cpp */; };
-		FF1487292CB3FBF600C42D4C /* GLTextureHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF14870F2CB3FBF600C42D4C /* GLTextureHelper.mm */; };
-		FF14872A2CB3FBF600C42D4C /* KMiscTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF1487172CB3FBF600C42D4C /* KMiscTools.mm */; };
-		FF14872B2CB3FBF600C42D4C /* KPTK.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF14871B2CB3FBF600C42D4C /* KPTK.mm */; };
-		FF14872C2CB3FBF600C42D4C /* KSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF14871F2CB3FBF600C42D4C /* KSound.mm */; };
-		FF14872D2CB3FBF600C42D4C /* KShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF14871D2CB3FBF600C42D4C /* KShader.cpp */; };
-		FF14872E2CB3FBF600C42D4C /* KLogFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1487152CB3FBF600C42D4C /* KLogFile.cpp */; };
-		FF14872F2CB3FBF600C42D4C /* KWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF1487252CB3FBF600C42D4C /* KWindow.mm */; };
-		FF1487302CB3FBF600C42D4C /* KInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1487132CB3FBF600C42D4C /* KInput.cpp */; };
-		FF1487312CB3FBF600C42D4C /* KWeb.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF1487232CB3FBF600C42D4C /* KWeb.mm */; };
-		FF1487322CB3FBF600C42D4C /* KMusic.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF1487192CB3FBF600C42D4C /* KMusic.mm */; };
 		FF1CFF9B2CA606B2008CB8C2 /* glfm_android.c in Sources */ = {isa = PBXBuildFile; fileRef = FF1CFF962CA606B2008CB8C2 /* glfm_android.c */; };
 		FF1CFF9C2CA606B2008CB8C2 /* glfm_emscripten.c in Sources */ = {isa = PBXBuildFile; fileRef = FF1CFF982CA606B2008CB8C2 /* glfm_emscripten.c */; };
 		FF1CFF9D2CA606B2008CB8C2 /* glfm_apple.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1CFF972CA606B2008CB8C2 /* glfm_apple.m */; };
@@ -80,6 +68,18 @@
 		FF37576D2CB45B840012C4B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E487B1130A7D900105C50 /* QuartzCore.framework */; };
 		FF4C06182CB1CF5300BEC9CE /* MainControler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF4C06172CB1CF5300BEC9CE /* MainControler.mm */; };
 		FF76319F2CB1C39F006672CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF76319E2CB1C39A006672CE /* main.m */; };
+		FF8BC1D92CBB2AA200DE5C31 /* KPTK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1CC2CBB2AA200DE5C31 /* KPTK.cpp */; };
+		FF8BC1DA2CBB2AA200DE5C31 /* KLogFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C62CBB2AA200DE5C31 /* KLogFile.cpp */; };
+		FF8BC1DB2CBB2AA200DE5C31 /* KGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C22CBB2AA200DE5C31 /* KGraphic.cpp */; };
+		FF8BC1DC2CBB2AA200DE5C31 /* KSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1D12CBB2AA200DE5C31 /* KSound.mm */; };
+		FF8BC1DD2CBB2AA200DE5C31 /* KMusic.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1CA2CBB2AA200DE5C31 /* KMusic.mm */; };
+		FF8BC1DE2CBB2AA200DE5C31 /* KInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C42CBB2AA200DE5C31 /* KInput.cpp */; };
+		FF8BC1DF2CBB2AA200DE5C31 /* KSpline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1D32CBB2AA200DE5C31 /* KSpline.cpp */; };
+		FF8BC1E02CBB2AA200DE5C31 /* GLTextureHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C02CBB2AA200DE5C31 /* GLTextureHelper.mm */; };
+		FF8BC1E12CBB2AA200DE5C31 /* KWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1D72CBB2AA200DE5C31 /* KWindow.cpp */; };
+		FF8BC1E22CBB2AA200DE5C31 /* KMiscTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C82CBB2AA200DE5C31 /* KMiscTools.mm */; };
+		FF8BC1E42CBB2AA200DE5C31 /* KWeb.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1D52CBB2AA200DE5C31 /* KWeb.mm */; };
+		FF8BC1E52CBB2AA200DE5C31 /* KShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1CF2CBB2AA200DE5C31 /* KShader.cpp */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
 		FFCBB2782CAC8B56000797B4 /* 1704_960.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2772CAC8B56000797B4 /* 1704_960.png */; };
 		FFCBB27A2CACB5F2000797B4 /* 852_480.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2792CACB5F2000797B4 /* 852_480.png */; };
@@ -138,30 +138,6 @@
 		F98E5B051D3CC98000FC4879 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F98E5B071D3CC99000FC4879 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		F98E5B091D3CCA3200FC4879 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		FF14870E2CB3FBF600C42D4C /* GLTextureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLTextureHelper.h; sourceTree = "<group>"; };
-		FF14870F2CB3FBF600C42D4C /* GLTextureHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GLTextureHelper.mm; sourceTree = "<group>"; };
-		FF1487102CB3FBF600C42D4C /* KGraphic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGraphic.h; sourceTree = "<group>"; };
-		FF1487112CB3FBF600C42D4C /* KGraphic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KGraphic.cpp; sourceTree = "<group>"; };
-		FF1487122CB3FBF600C42D4C /* KInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KInput.h; sourceTree = "<group>"; };
-		FF1487132CB3FBF600C42D4C /* KInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KInput.cpp; sourceTree = "<group>"; };
-		FF1487142CB3FBF600C42D4C /* KLogFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLogFile.h; sourceTree = "<group>"; };
-		FF1487152CB3FBF600C42D4C /* KLogFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KLogFile.cpp; sourceTree = "<group>"; };
-		FF1487162CB3FBF600C42D4C /* KMiscTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMiscTools.h; sourceTree = "<group>"; };
-		FF1487172CB3FBF600C42D4C /* KMiscTools.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMiscTools.mm; sourceTree = "<group>"; };
-		FF1487182CB3FBF600C42D4C /* KMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMusic.h; sourceTree = "<group>"; };
-		FF1487192CB3FBF600C42D4C /* KMusic.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMusic.mm; sourceTree = "<group>"; };
-		FF14871A2CB3FBF600C42D4C /* KPTK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPTK.h; sourceTree = "<group>"; };
-		FF14871B2CB3FBF600C42D4C /* KPTK.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KPTK.mm; sourceTree = "<group>"; };
-		FF14871C2CB3FBF600C42D4C /* KShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KShader.h; sourceTree = "<group>"; };
-		FF14871D2CB3FBF600C42D4C /* KShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KShader.cpp; sourceTree = "<group>"; };
-		FF14871E2CB3FBF600C42D4C /* KSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSound.h; sourceTree = "<group>"; };
-		FF14871F2CB3FBF600C42D4C /* KSound.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KSound.mm; sourceTree = "<group>"; };
-		FF1487202CB3FBF600C42D4C /* KSpline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSpline.h; sourceTree = "<group>"; };
-		FF1487212CB3FBF600C42D4C /* KSpline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSpline.cpp; sourceTree = "<group>"; };
-		FF1487222CB3FBF600C42D4C /* KWeb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWeb.h; sourceTree = "<group>"; };
-		FF1487232CB3FBF600C42D4C /* KWeb.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KWeb.mm; sourceTree = "<group>"; };
-		FF1487242CB3FBF600C42D4C /* KWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWindow.h; sourceTree = "<group>"; };
-		FF1487252CB3FBF600C42D4C /* KWindow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KWindow.mm; sourceTree = "<group>"; };
 		FF1CFF962CA606B2008CB8C2 /* glfm_android.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glfm_android.c; sourceTree = "<group>"; };
 		FF1CFF972CA606B2008CB8C2 /* glfm_apple.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = glfm_apple.m; sourceTree = "<group>"; };
 		FF1CFF982CA606B2008CB8C2 /* glfm_emscripten.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glfm_emscripten.c; sourceTree = "<group>"; };
@@ -178,6 +154,30 @@
 		FF4C06172CB1CF5300BEC9CE /* MainControler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainControler.mm; sourceTree = "<group>"; };
 		FF5C8EE42CB3F32100D2F38C /* SimpleTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		FF76319E2CB1C39A006672CE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FF8BC1BF2CBB2AA200DE5C31 /* GLTextureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLTextureHelper.h; sourceTree = "<group>"; };
+		FF8BC1C02CBB2AA200DE5C31 /* GLTextureHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GLTextureHelper.mm; sourceTree = "<group>"; };
+		FF8BC1C12CBB2AA200DE5C31 /* KGraphic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGraphic.h; sourceTree = "<group>"; };
+		FF8BC1C22CBB2AA200DE5C31 /* KGraphic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KGraphic.cpp; sourceTree = "<group>"; };
+		FF8BC1C32CBB2AA200DE5C31 /* KInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KInput.h; sourceTree = "<group>"; };
+		FF8BC1C42CBB2AA200DE5C31 /* KInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KInput.cpp; sourceTree = "<group>"; };
+		FF8BC1C52CBB2AA200DE5C31 /* KLogFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLogFile.h; sourceTree = "<group>"; };
+		FF8BC1C62CBB2AA200DE5C31 /* KLogFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KLogFile.cpp; sourceTree = "<group>"; };
+		FF8BC1C72CBB2AA200DE5C31 /* KMiscTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMiscTools.h; sourceTree = "<group>"; };
+		FF8BC1C82CBB2AA200DE5C31 /* KMiscTools.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMiscTools.mm; sourceTree = "<group>"; };
+		FF8BC1C92CBB2AA200DE5C31 /* KMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMusic.h; sourceTree = "<group>"; };
+		FF8BC1CA2CBB2AA200DE5C31 /* KMusic.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMusic.mm; sourceTree = "<group>"; };
+		FF8BC1CB2CBB2AA200DE5C31 /* KPTK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPTK.h; sourceTree = "<group>"; };
+		FF8BC1CC2CBB2AA200DE5C31 /* KPTK.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KPTK.cpp; sourceTree = "<group>"; };
+		FF8BC1CE2CBB2AA200DE5C31 /* KShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KShader.h; sourceTree = "<group>"; };
+		FF8BC1CF2CBB2AA200DE5C31 /* KShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KShader.cpp; sourceTree = "<group>"; };
+		FF8BC1D02CBB2AA200DE5C31 /* KSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSound.h; sourceTree = "<group>"; };
+		FF8BC1D12CBB2AA200DE5C31 /* KSound.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KSound.mm; sourceTree = "<group>"; };
+		FF8BC1D22CBB2AA200DE5C31 /* KSpline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSpline.h; sourceTree = "<group>"; };
+		FF8BC1D32CBB2AA200DE5C31 /* KSpline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSpline.cpp; sourceTree = "<group>"; };
+		FF8BC1D42CBB2AA200DE5C31 /* KWeb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWeb.h; sourceTree = "<group>"; };
+		FF8BC1D52CBB2AA200DE5C31 /* KWeb.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KWeb.mm; sourceTree = "<group>"; };
+		FF8BC1D62CBB2AA200DE5C31 /* KWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWindow.h; sourceTree = "<group>"; };
+		FF8BC1D72CBB2AA200DE5C31 /* KWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KWindow.cpp; sourceTree = "<group>"; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFCBB2772CAC8B56000797B4 /* 1704_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1704_960.png; sourceTree = "<group>"; };
 		FFCBB2792CACB5F2000797B4 /* 852_480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 852_480.png; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 			children = (
 				FF4B990A2CB2013300DA591B /* SimpleTest.entitlements */,
 				F9458CCF1D415AD900135BCA /* Media.xcassets */,
-				FF1487262CB3FBF600C42D4C /* iPTKSources */,
+				FF8BC1D82CBB2AA200DE5C31 /* iPTKSources */,
 				D71E488B1130A7ED00105C50 /* assets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -372,38 +372,6 @@
 			path = tracks;
 			sourceTree = "<group>";
 		};
-		FF1487262CB3FBF600C42D4C /* iPTKSources */ = {
-			isa = PBXGroup;
-			children = (
-				FF14870E2CB3FBF600C42D4C /* GLTextureHelper.h */,
-				FF14870F2CB3FBF600C42D4C /* GLTextureHelper.mm */,
-				FF1487102CB3FBF600C42D4C /* KGraphic.h */,
-				FF1487112CB3FBF600C42D4C /* KGraphic.cpp */,
-				FF1487122CB3FBF600C42D4C /* KInput.h */,
-				FF1487132CB3FBF600C42D4C /* KInput.cpp */,
-				FF1487142CB3FBF600C42D4C /* KLogFile.h */,
-				FF1487152CB3FBF600C42D4C /* KLogFile.cpp */,
-				FF1487162CB3FBF600C42D4C /* KMiscTools.h */,
-				FF1487172CB3FBF600C42D4C /* KMiscTools.mm */,
-				FF1487182CB3FBF600C42D4C /* KMusic.h */,
-				FF1487192CB3FBF600C42D4C /* KMusic.mm */,
-				FF14871A2CB3FBF600C42D4C /* KPTK.h */,
-				FF14871B2CB3FBF600C42D4C /* KPTK.mm */,
-				FF14871C2CB3FBF600C42D4C /* KShader.h */,
-				FF14871D2CB3FBF600C42D4C /* KShader.cpp */,
-				FF14871E2CB3FBF600C42D4C /* KSound.h */,
-				FF14871F2CB3FBF600C42D4C /* KSound.mm */,
-				FF1487202CB3FBF600C42D4C /* KSpline.h */,
-				FF1487212CB3FBF600C42D4C /* KSpline.cpp */,
-				FF1487222CB3FBF600C42D4C /* KWeb.h */,
-				FF1487232CB3FBF600C42D4C /* KWeb.mm */,
-				FF1487242CB3FBF600C42D4C /* KWindow.h */,
-				FF1487252CB3FBF600C42D4C /* KWindow.mm */,
-			);
-			name = iPTKSources;
-			path = /Volumes/MacMiniSSD/GIT/PTK/iPTKSources;
-			sourceTree = "<absolute>";
-		};
 		FF1CFF9A2CA606B2008CB8C2 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +382,38 @@
 			);
 			path = src;
 			sourceTree = "<group>";
+		};
+		FF8BC1D82CBB2AA200DE5C31 /* iPTKSources */ = {
+			isa = PBXGroup;
+			children = (
+				FF8BC1BF2CBB2AA200DE5C31 /* GLTextureHelper.h */,
+				FF8BC1C02CBB2AA200DE5C31 /* GLTextureHelper.mm */,
+				FF8BC1C12CBB2AA200DE5C31 /* KGraphic.h */,
+				FF8BC1C22CBB2AA200DE5C31 /* KGraphic.cpp */,
+				FF8BC1C32CBB2AA200DE5C31 /* KInput.h */,
+				FF8BC1C42CBB2AA200DE5C31 /* KInput.cpp */,
+				FF8BC1C52CBB2AA200DE5C31 /* KLogFile.h */,
+				FF8BC1C62CBB2AA200DE5C31 /* KLogFile.cpp */,
+				FF8BC1C72CBB2AA200DE5C31 /* KMiscTools.h */,
+				FF8BC1C82CBB2AA200DE5C31 /* KMiscTools.mm */,
+				FF8BC1C92CBB2AA200DE5C31 /* KMusic.h */,
+				FF8BC1CA2CBB2AA200DE5C31 /* KMusic.mm */,
+				FF8BC1CB2CBB2AA200DE5C31 /* KPTK.h */,
+				FF8BC1CC2CBB2AA200DE5C31 /* KPTK.cpp */,
+				FF8BC1CE2CBB2AA200DE5C31 /* KShader.h */,
+				FF8BC1CF2CBB2AA200DE5C31 /* KShader.cpp */,
+				FF8BC1D02CBB2AA200DE5C31 /* KSound.h */,
+				FF8BC1D12CBB2AA200DE5C31 /* KSound.mm */,
+				FF8BC1D22CBB2AA200DE5C31 /* KSpline.h */,
+				FF8BC1D32CBB2AA200DE5C31 /* KSpline.cpp */,
+				FF8BC1D42CBB2AA200DE5C31 /* KWeb.h */,
+				FF8BC1D52CBB2AA200DE5C31 /* KWeb.mm */,
+				FF8BC1D62CBB2AA200DE5C31 /* KWindow.h */,
+				FF8BC1D72CBB2AA200DE5C31 /* KWindow.cpp */,
+			);
+			name = iPTKSources;
+			path = /Volumes/MacMiniSSD/GIT/ptk/iPTKSources;
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -522,19 +522,19 @@
 				FF1CFF9C2CA606B2008CB8C2 /* glfm_emscripten.c in Sources */,
 				FF1CFF9D2CA606B2008CB8C2 /* glfm_apple.m in Sources */,
 				FF76319F2CB1C39F006672CE /* main.m in Sources */,
+				FF8BC1D92CBB2AA200DE5C31 /* KPTK.cpp in Sources */,
+				FF8BC1DA2CBB2AA200DE5C31 /* KLogFile.cpp in Sources */,
+				FF8BC1DB2CBB2AA200DE5C31 /* KGraphic.cpp in Sources */,
+				FF8BC1DC2CBB2AA200DE5C31 /* KSound.mm in Sources */,
+				FF8BC1DD2CBB2AA200DE5C31 /* KMusic.mm in Sources */,
+				FF8BC1DE2CBB2AA200DE5C31 /* KInput.cpp in Sources */,
+				FF8BC1DF2CBB2AA200DE5C31 /* KSpline.cpp in Sources */,
+				FF8BC1E02CBB2AA200DE5C31 /* GLTextureHelper.mm in Sources */,
+				FF8BC1E12CBB2AA200DE5C31 /* KWindow.cpp in Sources */,
+				FF8BC1E22CBB2AA200DE5C31 /* KMiscTools.mm in Sources */,
+				FF8BC1E42CBB2AA200DE5C31 /* KWeb.mm in Sources */,
+				FF8BC1E52CBB2AA200DE5C31 /* KShader.cpp in Sources */,
 				FF4C06182CB1CF5300BEC9CE /* MainControler.mm in Sources */,
-				FF1487272CB3FBF600C42D4C /* KGraphic.cpp in Sources */,
-				FF1487282CB3FBF600C42D4C /* KSpline.cpp in Sources */,
-				FF1487292CB3FBF600C42D4C /* GLTextureHelper.mm in Sources */,
-				FF14872A2CB3FBF600C42D4C /* KMiscTools.mm in Sources */,
-				FF14872B2CB3FBF600C42D4C /* KPTK.mm in Sources */,
-				FF14872C2CB3FBF600C42D4C /* KSound.mm in Sources */,
-				FF14872D2CB3FBF600C42D4C /* KShader.cpp in Sources */,
-				FF14872E2CB3FBF600C42D4C /* KLogFile.cpp in Sources */,
-				FF14872F2CB3FBF600C42D4C /* KWindow.mm in Sources */,
-				FF1487302CB3FBF600C42D4C /* KInput.cpp in Sources */,
-				FF1487312CB3FBF600C42D4C /* KWeb.mm in Sources */,
-				FF1487322CB3FBF600C42D4C /* KMusic.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

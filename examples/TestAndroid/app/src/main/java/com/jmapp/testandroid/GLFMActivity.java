@@ -12,6 +12,7 @@ public class GLFMActivity {
     private GLSurfaceView glSurfaceView;
 
     public GLFMActivity(Context context) {
+
         // Create the GLSurfaceView
         glSurfaceView = new GLSurfaceView(context);
 
@@ -29,12 +30,10 @@ public class GLFMActivity {
         return glSurfaceView;
     }
 
-    // Native method for creating OpenGL surface
+    // Native methods
+
     public native void nativeOnSurfaceCreated();
-
-    // Native method for handling surface changes
     public native void nativeOnSurfaceChanged(int width, int height);
-
     public native void nativeOnDrawFrame();
 
     static {

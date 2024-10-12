@@ -2,7 +2,12 @@
 #ifndef KSHADER_H
 #define KSHADER_H
 
+#ifdef __ANDROID__
+#include <GLES2/gl2.h>
+#else
 #include <OpenGLES/ES2/gl.h>
+#endif
+
 
 class KShader {
 public:

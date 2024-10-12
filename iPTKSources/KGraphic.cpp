@@ -1,7 +1,7 @@
 
 #include "KGraphic.h"
 #include "GLTextureHelper.h"
-#include <OpenGLES/ES2/gl.h>
+//#include <OpenGLES/ES2/gl.h>
 #include <cmath>
 #include <cstring>
 #include <cstdio> // printf
@@ -387,8 +387,13 @@ void KGraphic::freePicture() {
 
 bool KGraphic::loadPicture(const char *filename)
 {
+    char * filename2 = NULL;
+#ifdef __ANDROID__
+    filename2 = (char *)filename;
+#else
     GLTextureHelper helper;
-    char * filename2 = helper.loadFileDatas(filename);
+    filename2 = helper.loadFileDatas(filename);
+#endif
     
     int width, height, nrChannels;
     unsigned char *data = stbi_load(filename2, &width, &height, &nrChannels, STBI_rgb_alpha);  // Load as RGBA

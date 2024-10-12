@@ -32,9 +32,12 @@
  */
 // This class wraps up and slightly modifies APPLE sample code
 
+#ifdef __ANDROID__
+#include <GLES2/gl2.h>
+#else
+#include <OpenGLES/ES2/gl.h>
+#endif
 
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
 
 typedef struct
 {

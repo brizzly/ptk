@@ -3,7 +3,12 @@
 #define KGRAPHIC_H
 
 #include "KShader.h"
+#ifdef __ANDROID__
+#include <GLES2/gl2.h>
+#else
 #include <OpenGLES/ES2/gl.h>
+#endif
+
 
 typedef float mat4[16];
 

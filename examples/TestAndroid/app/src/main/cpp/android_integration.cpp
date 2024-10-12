@@ -2,8 +2,7 @@
 #include "MainController.h"
 #include <jni.h>
 #include <android/log.h>
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
+
 
 #define LOG_TAG "NativeCode"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
@@ -52,24 +51,11 @@ extern "C" {
 
 JNIEXPORT void JNICALL
 Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceCreated(JNIEnv *env, jobject thiz) {
-    LOGE("nativeOnSurfaceCreated called");
-
-    // Set up OpenGL rendering settings here
-    glClearColor(1.0f, 0.0f, 1.0f, 1.0f); // Set clear color to black
-    //glEnable(GL_DEPTH_TEST);              // Enable depth testing
-}
-
-
-// JNI function for initializing the surface
-JNIEXPORT void JNICALL
-Java_com_jmapp_testandroid_GLFMRenderer_nativeOnSurfaceCreated(JNIEnv *env, jobject obj) {
-    LOGE("nativeOnSurfaceCreated called");
-
-    // Initialize OpenGL settings
-    glClearColor(0.0f, 1.0f, 0.0f, 1.0f); // Set the background color
+    //LOGE("nativeOnSurfaceCreated called");
     MainController::getInstance()->initialize(nullptr);
 }
 
+/*
 // JNI function for handling changes in surface size
 JNIEXPORT void JNICALL
 Java_com_jmapp_testandroid_GLFMRenderer_nativeOnSurfaceChanged(JNIEnv *env, jobject obj, jint width, jint height) {
@@ -78,6 +64,7 @@ Java_com_jmapp_testandroid_GLFMRenderer_nativeOnSurfaceChanged(JNIEnv *env, jobj
     // Set the viewport to the new dimensions
     glViewport(0, 0, width, height);
 }
+*/
 
 JNIEXPORT void JNICALL
 Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceChanged(JNIEnv *env, jobject thiz, jint width, jint height) {
@@ -90,16 +77,11 @@ Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceChanged(JNIEnv *env, jobj
 // JNI function for rendering each frame
 JNIEXPORT void JNICALL
 Java_com_jmapp_testandroid_GLFMActivity_nativeOnDrawFrame(JNIEnv *env, jobject obj) {
-    LOGE("nativeOnDrawFrame called");
-
-    // Clear the screen
-    //glClearColor(1.0,0.0,0.0,1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // Call MainController to draw the scene
+    //LOGE("nativeOnDrawFrame called");
     MainController::getInstance()->draw();
 }
 
+/*
 // JNI function for rendering each frame
 JNIEXPORT void JNICALL
 Java_com_jmapp_testandroid_GLFMRenderer_nativeOnDrawFrame(JNIEnv *env, jobject obj) {
@@ -112,4 +94,6 @@ Java_com_jmapp_testandroid_GLFMRenderer_nativeOnDrawFrame(JNIEnv *env, jobject o
     // Call MainController to draw the scene
     MainController::getInstance()->draw();
 }
+*/
+
 }

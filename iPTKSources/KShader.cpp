@@ -1,6 +1,6 @@
 
 #include "KShader.h"
-#include <OpenGLES/ES2/gl.h>
+//#include <OpenGLES/ES2/gl.h>
 #include <cmath>
 #include <cstring>
 #include <cstdio> // printf

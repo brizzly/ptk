@@ -12,10 +12,25 @@ target_include_directories(glm INTERFACE ${CMAKE_SOURCE_DIR}/../../../libs/glm)
 # Add GLM include path
 #include_directories(${CMAKE_SOURCE_DIR}/../../../libs/glm)
 
+# Chemin vers le répertoire partagé
+set(PTK_SOURCE_DIR ${CMAKE_SOURCE_DIR}/../../../../../../iPTKSources)
+
+# Récupérer tous les fichiers .cpp et .h du répertoire partagé
+file(GLOB_RECURSE SHARED_SOURCE_FILES
+        ${PTK_SOURCE_DIR}/*.cpp
+        ${PTK_SOURCE_DIR}/*.h
+)
+
+# Exclure des fichiers spécifiques (GLTextureHelper.mm et GLTextureHelper.h)
+list(REMOVE_ITEM SHARED_SOURCE_FILES
+        ${PTK_SOURCE_DIR}/GLTextureHelper.mm
+        ${PTK_SOURCE_DIR}/GLTextureHelper.h
+)
 
 
 # Specify source files
 set(SOURCE_FILES
+        ${SHARED_SOURCE_FILES}
         android_integration.cpp
         MainController.cpp
         MainController.h
@@ -24,6 +39,11 @@ set(SOURCE_FILES
         glfm_internal.h
         stb_image.h
 )
+
+# Inclure le répertoire partagé
+include_directories(${PTK_SOURCE_DIR})
+
+
 
 # Create shared library
 add_library(

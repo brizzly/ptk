@@ -293,11 +293,31 @@ void KGraphic::render()
 //    glViewport(0, 0, _gameW*2, _gameH*2);
    
    
+    
+    // Calculate scaling factors for width and height
+    float scaleX = static_cast<float>(_screenW) / _gameW;
+    float scaleY = static_cast<float>(_screenH) / _gameH;
+
+    // Choose the smaller scale to maintain aspect ratio
+    float scale_ = (scaleX < scaleY) ? scaleX : scaleY;
+
+    // Compute the scaled game dimensions
+    int scaledGameW = static_cast<int>(_gameW * scale_);
+    int scaledGameH = static_cast<int>(_gameH * scale_);
+
+    // Calculate offsets to center the game content
+    int offsetX = (_screenW - scaledGameW) / 2;
+    int offsetY = (_screenH - scaledGameH) / 2;
+
+    // Set the OpenGL viewport
+    glViewport(offsetX, offsetY, scaledGameW, scaledGameH);
+    
+    /*
     float offsetX = (_screenW - _gameW*2) / 2.0f;
     if(offsetX >= 0) {
         glViewport(offsetX, 0, _gameW*2, _gameH*2);
     }
-    
+    */
     
     glUseProgram(_shaderProgram);   // Use the shader
 

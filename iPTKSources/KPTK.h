@@ -24,10 +24,7 @@
 #ifndef KPTK_H
 #define KPTK_H
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include "KWindow.h"
-//#include "KGraphic.h"
+#include "KGraphic.h"
 
 class KWindow;
 

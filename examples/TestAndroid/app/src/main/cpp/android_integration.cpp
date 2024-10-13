@@ -18,10 +18,17 @@ void onRender(GLFMDisplay *display) {
     MainController::getInstance()->draw();
 }
 
+void onFrame(GLFMDisplay *display, double frameTime)
+{
+    MainController::getInstance()->update(frameTime);
+    MainController::getInstance()->draw();
+}
+
 // Function called during app initialization
 void onAppInit(GLFMDisplay *display) {
     // Set render function
-    glfmSetRenderFunc(display, onRender);
+    //glfmSetRenderFunc(display, onRender);
+    glfmSetMainLoopFunc(display, onFrame);
     // Initialize the main controller
     //MainController::getInstance()->initialize(display);
 }

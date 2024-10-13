@@ -11,6 +11,7 @@ MainController* MainController::getInstance() {
         instance = new MainController();
         instance->width = 0;
         instance->height = 0;
+        instance->_framtime = 0;
     }
     return instance;
 }
@@ -74,7 +75,6 @@ void MainController::initialize(int w, int h)
 }
 
 void MainController::update(double frameTime) {
-    // Update state, handle user input, etc.
 }
 
 void MainController::draw() {
@@ -83,19 +83,26 @@ void MainController::draw() {
     //glClearColor(1.0f, 0.5f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    float frameTime = 16.666;
+    static auto lastTime = std::chrono::high_resolution_clock::now();
+
+    // Calculate frame time
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsedTime = currentTime - lastTime;
+    this->_framtime = elapsedTime.count();
+    lastTime = currentTime;
+    //float frameTime = 16.666;
 
     static float r = 0.0;
     static float z = 0.0;
     static float a = 0.0;
 
-#ifdef __ANDROID__
-    r += 10000.0f * (frameTime / 1000.0f) * 0.0005f;
-    a += 10000.0f * (frameTime / 1000.0f) * 0.0005f;
-#else
-    r += (frameTime / 1000.0f) * 0.0005f;
-    a += (frameTime / 1000.0f) * 0.0005f;
-#endif
+
+    r += 10000.0f * (this->_framtime) * 0.0005f;
+    a += 10000.0f * (this->_framtime) * 0.0005f;
+
+    //r += (frameTime / 1000.0f) * 0.0005f;
+    //a += (frameTime / 1000.0f) * 0.0005f;
+
     z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
 
     static float debugval = 0.0;

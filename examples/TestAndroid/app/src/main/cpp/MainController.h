@@ -18,6 +18,7 @@ private:
 
     int width;
     int height;
+    double _framtime;
     AAssetManager* assetManager;
 
 public:

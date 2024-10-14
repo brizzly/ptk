@@ -69,13 +69,15 @@ void MainController::initialize(int w, int h)
     //sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
     sound1->loadSample("boing2.wav", this->assetManager);
     sound1->setVolume(1.0);
-    sound1->setLooping(true);
+    sound1->setLooping(false);
     sound1->playSample();
 
-/*
+
     music1 = new KMusic();
-    music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
-    */
+    music1->load("menu.mp3", this->assetManager);
+    music1->setVolume(1.0);
+    music1->playMusic();
+
 }
 
 void MainController::update(double frameTime) {

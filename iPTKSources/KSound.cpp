@@ -5,6 +5,9 @@
 KSound::KSound() {
     
     isLooping = false;
+#ifdef __ANDROID__
+    assetManager_ = NULL;
+#endif
     
     // Obtain the shared OpenALManager instance
     OpenALManager& alManager = OpenALManager::getInstance();

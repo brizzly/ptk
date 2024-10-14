@@ -223,7 +223,7 @@ GLESv2-lib:FILEPATH=/usr/X11R6/lib/libGLESv2.dylib
 android-lib:FILEPATH=android-lib-NOTFOUND
 
 //Dependencies for the target
-android_game_lib_LIB_DEPENDS:STATIC=general;c++_shared;general;/Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/openal.framework;general;log-lib-NOTFOUND;general;android-lib-NOTFOUND;general;/usr/X11R6/lib/libGLESv2.dylib;general;EGL-lib-NOTFOUND;
+android_game_lib_LIB_DEPENDS:STATIC=general;c++_shared;general;mpg123-lib;general;/Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/openal.framework;general;log-lib-NOTFOUND;general;android-lib-NOTFOUND;general;/usr/X11R6/lib/libGLESv2.dylib;general;EGL-lib-NOTFOUND;
 
 //Value Computed by CMake
 android_game_project_BINARY_DIR:STATIC=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp

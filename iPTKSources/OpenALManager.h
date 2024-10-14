@@ -2,6 +2,7 @@
 #define OPENAL_MANAGER_H
 
 #ifdef __ANDROID__
+#include <mpg123.h>
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <AL/alext.h>

@@ -21,6 +21,8 @@ find_library(openal-lib openal PATHS ${OpenAL_DIR} NO_CMAKE_FIND_ROOT_PATH)
 
 
 
+# Include directories for libmpg123 headers
+include_directories(${CMAKE_SOURCE_DIR}/../../../../../../mpg123/include)
 
 
 
@@ -126,10 +128,17 @@ find_library(GLESv2-lib GLESv2)
 find_library(EGL-lib EGL)
 
 
+# Add libmpg123 as a prebuilt library
+add_library(mpg123-lib SHARED IMPORTED)
+set_target_properties(mpg123-lib PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/../jniLibs/${ANDROID_ABI}/libmpg123.so)
+
+
 # Link libraries to the native library
 target_link_libraries(
         android_game_lib PRIVATE glm
         c++_shared
+        mpg123-lib
         ${openal-lib}
         ${OPENSLES_LIB}
         ${log-lib}

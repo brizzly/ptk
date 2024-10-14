@@ -284,6 +284,7 @@ libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/android_integration.c
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/MainController.cpp.o
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/glfm_android.c.o
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/build.make
+libandroid_game_lib.dylib: ../jniLibs//libmpg123.so
 libandroid_game_lib.dylib: /usr/X11R6/lib/libGLESv2.dylib
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX shared library libandroid_game_lib.dylib"

@@ -1,6 +1,7 @@
 #include "OpenALManager.h"
 #include <iostream>
 
+
 OpenALManager* OpenALManager::instance = nullptr;
 std::mutex OpenALManager::instanceMutex;
 
@@ -29,6 +30,12 @@ OpenALManager::OpenALManager()
         std::cerr << "Failed to make OpenAL context current" << std::endl;
         // Handle error appropriately
     }
+#ifdef __ANDROID__
+    if (mpg123_init() != MPG123_OK) {
+        std::cerr << "Failed to initialize libmpg123." << std::endl;
+        // Handle initialization failure
+    }
+#endif
 }
 
 OpenALManager::~OpenALManager()
@@ -42,6 +49,9 @@ OpenALManager::~OpenALManager()
     {
         alcCloseDevice(device);
     }
+#ifdef __ANDROID__
+    mpg123_exit();
+#endif
 }
 
 ALCdevice* OpenALManager::getDevice() const

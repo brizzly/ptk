@@ -38,7 +38,7 @@ public:
     bool load(const std::string &filename);
 #endif
     void playMusic(/*char *filename*/);
-    void stop();
+    void stopMusic();
     void setLooping(bool loop);
     void setVolume(float volume);
 

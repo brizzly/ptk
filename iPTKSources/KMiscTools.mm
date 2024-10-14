@@ -39,6 +39,8 @@
 //#import "SAMKeychain.h"
 
 
+struct utsname KMiscTools::systemInfo;
+
 char	KMiscTools::currentAppPath[MAX_PATH];
 char	KMiscTools::currentFilePath[MAX_PATH];
 char	KMiscTools::currentTempPath[MAX_PATH];

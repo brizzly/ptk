@@ -293,6 +293,32 @@ void KGraphic::render()
 //    glViewport(0, 0, _gameW*2, _gameH*2);
    
    
+    // Determine the orientation
+    bool isPortrait = _screenH > _screenW;
+
+    // Calculate scaling factors for width and height
+    float scaleX = static_cast<float>(_screenW) / _gameW;
+    float scaleY = static_cast<float>(_screenH) / _gameH;
+
+    // Choose the scale factor based on orientation
+    float scale_;
+    if (isPortrait) {
+        // Maximize width in portrait
+        scale_ = scaleX;
+    } else {
+        // Maximize height in landscape
+        scale_ = scaleY;
+    }
+
+    // Compute the scaled game dimensions
+    int scaledGameW = static_cast<int>(_gameW * scale_);
+    int scaledGameH = static_cast<int>(_gameH * scale_);
+
+    // Calculate offsets to center the game content
+    int offsetX = (_screenW - scaledGameW) / 2;
+    int offsetY = (_screenH - scaledGameH) / 2;
+    
+    /*
     
     // Calculate scaling factors for width and height
     float scaleX = static_cast<float>(_screenW) / _gameW;
@@ -308,7 +334,8 @@ void KGraphic::render()
     // Calculate offsets to center the game content
     int offsetX = (_screenW - scaledGameW) / 2;
     int offsetY = (_screenH - scaledGameH) / 2;
-
+*/
+    
     // Set the OpenGL viewport
     glViewport(offsetX, offsetY, scaledGameW, scaledGameH);
     

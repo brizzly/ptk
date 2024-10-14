@@ -26,16 +26,33 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/utsname.h>
+
+
+#ifdef __ANDROID__
+
 #include <assert.h>
 #include <time.h>
 #include <string.h>
 
-#ifndef __ANDROID__
-#include <Foundation/Foundation.h>
+#else
+
+#include <sys/utsname.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <unistd.h>
+
+#import <netinet/in.h>
+#import <netinet6/in6.h>
+
+//#import <Foundation/Foundation.h>
+#import <Security/Security.h>
+
+//#include <UIKit/UIKit.h>
+
+
+/*
+#include "Foundation/Foundation.h"
+
 #include <UIKit/UIKit.h>
 
 // isInternetReachable
@@ -46,6 +63,7 @@
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 //#import "SAMKeychain.h"
+*/
 #endif
 
 //#ifdef MAX_PATH
@@ -54,10 +72,14 @@
 //#endif
 
 
-static struct utsname systemInfo;
+
 
 class KMiscTools
 {
+private:
+    
+    static struct utsname systemInfo;
+    
 private:
 	
 	static	char	currentAppPath[MAX_PATH];

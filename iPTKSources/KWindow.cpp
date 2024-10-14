@@ -29,7 +29,6 @@ KWindow::KWindow()
 {
 	setClearColor( 1,1,1,1 ) ;
 	_terminated = false ;
-	
 }
 
 void KWindow::setClearColor( float r, float g , float b, float a ) 

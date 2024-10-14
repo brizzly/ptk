@@ -22,7 +22,7 @@ KSound::KSound() {
 KSound::~KSound() {
     
     // Stop playback
-    stop();
+    stopSample();
 
     // Delete OpenAL source and buffer
     if (source)
@@ -741,7 +741,7 @@ void KSound::playSample() {
     alSourcePlay(source);
 }
 
-void KSound::stop() {
+void KSound::stopSample() {
     alSourceStop(source);
 }
 

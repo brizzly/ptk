@@ -24,7 +24,7 @@ KMusic::KMusic()
 KMusic::~KMusic()
 {
     // Stop playback
-    stop();
+    stopMusic();
 
     // Delete OpenAL source and buffer
     if (source)
@@ -119,7 +119,7 @@ void KMusic::playMusic()
     }
 }
 
-void KMusic::stop()
+void KMusic::stopMusic()
 {
     alSourceStop(source);
     if (alGetError() != AL_NO_ERROR)

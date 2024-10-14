@@ -30,7 +30,7 @@ public:
     bool loadSample(const std::string &filename);
 #endif
     void playSample();
-    void stop();
+    void stopSample();
     void setLooping(bool loop);
     void setVolume(float volume);
     const char* getOpenALErrorString(ALenum error);

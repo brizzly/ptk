@@ -60,7 +60,7 @@ file(GLOB_RECURSE SHARED_SOURCE_FILES
 
 # Exclure des fichiers spécifiques (GLTextureHelper.mm et GLTextureHelper.h)
 list(REMOVE_ITEM SHARED_SOURCE_FILES
-        ${PTK_SOURCE_DIR}/GLTextureHelper.mm
+        ${PTK_SOURCE_DIR}/*.mm
         ${PTK_SOURCE_DIR}/GLTextureHelper.h
 )
 

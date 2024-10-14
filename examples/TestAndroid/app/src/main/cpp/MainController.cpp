@@ -52,7 +52,7 @@ void MainController::initialize(int w, int h)
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
 
-    //KMiscTools::initMiscTools();
+    KMiscTools::initMiscTools();
 
 
     testGraphic = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);

@@ -32,7 +32,7 @@
 #include <string.h>
 
 #ifndef __ANDROID__
-#include "Foundation/Foundation.h"
+#include <Foundation/Foundation.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <unistd.h>
@@ -64,22 +64,15 @@ private:
 	static	char	currentFilePath[MAX_PATH];
 	static	char	currentTempPath[MAX_PATH];
 	static	char	currentDocHomePath[MAX_PATH];
-	
+    static  char	currentPath[MAX_PATH*2];
 	static	bool	_inPackage;
-	
-	static char		currentPath[MAX_PATH*2];
 
-
-	
 public:
 	
 	static	void initMiscTools();
 	static	char * makeHomeDocFilePath(const char *filename);
 	static	char * makeTempFilePath(const char *filename);
 	static	char * makeFilePath(const char *filename);
-	static	void messageBox(char *msg, char *title);
-	static	short flipShort(short value);
-	static	long flipLong(long value);
 	static	long getSeed();
 	static	unsigned long getMilliseconds();
 	static  void  getSerial( char *s );

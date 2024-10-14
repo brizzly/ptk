@@ -111,10 +111,24 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.s
 
+CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
+CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp
+CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp
+
+CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp > CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.i
+
+CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.s
+
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp
 
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp
 
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp
 
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.c
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp
 
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cpp.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSound.cp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp
 
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KSpline.c
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp
 
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.cpp.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KWindow.c
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o: /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o -MF CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o.d -o CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp
 
 CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALManager.cpp.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/OpenALMan
 CMakeFiles/android_game_lib.dir/android_integration.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/android_integration.cpp.o: android_integration.cpp
 CMakeFiles/android_game_lib.dir/android_integration.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/android_game_lib.dir/android_integration.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/android_game_lib.dir/android_integration.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/android_integration.cpp.o -MF CMakeFiles/android_game_lib.dir/android_integration.cpp.o.d -o CMakeFiles/android_game_lib.dir/android_integration.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/android_integration.cpp
 
 CMakeFiles/android_game_lib.dir/android_integration.cpp.i: cmake_force
@@ -226,7 +240,7 @@ CMakeFiles/android_game_lib.dir/android_integration.cpp.s: cmake_force
 CMakeFiles/android_game_lib.dir/MainController.cpp.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/MainController.cpp.o: MainController.cpp
 CMakeFiles/android_game_lib.dir/MainController.cpp.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/android_game_lib.dir/MainController.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/android_game_lib.dir/MainController.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/MainController.cpp.o -MF CMakeFiles/android_game_lib.dir/MainController.cpp.o.d -o CMakeFiles/android_game_lib.dir/MainController.cpp.o -c /Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/MainController.cpp
 
 CMakeFiles/android_game_lib.dir/MainController.cpp.i: cmake_force
@@ -240,7 +254,7 @@ CMakeFiles/android_game_lib.dir/MainController.cpp.s: cmake_force
 CMakeFiles/android_game_lib.dir/glfm_android.c.o: CMakeFiles/android_game_lib.dir/flags.make
 CMakeFiles/android_game_lib.dir/glfm_android.c.o: glfm_android.c
 CMakeFiles/android_game_lib.dir/glfm_android.c.o: CMakeFiles/android_game_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/android_game_lib.dir/glfm_android.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/android_game_lib.dir/glfm_android.c.o"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/android_game_lib.dir/glfm_android.c.o -MF CMakeFiles/android_game_lib.dir/glfm_android.c.o.d -o CMakeFiles/android_game_lib.dir/glfm_android.c.o -c /Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/glfm_android.c
 
 CMakeFiles/android_game_lib.dir/glfm_android.c.i: cmake_force
@@ -256,6 +270,7 @@ android_game_lib_OBJECTS = \
 "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KGraphic.cpp.o" \
 "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KInput.cpp.o" \
 "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.o" \
+"CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o" \
 "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o" \
 "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o" \
 "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o" \
@@ -273,6 +288,7 @@ android_game_lib_EXTERNAL_OBJECTS =
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KGraphic.cpp.o
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KInput.cpp.o
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.o
+libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KShader.cpp.o
@@ -287,7 +303,7 @@ libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/build.make
 libandroid_game_lib.dylib: ../jniLibs//libmpg123.so
 libandroid_game_lib.dylib: /usr/X11R6/lib/libGLESv2.dylib
 libandroid_game_lib.dylib: CMakeFiles/android_game_lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX shared library libandroid_game_lib.dylib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX shared library libandroid_game_lib.dylib"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/android_game_lib.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

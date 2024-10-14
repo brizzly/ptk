@@ -27,6 +27,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/utsname.h>
+#include <assert.h>
+#include <time.h>
+#include <string.h>
+
+#ifndef __ANDROID__
+#include "Foundation/Foundation.h"
+#include <mach/mach.h>
+#include <mach/mach_time.h>
+#include <unistd.h>
+#include <UIKit/UIKit.h>
+
+// isInternetReachable
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <netinet/in.h>
+#import <netinet6/in6.h>
+
+#import <Foundation/Foundation.h>
+#import <Security/Security.h>
+//#import "SAMKeychain.h"
+#endif
 
 //#ifdef MAX_PATH
 //#undef MAX_PATH
@@ -73,7 +93,6 @@ public:
 	static	void appendPath(char * path, char * component) ;
 	static  char *concatePath(char * path1, char * path2) ;
 
-	static bool isIphone6();
 	static bool iPad();
 	static bool iPadPro();
 	static bool iPadMini();

@@ -225,6 +225,30 @@ Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/android_game_lib.dir/build.make CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.s
 .PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.s
 
+Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.o: Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o
+.PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.o
+
+# target to build an object file
+Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/android_game_lib.dir/build.make CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o
+.PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o
+
+Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.i: Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.i
+.PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.i
+
+# target to preprocess a source file
+Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/android_game_lib.dir/build.make CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.i
+.PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.i
+
+Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.s: Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.s
+.PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.s
+
+# target to generate assembly for a file
+Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/android_game_lib.dir/build.make CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.s
+.PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.s
+
 Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.o: Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o
 .PHONY : Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.o
 
@@ -462,6 +486,9 @@ help:
 	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.o"
 	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.i"
 	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.s"
+	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.o"
+	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.i"
+	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.s"
 	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.o"
 	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.i"
 	@echo "... Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.s"

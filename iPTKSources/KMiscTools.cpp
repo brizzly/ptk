@@ -1,42 +1,5 @@
-// Released under MIT License
-/*
- Copyright (c) 2010 by Julien Meyer. Web: http://www.jadegame.com
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- */
 
 #include "KMiscTools.h"
-#include "Foundation/Foundation.h"
-#include <assert.h>
-#include <mach/mach.h>
-#include <mach/mach_time.h>
-#include <unistd.h>
-#include <UIKit/UIKit.h>
-
-// isInternetReachable
-#import <SystemConfiguration/SystemConfiguration.h>
-#import <netinet/in.h>
-#import <netinet6/in6.h>
-
-#import <Foundation/Foundation.h>
-#import <Security/Security.h>
-//#import "SAMKeychain.h"
 
 
 char	KMiscTools::currentAppPath[MAX_PATH];
@@ -44,8 +7,10 @@ char	KMiscTools::currentFilePath[MAX_PATH];
 char	KMiscTools::currentTempPath[MAX_PATH];
 char	KMiscTools::currentDocHomePath[MAX_PATH];
 bool	KMiscTools::_inPackage;
-
 char	KMiscTools::currentPath[MAX_PATH*2];
+
+
+#ifndef __ANDROID__
 
 uint64_t 	t0;		// Start time for getMillisecond()
 static mach_timebase_info_data_t timebase;
@@ -61,41 +26,54 @@ static inline unsigned int getCString(NSString * str, char * cstr, unsigned int 
     memcpy(cstr, utf8, size);
 	return size;
 }
+#endif
 
 //#################################################################################	
 unsigned long KMiscTools::getMilliseconds( void )
 {
+#ifdef __ANDROID__
+    struct timespec ts;
+    // Get the current time with CLOCK_MONOTONIC
+    if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0) {
+        //printf("Seconds: %ld, Nanoseconds: %ld\n", ts.tv_sec, ts.tv_nsec);
+        return ts.tv_sec;
+    }
+    return 0;
+#else
 	return (unsigned long)(((float)(mach_absolute_time() - t0)) * ((float)timebase.numer) / ((float)timebase.denom) / 1000000.0f);
+#endif
 }
 
 //#################################################################################	
 long KMiscTools::getSeed( void )
 {
-	return (long)mach_absolute_time();
+#ifdef __ANDROID__
+    struct timespec ts;
+    // Get the current time with CLOCK_MONOTONIC
+    if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0) {
+        //printf("Seconds: %ld, Nanoseconds: %ld\n", ts.tv_sec, ts.tv_nsec);
+        return ts.tv_nsec;
+    }
+    return 0;
+#else
+    return (long)mach_absolute_time();#endif
+#endif
 }
 
 //#################################################################################	
 void KMiscTools::getSerial( char *s )
 {
 	memset(s, 0, 45);
-//	NSString *uniqueIdentifier;
-	/*
-	UIDevice *myCurrentDevice = [UIDevice currentDevice];
-	uniqueIdentifier = [myCurrentDevice uniqueIdentifier];
-	getCString(uniqueIdentifier, s, 40);
-	//[myCurrentDevice release];
-	//[uniqueIdentifier release];
-	 */
 }
 
 
 //#################################################################################	
 void KMiscTools::initMiscTools( void ) 
 {
-	//if(logfile) { logfile->logDebug("initMiscTools"); }
+#ifndef __ANDROID__
 
-	_inPackage = true;
-	
+    _inPackage = true;
+
 	t0 = mach_absolute_time();			// Init hires timer
 	mach_timebase_info(&timebase);	// Get mach timbase info to get real time
 
@@ -110,6 +88,7 @@ void KMiscTools::initMiscTools( void )
 	
 	memset(currentDocHomePath, 0, MAX_PATH);
 	getDocHome(currentDocHomePath, MAX_PATH);
+#endif
 }
 
 
@@ -117,6 +96,9 @@ void KMiscTools::initMiscTools( void )
 
 char * KMiscTools::makeHomeDocFilePath(const char *filename)
 {
+#ifdef __ANDROID__
+    return (char *)filename;
+#else
 	long		i =0 ;
 	long		index ;
 	char *builtPath = currentPath; //new char [MAX_PATH*2]; //[MAX_PATH*];
@@ -136,11 +118,15 @@ char * KMiscTools::makeHomeDocFilePath(const char *filename)
 		if ( builtPath[index] == '\\' )		
 			builtPath[index] = '/' ;			
 	}	
-	return	builtPath;	
+	return	builtPath;
+#endif
 }
 
 char * KMiscTools::makeTempFilePath(const	char *filename)
 {
+#ifdef __ANDROID__
+    return (char *)filename;
+#else
 	long		i =0 ;
 	long		index ;
 	char *builtPath = currentPath; //new char [MAX_PATH*2]; //[MAX_PATH*];
@@ -161,10 +147,14 @@ char * KMiscTools::makeTempFilePath(const	char *filename)
 			builtPath[index] = '/' ;			
 	}	
 	return	builtPath;
+#endif
 }
 
-char * KMiscTools::makeFilePath(const	char *filename)
+char * KMiscTools::makeFilePath(const char *filename)
 {
+#ifdef __ANDROID__
+    return (char *)filename;
+#else
 	long		i =0 ;
 	long		index ;
 	char *builtPath = currentPath; //new char [MAX_PATH*2]; //[MAX_PATH*];
@@ -185,6 +175,7 @@ char * KMiscTools::makeFilePath(const	char *filename)
 			builtPath[index] = '/' ;			
 	}	
 	return	builtPath;
+#endif
 }
 
 
@@ -192,8 +183,12 @@ char * KMiscTools::makeFilePath(const	char *filename)
 //#################################################################################	
 int KMiscTools::getCurrentDir(char * path, unsigned int maxLen)
 {
+#ifdef __ANDROID__
+    return 0;
+#else
    NSString * cur = [[NSFileManager defaultManager] currentDirectoryPath];
-   return getCString(cur, path, maxLen);    
+   return getCString(cur, path, maxLen);
+#endif
 }
 
 
@@ -201,8 +196,12 @@ int KMiscTools::getCurrentDir(char * path, unsigned int maxLen)
 //#################################################################################	
 int KMiscTools::getUserHome(char * path, unsigned int maxLen)
 {
+#ifdef __ANDROID__
+    return 0;
+#else
     NSString * home = NSHomeDirectory();
 	return getCString(home, path, maxLen);
+#endif
 }
 
 
@@ -210,10 +209,14 @@ int KMiscTools::getUserHome(char * path, unsigned int maxLen)
 //#################################################################################	
 int KMiscTools::getDocHome(char * path, unsigned int maxLen)
 {
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //creates paths so that you can pull the app's path from it
-		NSString *doc = [paths objectAtIndex:0]; //gets the applications directory on the users iPhone
+#ifdef __ANDROID__
+    return 0;
+#else
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //creates paths so that you can pull the app's path from it
+    NSString *doc = [paths objectAtIndex:0]; //gets the applications directory on the users iPhone
    // NSString * doc = NSDocumentDirectory();
 	return getCString(doc, path, maxLen);
+#endif
 }
 
 
@@ -221,8 +224,12 @@ int KMiscTools::getDocHome(char * path, unsigned int maxLen)
 //#################################################################################	
 int KMiscTools::getTempHome(char * path, unsigned int maxLen)
 {
+#ifdef __ANDROID__
+    return 0;
+#else
     NSString * home = NSTemporaryDirectory();
 	return getCString(home, path, maxLen);
+#endif
 }
 
 
@@ -230,9 +237,13 @@ int KMiscTools::getTempHome(char * path, unsigned int maxLen)
 //#################################################################################	
 int KMiscTools::getAppHome(char * path, unsigned int maxLen)
 {
+#ifdef __ANDROID__
+    return 0;
+#else
     NSBundle * mb = [NSBundle mainBundle];
 	NSString * mbp = [mb bundlePath];
 	return getCString(mbp, path, maxLen);
+#endif
 }
 
 
@@ -271,30 +282,25 @@ char * KMiscTools::concatePath(char * path1, char * path2)
 	 return resultPath;	 
 }
 
-bool KMiscTools::isIphone6()
-{
-	if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
-	{
-		CGRect f = [[UIScreen mainScreen] bounds];
-		if(f.size.width > 320) {
-			return true;
-		}
-	}
-	return false;
-}
-
 bool KMiscTools:: iPad()
 {
+#ifdef __ANDROID__
+    return false;
+#else
     UIUserInterfaceIdiom idiom = [[UIDevice currentDevice] userInterfaceIdiom];
     NSLog(@"%ld", idiom);
     if (idiom == UIUserInterfaceIdiomPad) {
         return true;
     }
 	return false;
+#endif
 }
 
 bool KMiscTools::iPadPro()
 {
+#ifdef __ANDROID__
+    return false;
+#else
 	//#define iPadPro12 (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad && UIScreen.mainScreen.nativeBounds.size.height == 2732)
 	int h = UIScreen.mainScreen.nativeBounds.size.height;
 	if(h == 1334 || h == 2732) {
@@ -305,10 +311,14 @@ bool KMiscTools::iPadPro()
 //		return true;
 //	}
 	return false;
+#endif
 }
 
 bool KMiscTools::iPadMini()
 {
+#ifdef __ANDROID__
+    return false;
+#else
 	NSString *machName = nil;
 
 	if (uname(&systemInfo) < 0) {
@@ -326,19 +336,25 @@ bool KMiscTools::iPadMini()
 		return true;
 	}
 	return false;
+#endif
 }
 
 float KMiscTools::getScale()
 {
 	float scale = 1;
+#ifndef __ANDROID__
 	if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
 		scale = [[UIScreen mainScreen] scale];
 	}
+#endif
 	return scale;
 }
 
 int KMiscTools::screenDPI()
 {
+#ifdef __ANDROID__
+    return 0;
+#else
 	UIScreen * mainscr = [UIScreen mainScreen];
 	int w = mainscr.nativeBounds.size.width;
 	int h = mainscr.nativeBounds.size.height;
@@ -373,10 +389,14 @@ int KMiscTools::screenDPI()
 		dpi = 160 * scale;
 	}
 	return (int)dpi;
+#endif
 }
 
 void KMiscTools::getUserLanguage(char * lang)
 {
+#ifdef __ANDROID__
+    return;
+#else
 	NSString * currentLanguage = [[NSLocale preferredLanguages] objectAtIndex:0];
 	NSLog(@"lang = %@", currentLanguage);
 	getCString(currentLanguage, lang, 16);
@@ -396,10 +416,14 @@ void KMiscTools::getUserLanguage(char * lang)
 	NSLocale		*	locale			= [NSLocale currentLocale];
 	NSString		*	currentLanguage5 = [locale objectForKey:NSLocaleLanguageCode];
 	NSLog(@"lang = %@", currentLanguage5);*/
+#endif
 }
 
 bool KMiscTools::isInternetReachable()
 {
+#ifdef __ANDROID__
+    return true;
+#else
 	struct sockaddr_in zeroAddress;
 	bzero(&zeroAddress, sizeof(zeroAddress));
 	zeroAddress.sin_len = sizeof(zeroAddress);
@@ -451,10 +475,14 @@ bool KMiscTools::isInternetReachable()
 	}
 	
 	return isReachable;
+#endif
 }
 
 int KMiscTools::getUserID(char * path)
 {
+#ifdef __ANDROID__
+    return 0;
+#else
 	CFUUIDRef cfuuid = CFUUIDCreate(NULL);
 	NSString *uuid =  (__bridge_transfer NSString *)CFUUIDCreateString(NULL, cfuuid);
 	CFRelease(cfuuid);
@@ -473,6 +501,7 @@ int KMiscTools::getUserID(char * path)
 	}else{
 		uuid = [keychain objectForKey:(__bridge id)(kSecAttrAccount)];
 	}*/
+#endif
 }
 
 #define USER_KEY					@"com.jadegame.ptk.user"	// iCloud Container Key

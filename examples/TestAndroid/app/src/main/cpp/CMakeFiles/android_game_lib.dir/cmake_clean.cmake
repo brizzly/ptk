@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KInput.cpp.o.d"
   "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.o"
   "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KLogFile.cpp.o.d"
+  "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o"
+  "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMiscTools.cpp.o.d"
   "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o"
   "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KMusic.cpp.o.d"
   "CMakeFiles/android_game_lib.dir/Volumes/MacMiniSSD/GIT/ptk/iPTKSources/KPTK.cpp.o"

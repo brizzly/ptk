@@ -129,6 +129,7 @@ find_library(EGL-lib EGL)
 # Link libraries to the native library
 target_link_libraries(
         android_game_lib PRIVATE glm
+        c++_shared
         ${openal-lib}
         ${opensl_es}
         ${log-lib}

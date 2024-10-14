@@ -29,10 +29,10 @@ KSound::~KSound() {
     alcCloseDevice(device);
 }
 
-bool KSound::loadSample(const std::string &filename) {
+bool KSound::loadSample(const std::string &filename, AAssetManager *assetManager) {
     ALenum format;
     ALsizei freq;
-    std::vector<char> data = loadWAVFile(filename, format, freq);
+    std::vector<char> data = loadWAVFile(filename, format, freq, assetManager);
 
     if (data.empty()) {
         std::cerr << "Failed to load WAV file: " << filename << std::endl;
@@ -61,30 +61,34 @@ void KSound::setVolume(float volume) {
     alSourcef(source, AL_GAIN, volume);
 }
 
-std::vector<char> KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq) {
-    std::ifstream file(filename, std::ios::binary);
-    if (!file) {
-        std::cerr << "Unable to open file: " << filename << std::endl;
+std::vector<char> KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq, AAssetManager *assetManager) {
+    // Open the WAV file from assets
+    AAsset *asset = AAssetManager_open(assetManager, filename.c_str(), AASSET_MODE_UNKNOWN);
+    if (!asset) {
+        std::cerr << "Unable to open asset: " << filename << std::endl;
         return {};
     }
 
-    // Read WAV header
+    // Read the WAV header
     char riff[4];
-    file.read(riff, 4);
+    AAsset_read(asset, riff, 4);
     if (strncmp(riff, "RIFF", 4) != 0) {
         std::cerr << "Invalid WAV file: " << filename << std::endl;
+        AAsset_close(asset);
         return {};
     }
 
-    file.seekg(22, std::ios::beg);
+    // Skip over the "WAVE" identifier and go to the "fmt " chunk
+    AAsset_seek(asset, 20, SEEK_CUR);
     uint16_t channels;
-    file.read(reinterpret_cast<char *>(&channels), sizeof(channels));
+    AAsset_read(asset, &channels, sizeof(channels));
 
-    file.read(reinterpret_cast<char *>(&freq), sizeof(freq));
+    AAsset_read(asset, &freq, sizeof(freq));
 
-    file.seekg(34, std::ios::beg);
+    // Skip to bits per sample
+    AAsset_seek(asset, 6, SEEK_CUR);
     uint16_t bitsPerSample;
-    file.read(reinterpret_cast<char *>(&bitsPerSample), sizeof(bitsPerSample));
+    AAsset_read(asset, &bitsPerSample, sizeof(bitsPerSample));
 
     if (channels == 1) {
         format = (bitsPerSample == 8) ? AL_FORMAT_MONO8 : AL_FORMAT_MONO16;
@@ -92,8 +96,15 @@ std::vector<char> KSound::loadWAVFile(const std::string &filename, ALenum &forma
         format = (bitsPerSample == 8) ? AL_FORMAT_STEREO8 : AL_FORMAT_STEREO16;
     }
 
-    file.seekg(44, std::ios::beg); // Skip to data
-    std::vector<char> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    // Skip to the "data" chunk
+    AAsset_seek(asset, 4, SEEK_CUR);
+    uint32_t dataSize;
+    AAsset_read(asset, &dataSize, sizeof(dataSize));
 
+    // Read the actual audio data
+    std::vector<char> data(dataSize);
+    AAsset_read(asset, data.data(), dataSize);
+
+    AAsset_close(asset);
     return data;
 }

@@ -7,6 +7,10 @@ android {
     namespace 'com.jmapp.testandroid'
     compileSdk 34
 
+    packagingOptions {
+        pickFirst '**/libc++_shared.so'
+    }
+
     defaultConfig {
         applicationId "com.jmapp.testandroid"
         minSdk 21
@@ -25,10 +29,13 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags "-std=c++11"
+                cppFlags "-std=c++17"
+                arguments "-DANDROID_STL=c++_shared"
             }
         }
     }
+
+
 
     externalNativeBuild {
         cmake {

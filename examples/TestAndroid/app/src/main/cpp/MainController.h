@@ -5,7 +5,7 @@
 #include "KMiscTools.h"
 #include "KLogFile.h"
 #include "KPTK.h"
-//#include "KSound.h"
+#include "KSound.h"
 //#include "KMusic.h"
 #include <GLES2/gl2.h>
 #include <glm.hpp>
@@ -26,7 +26,7 @@ public:
     KGraphic * testGraphic;     // box 1
     KGraphic * testGraphic2;    // box 2
     KGraphic * testGraphic3;    // background
-    //KSound * sound1;
+    KSound * sound1;
     //KMusic * music1;
 
 public:

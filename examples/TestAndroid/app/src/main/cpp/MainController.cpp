@@ -64,11 +64,14 @@ void MainController::initialize(int w, int h)
     testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);
     testGraphic3->loadPicture("960_1440.png");
 
-    /*
-    sound1 = new KSound;
-    sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
-    sound1->setVolume(50);
 
+    sound1 = new KSound;
+    //sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
+    sound1->loadSample("boing2.caf");
+    sound1->setVolume(50);
+    sound1->play();
+
+/*
     music1 = new KMusic();
     music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
     */

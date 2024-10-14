@@ -8,6 +8,7 @@ import android.content.res.AssetManager;
 public class MainActivity extends Activity {
 
     static {
+        System.loadLibrary("openal");
         System.loadLibrary("android_game_lib");
     }
 

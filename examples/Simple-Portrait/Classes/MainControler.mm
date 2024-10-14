@@ -23,6 +23,7 @@ KGraphic * testGraphic;     // box 1
 KGraphic * testGraphic2;    // box 2
 KGraphic * testGraphic3;    // background
 KSound * sound1;
+KSound * sound2;
 KMusic * music1;
 
 
@@ -64,13 +65,21 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH);
     testGraphic3->loadPicture("960_1440.png");
     
+    // Ensure OpenALManager is initialized
+    OpenALManager& alManager = OpenALManager::getInstance();
+
     
     sound1 = new KSound;
     sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
-    sound1->setVolume(50);
+    sound1->setVolume(1.0);
     
-    music1 = new KMusic();
-    music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
+    sound2 = new KSound;
+    sound2->loadSample(KMiscTools::makeFilePath("jump1.caf"));
+    sound2->setVolume(1.0);
+    
+    //music1 = new KMusic();
+    //music1->load(KMiscTools::makeFilePath("menu.mp3"));
+    //music1->playMusic();
     
 }
 
@@ -201,7 +210,12 @@ bool onTouch(GLFMDisplay *display, int touch, GLFMTouchPhase phase, double x, do
             printf("Touch %d started at (%.2f, %.2f)\n", touch, x, y);
             KInput::setScreenPressed(0, x, y);
             KInput::setFingerPosition(touch, x, y, true);
-            sound1->playSample();
+            if(rand() % 100 < 50) {
+                sound1->playSample();
+            }
+            else {
+                sound2->playSample();
+            }
             break;
         case GLFMTouchPhaseMoved:
             printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);

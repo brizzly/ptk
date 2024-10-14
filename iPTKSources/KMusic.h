@@ -9,8 +9,10 @@
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 #else
+#include <AudioToolbox/AudioToolbox.h>
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
+#include <CoreFoundation/CoreFoundation.h>
 #endif
 
 
@@ -23,7 +25,7 @@ public:
     ~KMusic();
 
     bool load(const std::string &filename);
-    void playMusic(char *filename);
+    void playMusic(/*char *filename*/);
     void stop();
     void setLooping(bool loop);
 
@@ -32,8 +34,10 @@ private:
     ALuint source;
     ALCdevice *device;
     ALCcontext *context;
+    
+    bool isLooping;
 
-    char * loadMP3File(const std::string &filename, ALenum &format, ALsizei &freq);
+    ALuint loadMP3toBuffer(const char* filePath);
 };
 
 

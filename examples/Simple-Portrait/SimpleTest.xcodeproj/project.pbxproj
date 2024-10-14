@@ -82,6 +82,7 @@
 		FF8BC20C2CBD011600DE5C31 /* KSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC20B2CBD011600DE5C31 /* KSound.cpp */; };
 		FF8BC20D2CBD05FE00DE5C31 /* KSound.h in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F62CBB2AE000DE5C31 /* KSound.h */; };
 		FF8BC20F2CBD343800DE5C31 /* KMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC20E2CBD343800DE5C31 /* KMusic.cpp */; };
+		FF8BC2122CBD44FD00DE5C31 /* OpenALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
 		FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48791130A7D900105C50 /* OpenGLES.framework */; };
 		FFF1BFF02CAB59D30093CA43 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF1BFEF2CAB59D30093CA43 /* box.png */; };
@@ -178,6 +179,8 @@
 		FF8BC1FD2CBB2AE000DE5C31 /* KWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KWindow.cpp; sourceTree = "<group>"; };
 		FF8BC20B2CBD011600DE5C31 /* KSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSound.cpp; sourceTree = "<group>"; };
 		FF8BC20E2CBD343800DE5C31 /* KMusic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KMusic.cpp; sourceTree = "<group>"; };
+		FF8BC2102CBD44FD00DE5C31 /* OpenALManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenALManager.h; sourceTree = "<group>"; };
+		FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALManager.cpp; sourceTree = "<group>"; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFF185EB2CA57EFC008120DB /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
 		FFF1BFEB2CAB43840093CA43 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -405,6 +408,8 @@
 				FF8BC1FB2CBB2AE000DE5C31 /* KWeb.mm */,
 				FF8BC1FC2CBB2AE000DE5C31 /* KWindow.h */,
 				FF8BC1FD2CBB2AE000DE5C31 /* KWindow.cpp */,
+				FF8BC2102CBD44FD00DE5C31 /* OpenALManager.h */,
+				FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */,
 			);
 			name = iPTKSources;
 			path = /Volumes/MacMiniSSD/GIT/ptk/iPTKSources;
@@ -519,6 +524,7 @@
 				FF8BC2022CBB2AE000DE5C31 /* KMiscTools.mm in Sources */,
 				FF8BC2032CBB2AE000DE5C31 /* KPTK.cpp in Sources */,
 				FF8BC2042CBB2AE000DE5C31 /* KShader.cpp in Sources */,
+				FF8BC2122CBD44FD00DE5C31 /* OpenALManager.cpp in Sources */,
 				FF8BC2052CBB2AE000DE5C31 /* KWindow.cpp in Sources */,
 				FF8BC2062CBB2AE000DE5C31 /* KSpline.cpp in Sources */,
 				FF8BC2072CBB2AE000DE5C31 /* GLTextureHelper.mm in Sources */,

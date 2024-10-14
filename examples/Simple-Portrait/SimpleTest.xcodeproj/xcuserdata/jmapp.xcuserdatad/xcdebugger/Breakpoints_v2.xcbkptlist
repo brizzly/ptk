@@ -7,96 +7,96 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D74B4587-0F37-4521-97B0-D7858704C8C9"
+            uuid = "500813D2-EE76-48C0-B130-989A3A7E3F70"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../iPTKSources/KSound.cpp"
+            filePath = "../../iPTKSources/KMusic.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
-            landmarkName = "KSound::loadCAFFile(filename, format, freq, dataSize)"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "KMusic::KMusic()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8E62F225-ECA2-4380-A1CA-B4A380171855"
+            uuid = "28E5AD82-0290-45B7-922A-5657B19DED3F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../iPTKSources/KSound.cpp"
+            filePath = "../../iPTKSources/KMusic.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "462"
-            endingLineNumber = "462"
-            landmarkName = "KSound::loadCAFFile(filename, format, freq, dataSize)"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "KMusic::load(filename)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B3E00B5B-41A0-46AA-9587-0124D5222336"
+            uuid = "44B7995D-92D1-4355-9E31-1ABD1F53B23D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../iPTKSources/KSound.cpp"
+            filePath = "../../iPTKSources/OpenALManager.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
-            landmarkName = "KSound::loadCAFFile(filename, format, freq, dataSize)"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "OpenALManager::OpenALManager()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5B878B15-C241-431B-B648-EA0C736241C0"
+            uuid = "9B037063-0A62-4DA2-BE4F-63DAC6C59BDF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../iPTKSources/KSound.cpp"
+            filePath = "../../iPTKSources/OpenALManager.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "481"
-            endingLineNumber = "481"
-            landmarkName = "KSound::loadCAFFile(filename, format, freq, dataSize)"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "OpenALManager::OpenALManager()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "54AAF3BE-9806-42EC-A81D-B9869D3EC256"
+            uuid = "193282CB-B110-49DC-9197-6738825459C5"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../iPTKSources/KSound.cpp"
+            filePath = "../../iPTKSources/OpenALManager.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "KSound::loadCAFFile(filename, format, freq, dataSize)"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "OpenALManager::~OpenALManager()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9FFED23C-96D0-4FEF-9AA4-B0BD096EDA41"
+            uuid = "D560A71C-4597-4B35-8C7C-2FF11AC9D9A1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../iPTKSources/KSound.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
-            landmarkName = "KSound::loadCAFFile(filename, format, freq, dataSize)"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "KSound::KSound()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

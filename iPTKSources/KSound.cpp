@@ -1,142 +1,114 @@
 #include "KSound.h"
-#include <iostream>
-#include <fstream>
+
+
 
 KSound::KSound() {
-    // Initialize OpenAL
-    device = alcOpenDevice(nullptr);
-    if (!device) {
-        std::cerr << "Failed to open OpenAL device" << std::endl;
-        return;
-    }
+    
+    isLooping = false;
+    
+    // Obtain the shared OpenALManager instance
+    OpenALManager& alManager = OpenALManager::getInstance();
 
-    context = alcCreateContext(device, nullptr);
-    if (!alcMakeContextCurrent(context)) {
-        std::cerr << "Failed to make OpenAL context current" << std::endl;
-        return;
-    }
-
-    alGenBuffers(1, &buffer);
     alGenSources(1, &source);
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error generating OpenAL source: " << getOpenALErrorString(error) << std::endl;
+    }
 }
 
 KSound::~KSound() {
-    // Clean up OpenAL resources
-    alDeleteSources(1, &source);
-    alDeleteBuffers(1, &buffer);
-    alcMakeContextCurrent(nullptr);
-    alcDestroyContext(context);
-    alcCloseDevice(device);
+    
+    // Stop playback
+    stop();
+
+    // Delete OpenAL source and buffer
+    if (source)
+    {
+        alDeleteSources(1, &source);
+        source = 0;
+    }
+    if (buffer)
+    {
+        alDeleteBuffers(1, &buffer);
+        buffer = 0;
+    }
+}
+
+const char* KSound::getOpenALErrorString(ALenum error)
+{
+    switch (error)
+    {
+        case AL_NO_ERROR: return "AL_NO_ERROR";
+        case AL_INVALID_NAME: return "AL_INVALID_NAME";
+        case AL_INVALID_ENUM: return "AL_INVALID_ENUM";
+        case AL_INVALID_VALUE: return "AL_INVALID_VALUE";
+        case AL_INVALID_OPERATION: return "AL_INVALID_OPERATION";
+        case AL_OUT_OF_MEMORY: return "AL_OUT_OF_MEMORY";
+        default: return "Unknown OpenAL Error";
+    }
 }
 
 #ifdef __ANDROID__
 
-bool KSound::loadSample(const std::string &filename, AAssetManager *assetManager) {
+bool KSound::loadSample(const std::string &filename, AAssetManager *assetManager)
+{
+    this->assetManager_ = assetManager;
+    return this->loadSampleEx(filename);
+}
+
+#else
+
+bool KSound::loadSample(const std::string &filename)
+{
+    return this->loadSampleEx(filename);
+}
+
+#endif
+
+bool KSound::loadSampleEx(const std::string &filename)
+{
     ALenum format;
     ALsizei freq;
-    std::vector<char> data = loadWAVFile(filename, format, freq, assetManager);
 
-    if (data.empty()) {
-        std::cerr << "Failed to load WAV file: " << filename << std::endl;
+    // Open the file as a binary stream
+    std::ifstream file(filename, std::ios::binary);
+    if (!file.is_open()) {
+        //std::cerr << "Unable to open file: " << filename << std::endl;
         return false;
     }
 
-    alBufferData(buffer, format, data.data(), static_cast<ALsizei>(data.size()), freq);
+    // Read the "RIFF" chunk descriptor
+    char riff[4];
+    file.read(riff, 4);
+    printf("%s\n", riff);
+    if (!strncasecmp(riff, "RIFF", 4)) {
+
+        buffer = this->loadWAVFile(filename, format, freq);
+    }
+#ifndef __ANDROID__
+    else if (!strncasecmp(riff, "CAFF", 4)) {
+
+        buffer = this->loadCAFFile(filename, format, freq);
+    }
+#endif
+    else {
+        return false;
+    }
+
+    
+    
     alSourcei(source, AL_BUFFER, buffer);
 
-    int errcode = alGetError();
-    printf("err: %d\n", errcode);
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error: " << getOpenALErrorString(error) << std::endl;
+    }
 
     return true;
 }
 
-std::vector<char> KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq, AAssetManager *assetManager) {
-    // Open the WAV file from assets
-    AAsset *asset = AAssetManager_open(assetManager, filename.c_str(), AASSET_MODE_UNKNOWN);
-    if (!asset) {
-        std::cerr << "Unable to open asset: " << filename << std::endl;
-        return {};
-    }
-
-    // Read the "RIFF" chunk descriptor (First 4 bytes should be "RIFF")
-    char riff[4];
-    AAsset_read(asset, riff, 4);
-    if (strncmp(riff, "RIFF", 4) != 0) {
-        std::cerr << "Invalid WAV file: " << filename << std::endl;
-        AAsset_close(asset);
-        return {};
-    }
-
-    // Skip over the next 4 bytes (chunk size) and read "WAVE" identifier
-    AAsset_seek(asset, 4, SEEK_CUR);
-    char wave[4];
-    AAsset_read(asset, wave, 4);
-    if (strncmp(wave, "WAVE", 4) != 0) {
-        std::cerr << "Invalid WAV file: " << filename << std::endl;
-        AAsset_close(asset);
-        return {};
-    }
-
-    // Read "fmt " subchunk (first 4 bytes should be "fmt ")
-    char fmt[4];
-    AAsset_read(asset, fmt, 4);
-    if (strncmp(fmt, "fmt ", 4) != 0) {
-        std::cerr << "Invalid WAV file: " << filename << std::endl;
-        AAsset_close(asset);
-        return {};
-    }
-
-    // Skip the next 4 bytes (subchunk size) and read the audio format (should be 1 for PCM)
-    AAsset_seek(asset, 4, SEEK_CUR);
-    uint16_t audioFormat;
-    AAsset_read(asset, &audioFormat, sizeof(audioFormat));
-    if (audioFormat != 1) { // Only PCM is supported
-        std::cerr << "Unsupported WAV format: " << filename << std::endl;
-        AAsset_close(asset);
-        return {};
-    }
-
-    // Read the number of channels (Offset 22 in file)
-    uint16_t channels;
-    AAsset_read(asset, &channels, sizeof(channels));
-
-    // Read the sample rate (Offset 24)
-    uint32_t sampleRate;
-    AAsset_read(asset, &sampleRate, sizeof(sampleRate));
-    freq = sampleRate;
-
-    // Skip next 6 bytes (byte rate and block align)
-    AAsset_seek(asset, 6, SEEK_CUR);
-
-    // Read bits per sample (Offset 34)
-    uint16_t bitsPerSample;
-    AAsset_read(asset, &bitsPerSample, sizeof(bitsPerSample));
-
-    // Determine the OpenAL format based on channels and bits per sample
-    if (channels == 1 && bitsPerSample == 16) {
-        format = AL_FORMAT_MONO16;
-    } else if (channels == 2 && bitsPerSample == 16) {
-        format = AL_FORMAT_STEREO16;
-    } else {
-        std::cerr << "Unsupported WAV format: channels=" << channels << ", bitsPerSample=" << bitsPerSample << std::endl;
-        AAsset_close(asset);
-        return {};
-    }
-
-    // Skip to the "data" chunk
-    char dataHeader[4];
-    while (AAsset_read(asset, dataHeader, 4) == 4) {
-        if (strncmp(dataHeader, "data", 4) == 0) {
-            break;
-        }
-        // Skip the size of the chunk if it's not "data"
-        uint32_t chunkSize;
-        AAsset_read(asset, &chunkSize, sizeof(chunkSize));
-        AAsset_seek(asset, chunkSize, SEEK_CUR);
-    }
-
-    // Read the size of the data chunk
-    uint32_t dataSize;
+/*
+int32_t dataSize;
     AAsset_read(asset, &dataSize, sizeof(dataSize));
 
     // Read the actual audio data into a buffer
@@ -148,16 +120,16 @@ std::vector<char> KSound::loadWAVFile(const std::string &filename, ALenum &forma
 
     return buffer;
 }
+*/
 
-#else
-
+/*
 bool KSound::loadSample(const char *filename)
 {
     ALenum format;
     ALsizei freq;
     size_t dataSize;  // Declare a variable to hold the size of the audio data
-    char * data = NULL;
-   
+    int errcode = 0;
+    
     // Open the file as a binary stream
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) {
@@ -171,152 +143,224 @@ bool KSound::loadSample(const char *filename)
     printf("%s\n", riff);
     if (!strncasecmp(riff, "RIFF", 4)) {
         
-        data = this->loadWAVFile(filename, format, freq, dataSize);
+        buffer = this->loadWAVFile(filename, format, freq, dataSize);
     }
     else if (!strncasecmp(riff, "CAFF", 4)) {
         
-        data = this->loadCAFFile(filename, format, freq, dataSize);
+        buffer = this->loadCAFFile(filename, format, freq, dataSize);
     }
     else {
         return false;
     }
     
-    
-    // Check if the data is null (loading failed)
-    if (data == NULL) {
-        //std::cerr << "Failed to load WAV file: " << filename << std::endl;
-        return false;
-    }
 
-    // Use alBufferData to load the audio data into OpenAL buffer
-    alBufferData(buffer, format, data, static_cast<ALsizei>(dataSize), freq);
+
     alSourcei(source, AL_BUFFER, buffer);
+    errcode = alGetError();
+    if (errcode != AL_NO_ERROR) {
+        std::cerr << "Error : " << errcode << std::endl;
+    }
 
     // Check for any errors
-    int errcode = alGetError();
+    errcode = alGetError();
     if (errcode != AL_NO_ERROR) {
         //std::cerr << "OpenAL error while loading sound data: " << errcode << std::endl;
-        delete[] data;  // Don't forget to clean up the allocated memory
         return false;
     }
-
-    // Clean up the audio data buffer after loading into OpenAL
-    delete[] data;
 
     return true;
 }
+*/
 
-char * KSound::loadWAVFile(const char *filename, ALenum &format, ALsizei &freq, size_t &dataSize)
+#ifdef __ANDROID__
+
+ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq/*, AAssetManager *assetManager*/)
 {
-    // Open the file as a binary stream
-    std::ifstream file(filename, std::ios::binary);
-    if (!file.is_open()) {
-        //std::cerr << "Unable to open file: " << filename << std::endl;
-        return NULL;
+    AAssetManager * assetManager = this->assetManager_;
+    // Open the WAV file from assets
+    AAsset *asset = AAssetManager_open(assetManager, filename.c_str(), AASSET_MODE_STREAMING);
+    if (!asset) {
+        std::cerr << "Unable to open asset: " << filename << std::endl;
+        return 0; // 0 is not a valid OpenAL buffer ID
     }
 
-    // Read the "RIFF" chunk descriptor
+    // Read the "RIFF" chunk descriptor (First 4 bytes should be "RIFF")
     char riff[4];
-    file.read(riff, 4);
-    if (strncmp(riff, "RIFF", 4) != 0) {
-        //std::cerr << "Invalid WAV file: " << filename << std::endl;
-        file.close();
-        return NULL;
+    ssize_t bytesRead = AAsset_read(asset, riff, 4);
+    if (bytesRead != 4 || strncmp(riff, "RIFF", 4) != 0) {
+        std::cerr << "Invalid WAV file (Missing 'RIFF'): " << filename << std::endl;
+        AAsset_close(asset);
+        return 0;
     }
 
-    // Skip the next 4 bytes (chunk size) and read the "WAVE" identifier
-    file.seekg(4, std::ios::cur);
+    // Read the chunk size (4 bytes) and "WAVE" identifier (4 bytes)
     char wave[4];
-    file.read(wave, 4);
-    if (strncmp(wave, "WAVE", 4) != 0) {
-        //std::cerr << "Invalid WAV file: " << filename << std::endl;
-        file.close();
-        return NULL;
+    bytesRead = AAsset_read(asset, wave, 4);
+    if (bytesRead != 4 || strncmp(wave, "WAVE", 4) != 0) {
+        std::cerr << "Invalid WAV file (Missing 'WAVE'): " << filename << std::endl;
+        AAsset_close(asset);
+        return 0;
     }
 
-    // Read the "fmt " subchunk (first 4 bytes should be "fmt ")
+    // Read the "fmt " subchunk (4 bytes)
     char fmt[4];
-    file.read(fmt, 4);
-    if (strncmp(fmt, "fmt ", 4) != 0) {
-        //std::cerr << "Invalid WAV file: " << filename << std::endl;
-        file.close();
-        return NULL;
+    bytesRead = AAsset_read(asset, fmt, 4);
+    if (bytesRead != 4 || strncmp(fmt, "fmt ", 4) != 0) {
+        std::cerr << "Invalid WAV file (Missing 'fmt '): " << filename << std::endl;
+        AAsset_close(asset);
+        return 0;
     }
 
-    // Skip the next 4 bytes (subchunk size) and read the audio format (should be 1 for PCM)
-    file.seekg(4, std::ios::cur);
-    uint16_t audioFormat;
-    file.read(reinterpret_cast<char *>(&audioFormat), sizeof(audioFormat));
+    // Read the subchunk size (4 bytes)
+    uint32_t subChunk1Size = 0;
+    bytesRead = AAsset_read(asset, &subChunk1Size, sizeof(subChunk1Size));
+    if (bytesRead != sizeof(subChunk1Size)) {
+        std::cerr << "Failed to read 'fmt ' subchunk size." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
+
+    // Read the audio format (2 bytes)
+    uint16_t audioFormat = 0;
+    bytesRead = AAsset_read(asset, &audioFormat, sizeof(audioFormat));
+    if (bytesRead != sizeof(audioFormat)) {
+        std::cerr << "Failed to read audio format." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
     if (audioFormat != 1) { // Only PCM is supported
-        //std::cerr << "Unsupported WAV format: " << filename << std::endl;
-        file.close();
-        return NULL;
+        std::cerr << "Unsupported WAV format (Only PCM is supported): " << filename << std::endl;
+        AAsset_close(asset);
+        return 0;
     }
 
-    // Read the number of channels
-    uint16_t channels;
-    file.read(reinterpret_cast<char *>(&channels), sizeof(channels));
+    // Read the number of channels (2 bytes)
+    uint16_t channels = 0;
+    bytesRead = AAsset_read(asset, &channels, sizeof(channels));
+    if (bytesRead != sizeof(channels)) {
+        std::cerr << "Failed to read number of channels." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
 
-    // Read the sample rate
-    uint32_t sampleRate;
-    file.read(reinterpret_cast<char *>(&sampleRate), sizeof(sampleRate));
+    // Read the sample rate (4 bytes)
+    uint32_t sampleRate = 0;
+    bytesRead = AAsset_read(asset, &sampleRate, sizeof(sampleRate));
+    if (bytesRead != sizeof(sampleRate)) {
+        std::cerr << "Failed to read sample rate." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
     freq = static_cast<ALsizei>(sampleRate);
 
-    // Skip the next 6 bytes (byte rate and block align)
-    file.seekg(6, std::ios::cur);
+    // Read the byte rate (4 bytes) and block align (2 bytes) - skipping as they are not needed here
+    AAsset_seek(asset, 6, SEEK_CUR);
 
-    // Read bits per sample
-    uint16_t bitsPerSample;
-    file.read(reinterpret_cast<char *>(&bitsPerSample), sizeof(bitsPerSample));
+    // Read bits per sample (2 bytes)
+    uint16_t bitsPerSample = 0;
+    bytesRead = AAsset_read(asset, &bitsPerSample, sizeof(bitsPerSample));
+    if (bytesRead != sizeof(bitsPerSample)) {
+        std::cerr << "Failed to read bits per sample." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
 
     // Determine the OpenAL format based on channels and bits per sample
-    if (channels == 1 && bitsPerSample == 16) {
+    if (channels == 1 && bitsPerSample == 8) {
+        format = AL_FORMAT_MONO8;
+    } else if (channels == 1 && bitsPerSample == 16) {
         format = AL_FORMAT_MONO16;
+    } else if (channels == 2 && bitsPerSample == 8) {
+        format = AL_FORMAT_STEREO8;
     } else if (channels == 2 && bitsPerSample == 16) {
         format = AL_FORMAT_STEREO16;
     } else {
-        //std::cerr << "Unsupported WAV format: channels=" << channels << ", bitsPerSample=" << bitsPerSample << std::endl;
-        file.close();
-        return NULL;
+        std::cerr << "Unsupported WAV format: channels=" << channels
+                  << ", bitsPerSample=" << bitsPerSample << std::endl;
+        AAsset_close(asset);
+        return 0;
     }
 
-    // Find the "data" subchunk (skip other chunks if necessary)
+    // Find the "data" subchunk
     char dataHeader[4];
-    while (file.read(dataHeader, 4)) {
+    bool dataChunkFound = false;
+    uint32_t dataSize = 0;
+
+    while (AAsset_read(asset, dataHeader, 4) == 4) {
         if (strncmp(dataHeader, "data", 4) == 0) {
-            // Read the size of the data chunk
-            file.read(reinterpret_cast<char *>(&dataSize), sizeof(dataSize));
+            // Read the size of the data chunk (4 bytes)
+            bytesRead = AAsset_read(asset, &dataSize, sizeof(dataSize));
+            if (bytesRead != sizeof(dataSize)) {
+                std::cerr << "Failed to read 'data' subchunk size." << std::endl;
+                AAsset_close(asset);
+                return 0;
+            }
+            dataChunkFound = true;
             break;
         } else {
-            // Skip the chunk size
-            uint32_t chunkSize;
-            file.read(reinterpret_cast<char *>(&chunkSize), sizeof(chunkSize));
-            file.seekg(chunkSize, std::ios::cur);
+            // Read the size of the current chunk to skip it
+            uint32_t chunkSize = 0;
+            bytesRead = AAsset_read(asset, &chunkSize, sizeof(chunkSize));
+            if (bytesRead != sizeof(chunkSize)) {
+                std::cerr << "Failed to read chunk size." << std::endl;
+                AAsset_close(asset);
+                return 0;
+            }
+            // Skip the current chunk's data
+            AAsset_seek(asset, chunkSize, SEEK_CUR);
         }
     }
 
-    if (strncmp(dataHeader, "data", 4) != 0) {
-        //std::cerr << "No data chunk found in WAV file: " << filename << std::endl;
-        file.close();
-        return NULL;
-    }
-
-    // Allocate memory for the audio data
-    char* buffer = new char[dataSize];
-    if (!buffer) {
-        //std::cerr << "Memory allocation failed for WAV file data: " << filename << std::endl;
-        file.close();
-        return NULL;
+    if (!dataChunkFound) {
+        std::cerr << "No 'data' chunk found in WAV file: " << filename << std::endl;
+        AAsset_close(asset);
+        return 0;
     }
 
     // Read the actual audio data into a buffer
-    file.read(buffer, dataSize);
+    std::vector<char> audioData(dataSize);
+    ssize_t totalRead = 0;
+    while (totalRead < dataSize) {
+        ssize_t bytes = AAsset_read(asset, audioData.data() + totalRead, dataSize - totalRead);
+        if (bytes <= 0) {
+            std::cerr << "Failed to read audio data from WAV file: " << filename << std::endl;
+            AAsset_close(asset);
+            return 0;
+        }
+        totalRead += bytes;
+    }
 
-    // Close the file
-    file.close();
+    // Close the asset file
+    AAsset_close(asset);
 
-    return buffer;  // Return the allocated buffer
+    // Generate OpenAL buffer
+    ALuint bufferID = 0;
+    alGenBuffers(1, &bufferID);
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error generating OpenAL buffer: " << getOpenALErrorString(error) << std::endl;
+        return 0;
+    }
+
+    if (bufferID == 0) {
+        std::cerr << "alGenBuffers failed to generate a valid buffer." << std::endl;
+        return 0;
+    }
+
+    // Buffer the audio data into OpenAL
+    alBufferData(bufferID, format, audioData.data(), static_cast<ALsizei>(dataSize), freq);
+    error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error buffering data into OpenAL buffer: " << getOpenALErrorString(error) << std::endl;
+        alDeleteBuffers(1, &bufferID);
+        return 0;
+    }
+
+    // Return the generated OpenAL buffer ID
+    return bufferID;
 }
+
+#else
 
 uint32_t KSound::be32toh(uint32_t big_endian_32bits) {
     return ((big_endian_32bits << 24) & 0xFF000000) |
@@ -330,22 +374,203 @@ uint64_t KSound::be64toh(uint64_t big_endian_64bits) {
             be32toh((big_endian_64bits >> 32) & 0xFFFFFFFF);
 }
 
-char* KSound::loadCAFFile(const char* filename, ALenum& format, ALsizei& freq, size_t& dataSize)
+ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq)
+{
+    // Open the WAV file as a binary stream
+    std::ifstream file(filename, std::ios::binary);
+    if (!file.is_open()) {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+        return 0; // 0 is not a valid OpenAL buffer ID
+    }
+
+    // Read the "RIFF" chunk descriptor (First 4 bytes should be "RIFF")
+    char riff[4];
+    file.read(riff, 4);
+    if (file.gcount() != 4 || strncmp(riff, "RIFF", 4) != 0) {
+        std::cerr << "Invalid WAV file (Missing 'RIFF'): " << filename << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Read the chunk size (4 bytes) and "WAVE" identifier (4 bytes)
+    char wave[4];
+    file.read(wave, 4);
+    if (file.gcount() != 4 || strncmp(wave, "WAVE", 4) != 0) {
+        std::cerr << "Invalid WAV file (Missing 'WAVE'): " << filename << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Read the "fmt " subchunk (4 bytes)
+    char fmt[4];
+    file.read(fmt, 4);
+    if (file.gcount() != 4 || strncmp(fmt, "fmt ", 4) != 0) {
+        std::cerr << "Invalid WAV file (Missing 'fmt '): " << filename << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Read the subchunk size (4 bytes)
+    uint32_t subChunk1Size = 0;
+    file.read(reinterpret_cast<char*>(&subChunk1Size), sizeof(subChunk1Size));
+    if (file.gcount() != sizeof(subChunk1Size)) {
+        std::cerr << "Failed to read 'fmt ' subchunk size." << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Read the audio format (2 bytes)
+    uint16_t audioFormat = 0;
+    file.read(reinterpret_cast<char*>(&audioFormat), sizeof(audioFormat));
+    if (file.gcount() != sizeof(audioFormat)) {
+        std::cerr << "Failed to read audio format." << std::endl;
+        file.close();
+        return 0;
+    }
+    if (audioFormat != 1) { // Only PCM is supported
+        std::cerr << "Unsupported WAV format (Only PCM is supported): " << filename << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Read the number of channels (2 bytes)
+    uint16_t channels = 0;
+    file.read(reinterpret_cast<char*>(&channels), sizeof(channels));
+    if (file.gcount() != sizeof(channels)) {
+        std::cerr << "Failed to read number of channels." << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Read the sample rate (4 bytes)
+    uint32_t sampleRate = 0;
+    file.read(reinterpret_cast<char*>(&sampleRate), sizeof(sampleRate));
+    if (file.gcount() != sizeof(sampleRate)) {
+        std::cerr << "Failed to read sample rate." << std::endl;
+        file.close();
+        return 0;
+    }
+    freq = static_cast<ALsizei>(sampleRate);
+
+    // Read the byte rate (4 bytes) and block align (2 bytes) - skipping as they are not needed here
+    file.seekg(6, std::ios::cur);
+
+    // Read bits per sample (2 bytes)
+    uint16_t bitsPerSample = 0;
+    file.read(reinterpret_cast<char*>(&bitsPerSample), sizeof(bitsPerSample));
+    if (file.gcount() != sizeof(bitsPerSample)) {
+        std::cerr << "Failed to read bits per sample." << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Determine the OpenAL format based on channels and bits per sample
+    if (channels == 1 && bitsPerSample == 8) {
+        format = AL_FORMAT_MONO8;
+    } else if (channels == 1 && bitsPerSample == 16) {
+        format = AL_FORMAT_MONO16;
+    } else if (channels == 2 && bitsPerSample == 8) {
+        format = AL_FORMAT_STEREO8;
+    } else if (channels == 2 && bitsPerSample == 16) {
+        format = AL_FORMAT_STEREO16;
+    } else {
+        std::cerr << "Unsupported WAV format: channels=" << channels
+                  << ", bitsPerSample=" << bitsPerSample << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Find the "data" subchunk
+    char dataHeader[4];
+    bool dataChunkFound = false;
+    uint32_t dataSize = 0;
+
+    while (file.read(dataHeader, 4)) {
+        if (strncmp(dataHeader, "data", 4) == 0) {
+            // Read the size of the data chunk (4 bytes)
+            file.read(reinterpret_cast<char*>(&dataSize), sizeof(dataSize));
+            if (file.gcount() != sizeof(dataSize)) {
+                std::cerr << "Failed to read 'data' subchunk size." << std::endl;
+                file.close();
+                return 0;
+            }
+            dataChunkFound = true;
+            break;
+        } else {
+            // Read the size of the current chunk to skip it
+            uint32_t chunkSize = 0;
+            file.read(reinterpret_cast<char*>(&chunkSize), sizeof(chunkSize));
+            if (file.gcount() != sizeof(chunkSize)) {
+                std::cerr << "Failed to read chunk size." << std::endl;
+                file.close();
+                return 0;
+            }
+            // Skip the current chunk's data
+            file.seekg(chunkSize, std::ios::cur);
+        }
+    }
+
+    if (!dataChunkFound) {
+        std::cerr << "No 'data' chunk found in WAV file: " << filename << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Read the actual audio data into a buffer
+    std::vector<char> audioData(dataSize);
+    file.read(audioData.data(), dataSize);
+    if (file.gcount() != static_cast<std::streamsize>(dataSize)) {
+        std::cerr << "Failed to read audio data from WAV file: " << filename << std::endl;
+        file.close();
+        return 0;
+    }
+
+    // Close the file
+    file.close();
+
+    // Generate OpenAL buffer
+    ALuint bufferID = 0;
+    alGenBuffers(1, &bufferID);
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error generating OpenAL buffer: " << getOpenALErrorString(error) << std::endl;
+        return 0;
+    }
+
+    if (bufferID == 0) {
+        std::cerr << "alGenBuffers failed to generate a valid buffer." << std::endl;
+        return 0;
+    }
+
+    // Buffer the audio data into OpenAL
+    alBufferData(bufferID, format, audioData.data(), static_cast<ALsizei>(dataSize), freq);
+    error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error buffering data into OpenAL buffer: " << getOpenALErrorString(error) << std::endl;
+        alDeleteBuffers(1, &bufferID);
+        return 0;
+    }
+
+    // Return the generated OpenAL buffer ID
+    return bufferID;
+}
+
+ALuint KSound::loadCAFFile(const std::string &filename, ALenum& format, ALsizei& freq)
 {
     // Open the file as a binary stream
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "Unable to open CAF file: " << filename << std::endl;
-        return NULL;
+        return 0; // Use 0 to indicate failure for ALuint
     }
 
     // Read the CAF file header
     char fileType[4];
     file.read(fileType, 4);
     if (strncmp(fileType, "caff", 4) != 0) {
-        std::cerr << "Invalid CAF file: " << filename << std::endl;
+        std::cerr << "Invalid CAF file (Missing 'caff'): " << filename << std::endl;
         file.close();
-        return NULL;
+        return 0;
     }
 
     // Read the file header version and flags
@@ -354,7 +579,7 @@ char* KSound::loadCAFFile(const char* filename, ALenum& format, ALsizei& freq, s
     file.read(reinterpret_cast<char*>(&version), sizeof(version));
     file.read(reinterpret_cast<char*>(&flags), sizeof(flags));
 
-    // Swap bytes if necessary (CAF files are big-endian)
+    // Convert from big-endian to host byte order (16-bit)
     version = ntohs(version);
     flags = ntohs(flags);
 
@@ -380,7 +605,7 @@ char* KSound::loadCAFFile(const char* filename, ALenum& format, ALsizei& freq, s
 
         uint64_t chunkSize = 0;
         file.read(reinterpret_cast<char*>(&chunkSize), sizeof(chunkSize));
-        chunkSize = be64toh(chunkSize); // Convert from big-endian to host
+        chunkSize = be64toh(chunkSize); // Convert from big-endian to host byte order
 
         // Remember the current file position
         std::streampos chunkDataStart = file.tellg();
@@ -395,33 +620,33 @@ char* KSound::loadCAFFile(const char* filename, ALenum& format, ALsizei& freq, s
 
             // mFormatID (UInt32)
             file.read(reinterpret_cast<char*>(&formatID), sizeof(formatID));
-            formatID = ntohl(formatID);
+            formatID = be32toh(formatID);
 
             // mFormatFlags (UInt32)
             file.read(reinterpret_cast<char*>(&formatFlags), sizeof(formatFlags));
-            formatFlags = ntohl(formatFlags);
+            formatFlags = be32toh(formatFlags);
 
             // mBytesPerPacket (UInt32)
             file.read(reinterpret_cast<char*>(&bytesPerPacket), sizeof(bytesPerPacket));
-            bytesPerPacket = ntohl(bytesPerPacket);
+            bytesPerPacket = be32toh(bytesPerPacket);
 
             // mFramesPerPacket (UInt32)
             file.read(reinterpret_cast<char*>(&framesPerPacket), sizeof(framesPerPacket));
-            framesPerPacket = ntohl(framesPerPacket);
+            framesPerPacket = be32toh(framesPerPacket);
 
             // mChannelsPerFrame (UInt32)
             file.read(reinterpret_cast<char*>(&channelsPerFrame), sizeof(channelsPerFrame));
-            channelsPerFrame = ntohl(channelsPerFrame);
+            channelsPerFrame = be32toh(channelsPerFrame);
 
             // mBitsPerChannel (UInt32)
             file.read(reinterpret_cast<char*>(&bitsPerChannel), sizeof(bitsPerChannel));
-            bitsPerChannel = ntohl(bitsPerChannel);
+            bitsPerChannel = be32toh(bitsPerChannel);
         }
         else if (strncmp(chunkType, "data", 4) == 0) {
             // Read the Audio Data Chunk
             uint32_t editCount = 0;
             file.read(reinterpret_cast<char*>(&editCount), sizeof(editCount));
-            editCount = ntohl(editCount);
+            editCount = be32toh(editCount);
 
             audioDataOffset = file.tellg();
             audioDataSize = chunkSize - sizeof(editCount);
@@ -442,7 +667,7 @@ char* KSound::loadCAFFile(const char* filename, ALenum& format, ALsizei& freq, s
     if (sampleRate == 0 || audioDataSize == 0) {
         std::cerr << "Required chunks not found in CAF file: " << filename << std::endl;
         file.close();
-        return NULL;
+        return 0;
     }
 
     // Set the frequency
@@ -459,32 +684,63 @@ char* KSound::loadCAFFile(const char* filename, ALenum& format, ALsizei& freq, s
         std::cerr << "Unsupported CAF format: channels=" << channelsPerFrame
                   << ", bitsPerChannel=" << bitsPerChannel << std::endl;
         file.close();
-        return NULL;
+        return 0;
     }
 
     // Allocate memory for the audio data
-    dataSize = static_cast<size_t>(audioDataSize);
-    char* buffer = new char[dataSize];
-    if (!buffer) {
+
+    uint32_t dataSize = static_cast<size_t>(audioDataSize);
+    //dataSize = static_cast<size_t>(audioDataSize);
+    char* data = new(std::nothrow) char[dataSize];
+    if (!data) {
         std::cerr << "Memory allocation failed for CAF file data: " << filename << std::endl;
         file.close();
-        return NULL;
+        return 0;
     }
 
     // Read the audio data
     file.seekg(audioDataOffset, std::ios::beg);
-    file.read(buffer, dataSize);
+    file.read(data, dataSize);
     if (file.gcount() != static_cast<std::streamsize>(dataSize)) {
         std::cerr << "Failed to read audio data from CAF file: " << filename << std::endl;
-        delete[] buffer;
+        delete[] data;
         file.close();
-        return NULL;
+        return 0;
     }
 
     // Close the file
     file.close();
 
-    return buffer;  // Return the allocated buffer
+    // Generate OpenAL buffer
+    ALuint bufferID = 0;
+    alGenBuffers(1, &bufferID);
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error generating buffer: " << getOpenALErrorString(error) << std::endl;
+        delete[] data;
+        return 0;
+    }
+
+    if (bufferID == 0) {
+        std::cerr << "alGenBuffers failed to generate a valid buffer." << std::endl;
+        delete[] data;
+        return 0;
+    }
+
+    // Buffer the audio data into OpenAL
+    alBufferData(bufferID, format, data, static_cast<ALsizei>(dataSize), freq);
+    error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error buffering data: " << getOpenALErrorString(error) << std::endl;
+        alDeleteBuffers(1, &bufferID);
+        delete[] data;
+        return 0;
+    }
+
+    // Free the audio data buffer as OpenAL has copied the data
+    delete[] data;
+
+    return bufferID;
 }
 
 #endif

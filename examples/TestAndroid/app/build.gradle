@@ -11,6 +11,10 @@ android {
         pickFirst '**/libc++_shared.so'
     }
 
+    aaptOptions {
+        noCompress "wav"
+    }
+
     defaultConfig {
         applicationId "com.jmapp.testandroid"
         minSdk 21

@@ -52,19 +52,84 @@ const char* KSound::getOpenALErrorString(ALenum error)
 
 bool KSound::loadSample(const std::string &filename, AAssetManager *assetManager)
 {
+    ALenum format;
+    ALsizei freq;
+
     this->assetManager_ = assetManager;
-    return this->loadSampleEx(filename);
+
+    // Open the WAV file from assets
+    AAsset *asset = AAssetManager_open(assetManager, filename.c_str(), AASSET_MODE_STREAMING);
+    if (!asset) {
+        std::cerr << "Unable to open asset: " << filename << std::endl;
+        return 0; // 0 is not a valid OpenAL buffer ID
+    }
+
+    // Read the "RIFF" chunk descriptor (First 4 bytes should be "RIFF")
+    char riff[4];
+    ssize_t bytesRead = AAsset_read(asset, riff, 4);
+    if (bytesRead == 4 && !strncasecmp(riff, "RIFF", 4)) {
+
+        buffer = this->loadWAVFile(filename, format, freq);
+    }
+    else {
+        std::cerr << "Invalid WAV file (Missing 'RIFF'): " << filename << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
+
+    alSourcei(source, AL_BUFFER, buffer);
+
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error: " << getOpenALErrorString(error) << std::endl;
+    }
+
+    return true;
 }
 
 #else
 
 bool KSound::loadSample(const std::string &filename)
 {
-    return this->loadSampleEx(filename);
+    ALenum format;
+    ALsizei freq;
+
+    // Open the file as a binary stream
+    std::ifstream file(filename, std::ios::binary);
+    if (!file.is_open()) {
+        //std::cerr << "Unable to open file: " << filename << std::endl;
+        return false;
+    }
+
+    // Read the "RIFF" chunk descriptor
+    char riff[4];
+    file.read(riff, 4);
+    printf("%s\n", riff);
+    if (!strncasecmp(riff, "RIFF", 4)) {
+
+        buffer = this->loadWAVFile(filename, format, freq);
+    }
+    else if (!strncasecmp(riff, "CAFF", 4)) {
+
+        buffer = this->loadCAFFile(filename, format, freq);
+    }
+    else {
+        return false;
+    }
+
+    alSourcei(source, AL_BUFFER, buffer);
+
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        std::cerr << "Error: " << getOpenALErrorString(error) << std::endl;
+    }
+
+    return true;
 }
 
 #endif
 
+/*
 bool KSound::loadSampleEx(const std::string &filename)
 {
     ALenum format;
@@ -106,6 +171,7 @@ bool KSound::loadSampleEx(const std::string &filename)
 
     return true;
 }
+*/
 
 /*
 int32_t dataSize;
@@ -174,11 +240,12 @@ bool KSound::loadSample(const char *filename)
 
 #ifdef __ANDROID__
 
-ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq/*, AAssetManager *assetManager*/)
+ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq)
 {
-    AAssetManager * assetManager = this->assetManager_;
-    // Open the WAV file from assets
-    AAsset *asset = AAssetManager_open(assetManager, filename.c_str(), AASSET_MODE_STREAMING);
+    AAssetManager *assetManager = this->assetManager_;
+
+    // Open the WAV file from assets in BUFFER mode to prevent compression issues
+    AAsset *asset = AAssetManager_open(assetManager, filename.c_str(), AASSET_MODE_BUFFER);
     if (!asset) {
         std::cerr << "Unable to open asset: " << filename << std::endl;
         return 0; // 0 is not a valid OpenAL buffer ID
@@ -193,7 +260,16 @@ ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei 
         return 0;
     }
 
-    // Read the chunk size (4 bytes) and "WAVE" identifier (4 bytes)
+    // Read the chunk size (4 bytes)
+    uint32_t chunkSize = 0;
+    bytesRead = AAsset_read(asset, &chunkSize, sizeof(chunkSize));
+    if (bytesRead != sizeof(chunkSize)) {
+        std::cerr << "Failed to read chunk size." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
+
+    // Read the "WAVE" identifier (4 bytes)
     char wave[4];
     bytesRead = AAsset_read(asset, wave, 4);
     if (bytesRead != 4 || strncmp(wave, "WAVE", 4) != 0) {
@@ -202,16 +278,16 @@ ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei 
         return 0;
     }
 
-    // Read the "fmt " subchunk (4 bytes)
+    // Read the "fmt " subchunk ID (4 bytes)
     char fmt[4];
     bytesRead = AAsset_read(asset, fmt, 4);
     if (bytesRead != 4 || strncmp(fmt, "fmt ", 4) != 0) {
-        std::cerr << "Invalid WAV file (Missing 'fmt '): " << filename << std::endl;
+        std::cerr << "Invalid WAV file (Missing 'fmt ' subchunk): " << filename << std::endl;
         AAsset_close(asset);
         return 0;
     }
 
-    // Read the subchunk size (4 bytes)
+    // Read the subchunk1 size (4 bytes)
     uint32_t subChunk1Size = 0;
     bytesRead = AAsset_read(asset, &subChunk1Size, sizeof(subChunk1Size));
     if (bytesRead != sizeof(subChunk1Size)) {
@@ -253,8 +329,23 @@ ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei 
     }
     freq = static_cast<ALsizei>(sampleRate);
 
-    // Read the byte rate (4 bytes) and block align (2 bytes) - skipping as they are not needed here
-    AAsset_seek(asset, 6, SEEK_CUR);
+    // Read the byte rate (4 bytes)
+    uint32_t byteRate = 0;
+    bytesRead = AAsset_read(asset, &byteRate, sizeof(byteRate));
+    if (bytesRead != sizeof(byteRate)) {
+        std::cerr << "Failed to read byte rate." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
+
+    // Read the block align (2 bytes)
+    uint16_t blockAlign = 0;
+    bytesRead = AAsset_read(asset, &blockAlign, sizeof(blockAlign));
+    if (bytesRead != sizeof(blockAlign)) {
+        std::cerr << "Failed to read block align." << std::endl;
+        AAsset_close(asset);
+        return 0;
+    }
 
     // Read bits per sample (2 bytes)
     uint16_t bitsPerSample = 0;
@@ -263,6 +354,12 @@ ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei 
         std::cerr << "Failed to read bits per sample." << std::endl;
         AAsset_close(asset);
         return 0;
+    }
+
+    // If subChunk1Size > 16, skip the extra bytes
+    if (subChunk1Size > 16) {
+        uint32_t extraBytes = subChunk1Size - 16;
+        AAsset_seek(asset, extraBytes, SEEK_CUR);
     }
 
     // Determine the OpenAL format based on channels and bits per sample
@@ -359,6 +456,7 @@ ALuint KSound::loadWAVFile(const std::string &filename, ALenum &format, ALsizei 
     // Return the generated OpenAL buffer ID
     return bufferID;
 }
+
 
 #else
 

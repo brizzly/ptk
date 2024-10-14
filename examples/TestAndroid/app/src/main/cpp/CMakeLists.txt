@@ -17,7 +17,7 @@ set(OpenAL_DIR ${CMAKE_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
 find_library(openal-lib openal PATHS ${OpenAL_DIR} NO_CMAKE_FIND_ROOT_PATH)
 
 # Example for linking with OpenSL ES
-find_library(opensl_es OpenSLES REQUIRED)
+#find_library(opensl_es OpenSLES REQUIRED)
 
 
 
@@ -131,7 +131,7 @@ target_link_libraries(
         android_game_lib PRIVATE glm
         c++_shared
         ${openal-lib}
-        ${opensl_es}
+        ${OPENSLES_LIB}
         ${log-lib}
         ${android-lib}
         ${GLESv2-lib}

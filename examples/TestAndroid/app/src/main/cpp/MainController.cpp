@@ -69,7 +69,7 @@ void MainController::initialize(int w, int h)
     //sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
     sound1->loadSample("boing2.wav", this->assetManager);
     sound1->setVolume(1.0);
-    sound1->setLooping(false);
+    sound1->setLooping(true);
     sound1->playSample();
 
 /*

@@ -52,7 +52,7 @@ private:
     uint64_t be64toh(uint64_t big_endian_64bits);
     //std::vector<char> loadWAVFile(const std::string &filename, ALenum &format, ALsizei &freq);
 #endif
-    bool loadSampleEx(const std::string &filename);
+    //bool loadSampleEx(const std::string &filename);
 };
 
 #endif // KSOUND_H

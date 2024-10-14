@@ -2,14 +2,15 @@
 #include "MainController.h"
 #include <jni.h>
 #include <android/log.h>
+#include <cmath>
 //#include <android/asset_manager.h>
 #include <android/native_window_jni.h> // Required for native window integration
 #include <android/asset_manager_jni.h> // Include for AAssetManager_fromJava
 
+
 #define LOG_TAG "NativeCode"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
-//AAssetManager* g_assetManager = nullptr;
 
 
 // Render function called each frame
@@ -34,6 +35,34 @@ void onAppInit(GLFMDisplay *display) {
 }
 
 extern "C" {
+
+    JNIEXPORT void JNICALL
+    Java_com_jmapp_testandroid_MainActivity_handleTouchEvent(JNIEnv* env, jobject /* this */, jint action, jfloat x, jfloat y) {
+        switch (action) {
+            case AMOTION_EVENT_ACTION_DOWN:
+                LOGI("Touch down at (%f, %f)", x, y);
+                MainController::getInstance()->touchEvent(0, action, x, y);
+                break;
+            case AMOTION_EVENT_ACTION_MOVE:
+                LOGI("Touch move to (%f, %f)", x, y);
+                MainController::getInstance()->touchEvent(0, action, x, y);
+                break;
+            case AMOTION_EVENT_ACTION_UP:
+                LOGI("Touch up at (%f, %f)", x, y);
+                MainController::getInstance()->touchEvent(0, action, x, y);
+                break;
+            case AMOTION_EVENT_ACTION_CANCEL:
+                LOGI("Touch canceled at (%f, %f)", x, y);
+                MainController::getInstance()->touchEvent(0, action, x, y);
+                break;
+            default:
+                LOGI("Other touch event (%d) at (%f, %f)", action, x, y);
+                MainController::getInstance()->touchEvent(1, action, x, y);
+                break;
+        }
+
+    }
+
 
     JNIEXPORT void JNICALL
     Java_com_jmapp_testandroid_MainActivity_nativeSetAssetManager(JNIEnv* env, jobject obj, jobject assetManager) {

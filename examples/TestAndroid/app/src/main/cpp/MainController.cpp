@@ -70,8 +70,14 @@ void MainController::initialize(int w, int h)
     //sound1->loadSample("boing2.wav", this->assetManager);
     sound1->setVolume(1.0);
     sound1->setLooping(false);
-    sound1->playSample();
+    //sound1->playSample();
 
+    sound2 = new KSound;
+    sound2->loadSample(KMiscTools::makeFilePath("jump1.wav"), this->assetManager);
+    //sound2->loadSample("boing2.wav", this->assetManager);
+    sound2->setVolume(1.0);
+    sound2->setLooping(false);
+    //sound2->playSample();
 
     music1 = new KMusic();
     music1->load("menu.mp3", this->assetManager);
@@ -159,6 +165,49 @@ void MainController::draw() {
     testGraphic2->blend = 1.0;
     testGraphic2->render();
 
+}
 
+void MainController::touchEvent(int touch, int phase, double x, double y)
+{
+    float ratio = KPTK::_screenW / KPTK::_screenH;
+    if(ratio > 1.0)
+    {
+        float offsetX = (KPTK::_screenW - KPTK::getGameW()*2) / 2.0f;
+        x -= offsetX;
+        x *= 0.5f;
+        y *= 0.5f;
+    }
+    else
+    {
+        x = x * (KPTK::getGameW() / KPTK::_screenW);
+        y = y * (KPTK::getGameH() / KPTK::_screenH);
+    }
 
+    switch (phase) {
+        case 0://AMOTION_EVENT_ACTION_DOWN:
+            printf("Touch %d started at (%.2f, %.2f)\n", touch, x, y);
+            KInput::setScreenPressed(0, x, y);
+            KInput::setFingerPosition(touch, x, y, true);
+            if(rand() % 100 < 50) {
+                sound1->playSample();
+            }
+            else {
+                sound2->playSample();
+            }
+            break;
+        case 1://GLFMTouchPhaseMoved:
+            printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);
+            KInput::setScreenMoving(x, y);
+            break;
+        case 2://GLFMTouchPhaseEnded:
+            printf("Touch %d ended at (%.2f, %.2f)\n", touch, x, y);
+            KInput::setScreenReleased();
+            KInput::setFingerPosition(touch, x, y, false);
+            break;
+        case 3://GLFMTouchPhaseCancelled:
+            printf("Touch %d cancelled at (%.2f, %.2f)\n", touch, x, y);
+            break;
+        default:
+            break;
+    }
 }

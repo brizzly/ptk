@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.content.res.AssetManager;
+import android.view.MotionEvent;
 
 public class MainActivity extends Activity {
 
@@ -34,6 +35,21 @@ public class MainActivity extends Activity {
         setContentView(glfm.getView());
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        float x = event.getX();
+        float y = event.getY();
+
+        // Pass touch event data to native code
+        handleTouchEvent(action, x, y);
+
+        return super.onTouchEvent(event);
+    }
+
+    // Native methods declarations
     private native void nativeSetAssetManager(AssetManager assetManager);
+    private native void handleTouchEvent(int action, float x, float y);
+
 }
 

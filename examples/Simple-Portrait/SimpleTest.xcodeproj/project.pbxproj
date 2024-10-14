@@ -79,8 +79,9 @@
 		FF8BC2062CBB2AE000DE5C31 /* KSpline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F92CBB2AE000DE5C31 /* KSpline.cpp */; };
 		FF8BC2072CBB2AE000DE5C31 /* GLTextureHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1E72CBB2AE000DE5C31 /* GLTextureHelper.mm */; };
 		FF8BC2082CBB2AE000DE5C31 /* KGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1E92CBB2AE000DE5C31 /* KGraphic.cpp */; };
-		FF8BC2092CBB2AE000DE5C31 /* KSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F72CBB2AE000DE5C31 /* KSound.mm */; };
 		FF8BC20A2CBB2AE000DE5C31 /* KMusic.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F12CBB2AE000DE5C31 /* KMusic.mm */; };
+		FF8BC20C2CBD011600DE5C31 /* KSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC20B2CBD011600DE5C31 /* KSound.cpp */; };
+		FF8BC20D2CBD05FE00DE5C31 /* KSound.h in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F62CBB2AE000DE5C31 /* KSound.h */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
 		FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48791130A7D900105C50 /* OpenGLES.framework */; };
 		FFF1BFF02CAB59D30093CA43 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF1BFEF2CAB59D30093CA43 /* box.png */; };
@@ -170,13 +171,13 @@
 		FF8BC1F42CBB2AE000DE5C31 /* KShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KShader.h; sourceTree = "<group>"; };
 		FF8BC1F52CBB2AE000DE5C31 /* KShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KShader.cpp; sourceTree = "<group>"; };
 		FF8BC1F62CBB2AE000DE5C31 /* KSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSound.h; sourceTree = "<group>"; };
-		FF8BC1F72CBB2AE000DE5C31 /* KSound.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KSound.mm; sourceTree = "<group>"; };
 		FF8BC1F82CBB2AE000DE5C31 /* KSpline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSpline.h; sourceTree = "<group>"; };
 		FF8BC1F92CBB2AE000DE5C31 /* KSpline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSpline.cpp; sourceTree = "<group>"; };
 		FF8BC1FA2CBB2AE000DE5C31 /* KWeb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWeb.h; sourceTree = "<group>"; };
 		FF8BC1FB2CBB2AE000DE5C31 /* KWeb.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KWeb.mm; sourceTree = "<group>"; };
 		FF8BC1FC2CBB2AE000DE5C31 /* KWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWindow.h; sourceTree = "<group>"; };
 		FF8BC1FD2CBB2AE000DE5C31 /* KWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KWindow.cpp; sourceTree = "<group>"; };
+		FF8BC20B2CBD011600DE5C31 /* KSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSound.cpp; sourceTree = "<group>"; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFF185EB2CA57EFC008120DB /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
 		FFF1BFEB2CAB43840093CA43 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -397,7 +398,7 @@
 				FF8BC1F42CBB2AE000DE5C31 /* KShader.h */,
 				FF8BC1F52CBB2AE000DE5C31 /* KShader.cpp */,
 				FF8BC1F62CBB2AE000DE5C31 /* KSound.h */,
-				FF8BC1F72CBB2AE000DE5C31 /* KSound.mm */,
+				FF8BC20B2CBD011600DE5C31 /* KSound.cpp */,
 				FF8BC1F82CBB2AE000DE5C31 /* KSpline.h */,
 				FF8BC1F92CBB2AE000DE5C31 /* KSpline.cpp */,
 				FF8BC1FA2CBB2AE000DE5C31 /* KWeb.h */,
@@ -510,6 +511,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF8BC20D2CBD05FE00DE5C31 /* KSound.h in Sources */,
 				FF1CFF9B2CA606B2008CB8C2 /* glfm_android.c in Sources */,
 				FF8BC1FF2CBB2AE000DE5C31 /* KInput.cpp in Sources */,
 				FF8BC2002CBB2AE000DE5C31 /* KLogFile.cpp in Sources */,
@@ -521,10 +523,10 @@
 				FF8BC2062CBB2AE000DE5C31 /* KSpline.cpp in Sources */,
 				FF8BC2072CBB2AE000DE5C31 /* GLTextureHelper.mm in Sources */,
 				FF8BC2082CBB2AE000DE5C31 /* KGraphic.cpp in Sources */,
-				FF8BC2092CBB2AE000DE5C31 /* KSound.mm in Sources */,
 				FF8BC20A2CBB2AE000DE5C31 /* KMusic.mm in Sources */,
 				FF1CFF9C2CA606B2008CB8C2 /* glfm_emscripten.c in Sources */,
 				FF1CFF9D2CA606B2008CB8C2 /* glfm_apple.m in Sources */,
+				FF8BC20C2CBD011600DE5C31 /* KSound.cpp in Sources */,
 				FF76319F2CB1C39F006672CE /* main.m in Sources */,
 				FF4C06182CB1CF5300BEC9CE /* MainControler.mm in Sources */,
 			);
@@ -748,6 +750,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
+				CLANG_CXX_STANDARD_LIBRARY_HARDENING = none;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = SimpleTest.entitlements;

@@ -70,7 +70,7 @@ void MainController::initialize(int w, int h)
     sound1->loadSample("boing2.wav", this->assetManager);
     sound1->setVolume(1.0);
     sound1->setLooping(false);
-    sound1->play();
+    sound1->playSample();
 
 /*
     music1 = new KMusic();

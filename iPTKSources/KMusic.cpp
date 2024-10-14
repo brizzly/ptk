@@ -7,35 +7,15 @@
 
 KMusic::KMusic()
 {
-    // Initialize member variables
-    buffer = 0;
-    source = 0;
-    device = nullptr;
-    context = nullptr;
     isLooping = false;
+    
+    // Obtain the shared OpenALManager instance
+    OpenALManager& alManager = OpenALManager::getInstance();
 
-    // Initialize OpenAL device
-    device = alcOpenDevice(NULL);
-    if (!device)
-    {
-        std::cerr << "Failed to open OpenAL device" << std::endl;
-        // Handle error appropriately
-    }
-
-    // Create OpenAL context
-    context = alcCreateContext(device, NULL);
-    if (!alcMakeContextCurrent(context))
-    {
-        std::cerr << "Failed to make OpenAL context current" << std::endl;
-        // Handle error appropriately
-    }
-
-    // Generate OpenAL source
     alGenSources(1, &source);
-    if (alGetError() != AL_NO_ERROR)
-    {
-        std::cerr << "Failed to generate OpenAL source" << std::endl;
-        // Handle error appropriately
+    ALenum error = alGetError();
+    if (error != AL_NO_ERROR) {
+        //std::cerr << "Error generating OpenAL source: " << getOpenALErrorString(error) << std::endl;
     }
 }
 
@@ -46,18 +26,15 @@ KMusic::~KMusic()
 
     // Delete OpenAL source and buffer
     if (source)
-        alDeleteSources(1, &source);
-    if (buffer)
-        alDeleteBuffers(1, &buffer);
-
-    // Destroy OpenAL context and close device
-    if (context)
     {
-        alcMakeContextCurrent(NULL);
-        alcDestroyContext(context);
+        alDeleteSources(1, &source);
+        source = 0;
     }
-    if (device)
-        alcCloseDevice(device);
+    if (buffer)
+    {
+        alDeleteBuffers(1, &buffer);
+        buffer = 0;
+    }
 }
 
 bool KMusic::load(const std::string &filename)

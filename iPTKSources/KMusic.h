@@ -1,6 +1,10 @@
 #ifndef KMUSIC_H
 #define KMUSIC_H
 
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
 
 #ifdef __ANDROID__
 #include <AL/al.h>
@@ -14,10 +18,8 @@
 #include <OpenAL/alc.h>
 #include <CoreFoundation/CoreFoundation.h>
 #endif
+#include "OpenALManager.h"
 
-
-#include <string>
-#include <vector>
 
 class KMusic {
 public:
@@ -32,11 +34,8 @@ public:
 private:
     ALuint buffer;
     ALuint source;
-    ALCdevice *device;
-    ALCcontext *context;
-    
     bool isLooping;
-
+    
     ALuint loadMP3toBuffer(const char* filePath);
 };
 

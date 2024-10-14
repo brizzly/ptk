@@ -77,9 +77,9 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     sound2->loadSample(KMiscTools::makeFilePath("jump1.caf"));
     sound2->setVolume(1.0);
     
-    //music1 = new KMusic();
-    //music1->load(KMiscTools::makeFilePath("menu.mp3"));
-    //music1->playMusic();
+    music1 = new KMusic();
+    music1->load(KMiscTools::makeFilePath("menu.mp3"));
+    music1->playMusic();
     
 }
 

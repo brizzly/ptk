@@ -24,6 +24,8 @@
 #ifndef		DEF_KWEB
 #define		DEF_KWEB		
 
+#include <cstddef>
+
 class		KWeb
 {
 private:

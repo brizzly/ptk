@@ -138,7 +138,7 @@ int KPTK::getGameH()
 
 KWindow * KPTK::createKWindow(screenOrientation orientation)
 {
-	int debug = (int)orientation;
+	//int debug = (int)orientation;
 	//printf("d=%d\n", debug);
 	
 	_screenOrientation = orientation;
@@ -152,13 +152,24 @@ KWindow * KPTK::createKWindow(screenOrientation orientation)
 
 #ifdef __ANDROID__
 
+KGraphic * KPTK::createKGraphic(AAssetManager * assetManager)
+{
+    // Create an instance of KGraphic
+    int gameW = KPTK::getGameW();
+    int gameH = KPTK::getGameH();
+    KGraphic * graphic = new KGraphic(gameW, gameH, _screenW, _screenH, assetManager);
+    return graphic;
+}
+
 #else
+
 KGraphic * KPTK::createKGraphic()
 {
     // Create an instance of KGraphic
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
     KGraphic * graphic = new KGraphic(gameW, gameH, _screenW, _screenH);
-   return graphic;
+    return graphic;
 }
+
 #endif

@@ -25,8 +25,13 @@
 #define KPTK_H
 
 #include "KGraphic.h"
+#include "KWindow.h"
 
-class KWindow;
+#ifdef __ANDROID__
+#include <android/asset_manager_jni.h>
+#endif
+
+//class KWindow;
 
 
 enum screenOrientation
@@ -80,9 +85,13 @@ public:
 public:
 
 	static	KWindow			*	createKWindow(screenOrientation orientation);
-#ifndef __ANDROID__
-	static	KGraphic		*	createKGraphic();
+
+#ifdef __ANDROID__
+    static  KGraphic        *   createKGraphic(AAssetManager * assetManager);
+#else
+    static	KGraphic		*	createKGraphic();
 #endif
+
 	static	int					getGameW();
 	static	int					getGameH();
     static  int                 getScreenW();

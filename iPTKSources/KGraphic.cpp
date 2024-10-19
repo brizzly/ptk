@@ -40,6 +40,8 @@ KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen
 
 void KGraphic::init(int game_width, int game_height, int screen_width, int screen_height)
 {
+    _offsetX = 0;
+    _offsetY = 0;
     _gameW = (float) game_width;
     _gameH = (float) game_height;
     _screenW = (float) screen_width;
@@ -49,6 +51,8 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
         printf("KGraphic init error.");
         return;
     }
+    
+    computOffset();
     
     const char * vertexShaderSource =
         "attribute vec4 a_position;"
@@ -277,6 +281,64 @@ void KGraphic::setProjectionMatrix(int window_width, int window_height, float di
     glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, orthoMatrix);
 }
 
+void KGraphic::computOffset()
+{
+     // Determine the orientation
+     bool isPortrait = _screenH > _screenW;
+
+     // Calculate scaling factors for width and height
+     float scaleX = static_cast<float>(_screenW) / _gameW;
+     float scaleY = static_cast<float>(_screenH) / _gameH;
+
+     // Choose the scale factor based on orientation
+     float scale_;
+     if (isPortrait) {
+         // Maximize width in portrait
+         scale_ = scaleX;
+     } else {
+         // Maximize height in landscape
+         scale_ = scaleY;
+     }
+
+    // Compute the scaled game dimensions
+    _scaledGameW = static_cast<int>(_gameW * scale_);
+    _scaledGameH = static_cast<int>(_gameH * scale_);
+
+     // Calculate offsets to center the game content
+    _offsetX = (_screenW - _scaledGameW) / 2;
+    _offsetY = (_screenH - _scaledGameH) / 2;
+   
+    if(_offsetX == 0 && _offsetY < 0)
+    {
+         scale_ = (scaleX < scaleY) ? scaleX : scaleY;
+
+         // Compute the scaled game dimensions
+        _scaledGameW = static_cast<int>(_gameW * scale_);
+        _scaledGameH = static_cast<int>(_gameH * scale_);
+
+         // Calculate offsets to center the game content
+        _offsetX = (_screenW - _scaledGameW) / 2;
+        _offsetY = (_screenH - _scaledGameH) / 2;
+    }
+     
+     /*
+     // Calculate scaling factors for width and height
+     float scaleX = static_cast<float>(_screenW) / _gameW;
+     float scaleY = static_cast<float>(_screenH) / _gameH;
+
+     // Choose the smaller scale to maintain aspect ratio
+     float scale_ = (scaleX < scaleY) ? scaleX : scaleY;
+
+     // Compute the scaled game dimensions
+     int scaledGameW = static_cast<int>(_gameW * scale_);
+     int scaledGameH = static_cast<int>(_gameH * scale_);
+
+     // Calculate offsets to center the game content
+     int offsetX = (_screenW - scaledGameW) / 2;
+     int offsetY = (_screenH - scaledGameH) / 2;
+     */
+}
+
 void KGraphic::render()
 {
     if(_shaderProgram == 0) {
@@ -286,58 +348,11 @@ void KGraphic::render()
     // PROJECTION MATRIX AS PIXELS
     float scale = 1.0f;
     setProjectionMatrix(_screenW, _screenH, _gameW, _gameH);
-
     
     glDisable(GL_CULL_FACE);
     //glViewport(0, 0, _screenW, _screenH);   // Viewport to cover the entire window
-//    glViewport(0, 0, _gameW*2, _gameH*2);
-   
-   
-    // Determine the orientation
-    bool isPortrait = _screenH > _screenW;
-
-    // Calculate scaling factors for width and height
-    float scaleX = static_cast<float>(_screenW) / _gameW;
-    float scaleY = static_cast<float>(_screenH) / _gameH;
-
-    // Choose the scale factor based on orientation
-    float scale_;
-    if (isPortrait) {
-        // Maximize width in portrait
-        scale_ = scaleX;
-    } else {
-        // Maximize height in landscape
-        scale_ = scaleY;
-    }
-
-    // Compute the scaled game dimensions
-    int scaledGameW = static_cast<int>(_gameW * scale_);
-    int scaledGameH = static_cast<int>(_gameH * scale_);
-
-    // Calculate offsets to center the game content
-    int offsetX = (_screenW - scaledGameW) / 2;
-    int offsetY = (_screenH - scaledGameH) / 2;
-    
-    /*
-    
-    // Calculate scaling factors for width and height
-    float scaleX = static_cast<float>(_screenW) / _gameW;
-    float scaleY = static_cast<float>(_screenH) / _gameH;
-
-    // Choose the smaller scale to maintain aspect ratio
-    float scale_ = (scaleX < scaleY) ? scaleX : scaleY;
-
-    // Compute the scaled game dimensions
-    int scaledGameW = static_cast<int>(_gameW * scale_);
-    int scaledGameH = static_cast<int>(_gameH * scale_);
-
-    // Calculate offsets to center the game content
-    int offsetX = (_screenW - scaledGameW) / 2;
-    int offsetY = (_screenH - scaledGameH) / 2;
-*/
-    
-    // Set the OpenGL viewport
-    glViewport(offsetX, offsetY, scaledGameW, scaledGameH);
+    //glViewport(0, 0, _gameW*2, _gameH*2);
+    glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
     
     /*
     float offsetX = (_screenW - _gameW*2) / 2.0f;

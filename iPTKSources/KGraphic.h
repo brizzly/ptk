@@ -16,6 +16,7 @@ typedef float mat4[16];
 class KGraphic {
 
 private:
+    
 #ifdef __ANDROID__
     AAssetManager* g_assetManager = nullptr;
 #endif
@@ -63,6 +64,10 @@ private:
     float _screenH;
     float _gameW;
     float _gameH;
+    float _offsetX;
+    float _offsetY;
+    float _scaledGameW;
+    float _scaledGameH;
     bool _blitColorChanged;
     bool _textureWrap;
     bool _eyeRetina;
@@ -83,6 +88,7 @@ private:
 //    void rotateMatrix(float* matrix, float angle, float x, float y, float z);
 //    void scaleMatrix(float* matrix, float scaleX, float scaleY, float scaleZ);
 
+    void computOffset();
     void printMatrix(mat4 m);
 
     void orthographicMatrix(mat4 m, float left, float right, float bottom, float top, float nearVal, float farVal);

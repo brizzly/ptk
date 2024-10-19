@@ -32,6 +32,10 @@
 #include <stdbool.h>
 //#endif
 
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
+
 
 
 

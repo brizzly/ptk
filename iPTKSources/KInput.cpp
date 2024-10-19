@@ -132,6 +132,11 @@ void KInput::mousePointerTo(int x, int y)
 
 int KInput::getMouseX()
 {
+    //printf("getMouseX _xScreenHit: %d\n", (int)_xScreenHit);
+#ifdef __ANDROID__
+    //__android_log_print(ANDROID_LOG_DEBUG, "PTK", "getMouseX _xScreenHit: %d\n", (int)_xScreenHit);
+#endif
+
     return (int) _xScreenHit;
                   
 	if( KPTK::_screenOrientation == K_621x1104 )
@@ -339,7 +344,7 @@ void KInput::setScreenPressed(int tapCount, int x, int y)
 
 void KInput::setScreenMoving(int x, int y)
 {
-	//printf("setScreenMoving: %d %d\n", x, y);
+	printf("setScreenMoving: %d %d\n", x, y);
 	_xScreenHit = x;
 	_yScreenHit = y;
 }

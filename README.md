@@ -1,13 +1,13 @@
 ![Grizzly](logo.png)
 
-# PTK Simple 2D engine C++/OpenGL ES2
+# PTK 2D engine C++/OpenGL ES2
 
 - This game engine is open source and forever free. Please buy me a coffee is you like it!
 - Send your game name and I will add it in the powered by ptk list.
 
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/jmapp)
 
-PTK is a very simple 2D engine for C++/OpenGL ES2 games.
+PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
 
 ## Why C++/OpenGL?
 
@@ -22,6 +22,9 @@ Your project will be buildable for Android, PC, Web, and not only iOS.
 ## Getting Started
 
 Example : xcode examples project in: /examples/Simple
+- iOS Landscape
+- iOS Portrait
+- Android Portait
 
 ## Usage : 
 
@@ -54,9 +57,10 @@ Example : xcode examples project in: /examples/Simple
 
 ### Requirements
 
-- C++11 compiler / xCode or Visual C++
+- C++11 compiler / xCode or Android Studio
 - OpenGL ES2
 - GLFM
+- OpenAL
 
 ### Build Instructions
 
@@ -64,35 +68,43 @@ Example : xcode examples project in: /examples/Simple
    ```bash
    git clone https://github.com/brizzly/ptk.git
    ```
-2. include /iPTKSources into your xcode project   
+2. include /iPTKSources into your project   
 
 
 ### Games prowered by PTK
 
-- GRIZZLY (macos) https://apps.apple.com/us/app/grizzly-retro-platformer/id413938360?mt=12
+## iPhone
+- ULTRANIUM https://apps.apple.com/app/space-breakout-ultranium/id6736717749
+- GRIZZLY https://apps.apple.com/app/grizzly-adventures-crazy-bear-platformer/id357410945
+- BARNEY https://apps.apple.com/app/barney-adventures/id502135523
+- METAL-ANGEL https://apps.apple.com/app/metal-angel-best-shootem-up/id287261924
+
+## Android
+coming-soon
+
+## macOS
+- GRIZZLY (macos) https://apps.apple.com/app/grizzly-retro-platformer/id413938360?mt=12
+- ANDROID LODERUNNER (macos) https://apps.apple.com/app/android-best-retro-lode-runner/id412859612
+- ANDROID2 (macos) https://apps.apple.com/app/android-2-retro-loderunner/id1347741576
+- ANDROKIDS (macos) https://apps.apple.com/app/notebook-city-androkids/id1516357274
+- BARNEY (macos) https://apps.apple.com/app/barney/id481853130
+- ANDROKIDS2 (macos) https://apps.apple.com/app/androkids-2/id1516721499
+- MARTY MCBLAST (macos) https://apps.apple.com/app/marty-mcblast/id870219886
+- METAL-ANGEL (macos) https://apps.apple.com/app/metal-angel-shooter/id6544782954
+- ULTRANIUM 3D (macos) https://apps.apple.com/app/ultranium3d/id413890023
+- ULTRANIUM4 (macos) https://apps.apple.com/app/ultranium-4-breakout-shooter/id412207082
+- ULTRANIUM5 (macos) https://apps.apple.com/app/ultranium-5-crazy-arcade-game/id431295311
+- HALLOWEEN 3D (macos) https://apps.apple.com/app/halloween-3d/id1276055212
+
+## PC
 - GRIZZLY (pc) https://brizzlyy.itch.io/grizzly-adventures
-- GRIZZLY https://apps.apple.com/us/app/grizzly-adventures-crazy-bear-platformer/id357410945
-- ANDROID LODERUNNER (macos) https://apps.apple.com/us/app/android-best-retro-lode-runner/id412859612
 - ANDROID LODERUNNER (pc) https://brizzlyy.itch.io/android-lode-runner
-- ANDROID2 (macos) https://apps.apple.com/us/app/android-2-retro-loderunner/id1347741576
 - ANDROID2 (pc) https://brizzlyy.itch.io/androkids2
-- ANDROKIDS (macos) https://apps.apple.com/us/app/notebook-city-androkids/id1516357274
 - ANDROKIDS (pc) https://brizzlyy.itch.io/androkids
-- BARNEY https://apps.apple.com/us/app/barney-adventures/id502135523
-- BARNEY (macos) https://apps.apple.com/us/app/barney/id481853130
 - BARNEY (pc) https://brizzlyy.itch.io/barney-adventures
-- ANDROKIDS2 (macos) https://apps.apple.com/us/app/androkids-2/id1516721499
-- MARTY MCBLAST (macos) https://apps.apple.com/us/app/marty-mcblast/id870219886
 - MARTY MCBLAST (pc) https://brizzlyy.itch.io/marty-mcblast
-- METAL-ANGEL https://apps.apple.com/us/app/metal-angel-best-shootem-up/id287261924
-- METAL-ANGEL (macos) https://apps.apple.com/us/app/metal-angel-shooter/id6544782954
 - METAL-ANGEL (pc) https://brizzlyy.itch.io/metal-angel-shoot-em-up
-- ULTRANIUM 3D (macos) https://apps.apple.com/us/app/ultranium3d/id413890023
-- ULTRANIUM4 (macos) https://apps.apple.com/us/app/ultranium-4-breakout-shooter/id412207082
 - ULTRANIUM4 (pc) https://brizzlyy.itch.io/ultranium-4
-- ULTRANIUM5 (macos) https://apps.apple.com/us/app/ultranium-5-crazy-arcade-game/id431295311
 - ULTRANIUM5 (pc) https://brizzlyy.itch.io/ultranium-5
-
-
 
 

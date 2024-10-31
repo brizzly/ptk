@@ -76,3 +76,22 @@ GLuint KShader::createShaderProgram(const char* vertexSource, const char* fragme
     return program;  // Return the valid shader program
 }
 
+GLuint KShader::createLineShader()
+{
+    const char* vertexSource =
+        "attribute vec2 position;"
+        "uniform mat4 u_Matrix;"  // Matrix uniform for projection
+        "void main() {"
+        "    gl_Position = u_Matrix * vec4(position, 0.0, 1.0);"  // Apply matrix transformation
+        "}";
+
+    const char* fragmentSource =
+        "precision mediump float;"
+        "uniform vec4 color;"
+        "void main() {"
+        "    gl_FragColor = color;"
+        "}";
+
+    // Use createShaderProgram to compile, link, and return the program
+    return createShaderProgram(vertexSource, fragmentSource);
+}

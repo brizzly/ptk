@@ -44,7 +44,10 @@ public:
     float getTextureSizeW();
     float getTextureSizeH();
 
+    void setupOrthoProjection(float left, float right, float bottom, float top);
     void setLineWidth(short lineWidth);
+    void drawLine(float x1, float y1, float x2, float y2, float r, float g, float b, float a, float linewidth=1.0);
+
 
     void blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int destY , bool flipx=false, bool flipy=false);
     void blitAlphaRectFx(int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend , bool flipx=false, bool flipy=false );
@@ -72,9 +75,13 @@ private:
     bool _textureWrap;
     bool _eyeRetina;
     GLuint _shaderProgram;
+    GLuint _lineShaderProgram;
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
     GLuint vertexBuffer, indexBuffer, textureSamplerLoc;
-    //GLuint textureID;
+
+    GLuint vertexBuffer_Line;
+    GLfloat orthoMatrix[16];
+    
     GLfloat projectionMatrix[16];
     GLuint blendColorLocation;
     KShader * shader;

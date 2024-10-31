@@ -44,6 +44,23 @@ Example : xcode examples project in: /examples/Simple
 	test->render();
 ```
 
+- Display lines :
+```bash
+    float line_R = 0.0f;
+    float line_G = 222.0f/255.0f;
+    float line_B = 1;
+    float line_A = 0.50f;
+    
+    float pX = 20;
+    float pY = 20;
+    float w1 = screenWidth/2;
+    float h1 = screenHeight/2;
+    shapeGraphic->drawLine(pX, pY, pX+w1, pY, line_R, line_G, line_B, line_A, 1.0f);
+    shapeGraphic->drawLine(pX+w1, pY, pX+w1, pY+h1, line_R, line_G, line_B, line_A, 1.0f);
+    shapeGraphic->drawLine(pX+w1, pY+h1, pX, pY+h1, line_R, line_G, line_B, line_A, 1.0f);
+    shapeGraphic->drawLine(pX, pY+h1, pX, pY, line_R, line_G, line_B, line_A, 1.0f);
+```
+
 - Load and play a sound or music :
 ```bash
 	sound1 = new KSound();
@@ -52,6 +69,17 @@ Example : xcode examples project in: /examples/Simple
 
 	music1 = new KMusic();
 	music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
+```
+
+- Read inputs:
+```bash
+sFinger fingerPos = KInput::getFinger(0);
+
+int hitX, hitY = 0;
+if(KInput::isScreenPressed(&hitX, &hitY) == true) {
+
+}
+
 ```
 
 

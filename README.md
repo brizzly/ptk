@@ -1,4 +1,5 @@
-![Grizzly](logo.png)
+![Grizzly](logo.png)<br>
+<img src="logo.png" width="256" height="256">
 
 # PTK 2D engine C++/OpenGL ES2
 

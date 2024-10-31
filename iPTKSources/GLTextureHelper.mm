@@ -64,8 +64,23 @@ GLTextureHelper::~GLTextureHelper(void)
 
 char * GLTextureHelper::loadFileDatas(const char *filename)
 {
-    NSString *texturePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:filename] ofType:nil];
+    //NSLog(@"Bundle path: %@", [[NSBundle mainBundle] bundlePath]);
+    
+    //NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[[NSBundle mainBundle] bundlePath] error:nil];
+    //NSLog(@"Files in bundle: %@", files);
+    
+    //NSString *texturePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:filename] ofType:nil];
+    //NSLog(@"Texture path: %@", texturePath);
+    
+    NSString *filenameStr = [NSString stringWithUTF8String:filename];
+    NSString *filenameEx = [filenameStr stringByDeletingPathExtension];  // Extracts "bg_pattern_separated_bottom"
+    NSString *extension = [filenameStr pathExtension];  // Extracts "png"
+    NSString *texturePath = [[NSBundle mainBundle] pathForResource:filenameEx ofType:extension];
     if (!texturePath) {
+        texturePath = [[NSBundle mainBundle] pathForResource:[filenameEx stringByAppendingString:@"@2x"] ofType:extension];
+    }
+    if (!texturePath) {
+        
         printf("Failed to find texture: %s\n", filename);
         return nullptr;
     }

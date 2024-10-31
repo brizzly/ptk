@@ -122,17 +122,21 @@ char * KWeb::postURL(char	*paramURL, char * param1, char * value1)
 	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 	[request setHTTPBody:postData];
 
-	
-	[NSURLConnection asyncRequest :request
-						  success:^(NSData *data, NSURLResponse *response) {
-							  NSLog(@"Success Post API.");
-							  //NSLog(@"Success Post API : %@", response);
-							 // compblock(data);
-						  }
-						  failure:^(NSData *data, NSError *error) {
-							  NSLog(@"Error: %@", error);
-							//  compblock(nil);
-						  }];
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request
+        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"Error: %@", error);
+                // Handle the failure case
+                // compblock(nil);  // Uncomment if you have a completion block
+            } else {
+                NSLog(@"Success Post API.");
+                // Handle the success case
+                // compblock(data);  // Uncomment if you have a completion block
+            }
+        }];
+    [dataTask resume];
+    
+    
 	
 	/*
 	NSData *returnData = [ NSURLConnection sendSynchronousRequest: request returningResponse: nil error: nil ];

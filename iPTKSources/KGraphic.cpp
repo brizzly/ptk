@@ -164,8 +164,8 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     glViewport(0, 0, _screenW, _screenH);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);  // Dark teal background
-    //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Dark teal background
+    //glClearColor(0.2f, 0.3f, 0.3f, 1.0f);  // Dark teal background
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Dark teal background
     
     
     // for lines -------------------------------

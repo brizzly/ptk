@@ -76,6 +76,8 @@ private:
     bool _eyeRetina;
     GLuint _shaderProgram;
     GLuint _lineShaderProgram;
+	
+	
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
     GLuint vertexBuffer, indexBuffer, textureSamplerLoc;
 

@@ -40,6 +40,15 @@
 		D71E48DB1130A7ED00105C50 /* rebon.caf in Resources */ = {isa = PBXBuildFile; fileRef = D71E48B01130A7ED00105C50 /* rebon.caf */; };
 		D71E48DC1130A7ED00105C50 /* rebon2.caf in Resources */ = {isa = PBXBuildFile; fileRef = D71E48B11130A7ED00105C50 /* rebon2.caf */; };
 		D71E48E01130A7ED00105C50 /* menu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D71E48B61130A7ED00105C50 /* menu.mp3 */; };
+		F929421B2CD5937C003A2720 /* KFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F929421A2CD5937C003A2720 /* KFont.cpp */; };
+		F929421E2CD594FA003A2720 /* libFreetype2-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F929421D2CD594FA003A2720 /* libFreetype2-sim.a */; };
+		F929421F2CD594FA003A2720 /* libFreetype2-arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F929421C2CD594FA003A2720 /* libFreetype2-arm.a */; };
+		F92942272CD59700003A2720 /* neue.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942212CD59700003A2720 /* neue.ttf */; };
+		F92942282CD59700003A2720 /* neuebold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942242CD59700003A2720 /* neuebold.ttf */; };
+		F92942292CD59700003A2720 /* neue_uncondensed__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942232CD59700003A2720 /* neue_uncondensed__.ttf */; };
+		F929422A2CD59700003A2720 /* chinese.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942202CD59700003A2720 /* chinese.ttf */; };
+		F929422B2CD59700003A2720 /* pixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942252CD59700003A2720 /* pixel.ttf */; };
+		F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942222CD59700003A2720 /* neue_uncondensed.ttf */; };
 		F9458CD01D415AD900135BCA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9458CCF1D415AD900135BCA /* Media.xcassets */; };
 		F98E5AFA1D3CC92A00FC4879 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */; };
 		F98E5AFC1D3CC94100FC4879 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */; };
@@ -128,6 +137,16 @@
 		D71E48B11130A7ED00105C50 /* rebon2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rebon2.caf; sourceTree = "<group>"; };
 		D71E48B61130A7ED00105C50 /* menu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menu.mp3; sourceTree = "<group>"; };
 		D71E49041130AC2200105C50 /* TestPortrait.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestPortrait.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F92942192CD5937C003A2720 /* KFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFont.h; sourceTree = "<group>"; };
+		F929421A2CD5937C003A2720 /* KFont.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KFont.cpp; sourceTree = "<group>"; };
+		F929421C2CD594FA003A2720 /* libFreetype2-arm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libFreetype2-arm.a"; sourceTree = "<group>"; };
+		F929421D2CD594FA003A2720 /* libFreetype2-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libFreetype2-sim.a"; sourceTree = "<group>"; };
+		F92942202CD59700003A2720 /* chinese.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.ttf; sourceTree = "<group>"; };
+		F92942212CD59700003A2720 /* neue.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue.ttf; sourceTree = "<group>"; };
+		F92942222CD59700003A2720 /* neue_uncondensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed.ttf; sourceTree = "<group>"; };
+		F92942232CD59700003A2720 /* neue_uncondensed__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed__.ttf; sourceTree = "<group>"; };
+		F92942242CD59700003A2720 /* neuebold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neuebold.ttf; sourceTree = "<group>"; };
+		F92942252CD59700003A2720 /* pixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixel.ttf; sourceTree = "<group>"; };
 		F9458CCF1D415AD900135BCA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -209,6 +228,8 @@
 				FF37576D2CB45B840012C4B0 /* QuartzCore.framework in Frameworks */,
 				F98E5AFE1D3CC94A00FC4879 /* MediaPlayer.framework in Frameworks */,
 				FF3757692CB45B730012C4B0 /* CoreServices.framework in Frameworks */,
+				F929421E2CD594FA003A2720 /* libFreetype2-sim.a in Frameworks */,
+				F929421F2CD594FA003A2720 /* libFreetype2-arm.a in Frameworks */,
 				F98E5AFC1D3CC94100FC4879 /* SafariServices.framework in Frameworks */,
 				F98E5AFA1D3CC92A00FC4879 /* EventKitUI.framework in Frameworks */,
 				069D6CE514C0F6FD00B463A9 /* MessageUI.framework in Frameworks */,
@@ -258,6 +279,7 @@
 			children = (
 				FF4B990A2CB2013300DA591B /* SimpleTest.entitlements */,
 				F9458CCF1D415AD900135BCA /* Media.xcassets */,
+				F92942262CD59700003A2720 /* fonte */,
 				FF8BC1FE2CBB2AE000DE5C31 /* iPTKSources */,
 				D71E488B1130A7ED00105C50 /* assets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -281,6 +303,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F929421C2CD594FA003A2720 /* libFreetype2-arm.a */,
+				F929421D2CD594FA003A2720 /* libFreetype2-sim.a */,
 				FF37576A2CB45B7B0012C4B0 /* IOKit.framework */,
 				FF3757682CB45B730012C4B0 /* CoreServices.framework */,
 				FF3757642CB45B5A0012C4B0 /* Accelerate.framework */,
@@ -370,6 +394,20 @@
 			path = tracks;
 			sourceTree = "<group>";
 		};
+		F92942262CD59700003A2720 /* fonte */ = {
+			isa = PBXGroup;
+			children = (
+				F92942202CD59700003A2720 /* chinese.ttf */,
+				F92942212CD59700003A2720 /* neue.ttf */,
+				F92942222CD59700003A2720 /* neue_uncondensed.ttf */,
+				F92942232CD59700003A2720 /* neue_uncondensed__.ttf */,
+				F92942242CD59700003A2720 /* neuebold.ttf */,
+				F92942252CD59700003A2720 /* pixel.ttf */,
+			);
+			name = fonte;
+			path = /Users/julien/Documents/GIT/ptk/fonte;
+			sourceTree = "<absolute>";
+		};
 		FF1CFF9A2CA606B2008CB8C2 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +424,8 @@
 			children = (
 				FF8BC1E62CBB2AE000DE5C31 /* GLTextureHelper.h */,
 				FF8BC1E72CBB2AE000DE5C31 /* GLTextureHelper.mm */,
+				F92942192CD5937C003A2720 /* KFont.h */,
+				F929421A2CD5937C003A2720 /* KFont.cpp */,
 				FF8BC1E82CBB2AE000DE5C31 /* KGraphic.h */,
 				FF8BC1E92CBB2AE000DE5C31 /* KGraphic.cpp */,
 				FF8BC1EA2CBB2AE000DE5C31 /* KInput.h */,
@@ -412,8 +452,8 @@
 				FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */,
 			);
 			name = iPTKSources;
-			path = /Volumes/MacMiniSSD/GIT/ptk/iPTKSources;
-			sourceTree = "<absolute>";
+			path = ../../iPTKSources;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -487,6 +527,12 @@
 				D71E48CB1130A7ED00105C50 /* breakjarre.caf in Resources */,
 				FFF1BFF02CAB59D30093CA43 /* box.png in Resources */,
 				D71E48CC1130A7ED00105C50 /* breakjarre2.caf in Resources */,
+				F92942272CD59700003A2720 /* neue.ttf in Resources */,
+				F92942282CD59700003A2720 /* neuebold.ttf in Resources */,
+				F92942292CD59700003A2720 /* neue_uncondensed__.ttf in Resources */,
+				F929422A2CD59700003A2720 /* chinese.ttf in Resources */,
+				F929422B2CD59700003A2720 /* pixel.ttf in Resources */,
+				F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */,
 				FF8BC1592CB7BB4400DE5C31 /* 960_1440.png in Resources */,
 				FFCBB2762CAB7406000797B4 /* box2.png in Resources */,
 				D71E48CD1130A7ED00105C50 /* click.caf in Resources */,
@@ -520,6 +566,7 @@
 				FF8BC2162CBDCA7800DE5C31 /* KMiscTools.mm in Sources */,
 				FF1CFF9B2CA606B2008CB8C2 /* glfm_android.c in Sources */,
 				FF8BC1FF2CBB2AE000DE5C31 /* KInput.cpp in Sources */,
+				F929421B2CD5937C003A2720 /* KFont.cpp in Sources */,
 				FF8BC2002CBB2AE000DE5C31 /* KLogFile.cpp in Sources */,
 				FF8BC2012CBB2AE000DE5C31 /* KWeb.mm in Sources */,
 				FF8BC2032CBB2AE000DE5C31 /* KPTK.cpp in Sources */,
@@ -567,7 +614,8 @@
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SAMKeychain/SAMKeychain.framework/Headers\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers\"",
-					"$(SRCROOT)/../../glfm-main/include/",
+					"$(SRCROOT)/../../fglm/",
+					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				INFOPLIST_FILE = "SimpleTest-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -613,7 +661,8 @@
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SAMKeychain/SAMKeychain.framework/Headers\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers\"",
-					"$(SRCROOT)/../../glfm-main/include/",
+					"$(SRCROOT)/../../fglm/",
+					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				INFOPLIST_FILE = "SimpleTest-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -775,7 +824,8 @@
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SAMKeychain/SAMKeychain.framework/Headers\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers\"",
-					"$(SRCROOT)/../../glfm-main/include/",
+					"$(SRCROOT)/../../fglm/",
+					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				INFOPLIST_FILE = "SimpleTest-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";

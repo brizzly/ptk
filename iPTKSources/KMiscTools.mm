@@ -290,7 +290,7 @@ bool KMiscTools::isIphone6()
 bool KMiscTools:: iPad()
 {
     UIUserInterfaceIdiom idiom = [[UIDevice currentDevice] userInterfaceIdiom];
-    NSLog(@"%ld", idiom);
+    //NSLog(@"%ld", idiom);
     if (idiom == UIUserInterfaceIdiomPad) {
         return true;
     }

@@ -17,12 +17,8 @@ public:
     GLuint compileShader(GLenum type, const char* source);
     GLuint createShaderProgram(const char* vertexSource, const char* fragmentSource);
     GLuint createLineShader();
-    
-//public:
-//    
-//    const char* vertexShaderSource;
-//    const char* fragmentShaderSource;
-//    
+	GLuint createFonteShader();
+
     
 private:
     

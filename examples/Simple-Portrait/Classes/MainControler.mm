@@ -7,6 +7,7 @@
 #import "MainController.h"
 #import "KShader.h"
 #import "KGraphic.h"
+#import "KFont.h"
 #import "KSound.h"
 #import "KMusic.h"
 #import "KInput.h"
@@ -23,6 +24,7 @@ KGraphic * testGraphic;     // box 1
 KGraphic * testGraphic2;    // box 2
 KGraphic * testGraphic3;    // background
 KGraphic * shapeGraphic;
+KFont * fonte;
 KSound * sound1;
 KSound * sound2;
 KMusic * music1;
@@ -68,7 +70,11 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     
     shapeGraphic = new KGraphic(gameW, gameH, screenW, screenH);
     
-    
+	
+	const char * fontname = "neue.ttf";
+	fonte = new KFont(KMiscTools::makeFilePath(fontname), 48);
+	
+	
     // Ensure OpenALManager is initialized
     OpenALManager& alManager = OpenALManager::getInstance();
 
@@ -100,9 +106,10 @@ void onFrame(GLFMDisplay *display, double frameTime)
     static float r = 0.0;
     static float z = 0.0;
     static float a = 0.0;
-    
-    r += (frameTime / 1000.0f) * 0.0005f;
-    a += (frameTime / 1000.0f) * 0.0005f;
+	
+
+    r += (frameTime / 1000.0f) * 0.01f;
+    a += (frameTime / 1000.0f) * 0.01f;
     z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
 
     static float debugval = 0.0;
@@ -169,8 +176,16 @@ void onFrame(GLFMDisplay *display, double frameTime)
     shapeGraphic->drawLine(pX, pY+h1, pX, pY, line_R, line_G, line_B, line_A, 1.0f);
 
     
+	// TEXT
+	
+	float _gameW = 960.0f;
+	float _gameH = 1440.0f;
 
-    
+	// Set up orthographic projection before rendering text
+	fonte->setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
+	fonte->RenderText(L"HELLO WORLD HOW ARE YOU!!!!!!", 10, 20, 1.0f);
+
+
     // Swap the buffers to display the rendered content
     //glfmSwapBuffers(display);
 }

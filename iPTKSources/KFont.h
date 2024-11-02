@@ -31,7 +31,7 @@ struct Character {
 class KFont {
 	
 public:
-	KFont(const char* fontPath, int fontSize);
+	KFont(const char* fontPath, int fontSize, float gameWidth, float gameHeight);
 	~KFont();
 
 	void RenderText(const wchar_t* text, float x, float y, float scale);
@@ -42,7 +42,7 @@ private:
 	KShader *shader;
 	GLuint _fonteShaderProgram;
 	GLfloat orthoMatrix[16];
-	
+	float _gameW, _gameH;
 	FT_Library ft;
 	FT_Face face;
 	std::map<char, Character> characters;

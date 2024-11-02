@@ -72,7 +72,7 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     
 	
 	const char * fontname = "neue.ttf";
-	fonte = new KFont(KMiscTools::makeFilePath(fontname), 48);
+	fonte = new KFont(KMiscTools::makeFilePath(fontname), 48, gameW, gameH);
 	
 	
     // Ensure OpenALManager is initialized
@@ -178,11 +178,6 @@ void onFrame(GLFMDisplay *display, double frameTime)
     
 	// TEXT
 	
-	float _gameW = 960.0f;
-	float _gameH = 1440.0f;
-
-	// Set up orthographic projection before rendering text
-	fonte->setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
 	fonte->RenderText(L"HELLO WORLD HOW ARE YOU!!!!!!", 10, 20, 1.0f);
 
 

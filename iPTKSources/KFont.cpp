@@ -1,7 +1,10 @@
 // KFont.cpp
 #include "KFont.h"
 
-KFont::KFont(const char* fontPath, int fontSize) {
+KFont::KFont(const char* fontPath, int fontSize, float gameWidth, float gameHeight)
+{
+	_gameW = gameWidth;
+	_gameH = gameHeight;
 	shader = new KShader();
 	_fonteShaderProgram = shader->createFonteShader();
 
@@ -81,6 +84,9 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		printf("Error: Shader program is invalid.\n");
 		return;
 	}
+	
+	setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
+	
 
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
 	std::string utf8Text = converter.to_bytes(text);

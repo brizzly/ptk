@@ -3,12 +3,13 @@
 # PTK awesome mobile game engine
 # C++/OpenGL ES2/OpenAL/Freetype2
 
+PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
+
 - This game engine is open source and forever free. Please buy me a coffee is you like it!
 - Send your game name and I will add it in the powered by ptk list.
 
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/jmapp)
 
-PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
 
 ## Why C++/OpenGL?
 

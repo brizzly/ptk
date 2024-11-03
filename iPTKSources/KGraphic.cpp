@@ -555,7 +555,7 @@ bool KGraphic::loadPicture(const char *filename)
     unsigned char *data = NULL;
     int width, height, nrChannels;
     int isBGR = 1;
-    bool isRetina = false;
+    _eyeRetina = false;
     
 #ifdef __ANDROID__
 
@@ -589,15 +589,28 @@ bool KGraphic::loadPicture(const char *filename)
 //    data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);  // Load as RGBA
     
     GLTextureHelper helper;
-    isRetina = helper.getSurfaceRetina(filename); // Check for Retina
-    std::string retinaFilename(filename);
+    std::string modifiedFilename(filename);  // Use std::string to modify the filename
     
-//    if (isRetina) {
-//        retinaFilename.insert(retinaFilename.find_last_of("."), "@2x"); // Append @2x
-//    }
-    
-    filename = helper.loadFileDatas(retinaFilename.c_str());
-    data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);
+    // Attempt to load @2x version first
+    size_t dotPosition = modifiedFilename.find_last_of(".");
+    if (dotPosition != std::string::npos) {
+        _eyeRetina = true;
+        modifiedFilename.insert(dotPosition, "@2x");  // Add @2x before the file extension
+    }
+
+    const char* retinaFilename = helper.loadFileDatas(modifiedFilename.c_str());
+    data = stbi_load(retinaFilename, &width, &height, &nrChannels, STBI_rgb_alpha);
+
+    // Check if the @2x image failed to load
+    if (!data) {
+        printf("Failed to load @2x texture, trying standard version: %s\n", filename);
+        
+        _eyeRetina = false;
+        
+        // Fall back to standard filename
+        retinaFilename = helper.loadFileDatas(filename);
+        data = stbi_load(retinaFilename, &width, &height, &nrChannels, STBI_rgb_alpha);
+    }
 
 #endif
 
@@ -607,7 +620,7 @@ bool KGraphic::loadPicture(const char *filename)
     }
 
     // Update texture dimensions for retina if needed
-    if (isRetina) {
+    if (_eyeRetina) {
         _textureSizeW = width / 2;
         _textureSizeH = height / 2;
     } else {
@@ -652,7 +665,6 @@ bool KGraphic::loadPicture(const char *filename)
     // Use RGBA format for texture
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-    _eyeRetina = true; //helper.getSurfaceRetina();
     return true;
 }
 
@@ -672,6 +684,10 @@ float KGraphic::getTextureSizeH() {
     return static_cast<float>(_textureSizeH);
 }
 
+bool KGraphic::isRetina() {
+    return _eyeRetina;
+}
+
 void KGraphic::blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int destY , bool flipx , bool flipy )
 {
     // Set properties for the rendering
@@ -681,6 +697,13 @@ void KGraphic::blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int dest
     this->destY = destY;      // Destination Y
     this->sizeW = x2 - x1;
     this->sizeH = y2 - y1;
+    
+    // presume every ios devices are Retina capables so we need to double size before display it
+    if(_eyeRetina) {
+        this->sizeW *= 2.0f;
+        this->sizeH *= 2.0f;
+    }
+    
     this->angle = 0;    // Rotation angle in degrees
     this->zoom = 1.0;      // Scale (1.0 = no scaling)
     this->blend = 1.0;     // Alpha blending value (0.0 - 1.0)
@@ -688,7 +711,7 @@ void KGraphic::blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int dest
     render();
 }
 
-void KGraphic::blitAlphaRectFx(int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend , bool flipx , bool flipy )
+void KGraphic::blit(int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend , bool flipx , bool flipy )
 {
     // Set properties for the rendering
     this->srcX = x1;
@@ -697,6 +720,13 @@ void KGraphic::blitAlphaRectFx(int x1, int y1, int x2, int y2, int destX, int de
     this->destY = destY;      // Destination Y
     this->sizeW = x2 - x1;
     this->sizeH = y2 - y1;
+    
+    // presume every ios devices are Retina capables so we need to double size before display it
+    if(_eyeRetina) {
+        this->sizeW *= 2.0f;
+        this->sizeH *= 2.0f;
+    }
+    
     this->angle = angle;    // Rotation angle in degrees
     this->zoom = zoom;      // Scale (1.0 = no scaling)
     this->blend = blend;     // Alpha blending value (0.0 - 1.0)

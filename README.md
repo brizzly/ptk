@@ -30,35 +30,15 @@ Example : xcode examples project in: /examples/Simple
 
 - Load and display a sprite :
 ```bash
-	test = new KGraphic();
-	test->loadPicture("box.png");
-	test->srcX = 0;
-	test->srcY = 0;
-	test->destX = 0;
-	test->destY = 0;
-	test->sizeW = 640;
-	test->sizeH = 480;
-	test->angle = 0;
-	test->zoom = 1.0;
-	test->blend = 1.0;
-	test->render();
+	image = new KGraphic();
+	image->loadPicture("image.png");
+	image->blit(0, 0, 256, 256, 140, 80, a, z);
 ```
 
 - Display lines :
 ```bash
-    float line_R = 0.0f;
-    float line_G = 222.0f/255.0f;
-    float line_B = 1;
-    float line_A = 0.50f;
-    
-    float pX = 20;
-    float pY = 20;
-    float w1 = screenWidth/2;
-    float h1 = screenHeight/2;
-    shapeGraphic->drawLine(pX, pY, pX+w1, pY, line_R, line_G, line_B, line_A, 1.0f);
-    shapeGraphic->drawLine(pX+w1, pY, pX+w1, pY+h1, line_R, line_G, line_B, line_A, 1.0f);
-    shapeGraphic->drawLine(pX+w1, pY+h1, pX, pY+h1, line_R, line_G, line_B, line_A, 1.0f);
-    shapeGraphic->drawLine(pX, pY+h1, pX, pY, line_R, line_G, line_B, line_A, 1.0f);
+    shapeGraphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
+
 ```
 
 - Load and play a sound or music :

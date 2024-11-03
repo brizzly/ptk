@@ -25,6 +25,9 @@ KGraphic * testGraphic2;    // box 2
 KGraphic * testGraphic3;    // background
 KGraphic * testGraphic4;    // box 3
 KGraphic * shapeGraphic;
+KGraphic * buttonLeft;
+KGraphic * buttonMiddle;
+KGraphic * buttonRight;
 KFont * fonte;
 KSound * sound1;
 KSound * sound2;
@@ -68,13 +71,21 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     
     testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH);
     //testGraphic3->loadPicture("960_1440.png");
-    testGraphic3->loadPicture("960_1440_Retina@2x.png");
+    testGraphic3->loadPicture("960_1440_Retina.png");
 
     testGraphic4 = new KGraphic(gameW, gameH, screenW, screenH);
     testGraphic4->loadPicture("box512.png");
     
     shapeGraphic = new KGraphic(gameW, gameH, screenW, screenH);
     
+    buttonLeft = new KGraphic(gameW, gameH, screenW, screenH);
+    buttonLeft->loadPicture("border2_left.png");
+
+    buttonMiddle = new KGraphic(gameW, gameH, screenW, screenH);
+    buttonMiddle->loadPicture("border2_middle.png");
+    
+    buttonRight = new KGraphic(gameW, gameH, screenW, screenH);
+    buttonRight->loadPicture("border2_right.png");
 	
 	const char * fontname = "neue.ttf";
 	fonte = new KFont(KMiscTools::makeFilePath(fontname), 48, gameW, gameH);
@@ -83,7 +94,7 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     // Ensure OpenALManager is initialized
     OpenALManager& alManager = OpenALManager::getInstance();
 
-    
+    /*
     sound1 = new KSound;
     sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
     sound1->setVolume(1.0);
@@ -95,7 +106,7 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     music1 = new KMusic();
     music1->load(KMiscTools::makeFilePath("menu.mp3"));
     music1->playMusic();
-    
+    */
 }
 
 // Rendering function
@@ -122,60 +133,19 @@ void onFrame(GLFMDisplay *display, double frameTime)
 
     
     // FULL SCREEN IMAGE : 960x1440
-    
-    testGraphic3->srcX = 0;
-    testGraphic3->srcY = 0;
-    testGraphic3->destX = 0;
-    testGraphic3->destY = 0;
-    testGraphic3->sizeW = 960;
-    testGraphic3->sizeH = 1440;
-    testGraphic3->angle = 0;
-    testGraphic3->zoom = 1.0;
-    testGraphic3->blend = 1.0;
-    testGraphic3->render();
+    testGraphic3->blit(0, 0, 960, 1440, 0, 0);
     
     
     // SQUARE 256x256
-    
-    testGraphic->srcX = 0;
-    testGraphic->srcY = 0;
-    testGraphic->destX = 140;
-    testGraphic->destY = 80;
-    testGraphic->sizeW = 256;
-    testGraphic->sizeH = 256;
-    testGraphic->angle = a;
-    testGraphic->zoom = z;
-    testGraphic->blend = 1.0;
-    testGraphic->render();
-    
-    
-
-     // SQUARE 256x256
+    testGraphic->blit(0, 0, 256, 256, 140, 80, a, z);
      
-     testGraphic2->srcX = 0;
-     testGraphic2->srcY = 0;
-     testGraphic2->destX = 420;
-     testGraphic2->destY = 850;
-     testGraphic2->sizeW = 256;
-     testGraphic2->sizeH = 256;
-     testGraphic2->angle = 360-a;
-     testGraphic2->zoom = 1.0;
-     testGraphic2->blend = 1.0;
-     testGraphic2->render();
+     
+     // SQUARE 256x256
+    testGraphic2->blit(0, 0, 256, 256, 420, 850, 360-a, z);
 
     
     // SQUARE 512x512
-    
-    testGraphic4->srcX = 0;
-    testGraphic4->srcY = 0;
-    testGraphic4->destX = 362;
-    testGraphic4->destY = 353;
-    testGraphic4->sizeW = 512;
-    testGraphic4->sizeH = 512;
-    testGraphic4->angle = 0;
-    testGraphic4->zoom = 1;
-    testGraphic4->blend = 1;
-    testGraphic4->render();
+    testGraphic4->blit(0, 0, 512, 512, 362, 353);
     
     
     // LINES
@@ -195,6 +165,13 @@ void onFrame(GLFMDisplay *display, double frameTime)
     shapeGraphic->drawLine(pX, pY+h1, pX, pY, line_R, line_G, line_B, line_A, 1.0f);
 
     
+    // BUTTON
+    
+    buttonLeft->blit(0, 0, 40, 98, 0, 0);
+    buttonMiddle->blit(0, 0, 40, 98, 0+50, 0);
+    buttonRight->blit(0, 0, 40, 98, 0+50+100, 0);
+    
+    
 	// TEXT
 	
 	fonte->RenderText(L"y=20: HELLO WORLD HOW ARE YOU!!!!!!", 10, 20, 1.0f);
@@ -207,7 +184,7 @@ void onFrame(GLFMDisplay *display, double frameTime)
 	fonte->RenderText(L"y=1100: OK it's good ;p", 10, 1100, 1.0f);
 	fonte->RenderText(L"y=1300: OK it's good ;p", 10, 1300, 1.0f);
 	fonte->RenderText(L"y=1400: OK it's good ;p", 10, 1400, 1.0f);
-	
+
 
     // Swap the buffers to display the rendered content
     //glfmSwapBuffers(display);

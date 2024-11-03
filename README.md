@@ -1,6 +1,6 @@
 <img src="logo.png" width="256" height="256">
 
-# PTK 2D fantastic easy mobile game engine
+# PTK awesome mobile game engine
 # C++/OpenGL ES2/OpenAL/Freetype2
 
 - This game engine is open source and forever free. Please buy me a coffee is you like it!

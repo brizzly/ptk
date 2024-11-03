@@ -555,7 +555,8 @@ bool KGraphic::loadPicture(const char *filename)
     unsigned char *data = NULL;
     int width, height, nrChannels;
     int isBGR = 1;
-
+    bool isRetina = false;
+    
 #ifdef __ANDROID__
 
     if (this->g_assetManager == nullptr) {
@@ -583,15 +584,37 @@ bool KGraphic::loadPicture(const char *filename)
     isBGR = 0; //detectRGBorBGR(data, width, height);
 
 #else
+//    GLTextureHelper helper;
+//    filename = helper.loadFileDatas(filename);
+//    data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);  // Load as RGBA
+    
     GLTextureHelper helper;
-    filename = helper.loadFileDatas(filename);
-    data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);  // Load as RGBA
+    isRetina = helper.getSurfaceRetina(filename); // Check for Retina
+    std::string retinaFilename(filename);
+    
+//    if (isRetina) {
+//        retinaFilename.insert(retinaFilename.find_last_of("."), "@2x"); // Append @2x
+//    }
+    
+    filename = helper.loadFileDatas(retinaFilename.c_str());
+    data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);
+
 #endif
 
     if (!data) {
         printf("Failed to load texture: %s\n", filename);
         return false;
     }
+
+    // Update texture dimensions for retina if needed
+    if (isRetina) {
+        _textureSizeW = width / 2;
+        _textureSizeH = height / 2;
+    } else {
+        _textureSizeW = width;
+        _textureSizeH = height;
+    }
+    
 
     // Detect whether the image is RGB or BGR
     if (isBGR) {
@@ -609,9 +632,6 @@ bool KGraphic::loadPicture(const char *filename)
     _blitColorChanged = false;
     _imageWidth = width;
     _imageHeight = height;
-
-    _textureSizeW = width;
-    _textureSizeH = height;
     
     glDisable(GL_DEPTH_TEST);
     glGenTextures(1, &_texture);

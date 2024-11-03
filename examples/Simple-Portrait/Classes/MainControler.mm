@@ -23,6 +23,7 @@
 KGraphic * testGraphic;     // box 1
 KGraphic * testGraphic2;    // box 2
 KGraphic * testGraphic3;    // background
+KGraphic * testGraphic4;    // box 3
 KGraphic * shapeGraphic;
 KFont * fonte;
 KSound * sound1;
@@ -66,7 +67,11 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     testGraphic2->loadPicture("box2.png");
     
     testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH);
-    testGraphic3->loadPicture("960_1440.png");
+    //testGraphic3->loadPicture("960_1440.png");
+    testGraphic3->loadPicture("960_1440_Retina@2x.png");
+
+    testGraphic4 = new KGraphic(gameW, gameH, screenW, screenH);
+    testGraphic4->loadPicture("box512.png");
     
     shapeGraphic = new KGraphic(gameW, gameH, screenW, screenH);
     
@@ -158,6 +163,20 @@ void onFrame(GLFMDisplay *display, double frameTime)
      testGraphic2->blend = 1.0;
      testGraphic2->render();
 
+    
+    // SQUARE 512x512
+    
+    testGraphic4->srcX = 0;
+    testGraphic4->srcY = 0;
+    testGraphic4->destX = 362;
+    testGraphic4->destY = 353;
+    testGraphic4->sizeW = 512;
+    testGraphic4->sizeH = 512;
+    testGraphic4->angle = 0;
+    testGraphic4->zoom = 1;
+    testGraphic4->blend = 1;
+    testGraphic4->render();
+    
     
     // LINES
     

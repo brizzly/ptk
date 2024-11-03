@@ -32,6 +32,7 @@
  */
 // This class wraps up and slightly modifies APPLE sample code
 
+#include <string>
 #ifdef __ANDROID__
 #include <GLES2/gl2.h>
 #else
@@ -64,10 +65,9 @@ class GLTextureHelper
 		
         char *  loadFileDatas(const char *filename);
 		void	clearSurface(char * surface, int w, int h, int bpp, int R, int G, int B, int A);
-		bool	isScreenRetina_iPhone4();
-		bool	isScreenRetina();
-		bool	iPadScreen();
 		void	listFonts();
+        bool    getSurfaceRetina(const char *filename);
+        bool    getDeviceRetina();
 		bool	LoadTexture(const char *szTextureFile );
 		int		LoadFileTGA(JadeImage_t *textureObject);
 		
@@ -76,7 +76,6 @@ class GLTextureHelper
 		//GLint	getTextureSize(void) { return _texSize; }
 		GLint	getTextureSizeW(void) { return _texSizeW; }
 		GLint	getTextureSizeH(void) { return _texSizeH; }
-		bool	getSurfaceRetina(void) { return _surfaceRetina; }
 		
 		
 	private:

@@ -3,6 +3,7 @@
 #define KGRAPHIC_H
 
 #include "KShader.h"
+#include <string>
 #ifdef __ANDROID__
 #include <GLES2/gl2.h>
 #include <android/asset_manager_jni.h>

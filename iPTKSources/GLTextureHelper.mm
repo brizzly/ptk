@@ -118,80 +118,35 @@ void GLTextureHelper::clearSurface(char * surface, int w, int h, int bpp, int R,
 	}	
 }
 
-bool GLTextureHelper::isScreenRetina_iPhone4()
+bool GLTextureHelper::getSurfaceRetina(const char *filename)
 {
-	UIScreen* mainscr = [UIScreen mainScreen];
-	int w = mainscr.currentMode.size.width;
-	int h = mainscr.currentMode.size.height;
-	if (w == 640 && h == 960) // Retina 3.5" display detected (iphone4)
-	{
-		return true;
-	}
-	return false;
+    std::string filenameStr(filename);  // Convert to std::string for easier manipulation
+
+    // Check if filename contains "@2x" before the file extension
+    size_t pos = filenameStr.find("@2x");
+    if (pos != std::string::npos) {
+        // @2x found in filename, so it is considered a Retina asset
+        return true;
+    }
+    
+    // If "@2x" is not found, assume it is not a Retina asset
+    return false;
 }
 
-bool GLTextureHelper::isScreenRetina()
+bool GLTextureHelper::getDeviceRetina()
 {
-	UIScreen* mainscr = [UIScreen mainScreen];
-	int w = mainscr.currentMode.size.width;
-	int h = mainscr.currentMode.size.height;
-	if (w == 640 && h == 960) // Retina 3.5" display detected
-	{
-		return true;
-	}
-	if(w == 960 && h == 1704) // Retina iPhone 6+,7+,8+
-	{
-		return true;
-	}
-	if(w == 1242 && h == 2208) // Retina iPhone 7+,8+
-	{
-		return true;
-	}
-	if(w == 1125 && h == 2001) // Retina iPhone 8+ Scale2 instead of 3
-	{
-		return true;
-	}
-	if(w == 1125 && h == 2436) // Retina iPhone X
-	{
-		return true;
-	}
-	if ((w == 640 && h == 1136) || (w == 1136 && h == 640)) // Retina 4" display detected
-	{
-		return true;
-	}
-	if ((w == 750 && h == 1334) || (w == 1080 && h == 1920) ) // Retina 4"5 and 5"5 display detected
-	{
-		return true;
-	}
-	if ((w == 1536 && h == 2048) || (w == 2048 && h == 1536)) // Retina 13" iPad display detected
-	{
-		return true;
-	}
-	if(w == 2048 && h == 2732) // ipad pro
-	{
-		return true;
-	}
-	return false;
-}
-
-bool GLTextureHelper::iPadScreen()
-{
-	UIScreen* mainscr = [UIScreen mainScreen];
-	int w = mainscr.currentMode.size.width;
-	int h = mainscr.currentMode.size.height;
-	if (w == 1024 && h == 768) // iPad non retina detected
-	{
-		return true;
-	}
-	if (w == 2048 && h == 1536) // iPad retina detected
-	{
-		return true;
-	}
-	if(w == 2048 && h == 2732) // ipad pro
-	{
-		return true;
-	}
-	return false;
+    #if TARGET_OS_IPHONE || TARGET_OS_SIMULATOR
+    // iOS or Simulator
+    return [UIScreen mainScreen].scale > 1.0;
+    #elif TARGET_OS_MAC
+    // macOS
+    NSArray *screens = [NSScreen screens];
+    NSScreen *mainScreen = [screens objectAtIndex:0];
+    return [mainScreen backingScaleFactor] > 1.0;
+    #else
+    // Default to non-retina if not detected
+    return false;
+    #endif
 }
 
 bool GLTextureHelper::LoadTexture(const char *szTextureFile)

@@ -75,7 +75,6 @@
 		FF37576D2CB45B840012C4B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E487B1130A7D900105C50 /* QuartzCore.framework */; };
 		FF4C06182CB1CF5300BEC9CE /* MainControler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF4C06172CB1CF5300BEC9CE /* MainControler.mm */; };
 		FF76319F2CB1C39F006672CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF76319E2CB1C39A006672CE /* main.m */; };
-		FF8BC1592CB7BB4400DE5C31 /* 960_1440.png in Resources */ = {isa = PBXBuildFile; fileRef = FF8BC1582CB7BB4400DE5C31 /* 960_1440.png */; };
 		FF8BC1FF2CBB2AE000DE5C31 /* KInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1EB2CBB2AE000DE5C31 /* KInput.cpp */; };
 		FF8BC2002CBB2AE000DE5C31 /* KLogFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1ED2CBB2AE000DE5C31 /* KLogFile.cpp */; };
 		FF8BC2012CBB2AE000DE5C31 /* KWeb.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1FB2CBB2AE000DE5C31 /* KWeb.mm */; };
@@ -91,6 +90,9 @@
 		FF8BC2122CBD44FD00DE5C31 /* OpenALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */; };
 		FF8BC2162CBDCA7800DE5C31 /* KMiscTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC2152CBDCA7800DE5C31 /* KMiscTools.mm */; };
 		FFB190A32CD7DC3C005D7AEB /* Freetype2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */; };
+		FFB190A52CD7E080005D7AEB /* box512.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190A42CD7E080005D7AEB /* box512.png */; };
+		FFB190AB2CD8006C005D7AEB /* 960_1440.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AA2CD8006C005D7AEB /* 960_1440.png */; };
+		FFB190AD2CD80EAF005D7AEB /* 960_1440_Retina@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AC2CD80EAF005D7AEB /* 960_1440_Retina@2x.png */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
 		FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48791130A7D900105C50 /* OpenGLES.framework */; };
 		FFF1BFF02CAB59D30093CA43 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF1BFEF2CAB59D30093CA43 /* box.png */; };
@@ -170,7 +172,6 @@
 		FF4C06172CB1CF5300BEC9CE /* MainControler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainControler.mm; sourceTree = "<group>"; };
 		FF5C8EE42CB3F32100D2F38C /* TestPortrait-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestPortrait-Bridging-Header.h"; sourceTree = "<group>"; };
 		FF76319E2CB1C39A006672CE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FF8BC1582CB7BB4400DE5C31 /* 960_1440.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 960_1440.png; sourceTree = "<group>"; };
 		FF8BC1E62CBB2AE000DE5C31 /* GLTextureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLTextureHelper.h; sourceTree = "<group>"; };
 		FF8BC1E72CBB2AE000DE5C31 /* GLTextureHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GLTextureHelper.mm; sourceTree = "<group>"; };
 		FF8BC1E82CBB2AE000DE5C31 /* KGraphic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGraphic.h; sourceTree = "<group>"; };
@@ -198,6 +199,9 @@
 		FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALManager.cpp; sourceTree = "<group>"; };
 		FF8BC2152CBDCA7800DE5C31 /* KMiscTools.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMiscTools.mm; sourceTree = "<group>"; };
 		FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Freetype2.xcframework; path = ../../ExternalSDKs/ft2/Freetype2.xcframework; sourceTree = SOURCE_ROOT; };
+		FFB190A42CD7E080005D7AEB /* box512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box512.png; sourceTree = "<group>"; };
+		FFB190AA2CD8006C005D7AEB /* 960_1440.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 960_1440.png; sourceTree = "<group>"; };
+		FFB190AC2CD80EAF005D7AEB /* 960_1440_Retina@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "960_1440_Retina@2x.png"; sourceTree = "<group>"; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFF185EB2CA57EFC008120DB /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
 		FFF1BFEB2CAB43840093CA43 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -347,9 +351,11 @@
 		D71E488C1130A7ED00105C50 /* gfx */ = {
 			isa = PBXGroup;
 			children = (
-				FF8BC1582CB7BB4400DE5C31 /* 960_1440.png */,
+				FFB190AC2CD80EAF005D7AEB /* 960_1440_Retina@2x.png */,
+				FFB190AA2CD8006C005D7AEB /* 960_1440.png */,
 				FFF1BFEF2CAB59D30093CA43 /* box.png */,
 				FFCBB2752CAB7406000797B4 /* box2.png */,
+				FFB190A42CD7E080005D7AEB /* box512.png */,
 			);
 			path = gfx;
 			sourceTree = "<group>";
@@ -529,12 +535,14 @@
 				F929422A2CD59700003A2720 /* chinese.ttf in Resources */,
 				F929422B2CD59700003A2720 /* pixel.ttf in Resources */,
 				F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */,
-				FF8BC1592CB7BB4400DE5C31 /* 960_1440.png in Resources */,
 				FFCBB2762CAB7406000797B4 /* box2.png in Resources */,
 				D71E48CD1130A7ED00105C50 /* click.caf in Resources */,
+				FFB190AD2CD80EAF005D7AEB /* 960_1440_Retina@2x.png in Resources */,
+				FFB190AB2CD8006C005D7AEB /* 960_1440.png in Resources */,
 				D71E48CE1130A7ED00105C50 /* explosion.caf in Resources */,
 				D71E48CF1130A7ED00105C50 /* fruit.caf in Resources */,
 				D71E48D01130A7ED00105C50 /* fruit2.caf in Resources */,
+				FFB190A52CD7E080005D7AEB /* box512.png in Resources */,
 				D71E48D11130A7ED00105C50 /* fruit3.caf in Resources */,
 				D71E48D21130A7ED00105C50 /* grizzly_abeille.caf in Resources */,
 				D71E48D31130A7ED00105C50 /* grizzly_chenille.caf in Resources */,

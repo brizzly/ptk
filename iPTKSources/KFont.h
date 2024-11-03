@@ -8,15 +8,17 @@
 #include <string>
 #include <locale>
 #include <codecvt>
-#include <ft2build.h>
-#include FT_FREETYPE_H
 
 #ifdef __ANDROID__
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 #else
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
+#import <Freetype2/ft2build.h>
+#include FT_FREETYPE_H
 #endif
 
 struct Character {

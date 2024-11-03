@@ -1,6 +1,6 @@
 <img src="logo.png" width="256" height="256">
 
-# PTK awesome mobile game engine
+# PTK super easy mobile game engine
 # C++/OpenGL ES2/OpenAL/Freetype2
 
 PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
@@ -77,7 +77,7 @@ Example : xcode examples project in: /examples/Simple
 1. Clone this repository:
 ```bash
 	git clone https://github.com/brizzly/ptk.git
-	
+
 ```
 2. include /iPTKSources into your project   
 

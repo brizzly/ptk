@@ -49,7 +49,7 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     
     KPTK::_screenW = width;
     KPTK::_screenH = height;
-    KPTK::_screenOrientation = K_960x1440;
+	KPTK::_screenOrientation = K_960x1440;
         
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
@@ -178,8 +178,17 @@ void onFrame(GLFMDisplay *display, double frameTime)
     
 	// TEXT
 	
-	fonte->RenderText(L"HELLO WORLD HOW ARE YOU!!!!!!", 10, 20, 1.0f);
+	fonte->RenderText(L"y=20: HELLO WORLD HOW ARE YOU!!!!!!", 10, 20, 1.0f);
+	fonte->RenderText(L"y=80: i'm fine thank you", 10, 80, 1.0f);
+	fonte->RenderText(L"y=140: OK it's good ;p", 10, 140, 1.0f);
 
+	fonte->RenderText(L"y=500: OK it's good ;p", 10, 500, 1.0f);
+	fonte->RenderText(L"y=700: OK it's good ;p", 10, 700, 1.0f);
+	fonte->RenderText(L"y=900: OK it's good ;p", 10, 900, 1.0f);
+	fonte->RenderText(L"y=1100: OK it's good ;p", 10, 1100, 1.0f);
+	fonte->RenderText(L"y=1300: OK it's good ;p", 10, 1300, 1.0f);
+	fonte->RenderText(L"y=1400: OK it's good ;p", 10, 1400, 1.0f);
+	
 
     // Swap the buffers to display the rendered content
     //glfmSwapBuffers(display);

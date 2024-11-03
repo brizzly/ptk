@@ -3,6 +3,7 @@
 
 KFont::KFont(const char* fontPath, int fontSize, float gameWidth, float gameHeight)
 {
+	_fontSize = fontSize;
 	_gameW = gameWidth;
 	_gameH = gameHeight;
 	shader = new KShader();
@@ -85,6 +86,9 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		return;
 	}
 	
+	y = _gameH - y - _fontSize;
+	
+	
 	setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
 	
 
@@ -143,15 +147,6 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, ch.textureID);
 			
-			//GLint boundTexture;
-			//glGetIntegerv(GL_TEXTURE_BINDING_2D, &boundTexture);
-			//printf("Rendering with texture ID: %d (Expected ID: %d)\n", boundTexture, ch.textureID);
-			
-			
-			//		GLint textUniform = glGetUniformLocation(_fonteShaderProgram, "text");
-			//		if (textUniform != -1) {
-			//			glUniform1i(textUniform, 0);  // Set the sampler to use texture unit 0
-			//		}
 			
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
@@ -180,7 +175,48 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 
 //	glDisableVertexAttribArray(glGetAttribLocation(_fonteShaderProgram, "position"));
 //	glDisableVertexAttribArray(glGetAttribLocation(_fonteShaderProgram, "texCoords"));
-//	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void KFont::RenderTextCenteredButton(const wchar_t* text, float posx, float posy, float btn_width, float scale)
+{
+	float text_width = 0.0f, text_height = 0.0f;
+
+	// Measure the text width and height
+	measure_text(text, &text_width, &text_height, scale);
+
+	// Adjust position to center the text horizontally within the button
+	posx += (btn_width - text_width) / 2;
+
+	// Render the text using drawText
+	RenderText(text, posx, posy, scale);
+}
+
+void KFont::measure_text(const wchar_t* text, float* width, float* height, float scale)
+{
+	*width = 0;
+	*height = 0;
+
+	for (const wchar_t* c = text; *c; ++c) {
+		// Convert wchar_t to char (assuming ASCII or compatible encoding)
+		char charCode = static_cast<char>(*c);
+		
+		// Check if the character is in the loaded glyph map
+		if (characters.find(charCode) != characters.end()) {
+			Character ch = characters[charCode];
+			
+			// Accumulate width based on character advance
+			*width += (ch.advance >> 6) * scale;  // Convert 26.6 fixed-point to pixels
+
+			// Find the maximum height of the characters
+			float charHeight = ch.sizeY * scale;
+			if (charHeight > *height) {
+				*height = charHeight;
+			}
+		} else {
+			//std::cerr << "Character " << charCode << " not found in font glyph map." << std::endl;
+		}
+	}
 }
 
 void KFont::setupOrthoProjection(float left, float right, float bottom, float top)

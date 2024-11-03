@@ -94,7 +94,6 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     // Ensure OpenALManager is initialized
     OpenALManager& alManager = OpenALManager::getInstance();
 
-    /*
     sound1 = new KSound;
     sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
     sound1->setVolume(1.0);
@@ -106,7 +105,6 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     music1 = new KMusic();
     music1->load(KMiscTools::makeFilePath("menu.mp3"));
     music1->playMusic();
-    */
 }
 
 // Rendering function

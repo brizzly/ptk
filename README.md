@@ -1,7 +1,7 @@
 <img src="logo.png" width="256" height="256">
 
 # PTK super easy mobile game engine
-# C++/OpenGL ES2/OpenAL/Freetype2
+## C++/OpenGL ES2/OpenAL/Freetype2
 
 PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
 
@@ -82,7 +82,7 @@ Example : xcode examples project in: /examples/Simple
 2. include /iPTKSources into your project   
 
 
-### Games prowered by PTK
+# Games prowered by PTK
 
 # iPhone
 - ULTRANIUM https://apps.apple.com/app/space-breakout-ultranium/id6736717749

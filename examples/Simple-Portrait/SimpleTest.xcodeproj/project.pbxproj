@@ -47,8 +47,6 @@
 		F929422A2CD59700003A2720 /* chinese.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942202CD59700003A2720 /* chinese.ttf */; };
 		F929422B2CD59700003A2720 /* pixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942252CD59700003A2720 /* pixel.ttf */; };
 		F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942222CD59700003A2720 /* neue_uncondensed.ttf */; };
-		F929423A2CD70121003A2720 /* libFreetype2-arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F92942382CD70121003A2720 /* libFreetype2-arm.a */; };
-		F929423B2CD70121003A2720 /* libFreetype2-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F92942392CD70121003A2720 /* libFreetype2-sim.a */; };
 		F9458CD01D415AD900135BCA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9458CCF1D415AD900135BCA /* Media.xcassets */; };
 		F98E5AFA1D3CC92A00FC4879 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */; };
 		F98E5AFC1D3CC94100FC4879 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */; };
@@ -92,6 +90,7 @@
 		FF8BC20F2CBD343800DE5C31 /* KMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC20E2CBD343800DE5C31 /* KMusic.cpp */; };
 		FF8BC2122CBD44FD00DE5C31 /* OpenALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */; };
 		FF8BC2162CBDCA7800DE5C31 /* KMiscTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC2152CBDCA7800DE5C31 /* KMiscTools.mm */; };
+		FFB190A32CD7DC3C005D7AEB /* Freetype2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
 		FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48791130A7D900105C50 /* OpenGLES.framework */; };
 		FFF1BFF02CAB59D30093CA43 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF1BFEF2CAB59D30093CA43 /* box.png */; };
@@ -145,8 +144,6 @@
 		F92942232CD59700003A2720 /* neue_uncondensed__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed__.ttf; sourceTree = "<group>"; };
 		F92942242CD59700003A2720 /* neuebold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neuebold.ttf; sourceTree = "<group>"; };
 		F92942252CD59700003A2720 /* pixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixel.ttf; sourceTree = "<group>"; };
-		F92942382CD70121003A2720 /* libFreetype2-arm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libFreetype2-arm.a"; path = "/Users/julien/Documents/GIT/ptk/ExternalSDKs/ft2/libFreetype2-arm.a"; sourceTree = "<absolute>"; };
-		F92942392CD70121003A2720 /* libFreetype2-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libFreetype2-sim.a"; path = "/Users/julien/Documents/GIT/ptk/ExternalSDKs/ft2/libFreetype2-sim.a"; sourceTree = "<absolute>"; };
 		F9458CCF1D415AD900135BCA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -200,6 +197,7 @@
 		FF8BC2102CBD44FD00DE5C31 /* OpenALManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenALManager.h; sourceTree = "<group>"; };
 		FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALManager.cpp; sourceTree = "<group>"; };
 		FF8BC2152CBDCA7800DE5C31 /* KMiscTools.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMiscTools.mm; sourceTree = "<group>"; };
+		FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Freetype2.xcframework; path = ../../ExternalSDKs/ft2/Freetype2.xcframework; sourceTree = SOURCE_ROOT; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFF185EB2CA57EFC008120DB /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
 		FFF1BFEB2CAB43840093CA43 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -212,8 +210,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1CFFA52CA607D0008CB8C2 /* MetalKit.framework in Frameworks */,
-				F929423A2CD70121003A2720 /* libFreetype2-arm.a in Frameworks */,
-				F929423B2CD70121003A2720 /* libFreetype2-sim.a in Frameworks */,
 				F98E5B0C1D3CCA3F00FC4879 /* Foundation.framework in Frameworks */,
 				F98E5B0B1D3CCA3900FC4879 /* AVFoundation.framework in Frameworks */,
 				F98E5B0A1D3CCA3200FC4879 /* CoreMedia.framework in Frameworks */,
@@ -239,6 +235,7 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				FFB190A32CD7DC3C005D7AEB /* Freetype2.xcframework in Frameworks */,
 				D71E47EA1130A53600105C50 /* StoreKit.framework in Frameworks */,
 				FF1CFFA32CA6079D008CB8C2 /* CoreMotion.framework in Frameworks */,
 				D71E48761130A7D900105C50 /* CoreAudio.framework in Frameworks */,
@@ -303,8 +300,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F92942382CD70121003A2720 /* libFreetype2-arm.a */,
-				F92942392CD70121003A2720 /* libFreetype2-sim.a */,
+				FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */,
 				FF37576A2CB45B7B0012C4B0 /* IOKit.framework */,
 				FF3757682CB45B730012C4B0 /* CoreServices.framework */,
 				FF3757642CB45B5A0012C4B0 /* Accelerate.framework */,
@@ -405,8 +401,8 @@
 				F92942252CD59700003A2720 /* pixel.ttf */,
 			);
 			name = fonte;
-			path = /Users/julien/Documents/GIT/ptk/fonte;
-			sourceTree = "<absolute>";
+			path = ../../fonte;
+			sourceTree = SOURCE_ROOT;
 		};
 		FF1CFF9A2CA606B2008CB8C2 /* src */ = {
 			isa = PBXGroup;

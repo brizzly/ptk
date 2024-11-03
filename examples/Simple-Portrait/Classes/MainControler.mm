@@ -108,8 +108,8 @@ void onFrame(GLFMDisplay *display, double frameTime)
     static float a = 0.0;
 	
 
-    r += (frameTime / 1000.0f) * 0.01f;
-    a += (frameTime / 1000.0f) * 0.01f;
+    r += (frameTime / 1000.0f) * 0.001f;
+    a += (frameTime / 1000.0f) * 0.001f;
     z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
 
     static float debugval = 0.0;

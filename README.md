@@ -75,9 +75,10 @@ Example : xcode examples project in: /examples/Simple
 ### Build Instructions
 
 1. Clone this repository:
-   ```bash
+```bash
 	git clone https://github.com/brizzly/ptk.git
-   ```
+	
+```
 2. include /iPTKSources into your project   
 
 

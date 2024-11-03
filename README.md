@@ -39,7 +39,7 @@ Example : xcode examples project in: /examples/Simple
 
 - Display lines :
 ```bash
-    shapeGraphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
+	shapeGraphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
 
 ```
 
@@ -55,12 +55,12 @@ Example : xcode examples project in: /examples/Simple
 
 - Read inputs:
 ```bash
-sFinger fingerPos = KInput::getFinger(0);
+	sFinger fingerPos = KInput::getFinger(0);
 
-int hitX, hitY = 0;
-if(KInput::isScreenPressed(&hitX, &hitY) == true) {
+	int hitX, hitY = 0;
+	if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 
-}
+	}
 
 ```
 
@@ -76,7 +76,7 @@ if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/brizzly/ptk.git
+	git clone https://github.com/brizzly/ptk.git
    ```
 2. include /iPTKSources into your project   
 

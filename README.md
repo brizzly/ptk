@@ -5,25 +5,35 @@
 
 PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
 
+- Your project will be buildable for Android, PC, Web, everywhere.
 - This game engine is open source and forever free. Please buy me a coffee is you like it!
 - Send your game name and I will add it in the powered by ptk list.
 
-[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/jmapp)
-
-
-## Why C++/OpenGL?
-
-Your project will be buildable for Android, PC, Web, everywhere.
-
-- Renderer uses [fglm](https://github.com/brackeen/glfm)
 - **KGraphic**: Blit super fast, alpha, zoom, rotation.
 - **KInput**: Key and touch input.
 - **KMusic**: Music player
 - **KSound**: Sound management with OpenAL.
 
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/jmapp)
+
+
+### Features
+
+- [OpenGL ES2](https://www.khronos.org/opengles/)
+- [GLFM][(https://github.com/brackeen/glfm)
+- [OpenAL](https://github.com/kcat/openal-soft)
+- [Freetype2](https://github.com/freetype/freetype)
+- [Box2D](https://www.google.com/search?q=github+Box2d&sourceid=chrome&ie=UTF-8)
+
 ## Getting Started
 
-Example : xcode examples project in: /examples/Simple
+1. Clone this repository:
+```bash
+git clone https://github.com/brizzly/ptk.git
+```
+2. include /iPTKSources into your project   
+
+3. Example : xcode examples project in: /examples/Simple
 - iOS Landscape
 - iOS Portrait
 - Android Portait
@@ -61,24 +71,6 @@ if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 
 }
 ```
-
-
-### Features
-
-- OpenGL ES2
-- GLFM
-- OpenAL
-- Freetype2
-- Box2D
-
-
-### Build Instructions
-
-1. Clone this repository:
-```bash
-git clone https://github.com/brizzly/ptk.git
-```
-2. include /iPTKSources into your project   
 
 
 

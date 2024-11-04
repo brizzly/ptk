@@ -1,6 +1,6 @@
 <img src="logo.png" width="256" height="256">
 
-# PTK super easy mobile game engine
+# PTK super easy mobile game sdk
 ## C++/OpenGL ES2/OpenAL/Freetype2
 
 PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.

@@ -13,7 +13,7 @@ PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
 
 ## Why C++/OpenGL?
 
-Your project will be buildable for Android, PC, Web, and not only iOS.
+Your project will be buildable for Android, PC, Web, everywhere.
 
 - Renderer uses [fglm](https://github.com/brackeen/glfm)
 - **KGraphic**: Blit super fast, alpha, zoom, rotation.

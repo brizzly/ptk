@@ -3,11 +3,11 @@
 # PTK super easy mobile game sdk
 ## C++/OpenGL ES2/OpenAL/Freetype2
 
-PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
+Your project will be buildable for Android, PC, Web, everywhere.
+This game engine is open source and forever free. Please buy me a coffee is you like it!
+Send your game name and I will add it in the powered by ptk list.
 
-- Your project will be buildable for Android, PC, Web, everywhere.
-- This game engine is open source and forever free. Please buy me a coffee is you like it!
-- Send your game name and I will add it in the powered by ptk list.
+## PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
 
 - **KGraphic**: Blit super fast, alpha, zoom, rotation.
 - **KInput**: Key and touch input.
@@ -20,7 +20,7 @@ PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
 ### Features
 
 - [OpenGL ES2](https://www.khronos.org/opengles/)
-- [GLFM][(https://github.com/brackeen/glfm)
+- [GLFM](https://github.com/brackeen/glfm)
 - [OpenAL](https://github.com/kcat/openal-soft)
 - [Freetype2](https://github.com/freetype/freetype)
 - [Box2D](https://www.google.com/search?q=github+Box2d&sourceid=chrome&ie=UTF-8)

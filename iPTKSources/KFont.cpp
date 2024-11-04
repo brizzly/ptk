@@ -92,13 +92,7 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
     
     scale *= newScale;
     
-    //float stdSize = 48.0f;
-    //float fRatio = (stdSize/KFONT_SIZE);
-    //scale = (scale / 24.0f) * fRatio;
-    
-    
-    
-	
+
 	setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
 	
 
@@ -206,6 +200,10 @@ void KFont::measure_text(const wchar_t* text, float* width, float* height, float
 {
 	*width = 0;
 	*height = 0;
+    
+    float newScale = 2.0f / KFONT_SIZE;
+    
+    scale *= newScale;
 
 	for (const wchar_t* c = text; *c; ++c) {
 		// Convert wchar_t to char (assuming ASCII or compatible encoding)

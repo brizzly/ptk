@@ -16,7 +16,7 @@ Send your game name and I will add it in the powered by ptk list.
 - [Box2D](https://www.google.com/search?q=github+Box2d&sourceid=chrome&ie=UTF-8)
 
 
-## PTK is a very easy to use 2D engine for C++/OpenGL ES2 games.
+## PTK is very easy to use game sdk
 
 - **KGraphic**: Blit super fast, alpha, zoom, rotation.
 - **KInput**: Key and touch input.

@@ -13,7 +13,7 @@ Send your game name and I will add it in the powered by ptk list.
 - [GLFM](https://github.com/brackeen/glfm)
 - [OpenAL](https://github.com/kcat/openal-soft)
 - [Freetype2](https://github.com/freetype/freetype)
-- [Box2D](https://www.google.com/search?q=github+Box2d&sourceid=chrome&ie=UTF-8)
+- [Box2D](https://github.com/erincatto/box2d)
 
 
 ## PTK is very easy to use game sdk

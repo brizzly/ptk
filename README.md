@@ -55,14 +55,20 @@ image->blit(0, 0, 256, 256, 140, 80, a, z);
 graphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
 ```
 
+- Display TTF text :
+```bash
+fonte = new KFont("neue.ttf", gameW, gameH);
+fonte->RenderText(L"This is so COOL", 0, 0, 32); 
+```
+
 - Load and play a sound or music :
 ```bash
 sound = new KSound();
-sound->loadSample(KMiscTools::makeFilePath("boing2.caf"));
+sound->loadSample("boing2.caf");
 sound->setVolume(50);
 
 music = new KMusic();
-music->playMusic(KMiscTools::makeFilePath("menu.mp3"));
+music->playMusic("menu.mp3");
 ```
 
 - Read inputs:

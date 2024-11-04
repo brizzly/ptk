@@ -32,36 +32,34 @@ Example : xcode examples project in: /examples/Simple
 
 - Load and display a sprite :
 ```bash
-	image = new KGraphic();
-	image->loadPicture("image.png");
-	image->blit(0, 0, 256, 256, 140, 80, a, z);
+image = new KGraphic();
+image->loadPicture("image.png");
+image->blit(0, 0, 256, 256, 140, 80, a, z);
 ```
 
 - Display lines :
 ```bash
-	shapeGraphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
-
+shapeGraphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
 ```
 
 - Load and play a sound or music :
 ```bash
-	sound1 = new KSound();
-	sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
-	sound1->setVolume(50);
+sound1 = new KSound();
+sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
+sound1->setVolume(50);
 
-	music1 = new KMusic();
-	music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
+music1 = new KMusic();
+music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
 ```
 
 - Read inputs:
 ```bash
-	sFinger fingerPos = KInput::getFinger(0);
+sFinger fingerPos = KInput::getFinger(0);
 
-	int hitX, hitY = 0;
-	if(KInput::isScreenPressed(&hitX, &hitY) == true) {
+int hitX, hitY = 0;
+if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 
-	}
-
+}
 ```
 
 
@@ -76,8 +74,7 @@ Example : xcode examples project in: /examples/Simple
 
 1. Clone this repository:
 ```bash
-	git clone https://github.com/brizzly/ptk.git
-
+git clone https://github.com/brizzly/ptk.git
 ```
 2. include /iPTKSources into your project   
 

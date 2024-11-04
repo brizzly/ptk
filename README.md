@@ -39,7 +39,7 @@ git clone https://github.com/brizzly/ptk.git
 3. Example : xcode examples project in: /examples/Simple
 - iOS Landscape
 - iOS Portrait
-- Android Portait
+- Android Portrait
 
 ## Usage : 
 

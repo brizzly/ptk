@@ -82,18 +82,19 @@ Example : xcode examples project in: /examples/Simple
 2. include /iPTKSources into your project   
 
 
+
 # Games prowered by PTK
 
-# iPhone
+## iPhone
 - ULTRANIUM https://apps.apple.com/app/space-breakout-ultranium/id6736717749
 - GRIZZLY https://apps.apple.com/app/grizzly-adventures-crazy-bear-platformer/id357410945
 - BARNEY https://apps.apple.com/app/barney-adventures/id502135523
 - METAL-ANGEL https://apps.apple.com/app/metal-angel-best-shootem-up/id287261924
 
-# Android
+## Android
 coming-soon
 
-# macOS
+## macOS
 - GRIZZLY (macos) https://apps.apple.com/app/grizzly-retro-platformer/id413938360?mt=12
 - ANDROID LODERUNNER (macos) https://apps.apple.com/app/android-best-retro-lode-runner/id412859612
 - ANDROID2 (macos) https://apps.apple.com/app/android-2-retro-loderunner/id1347741576
@@ -107,7 +108,7 @@ coming-soon
 - ULTRANIUM5 (macos) https://apps.apple.com/app/ultranium-5-crazy-arcade-game/id431295311
 - HALLOWEEN 3D (macos) https://apps.apple.com/app/halloween-3d/id1276055212
 
-# PC
+## PC
 - GRIZZLY (pc) https://brizzlyy.itch.io/grizzly-adventures
 - ANDROID LODERUNNER (pc) https://brizzlyy.itch.io/android-lode-runner
 - ANDROID2 (pc) https://brizzlyy.itch.io/androkids2

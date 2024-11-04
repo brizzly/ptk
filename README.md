@@ -77,7 +77,7 @@ if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 
 
 
-# Games prowered by PTK
+# Games made with PTK
 
 ## iPhone
 - ULTRANIUM https://apps.apple.com/app/space-breakout-ultranium/id6736717749

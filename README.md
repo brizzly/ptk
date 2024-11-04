@@ -19,6 +19,7 @@ Send your game name and I will add it in the powered by ptk list.
 ## PTK is very easy to use game sdk
 
 - **KGraphic**: Blit super fast, alpha, zoom, rotation.
+- **KFont**: Render TTF fontes text.
 - **KInput**: Key and touch input.
 - **KMusic**: Music player
 - **KSound**: Sound management with OpenAL.

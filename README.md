@@ -63,12 +63,14 @@ if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 ```
 
 
-### Requirements
+### Features
 
-- C++11 compiler / xCode or Android Studio
 - OpenGL ES2
 - GLFM
 - OpenAL
+- Freetype2
+- Box2D
+
 
 ### Build Instructions
 

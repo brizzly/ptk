@@ -29,6 +29,8 @@ KGraphic * buttonLeft;
 KGraphic * buttonMiddle;
 KGraphic * buttonRight;
 KFont * fonte;
+KFont * fonte2;
+KFont * fonte3;
 KSound * sound1;
 KSound * sound2;
 KMusic * music1;
@@ -88,9 +90,11 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     buttonRight = new KGraphic(gameW, gameH, screenW, screenH);
     buttonRight->loadPicture("border2_right.png");
 	
-	const char * fontname = "neue.ttf";
-	fonte = new KFont(KMiscTools::makeFilePath(fontname), 48, gameW, gameH);
-	
+
+	fonte = new KFont(KMiscTools::makeFilePath("neue.ttf"), gameW, gameH);
+    fonte2 = new KFont(KMiscTools::makeFilePath("pixel.ttf"), gameW, gameH);
+    fonte3 = new KFont(KMiscTools::makeFilePath("chinese.ttf"), gameW, gameH);
+    
 	
     // Ensure OpenALManager is initialized
     OpenALManager& alManager = OpenALManager::getInstance();
@@ -130,11 +134,11 @@ void onFrame(GLFMDisplay *display, double frameTime)
     static float debugval = 0.0;
     debugval += 0.4f;
 
-    
+   
     // FULL SCREEN IMAGE : 960x1440
     testGraphic3->blit(0, 0, 960, 1440, 0, 0);
     
-    
+   
     // SQUARE 256x256
     testGraphic->blit(0, 0, 256, 256, 140, 80, a, z);
      
@@ -170,21 +174,33 @@ void onFrame(GLFMDisplay *display, double frameTime)
     buttonMiddle->blit(0, 0, 160, 49, 20, 0);
     buttonRight->blit(0, 0, 20, 49, 20+160, 0);
     
+
     
 	// TEXT
-	
-	fonte->RenderText(L"y=20: HELLO WORLD HOW ARE YOU!!!!!!", 10, 20, 1.0f);
-	fonte->RenderText(L"y=80: i'm fine thank you", 10, 80, 1.0f);
-	fonte->RenderText(L"y=140: OK it's good ;p", 10, 140, 1.0f);
+    
+    wchar_t * txt = L"This is so cool. COOL Bis";
+    float yfontpos = 0;
 
-	fonte->RenderText(L"y=500: OK it's good ;p", 10, 500, 1.0f);
-	fonte->RenderText(L"y=700: OK it's good ;p", 10, 700, 1.0f);
-	fonte->RenderText(L"y=900: OK it's good ;p", 10, 900, 1.0f);
-	fonte->RenderText(L"y=1100: OK it's good ;p", 10, 1100, 1.0f);
-	fonte->RenderText(L"y=1300: OK it's good ;p", 10, 1300, 1.0f);
-	fonte->RenderText(L"y=1400: OK it's good ;p", 10, 1400, 1.0f);
+    fonte->RenderText(txt, 10, yfontpos, 6);   yfontpos += 40;
+    fonte->RenderText(txt, 10, yfontpos, 12);    yfontpos += 60;
+    fonte->RenderText(txt, 10, yfontpos, 24);    yfontpos += 100;
+    fonte->RenderText(txt, 10, yfontpos, 48);    yfontpos += 130;
+    fonte->RenderText(txt, 10, yfontpos, 72);    yfontpos += 110;
 
-
+    fonte2->RenderText(txt, 10, yfontpos, 6);   yfontpos += 40;
+    fonte2->RenderText(txt, 10, yfontpos, 12);    yfontpos += 60;
+    fonte2->RenderText(txt, 10, yfontpos, 24);    yfontpos += 100;
+    fonte2->RenderText(txt, 10, yfontpos, 48);    yfontpos += 130;
+    fonte2->RenderText(txt, 10, yfontpos, 72);    yfontpos += 110;
+    
+    fonte3->RenderText(txt, 10, yfontpos, 6);   yfontpos += 40;
+    fonte3->RenderText(txt, 10, yfontpos, 12);    yfontpos += 60;
+    fonte3->RenderText(txt, 10, yfontpos, 24);    yfontpos += 100;
+    fonte3->RenderText(txt, 10, yfontpos, 48);    yfontpos += 130;
+    fonte3->RenderText(txt, 10, yfontpos, 72);    yfontpos += 110;
+    
+    
+    
     // Swap the buffers to display the rendered content
     //glfmSwapBuffers(display);
 }

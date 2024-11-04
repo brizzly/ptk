@@ -1,9 +1,9 @@
 // KFont.cpp
 #include "KFont.h"
 
-KFont::KFont(const char* fontPath, int fontSize, float gameWidth, float gameHeight)
+KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 {
-	_fontSize = fontSize;
+	_fontSize = KFONT_SIZE;
 	_gameW = gameWidth;
 	_gameH = gameHeight;
 	shader = new KShader();
@@ -25,7 +25,7 @@ KFont::KFont(const char* fontPath, int fontSize, float gameWidth, float gameHeig
 		return;
 	}
 
-	FT_Set_Pixel_Sizes(face, 0, fontSize);
+	FT_Set_Pixel_Sizes(face, 0, _fontSize);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
 
 	for (unsigned char c = 0; c < 128; c++) {
@@ -85,9 +85,19 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		printf("Error: Shader program is invalid.\n");
 		return;
 	}
+    
+    float newScale = 2.0f / KFONT_SIZE;
 	
-	y = _gameH - y - _fontSize;
-	
+    y = _gameH - y + _fontSize * newScale; // - _fontSize * newScale;
+    
+    scale *= newScale;
+    
+    //float stdSize = 48.0f;
+    //float fRatio = (stdSize/KFONT_SIZE);
+    //scale = (scale / 24.0f) * fRatio;
+    
+    
+    
 	
 	setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
 	

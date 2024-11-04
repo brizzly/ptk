@@ -21,6 +21,8 @@
 #include FT_FREETYPE_H
 #endif
 
+#define KFONT_SIZE  360.0
+
 struct Character {
 	GLuint textureID;   // ID handle of the glyph texture
 	int sizeX;          // Width of glyph
@@ -33,7 +35,7 @@ struct Character {
 class KFont {
 	
 public:
-	KFont(const char* fontPath, int fontSize, float gameWidth, float gameHeight);
+	KFont(const char* fontPath, float gameWidth, float gameHeight);
 	~KFont();
 
 	void RenderText(const wchar_t* text, float x, float y, float scale);

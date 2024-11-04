@@ -52,17 +52,17 @@ image->blit(0, 0, 256, 256, 140, 80, a, z);
 
 - Display lines :
 ```bash
-shapeGraphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
+graphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
 ```
 
 - Load and play a sound or music :
 ```bash
-sound1 = new KSound();
-sound1->loadSample(KMiscTools::makeFilePath("boing2.caf"));
-sound1->setVolume(50);
+sound = new KSound();
+sound->loadSample(KMiscTools::makeFilePath("boing2.caf"));
+sound->setVolume(50);
 
-music1 = new KMusic();
-music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
+music = new KMusic();
+music->playMusic(KMiscTools::makeFilePath("menu.mp3"));
 ```
 
 - Read inputs:

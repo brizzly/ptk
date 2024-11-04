@@ -53,7 +53,8 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     
     KPTK::_screenW = width;
     KPTK::_screenH = height;
-	KPTK::_screenOrientation = K_960x1440;
+    //KPTK::_screenOrientation = K_320x568;
+    KPTK::_screenOrientation = K_960x1440;
         
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
@@ -104,7 +105,7 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     
     music1 = new KMusic();
     music1->load(KMiscTools::makeFilePath("menu.mp3"));
-    music1->playMusic();
+ //   music1->playMusic();
 }
 
 // Rendering function
@@ -165,9 +166,9 @@ void onFrame(GLFMDisplay *display, double frameTime)
     
     // BUTTON
     
-    buttonLeft->blit(0, 0, 40, 98, 0, 0);
-    buttonMiddle->blit(0, 0, 40, 98, 0+50, 0);
-    buttonRight->blit(0, 0, 40, 98, 0+50+100, 0);
+    buttonLeft->blit(0, 0, 20, 49, 0, 0);
+    buttonMiddle->blit(0, 0, 160, 49, 20, 0);
+    buttonRight->blit(0, 0, 20, 49, 20+160, 0);
     
     
 	// TEXT

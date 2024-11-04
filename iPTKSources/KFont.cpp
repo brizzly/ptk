@@ -186,7 +186,7 @@ void KFont::RenderTextCenteredButton(const wchar_t* text, float posx, float posy
 	measure_text(text, &text_width, &text_height, scale);
 
 	// Adjust position to center the text horizontally within the button
-    posx += (btn_width - text_width); // / 2;
+    posx += (btn_width - text_width) / 2;
 
 	// Render the text using drawText
 	RenderText(text, posx, posy, scale);

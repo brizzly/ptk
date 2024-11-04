@@ -164,8 +164,8 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     glViewport(0, 0, _screenW, _screenH);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);  // Dark teal background
-    //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Dark teal background
+    //glClearColor(0.2f, 0.3f, 0.3f, 1.0f);  // Dark teal background
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Dark teal background
     
     
     // for lines -------------------------------
@@ -723,8 +723,8 @@ void KGraphic::blit(int x1, int y1, int x2, int y2, int destX, int destY, float 
     
     // presume every ios devices are Retina capables so we need to double size before display it
     if(_eyeRetina) {
-        this->sizeW *= 2.0f;
-        this->sizeH *= 2.0f;
+   //     this->sizeW *= 2.0f;
+   //     this->sizeH *= 2.0f;
     }
     
     this->angle = angle;    // Rotation angle in degrees

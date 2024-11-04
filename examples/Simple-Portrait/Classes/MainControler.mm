@@ -143,30 +143,30 @@ void onFrame(GLFMDisplay *display, double frameTime)
     testGraphic->blit(0, 0, 256, 256, 140, 80, a, z);
      
      
-     // SQUARE 256x256
-    testGraphic2->blit(0, 0, 256, 256, 420, 850, 360-a, z);
-
-    
     // SQUARE 512x512
-    testGraphic4->blit(0, 0, 512, 512, 362, 353);
+    testGraphic4->blit(0, 0, 512, 512, 362, 353, 10, 1.0f, 0.5f);
     
     
     // LINES
     
-    float line_R = 0.0f;
-    float line_G = 222.0f/255.0f;
-    float line_B = 1;
-    float line_A = 0.50f;
+    float line_R = 1.0f;
+    float line_G = 0;
+    float line_B = 0;
+    float line_A = 0.75f;
+    float line_W = 5.0;
     
     float pX = 20;
     float pY = 20;
     float w1 = screenWidth/2;
     float h1 = screenHeight/2;
-    shapeGraphic->drawLine(pX, pY, pX+w1, pY, line_R, line_G, line_B, line_A, 1.0f);
-    shapeGraphic->drawLine(pX+w1, pY, pX+w1, pY+h1, line_R, line_G, line_B, line_A, 1.0f);
-    shapeGraphic->drawLine(pX+w1, pY+h1, pX, pY+h1, line_R, line_G, line_B, line_A, 1.0f);
-    shapeGraphic->drawLine(pX, pY+h1, pX, pY, line_R, line_G, line_B, line_A, 1.0f);
+    shapeGraphic->drawLine(pX, pY, pX+w1, pY, line_R, line_G, line_B, line_A, line_W);
+    shapeGraphic->drawLine(pX+w1, pY, pX+w1, pY+h1, line_R, line_G, line_B, line_A, line_W);
+    shapeGraphic->drawLine(pX+w1, pY+h1, pX, pY+h1, line_R, line_G, line_B, line_A, line_W);
+    shapeGraphic->drawLine(pX, pY+h1, pX, pY, line_R, line_G, line_B, line_A, line_W);
 
+    shapeGraphic->drawLine(0, 80, screenWidth, 80, 1, 1, 1, 1, 1.0);
+    shapeGraphic->drawLine(0, 100, screenWidth, 100, 0, 1, 0, 0.5, 10.0);
+    
     
     // BUTTON
     
@@ -201,8 +201,10 @@ void onFrame(GLFMDisplay *display, double frameTime)
     
     
     
-    // Swap the buffers to display the rendered content
-    //glfmSwapBuffers(display);
+    // SQUARE 256x256
+   testGraphic2->blit(0, 0, 256, 256, 420, 850, 360-a, z);
+
+    
 }
 
 // Function to handle surface destruction (cleanup)

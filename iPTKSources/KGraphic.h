@@ -79,7 +79,7 @@ private:
 	
 	
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
-    GLuint vertexBuffer, indexBuffer, textureSamplerLoc;
+    GLuint vertexBuffer, indexBuffer, textureSamplerLoc, opacityLoc;
 
     GLuint vertexBuffer_Line;
     GLfloat orthoMatrix[16];

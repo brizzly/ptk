@@ -85,8 +85,10 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
         "precision mediump float;"
         "varying vec2 v_texCoord;"
         "uniform sampler2D u_texture;"
+        "uniform float u_opacity;"
         "void main() {"
-        "    gl_FragColor = texture2D(u_texture, v_texCoord);"
+        "    vec4 texColor = texture2D(u_texture, v_texCoord);"
+        "    gl_FragColor = vec4(texColor.rgb, texColor.a * u_opacity);"  // Apply opacity to alpha
         "}";
     
     shader = new KShader();
@@ -117,10 +119,10 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     printf("Matrix Uniform Projection: %d\n", matrixUniformProjection);
     printGLError("shader4bis");
     
-//    blendColorLocation = glGetUniformLocation(_shaderProgram, "u_blendColor");
-//    printf("Blend Color Uniform Location: %d\n", blendColorLocation);
-//    printGLError("shader5");
-    
+    opacityLoc = glGetUniformLocation(_shaderProgram, "u_opacity");
+    printf("Blend Location: %d\n", opacityLoc);
+    printGLError("shader5");
+                             
     textureSamplerLoc = glGetUniformLocation(_shaderProgram, "u_texture");
     printf("Texture Location: %d\n", textureSamplerLoc);
     printGLError("shader6");
@@ -226,31 +228,19 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     // Set up orthographic projection for screen size
     setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
     
-    /*
-    float sizeRatio = sizeW / sizeH;
-  
-    // ZOOM ( project real image size on screen )
-    scaleMatrix(orthoMatrix, zoom*sizeRatio, zoom);
-    //scaleMatrix(transform, 0.5*sizeRatio, 0.5);
-    
-    // ZOOM
-    scaleMatrix(orthoMatrix, zoom*sizeRatio*zoom, zoom*zoom);
-
-    // ROTATE
-    if (angle != 0.0f) {
-        rotateMatrix(orthoMatrix, angle * M_PI / 180.0f);
-    }
-    */
-    
 
     glUseProgram(_lineShaderProgram);
 
+    y1 = _gameH - y1;
+    y2 = _gameH - y2;
+
+    
     // Define line coordinates and color
     float lineCoords[] = { x1, y1, x2, y2 };
     float color[] = { r, g, b, a };
 
     // Set line width (note: this may be clamped on some platforms)
-    glLineWidth(linewidth*10.0f);
+    glLineWidth(linewidth*2.0f);
 
     // Bind the vertex buffer and upload the line coordinates
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -463,6 +453,10 @@ void KGraphic::render()
     glDisable(GL_CULL_FACE);
     glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
     
+    // Enable blending
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ 
     
     glUseProgram(_shaderProgram);   // Use the shader
 
@@ -473,7 +467,9 @@ void KGraphic::render()
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_sizeH"), sizeH);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_texWidth"), _textureSizeW);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_texHeight"), _textureSizeH);
+    glUniform1f(glGetUniformLocation(_shaderProgram, "u_opacity"), blend);
 
+    
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glEnableVertexAttribArray(positionAttribLocation);
     glEnableVertexAttribArray(texCoordAttribLocation);
@@ -481,10 +477,6 @@ void KGraphic::render()
     glVertexAttribPointer(positionAttribLocation, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
     glVertexAttribPointer(texCoordAttribLocation, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
     
-    
-    // Enable blending
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glActiveTexture(GL_TEXTURE0);  // Activate texture unit 0
     glBindTexture(GL_TEXTURE_2D, _texture);  // Bind texture
@@ -697,13 +689,6 @@ void KGraphic::blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int dest
     this->destY = destY;      // Destination Y
     this->sizeW = x2 - x1;
     this->sizeH = y2 - y1;
-    
-    // presume every ios devices are Retina capables so we need to double size before display it
-    if(_eyeRetina) {
-        this->sizeW *= 2.0f;
-        this->sizeH *= 2.0f;
-    }
-    
     this->angle = 0;    // Rotation angle in degrees
     this->zoom = 1.0;      // Scale (1.0 = no scaling)
     this->blend = 1.0;     // Alpha blending value (0.0 - 1.0)
@@ -720,13 +705,6 @@ void KGraphic::blit(int x1, int y1, int x2, int y2, int destX, int destY, float 
     this->destY = destY;      // Destination Y
     this->sizeW = x2 - x1;
     this->sizeH = y2 - y1;
-    
-    // presume every ios devices are Retina capables so we need to double size before display it
-    if(_eyeRetina) {
-   //     this->sizeW *= 2.0f;
-   //     this->sizeH *= 2.0f;
-    }
-    
     this->angle = angle;    // Rotation angle in degrees
     this->zoom = zoom;      // Scale (1.0 = no scaling)
     this->blend = blend;     // Alpha blending value (0.0 - 1.0)

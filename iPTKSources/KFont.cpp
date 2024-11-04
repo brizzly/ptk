@@ -88,7 +88,7 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
     
     float newScale = 2.0f / KFONT_SIZE;
 	
-    y = _gameH - y + _fontSize * newScale; // - _fontSize * newScale;
+    y = _gameH - y + _fontSize * newScale;
     
     scale *= newScale;
     

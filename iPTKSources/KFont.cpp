@@ -224,7 +224,8 @@ void KFont::measure_text(const wchar_t* text, float* width, float* height, float
 	*width = 0;
 	*height = 0;
     
-    float newScale = 2.0f / KFONT_SIZE;
+    float r = _gameW / _gameH;
+    float newScale = r * 2.0f / KFONT_SIZE;
     
     scale *= newScale;
 

@@ -8,6 +8,9 @@ KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 	_gameH = gameHeight;
 	shader = new KShader();
 	_fonteShaderProgram = shader->createFonteShader();
+    
+    SetBackgroundColor(0,0,0,0);
+    SetTextColor(1,1,1);
 
 	// Generate VBO
 	glGenBuffers(1, &VBO);
@@ -79,6 +82,21 @@ KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 	FT_Done_FreeType(ft);
 }
 
+void KFont::SetBackgroundColor(float r, float g, float b, float a)
+{
+    back_R = r;
+    back_G = g;
+    back_B = b;
+    back_A = a;
+}
+
+void KFont::SetTextColor(float r, float g, float b)
+{
+    text_R = r;
+    text_G = g;
+    text_B = b;
+}
+
 void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 {
 	if (_fonteShaderProgram == 0) {
@@ -86,11 +104,10 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		return;
 	}
     
-    float newScale = 2.0f / KFONT_SIZE;
-	
-    y = _gameH - y + _fontSize * newScale;
+    y = _gameH - y - scale;
     
-    scale *= newScale;
+    float r = _gameW / _gameH;
+    scale = scale * r * 2.0f / KFONT_SIZE;
     
 
 	setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
@@ -104,9 +121,15 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 	// Set text color
 	GLint textColorLoc = glGetUniformLocation(_fonteShaderProgram, "textColor");
 	if (textColorLoc != -1) {
-		glUniform3f(textColorLoc, 1.0f, 0.0f, 0.0f);  // Example color: red
+        glUniform3f(textColorLoc, text_R, text_G, text_B);
 	}
-
+    
+    // Set background color
+    GLint backgroundColorLoc = glGetUniformLocation(_fonteShaderProgram, "backgroundColor");
+    if (backgroundColorLoc != -1) {
+        glUniform4f(backgroundColorLoc, back_R, back_G, back_B, back_A);
+    }
+    
 	GLint textUniform = glGetUniformLocation(_fonteShaderProgram, "text");
 	if (textUniform != -1) {
 		glUniform1i(textUniform, 0);  // Set the sampler to use texture unit 0

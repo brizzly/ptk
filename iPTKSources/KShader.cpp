@@ -108,49 +108,19 @@ GLuint KShader::createFonteShader()
 		"    TexCoords = texCoords;"       // Pass texture coordinates
 		"}";
 	
-	/*
-	const char* fragmentSource =
-		"precision mediump float;"
-		"uniform vec3 textColor;"
-
-		"void main() {"
-		"	gl_FragColor = vec4(textColor, 1.0);"  // Render solid color
-		"}";*/
-
-	// Fragment shader source code (Corrected)
-	const char* fragmentSource =
-		"precision mediump float;\n"
-		"varying vec2 TexCoords;\n"
-		"uniform sampler2D text;\n"
-		"void main() {\n"
-		"    float alpha = texture2D(text, TexCoords).a;\n"  // Correctly sample the alpha channel
-		"    gl_FragColor = vec4(alpha, alpha, alpha, alpha);\n"  // Set correct output color with alpha
-		"}";
-	
-
-	
-	/*
-	const char* fragmentSource =
-		"precision mediump float;"
-		"varying vec2 TexCoords;"
-		"uniform sampler2D text;"
-		"void main() {"
-		"	float alpha = texture2D(text, TexCoords).r;"  // Sample the alpha channel
-		"	gl_FragColor = vec4(alpha, alpha, alpha, 1.0);"  // Output alpha as grayscale
-		"}";
-	*/
-	
-	/*
-	const char* fragmentSource =
-		"precision mediump float;"
-		"varying vec2 TexCoords;"          // Interpolated texture coordinates
-		"uniform sampler2D text;"          // Texture sampler for glyph
-		"uniform vec3 textColor;"          // Text color uniform
-		"void main() {"
-		"    vec4 sampled = vec4(1.0, 1.0, 1.0, texture2D(text, TexCoords).r);"  // Sample alpha
-		"    gl_FragColor = vec4(textColor, 1.0);" // * sampled;"  // Apply color to text
-		"}";
-	*/
+    const char* fragmentSource =
+        "precision mediump float;\n"
+        "varying vec2 TexCoords;\n"
+        "uniform sampler2D text;\n"
+        "uniform vec3 textColor;\n"            // Color of the text
+        "uniform vec4 backgroundColor;\n"      // RGBA color for background
+        "void main() {\n"
+        "    float alpha = texture2D(text, TexCoords).a;\n"  // Sample alpha channel
+        "    vec3 color = mix(backgroundColor.rgb, textColor, alpha);\n"  // Blend background and text colors
+        "    float finalAlpha = mix(backgroundColor.a, 1.0, alpha);\n"    // Blend background and text alpha
+        "    gl_FragColor = vec4(color, finalAlpha);\n"  // Set final color and alpha
+        "}";
+    
 	// Compile, link, and return the shader program
 	return createShaderProgram(vertexSource, fragmentSource);
 }

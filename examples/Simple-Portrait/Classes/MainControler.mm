@@ -92,9 +92,15 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
 	
 
 	fonte = new KFont(KMiscTools::makeFilePath("neue.ttf"), gameW, gameH);
-    fonte2 = new KFont(KMiscTools::makeFilePath("pixel.ttf"), gameW, gameH);
-    fonte3 = new KFont(KMiscTools::makeFilePath("chinese.ttf"), gameW, gameH);
+    fonte->SetTextColor(0, 0, 1.0);
+    fonte->SetBackgroundColor(1, 0, 0, 0.8f);
     
+    fonte2 = new KFont(KMiscTools::makeFilePath("pixel.ttf"), gameW, gameH);
+    fonte2->SetBackgroundColor(1, 0, 0, 0.8f);
+    
+    
+    fonte3 = new KFont(KMiscTools::makeFilePath("chinese.ttf"), gameW, gameH);
+    fonte3->SetTextColor(1, 0, 0);
 	
     // Ensure OpenALManager is initialized
     OpenALManager& alManager = OpenALManager::getInstance();
@@ -170,17 +176,29 @@ void onFrame(GLFMDisplay *display, double frameTime)
     
     // BUTTON
     
-    buttonLeft->blit(0, 0, 20, 49, 0, 0);
-    buttonMiddle->blit(0, 0, 160, 49, 20, 0);
-    buttonRight->blit(0, 0, 20, 49, 20+160, 0);
+    buttonLeft->blit(0, 800, 20, 49, 0, 0);
+    buttonMiddle->blit(0, 800, 160, 49, 20, 0);
+    buttonRight->blit(0, 800, 20, 49, 20+160, 0);
     
 
     
-	// TEXT
+    // SQUARE 256x256
+   testGraphic2->blit(0, 0, 256, 256, 420, 850, 360-a, z);
+
+    
+    
     
     wchar_t * txt = L"This is so cool. COOL Bis";
     float yfontpos = 0;
-
+    
+//    fonte->RenderText(txt, 0, +100+42, 100);
+    fonte->RenderText(txt, 0, 0, 100);
+    fonte->RenderText(txt, 0, 100, 50);
+    fonte->RenderText(txt, 0, 200, 100);
+    fonte->RenderText(txt, 0, 300, 50);
+    
+    
+/*
     fonte->RenderText(txt, 10, yfontpos, 6);   yfontpos += 40;
     fonte->RenderText(txt, 10, yfontpos, 12);    yfontpos += 60;
     fonte->RenderText(txt, 10, yfontpos, 24);    yfontpos += 100;
@@ -198,13 +216,10 @@ void onFrame(GLFMDisplay *display, double frameTime)
     fonte3->RenderText(txt, 10, yfontpos, 24);    yfontpos += 100;
     fonte3->RenderText(txt, 10, yfontpos, 48);    yfontpos += 130;
     fonte3->RenderText(txt, 10, yfontpos, 72);    yfontpos += 110;
+*/
     
     
-    
-    // SQUARE 256x256
-   testGraphic2->blit(0, 0, 256, 256, 420, 850, 360-a, z);
 
-    
 }
 
 // Function to handle surface destruction (cleanup)

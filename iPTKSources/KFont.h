@@ -38,6 +38,8 @@ public:
 	KFont(const char* fontPath, float gameWidth, float gameHeight);
 	~KFont();
 
+    void SetBackgroundColor(float r, float g, float b, float a);
+    void SetTextColor(float r, float g, float b);
 	void RenderText(const wchar_t* text, float x, float y, float scale);
 	void RenderTextCenteredButton(const wchar_t* text, float posx, float posy, float btn_width, float scale);
 	void measure_text(const wchar_t* text, float* width, float* height, float scale);
@@ -50,6 +52,8 @@ private:
 	GLfloat orthoMatrix[16];
 	float _gameW, _gameH;
 	int _fontSize;
+    float back_R, back_G, back_B, back_A;
+    float text_R, text_G, text_B;
 	FT_Library ft;
 	FT_Face face;
 	std::map<char, Character> characters;

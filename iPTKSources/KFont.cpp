@@ -1,6 +1,11 @@
 // KFont.cpp
 #include "KFont.h"
 
+KFont::~KFont()
+{
+    
+}
+
 KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 {
 	_fontSize = KFONT_SIZE;
@@ -217,6 +222,19 @@ void KFont::RenderTextCenteredButton(const wchar_t* text, float posx, float posy
 
 	// Render the text using drawText
 	RenderText(text, posx, posy, scale);
+}
+
+void KFont::RenderTextCentered(const wchar_t* text, float posy, float offset_x, float scale)
+{
+    float text_width=0, text_height=0;
+    measure_text(text, &text_width, &text_height, scale);
+    //printf("text w/h ; %f %f\n", text_width, text_height);
+    float posx = (_gameW - text_width) / 2;
+    //posx /= _scale;
+    if(offset_x != 0) {
+        posx += offset_x;
+    }
+    RenderText(text, posx, posy, scale);
 }
 
 void KFont::measure_text(const wchar_t* text, float* width, float* height, float scale)

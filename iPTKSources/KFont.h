@@ -42,6 +42,7 @@ public:
     void SetTextColor(float r, float g, float b);
 	void RenderText(const wchar_t* text, float x, float y, float scale);
 	void RenderTextCenteredButton(const wchar_t* text, float posx, float posy, float btn_width, float scale);
+    void RenderTextCentered(const wchar_t* text, float posy, float offset_x, float scale);
 	void measure_text(const wchar_t* text, float* width, float* height, float scale);
 	void printGLError(const char * label);
 	void setupOrthoProjection(float left, float right, float bottom, float top);

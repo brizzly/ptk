@@ -47,6 +47,7 @@
 		F929422A2CD59700003A2720 /* chinese.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942202CD59700003A2720 /* chinese.ttf */; };
 		F929422B2CD59700003A2720 /* pixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942252CD59700003A2720 /* pixel.ttf */; };
 		F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942222CD59700003A2720 /* neue_uncondensed.ttf */; };
+		F92942532CDCA1F6003A2720 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F92942522CDCA1F6003A2720 /* game.cpp */; };
 		F9458CD01D415AD900135BCA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9458CCF1D415AD900135BCA /* Media.xcassets */; };
 		F98E5AFA1D3CC92A00FC4879 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */; };
 		F98E5AFC1D3CC94100FC4879 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */; };
@@ -149,6 +150,8 @@
 		F92942232CD59700003A2720 /* neue_uncondensed__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed__.ttf; sourceTree = "<group>"; };
 		F92942242CD59700003A2720 /* neuebold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neuebold.ttf; sourceTree = "<group>"; };
 		F92942252CD59700003A2720 /* pixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixel.ttf; sourceTree = "<group>"; };
+		F92942512CDCA1F6003A2720 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		F92942522CDCA1F6003A2720 /* game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
 		F9458CCF1D415AD900135BCA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -262,13 +265,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				FFF1BFEB2CAB43840093CA43 /* stb_image.h */,
-				FF1CFF9A2CA606B2008CB8C2 /* src */,
-				FF76319E2CB1C39A006672CE /* main.m */,
-				FF4C06172CB1CF5300BEC9CE /* MainControler.mm */,
-				FF4C06162CB1CECA00BEC9CE /* MainController.h */,
-				FFF185EB2CA57EFC008120DB /* glfm.h */,
+				F92942522CDCA1F6003A2720 /* game.cpp */,
+				F92942512CDCA1F6003A2720 /* game.h */,
 				32CA4F630368D1EE00C91783 /* SimpleTest_Prefix.pch */,
+				F92942542CDCA1FF003A2720 /* System */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -418,6 +418,19 @@
 			name = fonte;
 			path = ../../fonte;
 			sourceTree = SOURCE_ROOT;
+		};
+		F92942542CDCA1FF003A2720 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				FFF1BFEB2CAB43840093CA43 /* stb_image.h */,
+				FF1CFF9A2CA606B2008CB8C2 /* src */,
+				FF76319E2CB1C39A006672CE /* main.m */,
+				FF4C06172CB1CF5300BEC9CE /* MainControler.mm */,
+				FF4C06162CB1CECA00BEC9CE /* MainController.h */,
+				FFF185EB2CA57EFC008120DB /* glfm.h */,
+			);
+			path = System;
+			sourceTree = "<group>";
 		};
 		FF1CFF9A2CA606B2008CB8C2 /* src */ = {
 			isa = PBXGroup;
@@ -580,6 +593,7 @@
 			files = (
 				FF8BC20D2CBD05FE00DE5C31 /* KSound.h in Sources */,
 				FF8BC2162CBDCA7800DE5C31 /* KMiscTools.mm in Sources */,
+				F92942532CDCA1F6003A2720 /* game.cpp in Sources */,
 				FF1CFF9B2CA606B2008CB8C2 /* glfm_android.c in Sources */,
 				FF8BC1FF2CBB2AE000DE5C31 /* KInput.cpp in Sources */,
 				F929421B2CD5937C003A2720 /* KFont.cpp in Sources */,
@@ -622,6 +636,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.1",
 				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -672,6 +687,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.1",
 				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/SimpleTest_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
@@ -836,6 +852,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.1",
 				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/SimpleTest_Prefix.pch;
 				HEADER_SEARCH_PATHS = (

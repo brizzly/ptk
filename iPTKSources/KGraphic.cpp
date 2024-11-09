@@ -14,7 +14,10 @@ KGraphic::~KGraphic()
 {
     glDeleteBuffers(1, &vertexBuffer);
     vertexBuffer = NULL;
-
+    
+    glDeleteBuffers(1, &vertexBuffer_Line);
+    vertexBuffer = NULL;
+    
     glDeleteBuffers(1, &indexBuffer);
     indexBuffer = NULL;
     
@@ -228,9 +231,8 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     // Set up orthographic projection for screen size
     setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
     
-
     glUseProgram(_lineShaderProgram);
-
+    
     y1 = _gameH - y1;
     y2 = _gameH - y2;
 
@@ -241,9 +243,9 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
 
     // Set line width (note: this may be clamped on some platforms)
     glLineWidth(linewidth*2.0f);
-
+    
     // Bind the vertex buffer and upload the line coordinates
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_Line);
     glBufferData(GL_ARRAY_BUFFER, sizeof(lineCoords), lineCoords, GL_DYNAMIC_DRAW);
 
     // Set the position attribute
@@ -277,7 +279,7 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
 
     // Draw the line
     glDrawArrays(GL_LINES, 0, 2);
-
+    
     // Cleanup
     glDisableVertexAttribArray(posAttrib);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

@@ -77,7 +77,6 @@ private:
     GLuint _shaderProgram;
     GLuint _lineShaderProgram;
 	
-	
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
     GLuint vertexBuffer, indexBuffer, textureSamplerLoc, opacityLoc;
 
@@ -89,13 +88,6 @@ private:
     KShader * shader;
     GLuint _texture;
 
-
-
-    // Matrix helper functions
-//    void identityMatrix(float* matrix);
-//    void translateMatrix(float* matrix, float x, float y, float z);
-//    void rotateMatrix(float* matrix, float angle, float x, float y, float z);
-//    void scaleMatrix(float* matrix, float scaleX, float scaleY, float scaleZ);
 
     void computOffset();
     void printMatrix(mat4 m);

@@ -15,9 +15,9 @@
 #include <android/asset_manager_jni.h>
 // Define logging macros for Android Logcat
 #include <android/log.h>
-#define LOG_TAG "KMusic"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+//#define LOG_TAG "KMusic"
+//#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+//#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #else
 #include <AudioToolbox/AudioToolbox.h>
 #include <OpenAL/al.h>

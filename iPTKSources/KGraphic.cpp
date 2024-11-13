@@ -45,6 +45,7 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
 {
     _offsetX = 0;
     _offsetY = 0;
+    shape_centerX = shape_centerY = 0;
     _gameW = (float) game_width;
     _gameH = (float) game_height;
     _screenW = (float) screen_width;
@@ -194,27 +195,34 @@ void KGraphic::printGLError(const char * label)
     }
 }
 
-void KGraphic::setupOrthoProjection(float left, float right, float bottom, float top)
+void KGraphic::setupOrthoProjection(mat4 m, float left, float right, float bottom, float top)
 {
-    orthoMatrix[0] = 2.0f / (right - left);
-    orthoMatrix[1] = 0.0f;
-    orthoMatrix[2] = 0.0f;
-    orthoMatrix[3] = 0.0f;
+    // Set base to identity (optional, since you're setting all values explicitly)
+    setIdentityMatrix(m);
 
-    orthoMatrix[4] = 0.0f;
-    orthoMatrix[5] = 2.0f / (top - bottom);
-    orthoMatrix[6] = 0.0f;
-    orthoMatrix[7] = 0.0f;
+    // First row: scaling X by 2 / (right - left)
+    m[0] = 2.0f / (right - left);
+    m[1] = 0.0f;
+    m[2] = 0.0f;
+    m[3] = 0.0f;
 
-    orthoMatrix[8] = 0.0f;
-    orthoMatrix[9] = 0.0f;
-    orthoMatrix[10] = -1.0f;
-    orthoMatrix[11] = 0.0f;
+    // Second row: scaling Y by 2 / (top - bottom)
+    m[4] = 0.0f;
+    m[5] = 2.0f / (top - bottom);
+    m[6] = 0.0f;
+    m[7] = 0.0f;
 
-    orthoMatrix[12] = -(right + left) / (right - left);
-    orthoMatrix[13] = -(top + bottom) / (top - bottom);
-    orthoMatrix[14] = 0.0f;
-    orthoMatrix[15] = 1.0f;
+    // Third row: scaling Z by -1.0 (assuming orthographic projection depth)
+    m[8] = 0.0f;
+    m[9] = 0.0f;
+    m[10] = -1.0f;  // Z scaling
+    m[11] = 0.0f;
+
+    // Fourth row: translation components
+    m[12] = -(right + left) / (right - left);
+    m[13] = -(top + bottom) / (top - bottom);
+    m[14] = 0.0f;  // Z translation (orthographic, so typically 0)
+    m[15] = 1.0f;  // Homogeneous coordinate
 }
 
 void KGraphic::setLineWidth(short lineWidth) {
@@ -227,11 +235,80 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
         printf("Error: Shader program is invalid.\n");
         return;
     }
+
+    
+    // Define a 4x4 transformation matrix
+    mat4 transform;
+    setIdentityMatrix(transform);
+    
+
+    // PROJECTION MATRIX AS PIXELS
+
+    glUseProgram(_lineShaderProgram);
+    
+    
+//    GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
+//    if (matrixProjection != -1) {
+
+    float scale2 = _screenW / _screenH;
+    float scale3 = 1.0;
+
+    //orthographicMatrix(transform, 0.0, 0.0 + scale2, scale3, 0.0f, -1.0f, 1.0f);
+    
+    setupOrthoProjection(transform, 0.0f, _gameW, 0.0f, _gameH);
+    
+    
+    
+
+//        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, orthoMatrix);
+//   }
+    
+ 
+    /*
+    sizeW = 512;
+    sizeH = 512;
     
     // Set up orthographic projection for screen size
-    setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
+ //   setupOrthoProjection(transform, 0.0f, _gameW, 0.0f, _gameH);
+
+    if(shape_centerX > 0 && shape_centerY > 0) {
     
-    glUseProgram(_lineShaderProgram);
+        float pixelTranslationX = 2.0f * (-shape_centerX / _gameW);
+        float pixelTranslationY = 2.0f * (-shape_centerY / _gameH);
+   //     translateMatrix2(transform, pixelTranslationX, pixelTranslationY);
+
+        
+        
+        // REAL IMAGE SIZE PROJECTION
+        if(zoom < 0) { zoom = 0; }
+        float zoomCopy = zoom;
+        zoom = sizeH / _gameH;
+        zoom *= 0.5;
+        float sizeRatio = sizeW / sizeH;
+        
+        // PREVENT IMAGE TO BE DISTRORDED BY SCREEN RATIO
+   //     scaleMatrix(transform, sizeRatio, 1);
+
+        // TRANSLATE IMAGE FROM ITS CENTER TO CORNER + POSITION
+        float hmX = ((sizeW + destX*2.0f) / _gameH) / 2.0f;
+        float hmY = ((sizeH + destY*2.0f) / _gameH) / 2.0f;
+        //translateMatrix(transform, hmX, hmY);
+    //    translateMatrix2(transform, hmX, hmY);
+        
+        
+        // ZOOM ( project real image size on screen )
+   //     scaleMatrix(transform, zoom*sizeRatio, zoom);
+        
+        // ZOOM
+   //     scaleMatrix(transform, zoom*sizeRatio*zoomCopy, zoom*zoomCopy);
+
+        // ROTATE
+        if (angle != 0.0f) {
+            rotateMatrix2(transform, angle * M_PI / 180.0f);
+        }
+    }
+    */
+    
     
     y1 = _gameH - y1;
     y2 = _gameH - y2;
@@ -271,7 +348,7 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
         printf("Error: Matrix uniform not found in shader.\n");
         return;
     }
-    glUniformMatrix4fv(matrixUniform, 1, GL_FALSE, orthoMatrix);  // Pass orthographic matrix
+    glUniformMatrix4fv(matrixUniform, 1, GL_FALSE, transform);  // Pass orthographic matrix
 
     // Enable blending for transparency
     glEnable(GL_BLEND);
@@ -300,6 +377,12 @@ void KGraphic::translateMatrix(mat4 m, float x, float y) {
     m[12] = x;
     m[13] = y;
 }
+
+void KGraphic::translateMatrix2(mat4 m, float x, float y) {
+    m[12] += x;
+    m[13] += y;
+}
+
 
 // Scaling matrix
 void KGraphic::scaleMatrix(mat4 m, float scaleX, float scaleY)
@@ -331,6 +414,17 @@ void KGraphic::rotateMatrix(mat4 m, float angle)
     // Restore the translation values
     m[12] = translateX;
     m[13] = translateY;
+}
+
+void KGraphic::rotateMatrix2(mat4 m, float angle)
+{
+    float s = sinf(angle);
+    float c = cosf(angle);
+
+    m[0] = c;
+    m[1] = -s;
+    m[4] = s;
+    m[5] = c;
 }
 
 void KGraphic::printMatrix(mat4 m)
@@ -684,18 +778,7 @@ bool KGraphic::isRetina() {
 
 void KGraphic::blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int destY , bool flipx , bool flipy )
 {
-    // Set properties for the rendering
-    this->srcX = x1;
-    this->srcY = y1;
-    this->destX = destX;      // Destination X
-    this->destY = destY;      // Destination Y
-    this->sizeW = x2 - x1;
-    this->sizeH = y2 - y1;
-    this->angle = 0;    // Rotation angle in degrees
-    this->zoom = 1.0;      // Scale (1.0 = no scaling)
-    this->blend = 1.0;     // Alpha blending value (0.0 - 1.0)
-
-    render();
+    blit(x1, y1, x2, y2, destX, destY, 0, 1, 1, flipx, flipy);
 }
 
 void KGraphic::blit(int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend , bool flipx , bool flipy )
@@ -712,4 +795,29 @@ void KGraphic::blit(int x1, int y1, int x2, int y2, int destX, int destY, float 
     this->blend = blend;     // Alpha blending value (0.0 - 1.0)
     
     render();
+}
+
+void KGraphic::blitShape(int numvertices, vec2 * vertice, int destX, int destY, float linewidth, float r, float g, float b, float a)
+{
+    for(int i=0 ; i<numvertices ; i++)
+    {
+        int j = (i+1)%numvertices;
+        
+        float x1 = vertice[i][0];
+        float y1 = vertice[i][1];
+        
+        float x2 = vertice[j][0];
+        float y2 = vertice[j][1];
+
+        //printf("%d: %f %f\n", i, x1, y1);
+        //printf("%d: %f %f\n", j, x2, y2);
+        
+        x1 += destX;
+        y1 += destY;
+        
+        x2 += destX;
+        y2 += destY;
+        
+        drawLine(x1, y1, x2, y2, r, g, b, a, linewidth);
+    }
 }

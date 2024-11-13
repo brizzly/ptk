@@ -13,6 +13,8 @@
 
 
 typedef float mat4[16];
+typedef float vec2[2];
+
 
 class KGraphic {
 
@@ -46,17 +48,20 @@ public:
     float getTextureSizeH();
     bool isRetina();
 
-    void setupOrthoProjection(float left, float right, float bottom, float top);
+    //void setupOrthoProjection(float left, float right, float bottom, float top);
+    void setupOrthoProjection(mat4 m, float left, float right, float bottom, float top);
     void setLineWidth(short lineWidth);
     void drawLine(float x1, float y1, float x2, float y2, float r, float g, float b, float a, float linewidth=1.0);
     void blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int destY , bool flipx=false, bool flipy=false);
     void blit(int x1, int y1, int x2, int y2, int destX, int destY, float angle = 0.0, float zoom = 1.0, float blend = 1.0 , bool flipx=false, bool flipy=false );
-
+    void blitShape(int numvertices, vec2 * vertice, int destX, int destY, float linewidth, float r, float g, float b, float a);
 
 public:
 
     float srcX, srcY, destX, destY, sizeW, sizeH, angle, zoom, blend;
+    float shape_centerX, shape_centerY;
 
+    
 
 private:
     float _imageWidth;
@@ -76,12 +81,9 @@ private:
     bool _eyeRetina;
     GLuint _shaderProgram;
     GLuint _lineShaderProgram;
-	
+    
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
-    GLuint vertexBuffer, indexBuffer, textureSamplerLoc, opacityLoc;
-
-    GLuint vertexBuffer_Line;
-    GLfloat orthoMatrix[16];
+    GLuint vertexBuffer_Line, vertexBuffer, indexBuffer, textureSamplerLoc, opacityLoc;
     
     GLfloat projectionMatrix[16];
     GLuint blendColorLocation;
@@ -99,12 +101,14 @@ private:
 
     // Translation matrix
     void translateMatrix(mat4 m, float x, float y);
+    void translateMatrix2(mat4 m, float x, float y);
 
     // Scaling matrix
     void scaleMatrix(mat4 m, float scaleX, float scaleY);
 
     // Rotation matrix (angle in radians)
     void rotateMatrix(mat4 m, float angle);
+    void rotateMatrix2(mat4 m, float angle);
 
 
 };

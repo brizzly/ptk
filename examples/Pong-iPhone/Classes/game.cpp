@@ -70,10 +70,35 @@ void game::init(int width, int height)
 	music1 = new KMusic();
 	music1->load(KMiscTools::makeFilePath("menu.mp3"));
  //   music1->playMusic();
+    
+    
+    for(int i=0 ; i<1 ; i++) {
+        
+        int px = rand() % (KPTK::_screenW - 256);
+        int py = rand() % (KPTK::_screenH - 256);
+        addBall(px, py);
+    }
+}
+
+void game::addBall(int px, int py)
+{
+    float vx = 2 * (float) ( ((rand() % 200) - 100) / 100.0f );
+    float vy = 2 * (float) ( ((rand() % 200) - 100) / 100.0f );
+    
+    //vx = vy = 0;
+    
+    int sw = 256; //32 + (rand() % 512-32);
+
+    ball * b = new ball(px, py, vx, vy, sw, sw, KPTK::_screenW, KPTK::_screenH);
+    ballsList.Append(b);
 }
 
 void game::draw(float frameTime)
 {
+    int screenWidth = KPTK::_screenW;
+    int screenHeight = KPTK::_screenH;
+    
+    
 	static float r = 0.0;
 	static float z = 0.0;
 	static float a = 0.0;
@@ -86,9 +111,16 @@ void game::draw(float frameTime)
 	static float debugval = 0.0;
 	debugval += 0.4f;
 	
-	
-	int screenWidth = KPTK::_screenW;
-	int screenHeight = KPTK::_screenH;
+
+    // Ball logic
+    
+    for(int i=0 ; i<ballsList.count() ; i++) {
+     
+        ball * b = (ball*) ballsList.get(i);
+        b->update(frameTime);
+    }
+
+    
 
    
 	// FULL SCREEN IMAGE : 960x1440
@@ -96,13 +128,17 @@ void game::draw(float frameTime)
 	
    
 	// SQUARE 256x256
-	testGraphic->blit(0, 0, 256, 256, 140, 80, a, z);
+    
+    for(int i=0 ; i<ballsList.count() ; i++) {
+        ball * b = (ball*) ballsList.get(i);
+        testGraphic->blit(0, 0, b->siz->x, b->siz->y, b->pos->x, b->pos->y, (i%2) ? 2*a : -a, 1);
+    }
 	 
 	 
 	// SQUARE 512x512
 //	testGraphic4->blit(0, 0, 512, 512, 362, 353, 10, 1.0f, 0.5f);
 	
-	
+	/*
 	// LINES
 	
 	float line_R = 1.0f;
@@ -115,6 +151,7 @@ void game::draw(float frameTime)
     float pY = 0;
     float w1 = 512; //screenWidth/2;
     float h1 = 512; //screenHeight/2;
+    */
     
     /*
     float square_x1[4] = {pX, pX+w1, pX+w1, pX};
@@ -129,6 +166,7 @@ void game::draw(float frameTime)
     shapeGraphic->drawLine(square_x1[3], square_y1[3], square_x2[3], square_y2[3], line_R, line_G, line_B, line_A, line_W);
 */
     
+    /*
     int cube_x = 362;
     int cube_y = 353;
     
@@ -152,7 +190,7 @@ void game::draw(float frameTime)
     //testGraphic4->shape_centerY = center[1];
     //testGraphic4->angle = a;
     testGraphic4->blitShape(4, vertice, cube_x, cube_y, line_W, line_R, line_G, line_B, line_A);
-    
+    */
     
     /*
 
@@ -175,7 +213,7 @@ void game::draw(float frameTime)
     */
     
     
-
+/*
 	shapeGraphic->drawLine(0, 80, screenWidth, 80, 1, 1, 1, 1, 1.0);
 	shapeGraphic->drawLine(0, 100, screenWidth, 100, 0, 1, 0, 0.5, 10.0);
     
@@ -192,7 +230,7 @@ void game::draw(float frameTime)
 	
 	// SQUARE 256x256
    testGraphic2->blit(0, 0, 256, 256, 420, 850, 360-a, z);
-
+*/
 	
 	/*
 	

@@ -102,6 +102,7 @@ GLuint KShader::createFonteShader()
 		"attribute vec2 position;"         // Separate position attribute
 		"attribute vec2 texCoords;"        // Separate texture coordinates attribute
 		"uniform mat4 u_Matrix;"           // Projection matrix uniform
+        
 		"varying vec2 TexCoords;"          // Pass texture coordinates to fragment shader
 		"void main() {"
 		"    gl_Position = u_Matrix * vec4(position, 0.0, 1.0);"  // Transform position

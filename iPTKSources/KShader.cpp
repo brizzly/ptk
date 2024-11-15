@@ -122,13 +122,11 @@ GLuint KShader::createShader()
 GLuint KShader::createLineShader()
 {
     const char* vertexSource =
-        //"attribute vec2 position;"
-		"attribute vec4 a_position;"
-        "uniform mat4 u_Matrix;"
-		"uniform mat4 u_projectionMatrix;"
+        "attribute vec4 a_position;"
+        "uniform mat4 u_matrix;"
+        "uniform mat4 u_projectionMatrix;"
         "void main() {"
-		"    gl_Position = u_projectionMatrix * u_Matrix * a_position;"
-        //"    gl_Position = u_projectionMatrix * u_Matrix * vec4(position, 0.0, 1.0);"  // Apply matrix transformation
+        "    gl_Position = u_projectionMatrix * u_matrix * a_position;"
         "}";
 
     const char* fragmentSource =
@@ -138,7 +136,6 @@ GLuint KShader::createLineShader()
         "    gl_FragColor = color;"
         "}";
 
-    // Use createShaderProgram to compile, link, and return the program
     return createShaderProgram(vertexSource, fragmentSource);
 }
 

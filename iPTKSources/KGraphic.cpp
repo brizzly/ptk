@@ -396,6 +396,20 @@ void KGraphic::printMatrix(mat4 m)
            m[12], m[13], m[14], m[15]);
 }
 
+void KGraphic::setOrthographicProjection(mat4& m, float left, float right, float bottom, float top)
+{
+    // Initialize the matrix to identity
+    setIdentityMatrix(m);
+
+    // Orthographic projection calculations
+    m[0] = 2.0f / (right - left); // Scale X
+    m[5] = 2.0f / (top - bottom); // Scale Y
+    m[10] = -1.0f;               // Scale Z (assuming no depth)
+    m[12] = -(right + left) / (right - left); // Translate X
+    m[13] = -(top + bottom) / (top - bottom); // Translate Y
+    m[15] = 1.0f;                // Homogeneous coordinate
+}
+
 void KGraphic::orthographicMatrix(mat4 m, float left, float right, float bottom, float top, float nearVal, float farVal)
 {
     setIdentityMatrix(m);  // Set base to identity
@@ -588,13 +602,13 @@ void KGraphic::render()
 		//testGraphic4->shape_centerX = center[0];
 		//testGraphic4->shape_centerY = center[1];
 		//testGraphic4->angle = a;
-		float line_W = 2.0;
+		float line_W = 4.0;
 		float line_R = 1;
 		float line_G = 0;
 		float line_B = 0;
 		float line_A = 1;
 		
-		blitShape(4, vertice, destX, destY, line_W, line_R, line_G, line_B, line_A);
+		blitShape(4, vertice, destX, _gameH - destY - sizeH, line_W, line_R, line_G, line_B, line_A);
 	}
 }
 
@@ -774,24 +788,76 @@ void KGraphic::blit(int x1, int y1, int x2, int y2, int destX, int destY, float 
     render();
 }
 
-void KGraphic::blitShape(int numvertices, vec2 * vertice, int destX, int destY, float linewidth, float r, float g, float b, float a)
+void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a)
 {
-    for(int i=0 ; i<numvertices ; i++)
-    {
-        int j = (i+1)%numvertices;
-        
-        float x1 = vertice[i][0];
-        float y1 = vertice[i][1];
-        
-        float x2 = vertice[j][0];
-        float y2 = vertice[j][1];
-    /*
-        x1 += destX;
-        y1 += destY;
-        
-        x2 += destX;
-        y2 += destY;
-     */
-        drawLine(x1, y1, x2, y2, r, g, b, a, linewidth);
+    if (_lineShaderProgram == 0) {
+        printf("Error: Line shader program is invalid.\n");
+        return;
     }
+
+    glUseProgram(_lineShaderProgram);
+
+    // Set Projection Matrix
+    mat4 projectionMatrix;
+    setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
+
+    GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
+    if (matrixProjection != -1) {
+        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
+    } else {
+        printf("Projection matrix uniform not found in shader!\n");
+    }
+
+    // Set Model-View Matrix
+    mat4 modelViewMatrix;
+    setIdentityMatrix(modelViewMatrix);
+    translateMatrix(modelViewMatrix, destX, destY);
+
+    GLuint matrixModelView = glGetUniformLocation(_lineShaderProgram, "u_matrix");
+    if (matrixModelView != -1) {
+        glUniformMatrix4fv(matrixModelView, 1, GL_FALSE, modelViewMatrix);
+    } else {
+        printf("Model-view matrix uniform not found in shader!\n");
+    }
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glLineWidth(linewidth);
+
+    for (int i = 0; i < numvertices; ++i) {
+        int j = (i + 1) % numvertices;
+
+        GLfloat lineCoords[] = {
+            vertice[i][0], vertice[i][1],
+            vertice[j][0], vertice[j][1]
+        };
+
+        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_Line);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(lineCoords), lineCoords, GL_DYNAMIC_DRAW);
+
+        GLint posAttrib = glGetAttribLocation(_lineShaderProgram, "a_position");
+        if (posAttrib == -1) {
+            printf("Error: Position attribute not found in shader.\n");
+            return;
+        }
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        GLint colorUniform = glGetUniformLocation(_lineShaderProgram, "color");
+        if (colorUniform != -1) {
+            glUniform4f(colorUniform, r, g, b, a);
+        } else {
+            printf("Color uniform not found in shader!\n");
+        }
+
+        glDrawArrays(GL_LINES, 0, 2);
+
+        glDisableVertexAttribArray(posAttrib);
+    }
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glUseProgram(0);
+
+    printGLError("blitShape");
 }

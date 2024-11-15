@@ -95,7 +95,7 @@ private:
 
     void computOffset();
     void printMatrix(mat4 m);
-
+    void setOrthographicProjection(mat4& m, float left, float right, float bottom, float top);
     void orthographicMatrix(mat4 m, float left, float right, float bottom, float top, float nearVal, float farVal);
 
 	void setProjectionMatrix(mat4 m, int window_width, int window_height, float display_width, float display_height);

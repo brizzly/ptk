@@ -59,45 +59,10 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     
     computOffset();
     
-    const char * vertexShaderSource =
-        "attribute vec4 a_position;"
-        "attribute vec2 a_texCoord;"
-        "varying vec2 v_texCoord;"
-        "uniform mat4 u_matrix;"
-        "uniform mat4 u_projectionMatrix;"
-        "uniform float u_srcX;"
-        "uniform float u_srcY;"
-        "uniform float u_sizeW;"
-        "uniform float u_sizeH;"
-        "uniform float u_texWidth;"
-        "uniform float u_texHeight;"
-        "uniform float u_epsilon;"  // UV epsilon offset
-        "void main() {"
-        "    gl_Position = u_projectionMatrix * u_matrix * a_position;"
-
-        // Calculate tex coordinates with added epsilon
-        "    float texLeft = (u_srcX / u_texWidth) + u_epsilon;"
-        "    float texRight = ((u_srcX + u_sizeW) / u_texWidth) - u_epsilon;"
-        "    float texBottom = ((u_srcY + u_sizeH) / u_texHeight) - u_epsilon;"
-        "    float texTop = (u_srcY / u_texHeight) + u_epsilon;"
-
-        // Use mix to interpolate between the adjusted UVs based on a_texCoord
-        "    v_texCoord = mix(vec2(texLeft, texTop), vec2(texRight, texBottom), a_texCoord);"
-        "}";
-
-
-    const char * fragmentShaderSource =
-        "precision mediump float;"
-        "varying vec2 v_texCoord;"
-        "uniform sampler2D u_texture;"
-        "uniform float u_opacity;"
-        "void main() {"
-        "    vec4 texColor = texture2D(u_texture, v_texCoord);"
-        "    gl_FragColor = vec4(texColor.rgb, texColor.a * u_opacity);"  // Apply opacity to alpha
-        "}";
+    
     
     shader = new KShader();
-    _shaderProgram = shader->createShaderProgram(vertexShaderSource, fragmentShaderSource);
+	_shaderProgram = shader->createShader();
     if (!_shaderProgram) {
         printf("Shader program linking failed!\n");
     }
@@ -176,7 +141,7 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     
     
     // for lines -------------------------------
-    
+	
     glGenBuffers(1, &vertexBuffer_Line);
     _lineShaderProgram = shader->createLineShader();
 }
@@ -240,87 +205,73 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
         printf("Error: Shader program is invalid.\n");
         return;
     }
+	
+	glUseProgram(_lineShaderProgram);  // Ensure the program is active
 
-    
-    // Define a 4x4 transformation matrix
-    mat4 transform;
-    setIdentityMatrix(transform);
-    
+	
+	// PROJECTION MATRIX AS PIXELS
+	setProjectionMatrix(transform, _screenW, _screenH, _gameW, _gameH);
+	GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
+	if(matrixProjection != -1) {
+		glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, transform);
+	}
+	
+	glDisable(GL_CULL_FACE);
+	glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
+	
+	// Enable blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	 
+	
+	setIdentityMatrix(transform);
 
-    // PROJECTION MATRIX AS PIXELS
+		
+		// REAL IMAGE SIZE PROJECTION
+	 if(zoom < 0) { zoom = 0; }
+	 float zoomCopy = zoom;
+	 zoom = sizeH / _gameH;
+	 zoom *= 0.5;
+	 float sizeRatio = sizeW / sizeH;
+	 
+	 // PREVENT IMAGE TO BE DISTRORDED BY SCREEN RATIO
+	//    scaleMatrix(transform, sizeRatio, 1);
 
-    glUseProgram(_lineShaderProgram);
-    
-    
-//    GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
-//    if (matrixProjection != -1) {
+	 // TRANSLATE IMAGE FROM ITS CENTER TO CORNER + POSITION
+	 float hmX = ((sizeW + destX*2.0f) / _gameH) / 2.0f;
+	 float hmY = ((sizeH + destY*2.0f) / _gameH) / 2.0f;
+	 translateMatrix(transform, hmX, hmY);
+	 
+	 
+	 // ZOOM ( project real image size on screen )
+	 scaleMatrix(transform, zoom*sizeRatio, zoom);
+	 //scaleMatrix(transform, 0.5*sizeRatio, 0.5);
+	 
+	 // ZOOM
+	 scaleMatrix(transform, zoom*sizeRatio*zoomCopy, zoom*zoomCopy);
 
-    float scale2 = _screenW / _screenH;
-    float scale3 = 1.0;
+	 // ROTATE
+	 if (angle != 0.0f) {
+		 rotateMatrix(transform, angle * M_PI / 180.0f);
+	 }
 
-    //orthographicMatrix(transform, 0.0, 0.0 + scale2, scale3, 0.0f, -1.0f, 1.0f);
+	 // Pass matrix to shader
+	 GLuint matrixLocation = glGetUniformLocation(_lineShaderProgram, "u_matrix");
+	 glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, transform);
+	 
     
-    setupOrthoProjection(transform, 0.0f, _gameW, 0.0f, _gameH);
-    
-    
-    
-
-//        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, orthoMatrix);
-//   }
-    
- 
-    /*
-    sizeW = 512;
-    sizeH = 512;
-    
-    // Set up orthographic projection for screen size
- //   setupOrthoProjection(transform, 0.0f, _gameW, 0.0f, _gameH);
-
-    if(shape_centerX > 0 && shape_centerY > 0) {
-    
-        float pixelTranslationX = 2.0f * (-shape_centerX / _gameW);
-        float pixelTranslationY = 2.0f * (-shape_centerY / _gameH);
-   //     translateMatrix2(transform, pixelTranslationX, pixelTranslationY);
-
-        
-        
-        // REAL IMAGE SIZE PROJECTION
-        if(zoom < 0) { zoom = 0; }
-        float zoomCopy = zoom;
-        zoom = sizeH / _gameH;
-        zoom *= 0.5;
-        float sizeRatio = sizeW / sizeH;
-        
-        // PREVENT IMAGE TO BE DISTRORDED BY SCREEN RATIO
-   //     scaleMatrix(transform, sizeRatio, 1);
-
-        // TRANSLATE IMAGE FROM ITS CENTER TO CORNER + POSITION
-        float hmX = ((sizeW + destX*2.0f) / _gameH) / 2.0f;
-        float hmY = ((sizeH + destY*2.0f) / _gameH) / 2.0f;
-        //translateMatrix(transform, hmX, hmY);
-    //    translateMatrix2(transform, hmX, hmY);
-        
-        
-        // ZOOM ( project real image size on screen )
-   //     scaleMatrix(transform, zoom*sizeRatio, zoom);
-        
-        // ZOOM
-   //     scaleMatrix(transform, zoom*sizeRatio*zoomCopy, zoom*zoomCopy);
-
-        // ROTATE
-        if (angle != 0.0f) {
-            rotateMatrix2(transform, angle * M_PI / 180.0f);
-        }
-    }
-    */
-    
-    
-    y1 = _gameH - y1;
+	y1 = _gameH - y1;
     y2 = _gameH - y2;
 
     
     // Define line coordinates and color
-    float lineCoords[] = { x1, y1, x2, y2 };
+    //float lineCoords[] = { x1, y1, x2, y2 };
+	
+	GLfloat lineCoords[] = {
+		x1,  y1, 0.0f, 0.0f,
+		x2, y2, 0.0f, 0.0f
+	};
+	
     float color[] = { r, g, b, a };
 
     // Set line width (note: this may be clamped on some platforms)
@@ -331,14 +282,15 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     glBufferData(GL_ARRAY_BUFFER, sizeof(lineCoords), lineCoords, GL_DYNAMIC_DRAW);
 
     // Set the position attribute
-    GLint posAttrib = glGetAttribLocation(_lineShaderProgram, "position");
+    GLint posAttrib = glGetAttribLocation(_lineShaderProgram, "a_position");
     if (posAttrib == -1) {
         printf("Error: Position attribute not found in shader.\n");
         return;
     }
     glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
-
+    //glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+	
     // Set the color uniform
     GLint colorUniform = glGetUniformLocation(_lineShaderProgram, "color");
     if (colorUniform == -1) {
@@ -347,14 +299,17 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     }
     glUniform4fv(colorUniform, 1, color);
 
-    // Set the orthographic projection matrix uniform
-    GLint matrixUniform = glGetUniformLocation(_lineShaderProgram, "u_Matrix");
-    if (matrixUniform == -1) {
-        printf("Error: Matrix uniform not found in shader.\n");
-        return;
-    }
-    glUniformMatrix4fv(matrixUniform, 1, GL_FALSE, transform);  // Pass orthographic matrix
-
+	
+	if(_drawBoundings == false) {
+		// Set the orthographic projection matrix uniform
+		GLint matrixUniform = glGetUniformLocation(_lineShaderProgram, "u_Matrix");
+		if (matrixUniform == -1) {
+			printf("Error: Matrix uniform not found in shader.\n");
+			return;
+		}
+		glUniformMatrix4fv(matrixUniform, 1, GL_FALSE, transform);  // Pass orthographic matrix
+	}
+	
     // Enable blending for transparency
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -467,21 +422,12 @@ void KGraphic::orthographicMatrix(mat4 m, float left, float right, float bottom,
     m[15] = 1.0f;  // Ensure the last element is 1.0 for homogeneous coordinates
 }
 
-void KGraphic::setProjectionMatrix(int window_width, int window_height, float display_width, float display_height)
+void KGraphic::setProjectionMatrix(mat4 m, int window_width, int window_height, float display_width, float display_height)
 {
     float scale2 = display_width / display_height;
     float scale3 = 1.0;
 
-    mat4 orthoMatrix;
-    orthographicMatrix(orthoMatrix, 0.0, 0.0 + scale2, scale3, 0.0f, -1.0f, 1.0f);
-    
-    GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
-    if (matrixProjection == -1) {
-        return;
-    }
-    
-    glUseProgram(_shaderProgram);  // Ensure the program is active
-    glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, orthoMatrix);
+    orthographicMatrix(m, 0.0, 0.0 + scale2, scale3, 0.0f, -1.0f, 1.0f);
 }
 
 void KGraphic::computOffset()
@@ -547,9 +493,15 @@ void KGraphic::render()
     if(_shaderProgram == 0) {
         return;
     }
-    
+
+	glUseProgram(_shaderProgram);  // Ensure the program is active
+
     // PROJECTION MATRIX AS PIXELS
-    setProjectionMatrix(_screenW, _screenH, _gameW, _gameH);
+	setProjectionMatrix(transform, _screenW, _screenH, _gameW, _gameH);
+	GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
+	if(matrixProjection != -1) {
+		glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, transform);
+	}
 
     glDisable(GL_CULL_FACE);
     glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
@@ -557,9 +509,7 @@ void KGraphic::render()
     // Enable blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
- 
-    
-    glUseProgram(_shaderProgram);   // Use the shader
+     
 
     // Pass the texture cropping information to the shader
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_srcX"), srcX);
@@ -585,7 +535,7 @@ void KGraphic::render()
     
     
     // Define a 4x4 transformation matrix
-    mat4 transform;
+    //mat4 transform;
     setIdentityMatrix(transform);
 
     // REAL IMAGE SIZE PROJECTION
@@ -835,16 +785,13 @@ void KGraphic::blitShape(int numvertices, vec2 * vertice, int destX, int destY, 
         
         float x2 = vertice[j][0];
         float y2 = vertice[j][1];
-
-        //printf("%d: %f %f\n", i, x1, y1);
-        //printf("%d: %f %f\n", j, x2, y2);
-        
+    /*
         x1 += destX;
         y1 += destY;
         
         x2 += destX;
         y2 += destY;
-        
+     */
         drawLine(x1, y1, x2, y2, r, g, b, a, linewidth);
     }
 }

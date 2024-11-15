@@ -64,6 +64,7 @@ public:
 	
     
 private:
+	mat4 transform;
     float _imageWidth;
     float _imageHeight;
     float _textureSizeW;
@@ -97,7 +98,7 @@ private:
 
     void orthographicMatrix(mat4 m, float left, float right, float bottom, float top, float nearVal, float farVal);
 
-    void setProjectionMatrix(int window_width, int window_height, float display_width, float display_height);
+	void setProjectionMatrix(mat4 m, int window_width, int window_height, float display_width, float display_height);
     void setIdentityMatrix(mat4 m);
 
     // Translation matrix

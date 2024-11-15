@@ -76,13 +76,59 @@ GLuint KShader::createShaderProgram(const char* vertexSource, const char* fragme
     return program;  // Return the valid shader program
 }
 
+GLuint KShader::createShader()
+{
+	const char * vertexShaderSource =
+		"attribute vec4 a_position;"
+		"attribute vec2 a_texCoord;"
+		"varying vec2 v_texCoord;"
+		"uniform mat4 u_matrix;"
+		"uniform mat4 u_projectionMatrix;"
+		"uniform float u_srcX;"
+		"uniform float u_srcY;"
+		"uniform float u_sizeW;"
+		"uniform float u_sizeH;"
+		"uniform float u_texWidth;"
+		"uniform float u_texHeight;"
+		"uniform float u_epsilon;"  // UV epsilon offset
+		"void main() {"
+		"    gl_Position = u_projectionMatrix * u_matrix * a_position;"
+
+		// Calculate tex coordinates with added epsilon
+		"    float texLeft = (u_srcX / u_texWidth) + u_epsilon;"
+		"    float texRight = ((u_srcX + u_sizeW) / u_texWidth) - u_epsilon;"
+		"    float texBottom = ((u_srcY + u_sizeH) / u_texHeight) - u_epsilon;"
+		"    float texTop = (u_srcY / u_texHeight) + u_epsilon;"
+
+		// Use mix to interpolate between the adjusted UVs based on a_texCoord
+		"    v_texCoord = mix(vec2(texLeft, texTop), vec2(texRight, texBottom), a_texCoord);"
+		"}";
+
+
+	const char * fragmentShaderSource =
+		"precision mediump float;"
+		"varying vec2 v_texCoord;"
+		"uniform sampler2D u_texture;"
+		"uniform float u_opacity;"
+		"void main() {"
+		"    vec4 texColor = texture2D(u_texture, v_texCoord);"
+		"    gl_FragColor = vec4(texColor.rgb, texColor.a * u_opacity);"  // Apply opacity to alpha
+		"}";
+
+	// Use createShaderProgram to compile, link, and return the program
+	return createShaderProgram(vertexShaderSource, fragmentShaderSource);
+}
+
 GLuint KShader::createLineShader()
 {
     const char* vertexSource =
-        "attribute vec2 position;"
-        "uniform mat4 u_Matrix;"  // Matrix uniform for projection
+        //"attribute vec2 position;"
+		"attribute vec4 a_position;"
+        "uniform mat4 u_Matrix;"
+		"uniform mat4 u_projectionMatrix;"
         "void main() {"
-        "    gl_Position = u_Matrix * vec4(position, 0.0, 1.0);"  // Apply matrix transformation
+		"    gl_Position = u_projectionMatrix * u_Matrix * a_position;"
+        //"    gl_Position = u_projectionMatrix * u_Matrix * vec4(position, 0.0, 1.0);"  // Apply matrix transformation
         "}";
 
     const char* fragmentSource =

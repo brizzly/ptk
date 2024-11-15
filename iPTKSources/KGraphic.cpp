@@ -598,7 +598,7 @@ void KGraphic::render()
 			{0+sizeW, 0+sizeH},
 			{0, 0+sizeH}
 		};
-		
+        
 		//testGraphic4->shape_centerX = center[0];
 		//testGraphic4->shape_centerY = center[1];
 		//testGraphic4->angle = a;

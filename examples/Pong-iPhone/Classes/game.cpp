@@ -122,7 +122,7 @@ void game::draw(float frameTime)
 
    
 	// FULL SCREEN IMAGE : 960x1440
-	testGraphic3->blit(0, 0, 960, 1440, 0, 0);
+	//testGraphic3->blit(0, 0, 960, 1440, 0, 0);
 	
    
 	// SQUARE 256x256

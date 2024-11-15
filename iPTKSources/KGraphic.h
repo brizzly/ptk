@@ -34,6 +34,7 @@ public:
     ~KGraphic();
 
     void init(int game_width, int game_height, int screen_width, int screen_height);
+	void setDrawBounds(bool value);
     void printGLError(const char * label);
     void render();
     void setOrientation(bool isLandscape);  // Call this to switch between landscape and portrait
@@ -60,9 +61,8 @@ public:
 
     float srcX, srcY, destX, destY, sizeW, sizeH, angle, zoom, blend;
     float shape_centerX, shape_centerY;
-
+	
     
-
 private:
     float _imageWidth;
     float _imageHeight;
@@ -81,6 +81,7 @@ private:
     bool _eyeRetina;
     GLuint _shaderProgram;
     GLuint _lineShaderProgram;
+	bool _drawBoundings;
     
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
     GLuint vertexBuffer_Line, vertexBuffer, indexBuffer, textureSamplerLoc, opacityLoc;

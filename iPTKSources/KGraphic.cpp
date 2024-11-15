@@ -50,7 +50,8 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     _gameH = (float) game_height;
     _screenW = (float) screen_width;
     _screenH = (float) screen_height;
-    
+	_drawBoundings = false;
+
     if(_screenW == 0 || _screenH == 0) {
         printf("KGraphic init error.");
         return;
@@ -180,6 +181,10 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     _lineShaderProgram = shader->createLineShader();
 }
 
+void KGraphic::setDrawBounds(bool value)
+{
+	_drawBoundings = value;
+}
 
 void KGraphic::printGLError(const char * label)
 {
@@ -619,6 +624,28 @@ void KGraphic::render()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     printGLError("render");
+	
+	// Debug mode
+	if(_drawBoundings == true) {
+		
+		vec2 vertice[] = {
+			{0, 0},
+			{0+sizeW, 0},
+			{0+sizeW, 0+sizeH},
+			{0, 0+sizeH}
+		};
+		
+		//testGraphic4->shape_centerX = center[0];
+		//testGraphic4->shape_centerY = center[1];
+		//testGraphic4->angle = a;
+		float line_W = 2.0;
+		float line_R = 1;
+		float line_G = 0;
+		float line_B = 0;
+		float line_A = 1;
+		
+		blitShape(4, vertice, destX, destY, line_W, line_R, line_G, line_B, line_A);
+	}
 }
 
 void KGraphic::setOrientation(bool isLandscape) {

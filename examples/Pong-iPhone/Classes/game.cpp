@@ -85,11 +85,11 @@ void game::addBall(int px, int py)
     float vx = 2 * (float) ( ((rand() % 200) - 100) / 100.0f );
     float vy = 2 * (float) ( ((rand() % 200) - 100) / 100.0f );
     
-    //vx = vy = 0;
+    vx = vy = 0;
     
     int sw = 256; //32 + (rand() % 512-32);
 
-    ball * b = new ball(px, py, vx, vy, sw, sw, KPTK::_screenW, KPTK::_screenH);
+    ball * b = new ball(px, py, vx, vy, sw, sw, KPTK::getGameW(), KPTK::getGameH(), KPTK::_screenW, KPTK::_screenH);
     ballsList.Append(b);
 }
 
@@ -113,14 +113,12 @@ void game::draw(float frameTime)
 	
 
     // Ball logic
-    
+	
     for(int i=0 ; i<ballsList.count() ; i++) {
      
         ball * b = (ball*) ballsList.get(i);
         b->update(frameTime);
     }
-
-    
 
    
 	// FULL SCREEN IMAGE : 960x1440
@@ -131,7 +129,8 @@ void game::draw(float frameTime)
     
     for(int i=0 ; i<ballsList.count() ; i++) {
         ball * b = (ball*) ballsList.get(i);
-        testGraphic->blit(0, 0, b->siz->x, b->siz->y, b->pos->x, b->pos->y, (i%2) ? 2*a : -a, 1);
+		b->kg->setDrawBounds(true);
+		b->kg->blit(0, 0, b->siz->x, b->siz->y, b->pos->x, b->pos->y, (i%2) ? 2*a : -a, 1);
     }
 	 
 	 

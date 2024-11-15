@@ -454,8 +454,8 @@
 				FF13903F2CE525BA004DFCE8 /* Vector.cpp */,
 			);
 			name = HelperSources;
-			path = /Volumes/MacMiniSSD/GIT/ptk/HelperSources;
-			sourceTree = "<absolute>";
+			path = ../../HelperSources;
+			sourceTree = SOURCE_ROOT;
 		};
 		FF1CFF9A2CA606B2008CB8C2 /* src */ = {
 			isa = PBXGroup;

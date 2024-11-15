@@ -12,6 +12,7 @@
 #include <stdio.h>
 #import "List.h"
 #import "vector.h"
+#import "KGraphic.h"
 
 class ball : Node
 {
@@ -25,9 +26,11 @@ public:
     Vector * pos;
     Vector * vel;
     Vector * siz;
+	
+	KGraphic * kg;
     
 public:
-    ball(int posx, int posy, float vx, float vy, int w, int h, int screen_w, int screen_h);
+    ball(int posx, int posy, float vx, float vy, int w, int h, int game_w, int game_h, int screen_w, int screen_h);
     ~ball();
     
     void update(float frametime);

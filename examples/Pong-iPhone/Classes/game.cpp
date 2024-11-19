@@ -130,7 +130,7 @@ void game::draw(float frameTime)
     for(int i=0 ; i<ballsList.count() ; i++) {
         ball * b = (ball*) ballsList.get(i);
 		b->kg->setDrawBounds(true);
-		b->kg->blit(0, 0, b->siz->x, b->siz->y, b->pos->x, b->pos->y, (i%2) ? 2*a : -a, 1);
+		b->kg->blit(0, 0, b->siz->x, b->siz->y, b->pos->x, b->pos->y, (i%2) ? 2*a : -a*10, 1);
     }
 	 
 	 

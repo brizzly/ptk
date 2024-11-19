@@ -387,6 +387,89 @@ void KGraphic::rotateMatrix2(mat4 m, float angle)
     m[5] = c;
 }
 
+void KGraphic::rotateMatrix3(mat4 m, float angle, float centerX, float centerY)
+{
+    float s = sinf(angle);
+    float c = cosf(angle);
+
+    mat4 rotation;
+    setIdentityMatrix(rotation);
+    rotation[0] = c;
+    rotation[1] = -s;
+    rotation[4] = s;
+    rotation[5] = c;
+
+    // Multiply the current matrix with the rotation matrix
+    mat4 result;
+    multiplyMatrices(m, rotation, result);
+    copyMatrix(m, result);
+    
+    
+    /*
+    float c = cosf(angle);
+    float s = sinf(angle);
+
+    // Translation to center
+    mat4 translationToCenter = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        -centerX, -centerY, 0.0f, 1.0f
+    };
+
+    // Rotation matrix
+    mat4 rotationMatrix = {
+        c,   s,   0.0f, 0.0f,
+       -s,   c,   0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    };
+
+    // Translation back from center
+    mat4 translationBack = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        centerX, centerY, 0.0f, 1.0f
+    };
+
+    // Combine transformations: T_back * R * T_center * m
+    mat4 result;
+
+    // Step 1: Apply translation to center
+    multiplyMatrices(translationToCenter, m, result);
+
+    // Step 2: Apply rotation
+    multiplyMatrices(rotationMatrix, result, result);
+
+    // Step 3: Apply translation back
+    multiplyMatrices(translationBack, result, result);
+
+    // Copy result back to m
+    for (int i = 0; i < 16; i++) {
+        m[i] = result[i];
+    }*/
+}
+
+void KGraphic::multiplyMatrices(const mat4 a, const mat4 b, mat4 result)
+{
+    for(int row = 0; row < 4; ++row){
+        for(int col = 0; col < 4; ++col){
+            result[row * 4 + col] = 0.0f;
+            for(int k = 0; k < 4; ++k){
+                result[row * 4 + col] += a[row * 4 + k] * b[k * 4 + col];
+            }
+        }
+    }
+}
+
+void KGraphic::copyMatrix(mat4 dest, const mat4 src)
+{
+    for(int i = 0; i < 16; ++i){
+        dest[i] = src[i];
+    }
+}
+
 void KGraphic::printMatrix(mat4 m)
 {
     printf("%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n\n",
@@ -599,8 +682,8 @@ void KGraphic::render()
 			{0, 0+sizeH}
 		};
         
-		//testGraphic4->shape_centerX = center[0];
-		//testGraphic4->shape_centerY = center[1];
+        shape_centerX = sizeW/2;
+        shape_centerY = sizeH/2;
 		//testGraphic4->angle = a;
 		float line_W = 4.0;
 		float line_R = 1;
@@ -800,6 +883,11 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
     // Set Projection Matrix
     mat4 projectionMatrix;
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
+    
+    
+    
+    float radians = (360.0-angle) * M_PI / 180.0f;
+
 
     GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
     if (matrixProjection != -1) {
@@ -808,10 +896,27 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
         printf("Projection matrix uniform not found in shader!\n");
     }
 
+    
     // Set Model-View Matrix
+    
+    // Identity matrix
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
-    translateMatrix(modelViewMatrix, destX, destY);
+
+    // Translate to center of the shape
+    translateMatrix2(modelViewMatrix, -shape_centerX, -shape_centerY);
+
+    // Apply rotation
+    //rotateMatrix(modelViewMatrix, radians);
+    rotateMatrix3(modelViewMatrix, radians, -shape_centerX, -shape_centerY);
+
+    // Translate back to the original position
+    translateMatrix2(modelViewMatrix, shape_centerX, shape_centerY);
+    
+    
+   translateMatrix2(modelViewMatrix, destX, destY);
+    
+    
 
     GLuint matrixModelView = glGetUniformLocation(_lineShaderProgram, "u_matrix");
     if (matrixModelView != -1) {

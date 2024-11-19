@@ -111,7 +111,10 @@ private:
     // Rotation matrix (angle in radians)
     void rotateMatrix(mat4 m, float angle);
     void rotateMatrix2(mat4 m, float angle);
-
+    void rotateMatrix3(mat4 m, float angle, float centerX, float centerY);
+    
+    void copyMatrix(mat4 dest, const mat4 src);
+    void multiplyMatrices(const mat4 a, const mat4 b, mat4 result);
 
 };
 

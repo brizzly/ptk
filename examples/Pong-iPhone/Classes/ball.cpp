@@ -9,17 +9,16 @@
 #include "ball.h"
 
 
-ball::ball(int posx, int posy, float vx, float vy, int w, int h, int game_w, int game_h, int screen_w, int screen_h)
+ball::ball(KGraphic * graphic, int posx, int posy, float vx, float vy, int w, int h, int game_w, int game_h, int screen_w, int screen_h)
 {
+    kg = graphic;
+    
     screenWidth = screen_w;
     screenHeight = screen_h;
     
     //pos = new Vector((float)posx, (float)posy);
     vel = new Vector(vx, vy);
     siz = new Vector(w, h);
-	
-	kg = new KGraphic(game_w, game_h, screen_w, screen_h);
-	kg->loadPicture("box.png");
 
     
     // setup box2D --------------------------------------------------

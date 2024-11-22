@@ -140,7 +140,7 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		glUniform1i(textUniform, 0);  // Set the sampler to use texture unit 0
 	}
 
-	GLint matrixLoc = glGetUniformLocation(_fonteShaderProgram, "u_Matrix");
+	GLint matrixLoc = glGetUniformLocation(_fonteShaderProgram, "u_matrix");
 	if (matrixLoc != -1) {
 		glUniformMatrix4fv(matrixLoc, 1, GL_FALSE, orthoMatrix);
 	}

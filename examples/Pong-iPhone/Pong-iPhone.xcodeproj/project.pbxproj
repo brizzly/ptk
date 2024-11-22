@@ -149,9 +149,9 @@
 		FFB190B12CD82A9A005D7AEB /* border2_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190B02CD82A9A005D7AEB /* border2_right@2x.png */; };
 		FFB190B22CD82A9A005D7AEB /* border2_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AE2CD82A9A005D7AEB /* border2_left@2x.png */; };
 		FFB190B32CD82A9A005D7AEB /* border2_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AF2CD82A9A005D7AEB /* border2_middle@2x.png */; };
-		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
 		FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48791130A7D900105C50 /* OpenGLES.framework */; };
 		FFF1BFF02CAB59D30093CA43 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF1BFEF2CAB59D30093CA43 /* box.png */; };
+		FFF4390D2CF0C69C00E9770E /* box2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF4390C2CF0C69C00E9770E /* box2@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -447,10 +447,11 @@
 		FFB190AE2CD82A9A005D7AEB /* border2_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_left@2x.png"; sourceTree = "<group>"; };
 		FFB190AF2CD82A9A005D7AEB /* border2_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_middle@2x.png"; sourceTree = "<group>"; };
 		FFB190B02CD82A9A005D7AEB /* border2_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_right@2x.png"; sourceTree = "<group>"; };
-		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFF185EB2CA57EFC008120DB /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
 		FFF1BFEB2CAB43840093CA43 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		FFF1BFEF2CAB59D30093CA43 /* box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box.png; sourceTree = "<group>"; };
+		FFF4390C2CF0C69C00E9770E /* box2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box2@2x.png"; sourceTree = "<group>"; };
+		FFF4390E2CF0D23B00E9770E /* Todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Todo.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -525,6 +526,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				FFF4390E2CF0D23B00E9770E /* Todo.txt */,
 				FF4B990A2CB2013300DA591B /* Pong.entitlements */,
 				F9458CCF1D415AD900135BCA /* Media.xcassets */,
 				FF3CCFBB2CEE4B020036DBFF /* ExternalSDKs */,
@@ -603,7 +605,7 @@
 				FFB190AC2CD80EAF005D7AEB /* 960_1440_Retina@2x.png */,
 				FFB190AA2CD8006C005D7AEB /* 960_1440.png */,
 				FFF1BFEF2CAB59D30093CA43 /* box.png */,
-				FFCBB2752CAB7406000797B4 /* box2.png */,
+				FFF4390C2CF0C69C00E9770E /* box2@2x.png */,
 				FFB190A42CD7E080005D7AEB /* box512.png */,
 				FFB190AE2CD82A9A005D7AEB /* border2_left@2x.png */,
 				FFB190AF2CD82A9A005D7AEB /* border2_middle@2x.png */,
@@ -1105,11 +1107,11 @@
 				F929422A2CD59700003A2720 /* chinese.ttf in Resources */,
 				F929422B2CD59700003A2720 /* pixel.ttf in Resources */,
 				F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */,
-				FFCBB2762CAB7406000797B4 /* box2.png in Resources */,
 				D71E48CD1130A7ED00105C50 /* click.caf in Resources */,
 				FFB190AD2CD80EAF005D7AEB /* 960_1440_Retina@2x.png in Resources */,
 				FFB190AB2CD8006C005D7AEB /* 960_1440.png in Resources */,
 				D71E48CE1130A7ED00105C50 /* explosion.caf in Resources */,
+				FFF4390D2CF0C69C00E9770E /* box2@2x.png in Resources */,
 				D71E48CF1130A7ED00105C50 /* fruit.caf in Resources */,
 				D71E48D01130A7ED00105C50 /* fruit2.caf in Resources */,
 				FFB190A52CD7E080005D7AEB /* box512.png in Resources */,

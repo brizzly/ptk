@@ -56,7 +56,7 @@ public:
 	KGraphic * kg;
     
 public:
-    ball(int posx, int posy, float vx, float vy, int w, int h, int game_w, int game_h, int screen_w, int screen_h);
+    ball(KGraphic * graphic, int posx, int posy, float vx, float vy, int w, int h, int game_w, int game_h, int screen_w, int screen_h);
     ~ball();
     
     Vector getPos();

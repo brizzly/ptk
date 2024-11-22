@@ -76,20 +76,42 @@ void game::init(int width, int height)
         
         int px = rand() % (KPTK::_screenW - 256);
         int py = rand() % (KPTK::_screenH - 256);
-        addBall(px, py);
+        addNewBall(px, py);
     }
 }
 
-void game::addBall(int px, int py)
+void game::addNewBall(int px, int py)
+{
+    if(rand() % 2 == 0) {
+        addBall("box.png", px, py);
+    }
+    else {
+        addBall("box2.png", px, py);
+    }
+}
+
+void game::addBall(char * imagename, int px, int py)
 {
     float vx = 2 * (float) ( ((rand() % 200) - 100) / 100.0f );
     float vy = 2 * (float) ( ((rand() % 200) - 100) / 100.0f );
     
     vx = vy = 0;
-    
-    int sw = 256; //32 + (rand() % 512-32);
 
-    ball * b = new ball(px, py, vx, vy, sw, sw, KPTK::getGameW(), KPTK::getGameH(), KPTK::_screenW, KPTK::_screenH);
+    int game_w = KPTK::getGameW();
+    int game_h = KPTK::getGameH();
+    int screen_w = KPTK::_screenW;
+    int screen_h = KPTK::_screenH;
+
+    KGraphic * kg = new KGraphic(game_w, game_h, screen_w, screen_h);
+    kg->loadPicture(imagename);
+    
+    float tw = kg->getTextureWidth(); // 256 pixels
+    float th = kg->getTextureHeight();
+    float tsw = kg->getTextureSizeW(); // 128 retina pixels
+    float tsh = kg->getTextureSizeH();
+    printf("tw=%f, th=%f, tsw=%f, tsh=%f\n", tw, th, tsw, tsh);
+
+    ball * b = new ball(kg, px, py, vx, vy, tsw, tsh, game_w, game_h, screen_w, screen_h);
     ballsList.Append(b);
 }
 

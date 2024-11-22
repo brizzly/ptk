@@ -302,7 +302,7 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
 	
 	if(_drawBoundings == false) {
 		// Set the orthographic projection matrix uniform
-		GLint matrixUniform = glGetUniformLocation(_lineShaderProgram, "u_Matrix");
+		GLint matrixUniform = glGetUniformLocation(_lineShaderProgram, "u_matrix");
 		if (matrixUniform == -1) {
 			printf("Error: Matrix uniform not found in shader.\n");
 			return;

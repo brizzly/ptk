@@ -36,7 +36,8 @@ public:
 	~game();
 	
 	void init(int width, int height);
-    void addBall(int px, int py);
+    void addNewBall(int px, int py);
+    void addBall(char * imagename, int px, int py);
 	void draw(float frameTime);
 	void playSfx();
 };

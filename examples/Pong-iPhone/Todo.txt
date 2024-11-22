@@ -1,0 +1,5 @@
+add collisions between boxes
+add racket at the bottom, movable bu user
+add collisions between boxes and racket
+display points
+

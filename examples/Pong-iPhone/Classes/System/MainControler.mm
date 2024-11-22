@@ -105,7 +105,7 @@ bool onTouch(GLFMDisplay *display, int touch, GLFMTouchPhase phase, double x, do
             KInput::setScreenPressed(0, x, y);
             KInput::setFingerPosition(touch, x, y, true);
 			gameInstance.playSfx();
-            gameInstance.addBall(x, y);
+            gameInstance.addNewBall(x, y);
             break;
         case GLFMTouchPhaseMoved:
             printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);

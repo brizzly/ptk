@@ -5,6 +5,7 @@
 #ifdef __ANDROID__
 #include <GLES2/gl2.h>
 #else
+#define GLES_SILENCE_DEPRECATION
 #include <OpenGLES/ES2/gl.h>
 #endif
 

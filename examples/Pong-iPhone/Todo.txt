@@ -1,3 +1,4 @@
+gerer le zoom sur le draw bounds
 add collisions between boxes
 add racket at the bottom, movable bu user
 add collisions between boxes and racket

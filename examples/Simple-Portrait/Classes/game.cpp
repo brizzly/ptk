@@ -72,6 +72,95 @@ void game::init(int width, int height)
  //   music1->playMusic();
 }
 
+void game::draw_scene0(float frameTime)
+{
+    static float r = 0.0;
+    static float z = 1.0;
+    static float a = 0.0;
+    
+    int sw = KPTK::_screenW;
+    int sh = KPTK::_screenH;
+
+    // (int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend , bool flipx , bool flipy )
+    
+    // FULL SCREEN IMAGE : 960x1440
+    testGraphic3->drawEx(0, 0, sw, sh, 0, 0);
+}
+
+void game::draw_scene1(float frameTime)
+{
+//    static float r = 0.0;
+//    static float z = 1.0;
+    static float a = 0.0;
+    
+    //r += (frameTime / 1000.0f) * 0.001f;
+    a += (frameTime / 1000.0f) * 0.001f;
+    //z = 1;//1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
+    
+    float x = 0;
+    float y = 0;
+    //float a = 0;
+    float z = 1;
+    float b = 0.5f;
+    
+
+    // FULL SCREEN IMAGE : 960x1440
+    testGraphic3->draw(0, 0, 0, 1, 1);
+     
+    // SQUARE 512x512
+    testGraphic4->setDrawBounds(true);
+    testGraphic4->draw(362, 353, 360-a, 1.0f, 0.9f);
+    
+    // SQUARE 512x512
+  //  testGraphic4->setDrawBounds(true);
+  //  testGraphic4->blit(0, 0, 512, 512, 362, 353, 0/*10*/, 1.0f, 0.5f);
+    
+    //testGraphic->setDrawBounds(true);
+    //testGraphic->blit(0, 0, 512, 512, 362, 353, 0/*10*/, 1.0f, 0.5f);
+    //testGraphic->blit(0, 0, testGraphic->getTextureSizeW(), testGraphic->getTextureSizeH(), 0, 0, 0/*10*/, 1.0f, 0.5f);
+    
+    // square 256x256
+    testGraphic->setDrawBounds(true);
+    testGraphic->draw(x, y, a, z, b);
+}
+
+void game::draw_scene2(float frameTime)
+{
+    //    static float r = 0.0;
+    static float z = 1.0;
+    static float a = 0.0;
+    
+    //r += (frameTime / 1000.0f) * 0.001f;
+    a += (frameTime / 1000.0f) * 0.001f;
+    z = 0.2f; // 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
+    
+    float x = 0;
+    float y = 0;
+    //float a = 0;
+    //float z = 1;
+    float b = 0.5f;
+    
+
+    // FULL SCREEN IMAGE : 960x1440
+    testGraphic3->draw(0, 0, 0, 1, 1);
+     
+    // SQUARE 512x512
+    testGraphic4->setDrawBounds(true);
+    testGraphic4->draw(362, 353, 360-a, z, 0.9f);
+    
+    // SQUARE 512x512
+  //  testGraphic4->setDrawBounds(true);
+  //  testGraphic4->blit(0, 0, 512, 512, 362, 353, 0/*10*/, 1.0f, 0.5f);
+    
+    //testGraphic->setDrawBounds(true);
+    //testGraphic->blit(0, 0, 512, 512, 362, 353, 0/*10*/, 1.0f, 0.5f);
+    //testGraphic->blit(0, 0, testGraphic->getTextureSizeW(), testGraphic->getTextureSizeH(), 0, 0, 0/*10*/, 1.0f, 0.5f);
+    
+    // square 256x256
+    testGraphic->setDrawBounds(true);
+    testGraphic->draw(x, y, a, z, b);
+}
+
 void game::draw(float frameTime)
 {
 	static float r = 0.0;
@@ -81,7 +170,7 @@ void game::draw(float frameTime)
 
 	r += (frameTime / 1000.0f) * 0.001f;
 	a += (frameTime / 1000.0f) * 0.001f;
-	z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
+    z = 1;//1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
 
 	static float debugval = 0.0;
 	debugval += 0.4f;
@@ -89,25 +178,31 @@ void game::draw(float frameTime)
 	
 	int screenWidth = KPTK::_screenW;
 	int screenHeight = KPTK::_screenH;
+    
+    //draw_scene0(frameTime);
+    //draw_scene1(frameTime);
+    draw_scene2(frameTime);
+    return;
 
    
 	// FULL SCREEN IMAGE : 960x1440
-	testGraphic3->blit(0, 0, 960, 1440, 0, 0);
+	testGraphic3->drawEx(0, 0, 960, 1440, 0, 0);
 	
    
 	// SQUARE 256x256
-	testGraphic->blit(0, 0, 256, 256, 140, 80, a, z);
+    testGraphic->setDrawBounds(true);
+	testGraphic->drawEx(0, 0, 256, 256, 140, 80, a, z);
 	 
 	 
 	// SQUARE 512x512
-//	testGraphic4->blit(0, 0, 512, 512, 362, 353, 10, 1.0f, 0.5f);
+	testGraphic4->drawEx(0, 0, 512, 512, 362, 353, 10, 1.0f, 0.5f);
 	
 	
 	// LINES
 	
-	float line_R = 1.0f;
+	float line_R = 0.0f;
 	float line_G = 1.0;
-	float line_B = 1.0;
+	float line_B = 0.0;
 	float line_A = 1.0f;
 	float line_W = 6.0;
 
@@ -129,8 +224,8 @@ void game::draw(float frameTime)
     shapeGraphic->drawLine(square_x1[3], square_y1[3], square_x2[3], square_y2[3], line_R, line_G, line_B, line_A, line_W);
 */
     
-    int cube_x = 362;
-    int cube_y = 353;
+    int cube_x = screenWidth/2; //10;//362;
+    int cube_y = screenHeight/2; //10;//353;
     
     vec2 vertice[] = {
         {pX, pY},
@@ -184,17 +279,18 @@ void game::draw(float frameTime)
 	
 	// BUTTON
 	
-	buttonLeft->blit(0, 800, 20, 49, 0, 0);
-	buttonMiddle->blit(0, 800, 160, 49, 20, 0);
-	buttonRight->blit(0, 800, 20, 49, 20+160, 0);
+	buttonLeft->drawEx(0, 800, 20, 49, 0, 0);
+	buttonMiddle->drawEx(0, 800, 160, 49, 20, 0);
+	buttonRight->drawEx(0, 800, 20, 49, 20+160, 0);
 	
 
 	
 	// SQUARE 256x256
-   testGraphic2->blit(0, 0, 256, 256, 420, 850, 360-a, z);
+    testGraphic2->setDrawBounds(true);
+    testGraphic2->drawEx(0, 0, 256, 256, 420, 850, 360-a, z);
 
 	
-	/*
+	
 	
 	wchar_t * txt = L"This is so cool. COOL Bis";
 	float yfontpos = 0;
@@ -205,7 +301,7 @@ void game::draw(float frameTime)
 	fonte->RenderText(txt, 0, 200, 100);
 	fonte->RenderText(txt, 0, 300, 50);
 	
-	*/
+	
 
 	
 }

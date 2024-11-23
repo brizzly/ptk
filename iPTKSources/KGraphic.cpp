@@ -1,4 +1,3 @@
-
 #include "KGraphic.h"
 #ifndef __ANDROID__
 #include "GLTextureHelper.h"
@@ -9,24 +8,22 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-
 KGraphic::~KGraphic()
 {
     glDeleteBuffers(1, &vertexBuffer);
-    vertexBuffer = NULL;
+    vertexBuffer = 0;
     
     glDeleteBuffers(1, &vertexBuffer_Line);
-    vertexBuffer = NULL;
+    vertexBuffer_Line = 0;
     
     glDeleteBuffers(1, &indexBuffer);
-    indexBuffer = NULL;
+    indexBuffer = 0;
     
     if(shader) {
         delete shader;
-        shader = NULL;
+        shader = nullptr;
     }
 }
-
 
 #ifdef __ANDROID__
 KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen_height, AAssetManager * value)
@@ -43,6 +40,11 @@ KGraphic::KGraphic(int game_width, int game_height, int screen_width, int screen
 
 void KGraphic::init(int game_width, int game_height, int screen_width, int screen_height)
 {
+    img_src_x = 0;
+    img_src_y = 0;
+    img_dst_x = 0;
+    img_dst_y = 0;
+    
     _offsetX = 0;
     _offsetY = 0;
     shape_centerX = shape_centerY = 0;
@@ -50,7 +52,7 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     _gameH = (float) game_height;
     _screenW = (float) screen_width;
     _screenH = (float) screen_height;
-	_drawBoundings = false;
+    _drawBoundings = false;
 
     if(_screenW == 0 || _screenH == 0) {
         printf("KGraphic init error.");
@@ -58,21 +60,16 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     }
     
     computOffset();
-    
-    
-    
+
     shader = new KShader();
-	_shaderProgram = shader->createShader();
+    _shaderProgram = shader->createShader();
     if (!_shaderProgram) {
         printf("Shader program linking failed!\n");
     }
     printf("Shader program linked successfully! Shader Id: %d\n\n", _shaderProgram);
-    
-    
-    //glUseProgram(_shaderProgram);
+
     printGLError("glUseProgram");
-    
-    
+
     positionAttribLocation = glGetAttribLocation(_shaderProgram, "a_position");
     printf("Position Attribute Location: %d\n", positionAttribLocation);
     printGLError("shader2");
@@ -97,58 +94,42 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     printf("Texture Location: %d\n", textureSamplerLoc);
     printGLError("shader6");
     
-    GLfloat epsilon = 0.00001f; // Small UV offset to avoid bleeding
+    GLfloat epsilon = 0.00001f;
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_epsilon"), epsilon);
 
+    GLfloat UV_EPSILON = 0;
     
-    // Vertex data: 2 triangles forming a rectangle (x, y positions + texture coordinates)
-
-    GLfloat UV_EPSILON = 0;//0.001f; // Small offset to avoid sampling adjacent pixels
-
     GLfloat vertices[] = {
-        // Positions        // UV Coordinates (adjusted by UV_EPSILON)
-        -1.0f,  1.0f, 0.0f, 1.0f - UV_EPSILON,   // Top-left corner
-        -1.0f, -1.0f, 0.0f, 0.0f + UV_EPSILON,   // Bottom-left corner
-         1.0f, -1.0f, 1.0f - UV_EPSILON, 0.0f + UV_EPSILON,   // Bottom-right corner
-         1.0f,  1.0f, 1.0f - UV_EPSILON, 1.0f - UV_EPSILON    // Top-right corner
+        // Positions          // UV Coordinates
+        -0.5f, -0.5f,          0.0f, 0.0f,   // Bottom-left corner
+         0.5f, -0.5f,          1.0f, 0.0f,   // Bottom-right corner
+         0.5f,  0.5f,          1.0f, 1.0f,   // Top-right corner
+        -0.5f,  0.5f,          0.0f, 1.0f    // Top-left corner
     };
     
-    GLuint indices[] = { 0, 1, 2, 0, 2, 3 };
+    GLuint indices[] = { 0, 1, 2, 2, 3, 0 };
     
-    
-    // Generate and bind the vertex buffer object (VBO)
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    
     printGLError("vertexBuffer");
     
-
- 
-    // Upload vertex data to the buffer
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
     printGLError("GL_STATIC_DRAW");
-
-
     
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     glViewport(0, 0, _screenW, _screenH);
-    //glClearColor(0.2f, 0.3f, 0.3f, 1.0f);  // Dark teal background
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Dark teal background
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
-    
-    // for lines -------------------------------
-	
     glGenBuffers(1, &vertexBuffer_Line);
     _lineShaderProgram = shader->createLineShader();
 }
 
 void KGraphic::setDrawBounds(bool value)
 {
-	_drawBoundings = value;
+    _drawBoundings = value;
 }
 
 void KGraphic::printGLError(const char * label)
@@ -165,36 +146,6 @@ void KGraphic::printGLError(const char * label)
     }
 }
 
-void KGraphic::setupOrthoProjection(mat4 m, float left, float right, float bottom, float top)
-{
-    // Set base to identity (optional, since you're setting all values explicitly)
-    setIdentityMatrix(m);
-
-    // First row: scaling X by 2 / (right - left)
-    m[0] = 2.0f / (right - left);
-    m[1] = 0.0f;
-    m[2] = 0.0f;
-    m[3] = 0.0f;
-
-    // Second row: scaling Y by 2 / (top - bottom)
-    m[4] = 0.0f;
-    m[5] = 2.0f / (top - bottom);
-    m[6] = 0.0f;
-    m[7] = 0.0f;
-
-    // Third row: scaling Z by -1.0 (assuming orthographic projection depth)
-    m[8] = 0.0f;
-    m[9] = 0.0f;
-    m[10] = -1.0f;  // Z scaling
-    m[11] = 0.0f;
-
-    // Fourth row: translation components
-    m[12] = -(right + left) / (right - left);
-    m[13] = -(top + bottom) / (top - bottom);
-    m[14] = 0.0f;  // Z translation (orthographic, so typically 0)
-    m[15] = 1.0f;  // Homogeneous coordinate
-}
-
 void KGraphic::setLineWidth(short lineWidth) {
     glLineWidth(lineWidth);
 }
@@ -205,93 +156,47 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
         printf("Error: Shader program is invalid.\n");
         return;
     }
-	
-	glUseProgram(_lineShaderProgram);  // Ensure the program is active
-
-	
-	// PROJECTION MATRIX AS PIXELS
-	setProjectionMatrix(transform, _screenW, _screenH, _gameW, _gameH);
-	GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
-	if(matrixProjection != -1) {
-		glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, transform);
-	}
-	
-	glDisable(GL_CULL_FACE);
-	glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
-	
-	// Enable blending
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	 
-	
-	setIdentityMatrix(transform);
-
-		
-		// REAL IMAGE SIZE PROJECTION
-	 if(zoom < 0) { zoom = 0; }
-	 float zoomCopy = zoom;
-	 zoom = sizeH / _gameH;
-	 zoom *= 0.5;
-	 float sizeRatio = sizeW / sizeH;
-	 
-	 // PREVENT IMAGE TO BE DISTRORDED BY SCREEN RATIO
-	//    scaleMatrix(transform, sizeRatio, 1);
-
-	 // TRANSLATE IMAGE FROM ITS CENTER TO CORNER + POSITION
-	 float hmX = ((sizeW + destX*2.0f) / _gameH) / 2.0f;
-	 float hmY = ((sizeH + destY*2.0f) / _gameH) / 2.0f;
-	 translateMatrix(transform, hmX, hmY);
-	 
-	 
-	 // ZOOM ( project real image size on screen )
-	 scaleMatrix(transform, zoom*sizeRatio, zoom);
-	 //scaleMatrix(transform, 0.5*sizeRatio, 0.5);
-	 
-	 // ZOOM
-	 scaleMatrix(transform, zoom*sizeRatio*zoomCopy, zoom*zoomCopy);
-
-	 // ROTATE
-	 if (angle != 0.0f) {
-		 rotateMatrix(transform, angle * M_PI / 180.0f);
-	 }
-
-	 // Pass matrix to shader
-	 GLuint matrixLocation = glGetUniformLocation(_lineShaderProgram, "u_matrix");
-	 glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, transform);
-	 
     
-	y1 = _gameH - y1;
-    y2 = _gameH - y2;
+    glUseProgram(_lineShaderProgram);
 
+    setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
     
-    // Define line coordinates and color
-    //float lineCoords[] = { x1, y1, x2, y2 };
-	
-	GLfloat lineCoords[] = {
-		x1,  y1, 0.0f, 0.0f,
-		x2, y2, 0.0f, 0.0f
-	};
-	
+    GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
+    if(matrixProjection != -1) {
+        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
+    }
+    
+    glDisable(GL_CULL_FACE);
+    glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+     
+    mat4 modelMatrix;
+    setIdentityMatrix(modelMatrix);
+    GLuint matrixLocation = glGetUniformLocation(_lineShaderProgram, "u_matrix");
+    glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelMatrix);
+     
+    GLfloat lineCoords[] = {
+        x1, y1,
+        x2, y2
+    };
+    
     float color[] = { r, g, b, a };
 
-    // Set line width (note: this may be clamped on some platforms)
-    glLineWidth(linewidth*2.0f);
+    glLineWidth(linewidth);
     
-    // Bind the vertex buffer and upload the line coordinates
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_Line);
     glBufferData(GL_ARRAY_BUFFER, sizeof(lineCoords), lineCoords, GL_DYNAMIC_DRAW);
 
-    // Set the position attribute
     GLint posAttrib = glGetAttribLocation(_lineShaderProgram, "a_position");
     if (posAttrib == -1) {
         printf("Error: Position attribute not found in shader.\n");
         return;
     }
     glEnableVertexAttribArray(posAttrib);
-    //glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
-	
-    // Set the color uniform
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+    
     GLint colorUniform = glGetUniformLocation(_lineShaderProgram, "color");
     if (colorUniform == -1) {
         printf("Error: Color uniform not found in shader.\n");
@@ -299,25 +204,8 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     }
     glUniform4fv(colorUniform, 1, color);
 
-	
-	if(_drawBoundings == false) {
-		// Set the orthographic projection matrix uniform
-		GLint matrixUniform = glGetUniformLocation(_lineShaderProgram, "u_matrix");
-		if (matrixUniform == -1) {
-			printf("Error: Matrix uniform not found in shader.\n");
-			return;
-		}
-		glUniformMatrix4fv(matrixUniform, 1, GL_FALSE, transform);  // Pass orthographic matrix
-	}
-	
-    // Enable blending for transparency
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    // Draw the line
     glDrawArrays(GL_LINES, 0, 2);
     
-    // Cleanup
     glDisableVertexAttribArray(posAttrib);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glUseProgram(0);
@@ -325,69 +213,73 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     printGLError("line");
 }
 
-// Initialize matrix to identity
 void KGraphic::setIdentityMatrix(mat4 m) {
     for (int i = 0; i < 16; ++i) {
         m[i] = (i % 5 == 0) ? 1.0f : 0.0f;
     }
 }
 
-// Translation matrix
-void KGraphic::translateMatrix(mat4 m, float x, float y) {
-    m[12] = x;
-    m[13] = y;
+void KGraphic::translateMatrix(mat4 m, float x, float y)
+{
+    mat4 translation;
+    setIdentityMatrix(translation);
+    translation[12] = x;
+    translation[13] = y;
+
+    // Multiply translation * m
+    mat4 result;
+    multiplyMatrices(translation, m, result);
+    copyMatrix(m, result);
 }
 
-void KGraphic::translateMatrix2(mat4 m, float x, float y) {
-    m[12] += x;
-    m[13] += y;
-}
-
-
-// Scaling matrix
 void KGraphic::scaleMatrix(mat4 m, float scaleX, float scaleY)
 {
-    // Multiply the existing scaling values with the new ones
-    m[0] = scaleX;  // Scale X
-    m[5] = scaleY;  // Scale Y
+    mat4 scaling;
+    setIdentityMatrix(scaling);
+    scaling[0] = scaleX;
+    scaling[5] = scaleY;
+
+    // Multiply scaling * m
+    mat4 result;
+    multiplyMatrices(scaling, m, result);
+    copyMatrix(m, result);
 }
 
+void KGraphic::scaleMatrix2(mat4 m, float scaleX, float scaleY)
+{
+    // Calculate the center of the model in model space.
+    // Since the quad vertices are from -0.5 to 0.5, the center is at (0, 0).
+    // If your model has different coordinates, adjust centerX and centerY accordingly.
+
+    float centerX = 0.0f;
+    float centerY = 0.0f;
+
+    // Create a translation matrix to move to the center point
+    mat4 translationToCenter;
+    setIdentityMatrix(translationToCenter);
+    translationToCenter[12] = -centerX;
+    translationToCenter[13] = -centerY;
+
+    // Create the scaling matrix
+    mat4 scaling;
+    setIdentityMatrix(scaling);
+    scaling[0] = scaleX;
+    scaling[5] = scaleY;
+
+    // Create a translation matrix to move back from the center point
+    mat4 translationBack;
+    setIdentityMatrix(translationBack);
+    translationBack[12] = centerX;
+    translationBack[13] = centerY;
+
+    // Multiply m = m * translationToCenter * scaling * translationBack
+    mat4 temp1, temp2;
+    multiplyMatrices(m, translationToCenter, temp1);
+    multiplyMatrices(temp1, scaling, temp2);
+    multiplyMatrices(temp2, translationBack, temp1);
+    copyMatrix(m, temp1);
+}
 void KGraphic::rotateMatrix(mat4 m, float angle)
-{
-    float s = sinf(angle);
-    float c = cosf(angle);
-
-    // Backup the current translation values
-    float translateX = m[12];
-    float translateY = m[13];
-
-    // Backup the current scale values
-    float scaleX = sqrtf(m[0] * m[0] + m[1] * m[1]);  // Scale in X direction
-    float scaleY = sqrtf(m[4] * m[4] + m[5] * m[5]);  // Scale in Y direction
-
-    // Apply rotation while preserving the scale
-    m[0] = scaleX * c;  // Cosine with scaling for the X axis
-    m[1] = scaleX * -s; // -Sine with scaling for the X axis
-    m[4] = scaleY * s;  // Sine with scaling for the Y axis
-    m[5] = scaleY * c;  // Cosine with scaling for the Y axis
-
-    // Restore the translation values
-    m[12] = translateX;
-    m[13] = translateY;
-}
-
-void KGraphic::rotateMatrix2(mat4 m, float angle)
-{
-    float s = sinf(angle);
-    float c = cosf(angle);
-
-    m[0] = c;
-    m[1] = -s;
-    m[4] = s;
-    m[5] = c;
-}
-
-void KGraphic::rotateMatrix3(mat4 m, float angle, float centerX, float centerY)
 {
     float s = sinf(angle);
     float c = cosf(angle);
@@ -399,56 +291,10 @@ void KGraphic::rotateMatrix3(mat4 m, float angle, float centerX, float centerY)
     rotation[4] = s;
     rotation[5] = c;
 
-    // Multiply the current matrix with the rotation matrix
+    // Multiply rotation * m
     mat4 result;
-    multiplyMatrices(m, rotation, result);
+    multiplyMatrices(rotation, m, result);
     copyMatrix(m, result);
-    
-    
-    /*
-    float c = cosf(angle);
-    float s = sinf(angle);
-
-    // Translation to center
-    mat4 translationToCenter = {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        -centerX, -centerY, 0.0f, 1.0f
-    };
-
-    // Rotation matrix
-    mat4 rotationMatrix = {
-        c,   s,   0.0f, 0.0f,
-       -s,   c,   0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
-    };
-
-    // Translation back from center
-    mat4 translationBack = {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        centerX, centerY, 0.0f, 1.0f
-    };
-
-    // Combine transformations: T_back * R * T_center * m
-    mat4 result;
-
-    // Step 1: Apply translation to center
-    multiplyMatrices(translationToCenter, m, result);
-
-    // Step 2: Apply rotation
-    multiplyMatrices(rotationMatrix, result, result);
-
-    // Step 3: Apply translation back
-    multiplyMatrices(translationBack, result, result);
-
-    // Copy result back to m
-    for (int i = 0; i < 16; i++) {
-        m[i] = result[i];
-    }*/
 }
 
 void KGraphic::multiplyMatrices(const mat4 a, const mat4 b, mat4 result)
@@ -470,145 +316,124 @@ void KGraphic::copyMatrix(mat4 dest, const mat4 src)
     }
 }
 
-void KGraphic::printMatrix(mat4 m)
-{
-    printf("%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n\n",
-           m[0], m[1], m[2], m[3],
-           m[4], m[5], m[6], m[7],
-           m[8], m[9], m[10], m[11],
-           m[12], m[13], m[14], m[15]);
-}
-
 void KGraphic::setOrthographicProjection(mat4& m, float left, float right, float bottom, float top)
 {
-    // Initialize the matrix to identity
     setIdentityMatrix(m);
 
-    // Orthographic projection calculations
-    m[0] = 2.0f / (right - left); // Scale X
-    m[5] = 2.0f / (top - bottom); // Scale Y
-    m[10] = -1.0f;               // Scale Z (assuming no depth)
-    m[12] = -(right + left) / (right - left); // Translate X
-    m[13] = -(top + bottom) / (top - bottom); // Translate Y
-    m[15] = 1.0f;                // Homogeneous coordinate
-}
-
-void KGraphic::orthographicMatrix(mat4 m, float left, float right, float bottom, float top, float nearVal, float farVal)
-{
-    setIdentityMatrix(m);  // Set base to identity
-
-    // First row: scaling X by 2 / (right - left)
-    m[0] = 2.0f / (right - left);
-
-    // Second row: scaling Y by 2 / (top - bottom)
-    m[5] = 2.0f / (top - bottom);
-
-    // Third row: scaling Z by -2 / (far - near) for depth
-    m[10] = -2.0f / (farVal - nearVal);
-
-    // Translation X: shifting based on the left and right boundaries
+    m[0] =  2.0f / (right - left);           // Positive scaling on X-axis (no flip)
+    m[5] = -2.0f / (top - bottom);           // Negative scaling to flip vertically
+    m[10] = -1.0f;
     m[12] = -(right + left) / (right - left);
-
-    // Translation Y: shifting based on the top and bottom boundaries
-    m[13] = -(top + bottom) / (top - bottom);
-
-    // Translation Z: shifting based on near and far planes
-    m[14] = -(farVal + nearVal) / (farVal - nearVal);
-
-    // Fix the last element for homogeneous coordinates
-    m[15] = 1.0f;  // Ensure the last element is 1.0 for homogeneous coordinates
-}
-
-void KGraphic::setProjectionMatrix(mat4 m, int window_width, int window_height, float display_width, float display_height)
-{
-    float scale2 = display_width / display_height;
-    float scale3 = 1.0;
-
-    orthographicMatrix(m, 0.0, 0.0 + scale2, scale3, 0.0f, -1.0f, 1.0f);
+    m[13] =  (top + bottom) / (top - bottom);
+    m[15] = 1.0f;
 }
 
 void KGraphic::computOffset()
 {
-     // Determine the orientation
-     bool isPortrait = _screenH > _screenW;
+    bool isPortrait = _screenH > _screenW;
 
-     // Calculate scaling factors for width and height
-     float scaleX = static_cast<float>(_screenW) / _gameW;
-     float scaleY = static_cast<float>(_screenH) / _gameH;
+    float scaleX = static_cast<float>(_screenW) / _gameW;
+    float scaleY = static_cast<float>(_screenH) / _gameH;
 
-     // Choose the scale factor based on orientation
-     float scale_;
-     if (isPortrait) {
-         // Maximize width in portrait
-         scale_ = scaleX;
-     } else {
-         // Maximize height in landscape
-         scale_ = scaleY;
-     }
+    float scale_;
+    if (isPortrait) {
+        scale_ = scaleX;
+    } else {
+        scale_ = scaleY;
+    }
 
-    // Compute the scaled game dimensions
     _scaledGameW = static_cast<int>(_gameW * scale_);
     _scaledGameH = static_cast<int>(_gameH * scale_);
 
-     // Calculate offsets to center the game content
     _offsetX = (_screenW - _scaledGameW) / 2;
     _offsetY = (_screenH - _scaledGameH) / 2;
    
     if(_offsetX == 0 && _offsetY < 0)
     {
-         scale_ = (scaleX < scaleY) ? scaleX : scaleY;
+        scale_ = (scaleX < scaleY) ? scaleX : scaleY;
 
-         // Compute the scaled game dimensions
         _scaledGameW = static_cast<int>(_gameW * scale_);
         _scaledGameH = static_cast<int>(_gameH * scale_);
 
-         // Calculate offsets to center the game content
         _offsetX = (_screenW - _scaledGameW) / 2;
         _offsetY = (_screenH - _scaledGameH) / 2;
     }
-     
-     /*
-     // Calculate scaling factors for width and height
-     float scaleX = static_cast<float>(_screenW) / _gameW;
-     float scaleY = static_cast<float>(_screenH) / _gameH;
-
-     // Choose the smaller scale to maintain aspect ratio
-     float scale_ = (scaleX < scaleY) ? scaleX : scaleY;
-
-     // Compute the scaled game dimensions
-     int scaledGameW = static_cast<int>(_gameW * scale_);
-     int scaledGameH = static_cast<int>(_gameH * scale_);
-
-     // Calculate offsets to center the game content
-     int offsetX = (_screenW - scaledGameW) / 2;
-     int offsetY = (_screenH - scaledGameH) / 2;
-     */
 }
 
 void KGraphic::render()
 {
-    if(_shaderProgram == 0) {
+    if (_shaderProgram == 0) {
         return;
     }
+    
+    glUseProgram(_shaderProgram);
+    
+    
 
-	glUseProgram(_shaderProgram);  // Ensure the program is active
+/*
 
-    // PROJECTION MATRIX AS PIXELS
-	setProjectionMatrix(transform, _screenW, _screenH, _gameW, _gameH);
-	GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
-	if(matrixProjection != -1) {
-		glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, transform);
-	}
+    // 1. Translate to the destination position
+    translateMatrix(modelViewMatrix, destX, destY);
+
+    // 2. Apply scaling centered around the model's center
+    scaleMatrix2(modelViewMatrix, sizeW * zoom, sizeH * zoom);
+
+    // 3. Apply rotation around the model's center (if necessary)
+    if (angle != 0.0f) {
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
+    }
+
+    // Set the model-view matrix to the shader
+    GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
+    if (matrixLocation != -1) {
+        glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelViewMatrix);
+    }
+*/
+    
+    
+    
+
+    // Set Projection Matrix
+    setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
+
+    GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
+    if (matrixProjection != -1) {
+        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
+    }
+
+    // Start with the identity matrix
+    mat4 modelViewMatrix;
+    setIdentityMatrix(modelViewMatrix);
+
+    // Apply transformations in the correct order
+
+    // 1. Translate to the destination position plus half the size (to center the model)
+    translateMatrix(modelViewMatrix, destX + (sizeW * zoom) / 2.0f, destY + (sizeH * zoom) / 2.0f);
+
+    // 3. Apply scaling for size and zoom
+    scaleMatrix(modelViewMatrix, sizeW * zoom, sizeH * zoom);
+    
+    if(zoom != 1) {
+        translateMatrix(modelViewMatrix, 2.0f, 2.0f);
+    }
+    
+    // 2. Apply rotation around the center
+    if (angle != 0.0f) {
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
+    }
+    
+    
+
+    // Set the model-view matrix to the shader
+    GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
+    glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelViewMatrix);
 
     glDisable(GL_CULL_FACE);
     glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
-    
-    // Enable blending
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-     
 
-    // Pass the texture cropping information to the shader
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_srcX"), srcX);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_srcY"), srcY);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_sizeW"), sizeW);
@@ -617,94 +442,36 @@ void KGraphic::render()
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_texHeight"), _textureSizeH);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_opacity"), blend);
 
-    
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glEnableVertexAttribArray(positionAttribLocation);
     glEnableVertexAttribArray(texCoordAttribLocation);
-    
     glVertexAttribPointer(positionAttribLocation, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
     glVertexAttribPointer(texCoordAttribLocation, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
-    
-    
-    glActiveTexture(GL_TEXTURE0);  // Activate texture unit 0
-    glBindTexture(GL_TEXTURE_2D, _texture);  // Bind texture
-    glUniform1i(textureSamplerLoc, 0);  // Set the sampler to texture unit 0
-    
-    
-    // Define a 4x4 transformation matrix
-    //mat4 transform;
-    setIdentityMatrix(transform);
-
-    // REAL IMAGE SIZE PROJECTION
-    if(zoom < 0) { zoom = 0; }
-    float zoomCopy = zoom;
-    zoom = sizeH / _gameH;
-    zoom *= 0.5;
-    float sizeRatio = sizeW / sizeH;
-    
-    // PREVENT IMAGE TO BE DISTRORDED BY SCREEN RATIO
-//    scaleMatrix(transform, sizeRatio, 1);
-
-    // TRANSLATE IMAGE FROM ITS CENTER TO CORNER + POSITION
-    float hmX = ((sizeW + destX*2.0f) / _gameH) / 2.0f;
-    float hmY = ((sizeH + destY*2.0f) / _gameH) / 2.0f;
-    translateMatrix(transform, hmX, hmY);
-    
-    
-    // ZOOM ( project real image size on screen )
-    scaleMatrix(transform, zoom*sizeRatio, zoom);
-    //scaleMatrix(transform, 0.5*sizeRatio, 0.5);
-    
-    // ZOOM
-    scaleMatrix(transform, zoom*sizeRatio*zoomCopy, zoom*zoomCopy);
-
-    // ROTATE
-    if (angle != 0.0f) {
-        rotateMatrix(transform, angle * M_PI / 180.0f);
-    }
-
-    // Pass matrix to shader
-    GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
-    glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, transform);
-    
-    // Draw it
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _texture);
+    glUniform1i(textureSamplerLoc, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
     printGLError("render");
-	
-	// Debug mode
-	if(_drawBoundings == true) {
-		
-		vec2 vertice[] = {
-			{0, 0},
-			{0+sizeW, 0},
-			{0+sizeW, 0+sizeH},
-			{0, 0+sizeH}
-		};
-        
-        shape_centerX = sizeW/2;
-        shape_centerY = sizeH/2;
-		//testGraphic4->angle = a;
-		float line_W = 4.0;
-		float line_R = 1;
-		float line_G = 0;
-		float line_B = 0;
-		float line_A = 1;
-		
-		blitShape(4, vertice, destX, _gameH - destY - sizeH, line_W, line_R, line_G, line_B, line_A);
-	}
+
+    // Draw debug bounding box if needed
+    if (_drawBoundings) {
+        vec2 vertice[] = {
+            {-sizeW * zoom / 2.0f, -sizeH * zoom / 2.0f},
+            { sizeW * zoom / 2.0f, -sizeH * zoom / 2.0f},
+            { sizeW * zoom / 2.0f,  sizeH * zoom / 2.0f},
+            {-sizeW * zoom / 2.0f,  sizeH * zoom / 2.0f}
+        };
+
+        float lineW = 4.0;
+        blitShape(4, vertice, destX + (sizeW * zoom) / 2.0f, destY + (sizeH * zoom) / 2.0f, lineW, 1, 0, 0, 1);
+    }
 }
 
 void KGraphic::setOrientation(bool isLandscape) {
-    // Update the projection matrix based on orientation
-    if (isLandscape) {
-        // Set landscape projection matrix
-    } else {
-        // Set portrait projection matrix
-    }
 }
 
-// Functions added as per user request
 void KGraphic::freePicture() {
     if (_imageWidth > 0) {
         _imageWidth = 0;
@@ -726,50 +493,40 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
-    // Ouvrir le fichier à partir du répertoire des assets
     AAsset* asset = AAssetManager_open(g_assetManager, filename, AASSET_MODE_BUFFER);
     if (asset == nullptr) {
         printf("Failed to open asset: %s\n", filename);
         return false;
     }
 
-    // Obtenir la taille du fichier et lire les données
     off_t assetLength = AAsset_getLength(asset);
     unsigned char* assetBuffer = new unsigned char[assetLength];
     AAsset_read(asset, assetBuffer, assetLength);
     AAsset_close(asset);
 
-    // Utiliser stb_image pour charger l'image depuis le buffer
     data = stbi_load_from_memory(assetBuffer, assetLength, &width, &height, &nrChannels, STBI_rgb_alpha);
-    delete[] assetBuffer;  // Libérer le buffer d'assets
+    delete[] assetBuffer;
 
-    isBGR = 0; //detectRGBorBGR(data, width, height);
+    isBGR = 0;
 
 #else
-//    GLTextureHelper helper;
-//    filename = helper.loadFileDatas(filename);
-//    data = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);  // Load as RGBA
-    
     GLTextureHelper helper;
-    std::string modifiedFilename(filename);  // Use std::string to modify the filename
+    std::string modifiedFilename(filename);
     
-    // Attempt to load @2x version first
     size_t dotPosition = modifiedFilename.find_last_of(".");
     if (dotPosition != std::string::npos) {
         _eyeRetina = true;
-        modifiedFilename.insert(dotPosition, "@2x");  // Add @2x before the file extension
+        modifiedFilename.insert(dotPosition, "@2x");
     }
 
     const char* retinaFilename = helper.loadFileDatas(modifiedFilename.c_str());
     data = stbi_load(retinaFilename, &width, &height, &nrChannels, STBI_rgb_alpha);
 
-    // Check if the @2x image failed to load
     if (!data) {
         printf("Failed to load @2x texture, trying standard version: %s\n", filename);
         
         _eyeRetina = false;
         
-        // Fall back to standard filename
         retinaFilename = helper.loadFileDatas(filename);
         data = stbi_load(retinaFilename, &width, &height, &nrChannels, STBI_rgb_alpha);
     }
@@ -781,7 +538,6 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
-    // Update texture dimensions for retina if needed
     if (_eyeRetina) {
         _textureSizeW = width / 2;
         _textureSizeH = height / 2;
@@ -789,14 +545,11 @@ bool KGraphic::loadPicture(const char *filename)
         _textureSizeW = width;
         _textureSizeH = height;
     }
-    
 
-    // Detect whether the image is RGB or BGR
     if (isBGR) {
         printf("Detected BGR format: Swapping red and blue channels.\n");
-        // Perform channel swapping if needed (red and blue)
         for (int i = 0; i < width * height * 4; i += 4) {
-            unsigned char temp = data[i];     // Swap red and blue
+            unsigned char temp = data[i];
             data[i] = data[i + 2];
             data[i + 2] = temp;
         }
@@ -810,22 +563,18 @@ bool KGraphic::loadPicture(const char *filename)
     
     glDisable(GL_DEPTH_TEST);
     glGenTextures(1, &_texture);
-    //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glActiveTexture(GL_TEXTURE0);  // Activate texture unit 0
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
     printf("texture binded to: %d\n", _texture);
     
-    // Set texture parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  // Must use CLAMP_TO_EDGE for NPOT textures
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  // Must use CLAMP_TO_EDGE for NPOT textures
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);     // Linear filtering (no mipmapping)
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);     // Magnification filter
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);     //
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);     //
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    
-    // Use RGBA format for texture
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+    stbi_image_free(data); // Free the image memory
 
     return true;
 }
@@ -850,23 +599,27 @@ bool KGraphic::isRetina() {
     return _eyeRetina;
 }
 
-void KGraphic::blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int destY , bool flipx , bool flipy )
+void KGraphic::draw(int x, int y, float angle, float zoom, float blend)
 {
-    blit(x1, y1, x2, y2, destX, destY, 0, 1, 1, flipx, flipy);
+    img_src_x = 0;
+    img_src_y = 0;
+    img_dst_x = getTextureSizeW();
+    img_dst_y = getTextureSizeH();
+    
+    drawEx(img_src_x, img_src_y, img_dst_x, img_dst_y, x, y, angle, zoom, blend);
 }
 
-void KGraphic::blit(int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend , bool flipx , bool flipy )
+void KGraphic::drawEx(int x1, int y1, int x2, int y2, int destX, int destY, float angle, float zoom, float blend)
 {
-    // Set properties for the rendering
     this->srcX = x1;
     this->srcY = y1;
-    this->destX = destX;      // Destination X
-    this->destY = destY;      // Destination Y
+    this->destX = destX;
+    this->destY = destY;
     this->sizeW = x2 - x1;
     this->sizeH = y2 - y1;
-    this->angle = angle;    // Rotation angle in degrees
-    this->zoom = zoom;      // Scale (1.0 = no scaling)
-    this->blend = blend;     // Alpha blending value (0.0 - 1.0)
+    this->angle = angle;
+    this->zoom = zoom;
+    this->blend = blend;
     
     render();
 }
@@ -880,14 +633,7 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
 
     glUseProgram(_lineShaderProgram);
 
-    // Set Projection Matrix
-    mat4 projectionMatrix;
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
-    
-    
-    
-    float radians = (360.0-angle) * M_PI / 180.0f;
-
 
     GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
     if (matrixProjection != -1) {
@@ -896,27 +642,15 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
         printf("Projection matrix uniform not found in shader!\n");
     }
 
-    
-    // Set Model-View Matrix
-    
-    // Identity matrix
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
 
-    // Translate to center of the shape
-    translateMatrix2(modelViewMatrix, -shape_centerX, -shape_centerY);
+    // Apply transformations
+    translateMatrix(modelViewMatrix, destX, destY);
 
-    // Apply rotation
-    //rotateMatrix(modelViewMatrix, radians);
-    rotateMatrix3(modelViewMatrix, radians, -shape_centerX, -shape_centerY);
-
-    // Translate back to the original position
-    translateMatrix2(modelViewMatrix, shape_centerX, shape_centerY);
-    
-    
-   translateMatrix2(modelViewMatrix, destX, destY);
-    
-    
+    if (angle != 0.0f) {
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
+    }
 
     GLuint matrixModelView = glGetUniformLocation(_lineShaderProgram, "u_matrix");
     if (matrixModelView != -1) {

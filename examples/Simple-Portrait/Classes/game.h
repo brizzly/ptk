@@ -32,5 +32,8 @@ public:
 	
 	void init(int width, int height);
 	void draw(float frameTime);
+    void draw_scene0(float frameTime);
+    void draw_scene1(float frameTime);
+    void draw_scene2(float frameTime);
 	void playSfx();
 };

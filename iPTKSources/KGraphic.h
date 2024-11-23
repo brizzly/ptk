@@ -8,6 +8,7 @@
 #include <GLES2/gl2.h>
 #include <android/asset_manager_jni.h>
 #else
+#define GLES_SILENCE_DEPRECATION
 #include <OpenGLES/ES2/gl.h>
 #endif
 
@@ -36,7 +37,6 @@ public:
     void init(int game_width, int game_height, int screen_width, int screen_height);
 	void setDrawBounds(bool value);
     void printGLError(const char * label);
-    void render();
     void setOrientation(bool isLandscape);  // Call this to switch between landscape and portrait
 
     // New functions as requested
@@ -49,12 +49,11 @@ public:
     float getTextureSizeH();
     bool isRetina();
 
-    //void setupOrthoProjection(float left, float right, float bottom, float top);
-    void setupOrthoProjection(mat4 m, float left, float right, float bottom, float top);
+    void draw(int x, int y, float angle, float zoom, float blend);
+    void drawEx(int x1, int y1, int x2, int y2, int destX, int destY, float angle = 0.0, float zoom = 1.0, float blend = 1.0);
+
     void setLineWidth(short lineWidth);
     void drawLine(float x1, float y1, float x2, float y2, float r, float g, float b, float a, float linewidth=1.0);
-    void blitAlphaRect(int x1, int y1, int x2, int y2, int destX, int destY , bool flipx=false, bool flipy=false);
-    void blit(int x1, int y1, int x2, int y2, int destX, int destY, float angle = 0.0, float zoom = 1.0, float blend = 1.0 , bool flipx=false, bool flipy=false );
     void blitShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a);
     
 public:
@@ -64,7 +63,7 @@ public:
 	
     
 private:
-	mat4 transform;
+	//mat4 transform;
     float _imageWidth;
     float _imageHeight;
     float _textureSizeW;
@@ -91,28 +90,22 @@ private:
     GLuint blendColorLocation;
     KShader * shader;
     GLuint _texture;
+    
+    float img_src_x;
+    float img_src_y;
+    float img_dst_x;
+    float img_dst_y;
 
-
+    void render();
     void computOffset();
+    
     void printMatrix(mat4 m);
     void setOrthographicProjection(mat4& m, float left, float right, float bottom, float top);
-    void orthographicMatrix(mat4 m, float left, float right, float bottom, float top, float nearVal, float farVal);
-
-	void setProjectionMatrix(mat4 m, int window_width, int window_height, float display_width, float display_height);
     void setIdentityMatrix(mat4 m);
-
-    // Translation matrix
     void translateMatrix(mat4 m, float x, float y);
-    void translateMatrix2(mat4 m, float x, float y);
-
-    // Scaling matrix
     void scaleMatrix(mat4 m, float scaleX, float scaleY);
-
-    // Rotation matrix (angle in radians)
+    void scaleMatrix2(mat4 m, float scaleX, float scaleY);
     void rotateMatrix(mat4 m, float angle);
-    void rotateMatrix2(mat4 m, float angle);
-    void rotateMatrix3(mat4 m, float angle, float centerX, float centerY);
-    
     void copyMatrix(mat4 dest, const mat4 src);
     void multiplyMatrices(const mat4 a, const mat4 b, mat4 result);
 

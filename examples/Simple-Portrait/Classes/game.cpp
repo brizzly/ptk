@@ -103,9 +103,6 @@ void game::draw_scene1(float frameTime)
     float z = 1;
     float b = 0.5f;
     
-
-    // FULL SCREEN IMAGE : 960x1440
-    testGraphic3->draw(0, 0, 0, 1, 1);
      
     // SQUARE 512x512
     testGraphic4->setDrawBounds(true);
@@ -161,57 +158,33 @@ void game::draw_scene2(float frameTime)
     testGraphic->draw(x, y, a, z, b);
 }
 
-void game::draw(float frameTime)
+void game::draw_scene3(float frameTime)
 {
-	static float r = 0.0;
-	static float z = 0.0;
-	static float a = 0.0;
-	
-
-	r += (frameTime / 1000.0f) * 0.001f;
-	a += (frameTime / 1000.0f) * 0.001f;
-    z = 1;//1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
-
-	static float debugval = 0.0;
-	debugval += 0.4f;
-	
-	
-	int screenWidth = KPTK::_screenW;
-	int screenHeight = KPTK::_screenH;
+    static float z = 1.0;
+    static float a = 0.0;
     
-    //draw_scene0(frameTime);
-    //draw_scene1(frameTime);
-    draw_scene2(frameTime);
-    return;
-
-   
-	// FULL SCREEN IMAGE : 960x1440
-	testGraphic3->drawEx(0, 0, 960, 1440, 0, 0);
-	
-   
-	// SQUARE 256x256
-    testGraphic->setDrawBounds(true);
-	testGraphic->drawEx(0, 0, 256, 256, 140, 80, a, z);
-	 
-	 
-	// SQUARE 512x512
-	testGraphic4->drawEx(0, 0, 512, 512, 362, 353, 10, 1.0f, 0.5f);
-	
-	
-	// LINES
-	
-	float line_R = 0.0f;
-	float line_G = 1.0;
-	float line_B = 0.0;
-	float line_A = 1.0f;
-	float line_W = 6.0;
+    //r += (frameTime / 1000.0f) * 0.001f;
+    a += (frameTime / 1000.0f) * 0.001f;
+    z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
+    
+    
+    int screenWidth = KPTK::_screenW;
+    int screenHeight = KPTK::_screenH;
+    
+    // LINES
+    
+    float line_R = 0.0f;
+    float line_G = 1.0;
+    float line_B = 0.0;
+    float line_A = 1.0f;
+    float line_W = 6.0;
 
     float pX = 0;
     float pY = 0;
     float w1 = 512; //screenWidth/2;
     float h1 = 512; //screenHeight/2;
     
-    /*
+    
     float square_x1[4] = {pX, pX+w1, pX+w1, pX};
     float square_y1[4] = {pY, pY, pY+h1, pY+h1};
     
@@ -222,7 +195,7 @@ void game::draw(float frameTime)
     shapeGraphic->drawLine(square_x1[1], square_y1[1], square_x2[1], square_y2[1], line_R, line_G, line_B, line_A, line_W);
     shapeGraphic->drawLine(square_x1[2], square_y1[2], square_x2[2], square_y2[2], line_R, line_G, line_B, line_A, line_W);
     shapeGraphic->drawLine(square_x1[3], square_y1[3], square_x2[3], square_y2[3], line_R, line_G, line_B, line_A, line_W);
-*/
+   
     
     int cube_x = screenWidth/2; //10;//362;
     int cube_y = screenHeight/2; //10;//353;
@@ -271,39 +244,60 @@ void game::draw(float frameTime)
     
     
 
-	shapeGraphic->drawLine(0, 80, screenWidth, 80, 1, 1, 1, 1, 1.0);
-	shapeGraphic->drawLine(0, 100, screenWidth, 100, 0, 1, 0, 0.5, 10.0);
+    shapeGraphic->drawLine(0, 80, screenWidth, 80, 1, 1, 1, 1, 1.0);
+    shapeGraphic->drawLine(0, 100, screenWidth, 100, 0, 1, 0, 0.5, 10.0);
+    //shapeGraphic->angle = a;
     
-    shapeGraphic->angle = a;
-	
-	
-	// BUTTON
-	
-	buttonLeft->drawEx(0, 800, 20, 49, 0, 0);
-	buttonMiddle->drawEx(0, 800, 160, 49, 20, 0);
-	buttonRight->drawEx(0, 800, 20, 49, 20+160, 0);
-	
+    
+    // BUTTON
+    
+    buttonLeft->drawEx(0, 800, 20, 49, 0, 0);
+    buttonMiddle->drawEx(0, 800, 160, 49, 20, 0);
+    buttonRight->drawEx(0, 800, 20, 49, 20+160, 0);
+    
 
-	
-	// SQUARE 256x256
+    
+    // SQUARE 256x256
     testGraphic2->setDrawBounds(true);
     testGraphic2->drawEx(0, 0, 256, 256, 420, 850, 360-a, z);
 
-	
-	
-	
-	wchar_t * txt = L"This is so cool. COOL Bis";
-	float yfontpos = 0;
-	
+    
+    
+    
+    wchar_t * txt = L"This is so cool. COOL Bis";
+    float yfontpos = 0;
+    
 //    fonte->RenderText(txt, 0, +100+42, 100);
-	fonte->RenderText(txt, 0, 0, 100);
-	fonte->RenderText(txt, 0, 100, 50);
-	fonte->RenderText(txt, 0, 200, 100);
-	fonte->RenderText(txt, 0, 300, 50);
-	
+    fonte->RenderText(txt, 0, 0, 100);
+    fonte->RenderText(txt, 0, 100, 50);
+    fonte->RenderText(txt, 0, 200, 100);
+    fonte->RenderText(txt, 0, 300, 50);
+    
+    
+}
+
+void game::draw(float frameTime)
+{
+	static float r = 0.0;
+	static float z = 0.0;
+	static float a = 0.0;
 	
 
+	r += (frameTime / 1000.0f) * 0.001f;
+	a += (frameTime / 1000.0f) * 0.001f;
+    z = 1;//1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
+
+	static float debugval = 0.0;
+	debugval += 0.4f;
 	
+	
+	int screenWidth = KPTK::_screenW;
+	int screenHeight = KPTK::_screenH;
+    
+    draw_scene0(frameTime);
+    //draw_scene1(frameTime);
+    draw_scene2(frameTime);
+    draw_scene3(frameTime);
 }
 
 void game::playSfx()

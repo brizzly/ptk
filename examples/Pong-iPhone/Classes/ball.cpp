@@ -13,6 +13,8 @@ ball::ball(KGraphic * graphic, int posx, int posy, float vx, float vy, int w, in
 {
     kg = graphic;
     
+    gameWidth = game_w;
+    gameHeight = game_h;
     screenWidth = screen_w;
     screenHeight = screen_h;
     
@@ -227,27 +229,7 @@ void ball::update(float frametime)
     
     printf("blocy %f lv.y %f\n", blocy, lv.y);
     
-    
-    //    printf("_current_block (%x) %f ; ylimit=%d ; %d < %d\n", (unsigned int)_current_block, blocy, ylimit, (int)timer->getDelta(), (int)timer->getDelay());
-    
-//    if (box2d_body->GetType() != b2_dynamicBody) {
-//        box2d_body->SetType(b2_dynamicBody);
-//    }
-//    float mass = box2d_body->GetMass();
-//    if (mass == 0) {
-//        // Recalculate mass if necessary
-//        b2MassData massData;
-//        box2d_body->GetMassData(&massData);
-//        massData.mass = 10;//desired_mass;
-//        box2d_body->SetMassData(&massData);
-//    }
-//    if (box2d_body->IsFixedRotation()) {
-//        box2d_body->SetFixedRotation(false);
-//    }
-//    box2d_body->SetLinearDamping(0.0f);
-//    box2d_body->SetAwake(true);
-    
-    int ylimit = 530;
+    int ylimit = gameHeight-100;
     
     if(lv.y > 0) {
         if(blocy > ylimit)

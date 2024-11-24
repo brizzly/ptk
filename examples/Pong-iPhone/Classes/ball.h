@@ -34,7 +34,9 @@
 class ball : Node
 {
 private:
-    
+
+    int gameWidth;
+    int gameHeight;
     int screenWidth;
     int screenHeight;
     

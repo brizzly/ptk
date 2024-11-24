@@ -34,6 +34,8 @@ void game::init(int width, int height)
 	testGraphic4->loadPicture("box512.png");
 	
 	shapeGraphic = new KGraphic(gameW, gameH, screenW, screenH);
+    shapeGraphic2 = new KGraphic(gameW, gameH, screenW, screenH);
+    shapeGraphic3 = new KGraphic(gameW, gameH, screenW, screenH);
 	
 	buttonLeft = new KGraphic(gameW, gameH, screenW, screenH);
 	buttonLeft->loadPicture("border2_left.png");
@@ -135,7 +137,7 @@ void game::draw_scene2(float frameTime)
     float y = 0;
     //float a = 0;
     //float z = 1;
-    float b = 0.5f;
+    float b = 0.85f;
     
 
     // FULL SCREEN IMAGE : 960x1440
@@ -179,10 +181,10 @@ void game::draw_scene3(float frameTime)
     float line_A = 1.0f;
     float line_W = 6.0;
 
-    float pX = 0;
-    float pY = 0;
-    float w1 = 512; //screenWidth/2;
-    float h1 = 512; //screenHeight/2;
+    float pX = 0 + 50;
+    float pY = 0 + 50;
+    float w1 = 512;
+    float h1 = 512;
     
     
     float square_x1[4] = {pX, pX+w1, pX+w1, pX};
@@ -192,17 +194,17 @@ void game::draw_scene3(float frameTime)
     float square_y2[4] = {pY, pY+h1, pY+h1, pY};
     
     shapeGraphic->angle = a;
-    shapeGraphic->shape_centerX = w1/2;
-    shapeGraphic->shape_centerY = h1/2;
+    shapeGraphic->line_centerX = w1/2 + pX;
+    shapeGraphic->line_centerY = h1/2 + pY;
 
-    shapeGraphic->drawLine(square_x1[0], square_y1[0], square_x2[0], square_y2[0], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
-    shapeGraphic->drawLine(square_x1[1], square_y1[1], square_x2[1], square_y2[1], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
-    shapeGraphic->drawLine(square_x1[2], square_y1[2], square_x2[2], square_y2[2], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
-    shapeGraphic->drawLine(square_x1[3], square_y1[3], square_x2[3], square_y2[3], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
-   
+    shapeGraphic->drawLine(square_x1[0], square_y1[0], square_x2[0], square_y2[0], 1, 1, 1, line_A, line_W);
+    shapeGraphic->drawLine(square_x1[1], square_y1[1], square_x2[1], square_y2[1], 1, 1, 1, line_A, line_W);
+    shapeGraphic->drawLine(square_x1[2], square_y1[2], square_x2[2], square_y2[2], 1, 1, 1, line_A, line_W);
+    shapeGraphic->drawLine(square_x1[3], square_y1[3], square_x2[3], square_y2[3], 1, 1, 1, line_A, line_W);
+
     
-    int cube_x = screenWidth/2; //10;//362;
-    int cube_y = screenHeight/2; //10;//353;
+    int cube_x = 200;
+    int cube_y = 320;
     
     vec2 vertice[] = {
         {pX, pY},
@@ -211,53 +213,25 @@ void game::draw_scene3(float frameTime)
         {pX, pY+h1}
     };
     
-//    vec2 center;
-//    center[0] = 256;
-//    center[1] = 256;
-//    for(int i=0 ; i<4 ; i++) {
-//        center[0] += vertice[i][0];
-//        center[1] += vertice[i][1];
-//    }
-
-    
-    //testGraphic4->shape_centerX = center[0];
-    //testGraphic4->shape_centerY = center[1];
-    //testGraphic4->angle = a;
-    testGraphic4->blitShape(4, vertice, cube_x, cube_y, line_W, line_R, line_G, line_B, line_A);
+    shapeGraphic2->shape_centerX = w1/2 + pX;
+    shapeGraphic2->shape_centerY = h1/2 + pY;
+    shapeGraphic2->angle = a;
+    shapeGraphic2->drawShape(4, vertice, cube_x, cube_y, line_W, line_R, line_G, line_B, line_A);
     
     
-    /*
-
-    testGraphic4->blit(0, 0, 512, 512, cube_x, cube_y, 10, 1.0f, 0.5f);
-    for(int i=0 ; i<4 ; i++)
-    {
-        float x1 = square_x1[i];
-        float y1 = square_y1[i];
-        float x2 = square_x2[i];
-        float y2 = square_y2[i];
-        
-        x1 += cube_x;
-        y1 += cube_y;
-        
-        x2 += cube_x;
-        y2 += cube_y;
-        
-        testGraphic4->drawLine(x1, y1, x2, y2, line_R, line_G, line_B, line_A, line_W);
-    }
-    */
     
-    
-
-    shapeGraphic->drawLine(0, 80, screenWidth, 80, 1, 0, 0, 0.25, 1.0);
-    shapeGraphic->drawLine(0, 100, screenWidth, 100, 0, 0, 1, 0.75, 10.0);
-    //shapeGraphic->angle = a;
-    
+    // Simple lines
+    float ylimit = KPTK::getGameH()/2-100;
+    shapeGraphic3->drawLine(40, 100+z*ylimit, screenWidth-40, 100+z*ylimit, 1, 0, 0, 1.0f, z*10.0f);
+    shapeGraphic3->drawLine(40, 100+z*ylimit, screenWidth-40, 200, 0, 0, 1, 1.0f, 6.0);
+    shapeGraphic3->drawLine(screenWidth-40, 200, screenWidth-40, 100+z*ylimit, 1, 0.5f, 0, 1.0f, z*10.0f);
+  
     
     // BUTTON
     
-    buttonLeft->drawEx(0, 800, 20, 49, 0, 0);
-    buttonMiddle->drawEx(0, 800, 160, 49, 20, 0);
-    buttonRight->drawEx(0, 800, 20, 49, 20+160, 0);
+    buttonLeft->drawEx(0, 100, 20, 49, 0, 0);
+    buttonMiddle->drawEx(0, 100, 160, 49, 20, 0);
+    buttonRight->drawEx(0, 100, 20, 49, 20+160, 0);
     
 
     
@@ -274,8 +248,8 @@ void game::draw_scene3(float frameTime)
 //    fonte->RenderText(txt, 0, +100+42, 100);
     fonte->RenderText(txt, 0, 0, 100);
     fonte->RenderText(txt, 0, 100, 50);
-    fonte->RenderText(txt, 0, 200, 100);
-    fonte->RenderText(txt, 0, 300, 50);
+    fonte->RenderText(txt, 0, 200+z*ylimit, 100);
+    fonte->RenderText(txt, 0, 300+z*ylimit, 50);
     
     
 }

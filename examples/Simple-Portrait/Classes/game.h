@@ -16,6 +16,8 @@ private:
 	KGraphic * testGraphic3;    // background
 	KGraphic * testGraphic4;    // box 3
 	KGraphic * shapeGraphic;
+    KGraphic * shapeGraphic2;
+    KGraphic * shapeGraphic3;
 	KGraphic * buttonLeft;
 	KGraphic * buttonMiddle;
 	KGraphic * buttonRight;

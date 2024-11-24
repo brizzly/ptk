@@ -54,11 +54,12 @@ public:
 
     void setLineWidth(short lineWidth);
     void drawLine(float x1, float y1, float x2, float y2, float r, float g, float b, float a, float linewidth=1.0);
-    void blitShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a);
+    void drawShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a);
     
 public:
 
     float srcX, srcY, destX, destY, sizeW, sizeH, angle, zoom, blend;
+    float line_centerX, line_centerY;
     float shape_centerX, shape_centerY;
 	
     
@@ -81,6 +82,7 @@ private:
     bool _eyeRetina;
     GLuint _shaderProgram;
     GLuint _lineShaderProgram;
+    GLuint _shapeShaderProgram;
 	bool _drawBoundings;
     
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;

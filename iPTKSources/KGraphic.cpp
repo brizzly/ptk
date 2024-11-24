@@ -47,6 +47,7 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     
     _offsetX = 0;
     _offsetY = 0;
+    line_centerX = line_centerY = 0;
     shape_centerX = shape_centerY = 0;
     _gameW = (float) game_width;
     _gameH = (float) game_height;
@@ -123,8 +124,16 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     glViewport(0, 0, _screenW, _screenH);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
+    
+    // Lines
+    
     glGenBuffers(1, &vertexBuffer_Line);
     _lineShaderProgram = shader->createLineShader();
+    
+    
+    // Shapes
+    
+    _shapeShaderProgram = shader->createLineShader();
 }
 
 void KGraphic::setDrawBounds(bool value)
@@ -177,14 +186,14 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     mat4 modelMatrix;
     setIdentityMatrix(modelMatrix);
     
-    translateMatrix(modelMatrix, shape_centerX, shape_centerX);
+    translateMatrix(modelMatrix, line_centerX, line_centerY);
 
     // Apply rotation if angle is non-zero
     if (angle != 0.0f) {
         rotateMatrix(modelMatrix, angle * M_PI / 180.0f); // Convert angle to radians
     }
 
-    translateMatrix(modelMatrix, -shape_centerX, -shape_centerX);
+    translateMatrix(modelMatrix, -line_centerX, -line_centerY);
 
     GLuint matrixLocation = glGetUniformLocation(_lineShaderProgram, "u_matrix");
     if (matrixLocation != -1) {
@@ -472,7 +481,9 @@ void KGraphic::render()
         };
 
         float lineW = 4.0;
-        blitShape(4, vertice, destX + (sizeW ) / 2.0f, destY + (sizeH ) / 2.0f, lineW, 1, 0, 0, 1);
+        shape_centerX = 0;
+        shape_centerY = 0;
+        drawShape(4, vertice, destX + (sizeW ) / 2.0f, destY + (sizeH ) / 2.0f, lineW, 1, 0, 0, 1);
     }
 }
 
@@ -631,18 +642,18 @@ void KGraphic::drawEx(int x1, int y1, int x2, int y2, int destX, int destY, floa
     render();
 }
 
-void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a)
+void KGraphic::drawShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a)
 {
-    if (_lineShaderProgram == 0) {
+    if (_shapeShaderProgram == 0) {
         printf("Error: Line shader program is invalid.\n");
         return;
     }
 
-    glUseProgram(_lineShaderProgram);
+    glUseProgram(_shapeShaderProgram);
 
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
 
-    GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
+    GLuint matrixProjection = glGetUniformLocation(_shapeShaderProgram, "u_projectionMatrix");
     if (matrixProjection != -1) {
         glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
     } else {
@@ -656,11 +667,20 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
     // Apply transformations
     translateMatrix(modelViewMatrix, destX, destY);
 
+
+    
+    translateMatrix(modelViewMatrix, shape_centerX, shape_centerX);
+
+    // Apply rotation if angle is non-zero
     if (angle != 0.0f) {
-        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f); // Convert angle to radians
     }
 
-    GLuint matrixModelView = glGetUniformLocation(_lineShaderProgram, "u_matrix");
+    translateMatrix(modelViewMatrix, -shape_centerX, -shape_centerX);
+    
+
+    
+    GLuint matrixModelView = glGetUniformLocation(_shapeShaderProgram, "u_matrix");
     if (matrixModelView != -1) {
         glUniformMatrix4fv(matrixModelView, 1, GL_FALSE, modelViewMatrix);
     } else {
@@ -683,7 +703,7 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_Line);
         glBufferData(GL_ARRAY_BUFFER, sizeof(lineCoords), lineCoords, GL_DYNAMIC_DRAW);
 
-        GLint posAttrib = glGetAttribLocation(_lineShaderProgram, "a_position");
+        GLint posAttrib = glGetAttribLocation(_shapeShaderProgram, "a_position");
         if (posAttrib == -1) {
             printf("Error: Position attribute not found in shader.\n");
             return;
@@ -691,7 +711,7 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
         glEnableVertexAttribArray(posAttrib);
         glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-        GLint colorUniform = glGetUniformLocation(_lineShaderProgram, "color");
+        GLint colorUniform = glGetUniformLocation(_shapeShaderProgram, "color");
         if (colorUniform != -1) {
             glUniform4f(colorUniform, r, g, b, a);
         } else {
@@ -706,5 +726,5 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glUseProgram(0);
 
-    printGLError("blitShape");
+    printGLError("drawShape");
 }

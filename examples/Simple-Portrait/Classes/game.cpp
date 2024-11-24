@@ -190,11 +190,15 @@ void game::draw_scene3(float frameTime)
     
     float square_x2[4] = {pX+w1, pX+w1, pX, pX};
     float square_y2[4] = {pY, pY+h1, pY+h1, pY};
+    
+    shapeGraphic->angle = a;
+    shapeGraphic->shape_centerX = w1/2;
+    shapeGraphic->shape_centerY = h1/2;
 
-    shapeGraphic->drawLine(square_x1[0], square_y1[0], square_x2[0], square_y2[0], line_R, line_G, line_B, line_A, line_W);
-    shapeGraphic->drawLine(square_x1[1], square_y1[1], square_x2[1], square_y2[1], line_R, line_G, line_B, line_A, line_W);
-    shapeGraphic->drawLine(square_x1[2], square_y1[2], square_x2[2], square_y2[2], line_R, line_G, line_B, line_A, line_W);
-    shapeGraphic->drawLine(square_x1[3], square_y1[3], square_x2[3], square_y2[3], line_R, line_G, line_B, line_A, line_W);
+    shapeGraphic->drawLine(square_x1[0], square_y1[0], square_x2[0], square_y2[0], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
+    shapeGraphic->drawLine(square_x1[1], square_y1[1], square_x2[1], square_y2[1], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
+    shapeGraphic->drawLine(square_x1[2], square_y1[2], square_x2[2], square_y2[2], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
+    shapeGraphic->drawLine(square_x1[3], square_y1[3], square_x2[3], square_y2[3], 255-line_R, 255-line_G, 255-line_B, line_A, line_W);
    
     
     int cube_x = screenWidth/2; //10;//362;
@@ -244,8 +248,8 @@ void game::draw_scene3(float frameTime)
     
     
 
-    shapeGraphic->drawLine(0, 80, screenWidth, 80, 1, 1, 1, 1, 1.0);
-    shapeGraphic->drawLine(0, 100, screenWidth, 100, 0, 1, 0, 0.5, 10.0);
+    shapeGraphic->drawLine(0, 80, screenWidth, 80, 1, 0, 0, 0.25, 1.0);
+    shapeGraphic->drawLine(0, 100, screenWidth, 100, 0, 0, 1, 0.75, 10.0);
     //shapeGraphic->angle = a;
     
     

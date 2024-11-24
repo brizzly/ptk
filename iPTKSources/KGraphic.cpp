@@ -159,10 +159,11 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     
     glUseProgram(_lineShaderProgram);
 
+    // Set Orthographic Projection
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
     
     GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
-    if(matrixProjection != -1) {
+    if (matrixProjection != -1) {
         glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
     }
     
@@ -172,10 +173,23 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
      
+    // Create model matrix and apply rotation
     mat4 modelMatrix;
     setIdentityMatrix(modelMatrix);
+    
+    translateMatrix(modelMatrix, shape_centerX, shape_centerX);
+
+    // Apply rotation if angle is non-zero
+    if (angle != 0.0f) {
+        rotateMatrix(modelMatrix, angle * M_PI / 180.0f); // Convert angle to radians
+    }
+
+    translateMatrix(modelMatrix, -shape_centerX, -shape_centerX);
+
     GLuint matrixLocation = glGetUniformLocation(_lineShaderProgram, "u_matrix");
-    glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelMatrix);
+    if (matrixLocation != -1) {
+        glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelMatrix);
+    }
      
     GLfloat lineCoords[] = {
         x1, y1,

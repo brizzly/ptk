@@ -105,6 +105,7 @@ private:
     void translateMatrix(mat4 m, float x, float y);
     void scaleMatrix(mat4 m, float scaleX, float scaleY);
     void scaleMatrix2(mat4 m, float scaleX, float scaleY);
+    void applyZoom(mat4& modelViewMatrix, float zoom, float modelWidth, float modelHeight);
     void rotateMatrix(mat4 m, float angle);
     void copyMatrix(mat4 dest, const mat4 src);
     void multiplyMatrices(const mat4 a, const mat4 b, mat4 result);

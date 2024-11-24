@@ -279,6 +279,23 @@ void KGraphic::scaleMatrix2(mat4 m, float scaleX, float scaleY)
     multiplyMatrices(temp2, translationBack, temp1);
     copyMatrix(m, temp1);
 }
+
+void KGraphic::applyZoom(mat4& modelViewMatrix, float zoom, float modelWidth, float modelHeight)
+{
+    // Calculate the center of the model in model space
+    float centerX = modelWidth / 2.0f;
+    float centerY = modelHeight / 2.0f;
+
+    // Step 1: Translate to the origin
+//    translateMatrix(modelViewMatrix, -centerX, -centerY);
+
+    // Step 2: Apply scaling
+    scaleMatrix2(modelViewMatrix, zoom, zoom);
+
+    // Step 3: Translate back to the original position
+//    translateMatrix(modelViewMatrix, centerX, centerY);
+}
+
 void KGraphic::rotateMatrix(mat4 m, float angle)
 {
     float s = sinf(angle);
@@ -370,29 +387,6 @@ void KGraphic::render()
     
     
 
-/*
-
-    // 1. Translate to the destination position
-    translateMatrix(modelViewMatrix, destX, destY);
-
-    // 2. Apply scaling centered around the model's center
-    scaleMatrix2(modelViewMatrix, sizeW * zoom, sizeH * zoom);
-
-    // 3. Apply rotation around the model's center (if necessary)
-    if (angle != 0.0f) {
-        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
-    }
-
-    // Set the model-view matrix to the shader
-    GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
-    if (matrixLocation != -1) {
-        glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelViewMatrix);
-    }
-*/
-    
-    
-    
-
     // Set Projection Matrix
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
 
@@ -408,16 +402,13 @@ void KGraphic::render()
     // Apply transformations in the correct order
 
     // 1. Translate to the destination position plus half the size (to center the model)
-    translateMatrix(modelViewMatrix, destX + (sizeW * zoom) / 2.0f, destY + (sizeH * zoom) / 2.0f);
+    //translateMatrix(modelViewMatrix, destX + (sizeW * zoom) / 2.0f, destY + (sizeH * zoom) / 2.0f);
+    translateMatrix(modelViewMatrix, destX + (sizeW ) / 2.0f, destY + (sizeH ) / 2.0f);
 
-    // 3. Apply scaling for size and zoom
+    // 2. Apply scaling for size and zoom
     scaleMatrix(modelViewMatrix, sizeW * zoom, sizeH * zoom);
     
-    if(zoom != 1) {
-        translateMatrix(modelViewMatrix, 2.0f, 2.0f);
-    }
-    
-    // 2. Apply rotation around the center
+    // 3. Apply rotation around the center
     if (angle != 0.0f) {
         rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
     }
@@ -454,6 +445,8 @@ void KGraphic::render()
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     printGLError("render");
+    
+
 
     // Draw debug bounding box if needed
     if (_drawBoundings) {
@@ -465,7 +458,7 @@ void KGraphic::render()
         };
 
         float lineW = 4.0;
-        blitShape(4, vertice, destX + (sizeW * zoom) / 2.0f, destY + (sizeH * zoom) / 2.0f, lineW, 1, 0, 0, 1);
+        blitShape(4, vertice, destX + (sizeW ) / 2.0f, destY + (sizeH ) / 2.0f, lineW, 1, 0, 0, 1);
     }
 }
 
@@ -642,6 +635,7 @@ void KGraphic::blitShape(int numvertices, vec2* vertice, int destX, int destY, f
         printf("Projection matrix uniform not found in shader!\n");
     }
 
+    
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
 

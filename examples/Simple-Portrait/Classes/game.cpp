@@ -132,7 +132,7 @@ void game::draw_scene2(float frameTime)
     
     //r += (frameTime / 1000.0f) * 0.001f;
     a += (frameTime / 1000.0f) * 0.001f;
-    z = 0.2f; // 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
+    z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
     
     float x = 0;
     float y = 0;

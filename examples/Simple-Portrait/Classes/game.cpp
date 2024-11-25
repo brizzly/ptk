@@ -242,16 +242,36 @@ void game::draw_scene3(float frameTime)
     
     
     
-    wchar_t * txt = L"This is so cool. COOL Bis";
+    wchar_t * txt = L"This is so cool. COOL VERY COOL and yes this is a very long text actually.";
     float yfontpos = 0;
     
 //    fonte->RenderText(txt, 0, +100+42, 100);
+
     fonte->RenderText(txt, 0, 0, 100);
     fonte->RenderText(txt, 0, 100, 50);
     fonte->RenderText(txt, 0, 200+z*ylimit, 100);
     fonte->RenderText(txt, 0, 300+z*ylimit, 50);
-    
-    
+}
+
+void game::draw_scene4(float frameTime)
+{
+	static float z = 1.0;
+	static float a = 0.0;
+	
+	//r += (frameTime / 1000.0f) * 0.001f;
+//	a += (frameTime / 1000.0f) * 0.001f;
+	a += (frameTime / 1000.0f) * 0.02f;
+	z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
+	
+	
+	//wchar_t * txt = L"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié.";
+	wchar_t * txt = L"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+	float yfontpos = 0;
+	
+	fonte->SetTextColor(1, 1, 1);
+	fonte->SetBackgroundColor(0, 0, 0, 0);
+	fonte->SetMaxCharBeforeLine(960-10);
+	fonte->RenderText(txt, 0, 0, 24 + z*20);
 }
 
 void game::draw(float frameTime)
@@ -272,10 +292,13 @@ void game::draw(float frameTime)
 	int screenWidth = KPTK::_screenW;
 	int screenHeight = KPTK::_screenH;
     
+	/*
     draw_scene0(frameTime);
     //draw_scene1(frameTime);
     draw_scene2(frameTime);
     draw_scene3(frameTime);
+	*/
+	draw_scene4(frameTime);
 }
 
 void game::playSfx()

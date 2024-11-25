@@ -13,7 +13,8 @@ KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 	_gameH = gameHeight;
 	shader = new KShader();
 	_fonteShaderProgram = shader->createFonteShader();
-    
+	_maxCharsBeforeNewLine = -1;
+	
     SetBackgroundColor(0,0,0,0);
     SetTextColor(1,1,1);
 
@@ -69,7 +70,15 @@ KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		}
+		
+//		int bbox_ymax = FT_MulFix(face->bbox.yMax, face->size->metrics.y_scale) >> 6;
+//		int bbox_ymin = FT_MulFix(face->bbox.yMin, face->size->metrics.y_scale) >> 6;
+//		int height = bbox_ymax - bbox_ymin;
 
+		// Calculate the glyph's bitmap height (from the rasterized data)
+		int bitmap_height = face->glyph->bitmap.rows;
+
+		
 		// Store character metrics regardless of bitmap data
 		Character character = {
 			texture,
@@ -77,7 +86,8 @@ KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 			face->glyph->bitmap.rows,
 			face->glyph->bitmap_left,
 			face->glyph->bitmap_top,
-			static_cast<unsigned int>(face->glyph->advance.x)
+			static_cast<unsigned int>(face->glyph->advance.x),
+			static_cast<unsigned int>(bitmap_height)
 		};
 
 		characters.insert(std::pair<char, Character>(c, character));
@@ -85,6 +95,19 @@ KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
+}
+
+void KFont::SetMaxCharBeforeLine(int value)
+{
+#ifndef __ANDROID__
+	//value *= 2;
+#endif
+	_maxCharsBeforeNewLine = value;
+}
+
+void KFont::UnsetMaxCharBeforeLine()
+{
+	SetMaxCharBeforeLine(1);
 }
 
 void KFont::SetBackgroundColor(float r, float g, float b, float a)
@@ -108,10 +131,14 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		printf("Error: Shader program is invalid.\n");
 		return;
 	}
+	
+	// debug
+	int x_copy = x;
     
     y = _gameH - y - scale;
     
     float r = _gameW / _gameH;
+	float scaleCopy = scale;
     scale = scale * r * 2.0f / KFONT_SIZE;
     
 
@@ -148,12 +175,18 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	float currentTextureID = 0;  // Track currently bound texture
+	bool needReturnLine = false;
+	
 	for (auto c : utf8Text)
 	{
 		Character ch = characters[c];
 		
-		float uWidth = static_cast<float>(ch.sizeX) / ch.sizeX;  // This results in 1.0f but validates each glyph’s size
-		float vHeight = static_cast<float>(ch.sizeY) / ch.sizeY;
+		float uWidth = 1.0f;
+		float vHeight = 1.0f;
+		
+		//float uWidth = static_cast<float>(ch.sizeX) / ch.sizeX;  // This results in 1.0f but validates each glyph’s size
+		//float vHeight = static_cast<float>(ch.sizeY) / ch.sizeY;
 		
 		float xpos = x + ch.bearingX * scale;
 		float ypos = y - (ch.sizeY - ch.bearingY) * scale;
@@ -177,7 +210,12 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		if (ch.textureID != 0) {
 			
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, ch.textureID);
+			
+			// Update texture only if different
+			if (ch.textureID != currentTextureID) {
+				glBindTexture(GL_TEXTURE_2D, ch.textureID);
+				currentTextureID = ch.textureID;
+			}
 			
 			
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -203,6 +241,24 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 		}
 		
 		x += (ch.advance >> 6) * scale;
+
+		if(_maxCharsBeforeNewLine > 0)
+		{
+			if (x - x_copy >= _maxCharsBeforeNewLine /* / (2*scale) */ )
+			{
+				needReturnLine = true;
+			}
+		}
+		if(needReturnLine == true)
+		{
+			if(ch.advance2 > 0)
+			{
+				x = x_copy;
+				y -= (ch.advance2 /*>> 6*/) * scale;
+				y -= scaleCopy;
+				needReturnLine = false;
+			}
+		}
 	}
 
 //	glDisableVertexAttribArray(glGetAttribLocation(_fonteShaderProgram, "position"));

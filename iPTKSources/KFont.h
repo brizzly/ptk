@@ -30,6 +30,7 @@ struct Character {
 	int bearingX;       // Offset from baseline to left/top of glyph
 	int bearingY;
 	unsigned int advance; // Horizontal offset to advance to next glyph
+	unsigned int advance2; // Vertical offset to advance to next glyph line
 };
 
 class KFont {
@@ -37,7 +38,9 @@ class KFont {
 public:
 	KFont(const char* fontPath, float gameWidth, float gameHeight);
 	~KFont();
-
+	
+	void SetMaxCharBeforeLine(int value);
+	void UnsetMaxCharBeforeLine();
     void SetBackgroundColor(float r, float g, float b, float a);
     void SetTextColor(float r, float g, float b);
 	void RenderText(const wchar_t* text, float x, float y, float scale);
@@ -59,6 +62,7 @@ private:
 	FT_Face face;
 	std::map<char, Character> characters;
 	GLuint VBO; // Only VBO, no VAO
+	int _maxCharsBeforeNewLine;
 };
 
 #endif // KFONT_H

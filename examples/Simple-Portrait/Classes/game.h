@@ -38,5 +38,6 @@ public:
     void draw_scene1(float frameTime);
     void draw_scene2(float frameTime);
     void draw_scene3(float frameTime);
+	void draw_scene4(float frameTime);
 	void playSfx();
 };

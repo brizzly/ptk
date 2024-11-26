@@ -92,7 +92,7 @@ if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 - METAL-ANGEL https://apps.apple.com/app/metal-angel-best-shootem-up/id287261924
 
 ## Android
-coming-soon
+- ULTRANIUM https://play.google.com/store/apps/details?id=com.jmapp.ultranium
 
 ## macOS
 - GRIZZLY (macos) https://apps.apple.com/app/grizzly-retro-platformer/id413938360?mt=12

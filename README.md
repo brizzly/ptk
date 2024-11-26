@@ -9,27 +9,27 @@ Send your game name and I will add it in the powered by ptk list.
 
 ### Features
 
-Easily loads PNG, BMP, TGA, 24Bits, 32Bits, with or without alpha transparency
-Easily loads Sound effects
-Easily loads Music playing in background
-OpenGL ES for fast graphics
-OpenAL for fast audios
-Splines and Nurbs
-System fontes draw suppot
-MultiTouch inputs support
-Accelerometer support
-EyeRetina supported
-iPhone OS18 support
-Easily call HTTP requests
-Portrait & landscape support
-Tilemaps engine and editor
-Fast scrollings
-Sprites manager
-Physic
-Collisions detections slopes water grounds air ropes
-FileSystem
-Font displays
-Maths
+- Easily loads PNG, BMP, TGA, 24Bits, 32Bits, with or without alpha transparency
+- Easily loads Sound effects
+- Easily loads Music playing in background
+- OpenGL ES2 for fast graphics
+- OpenAL for fast audios
+- Splines and Nurbs
+- System fontes draw suppot
+- MultiTouch inputs support
+- Accelerometer support
+- EyeRetina supported
+- iOS18 support
+- Easily call HTTP requests
+- Portrait & landscape support
+- Tilemaps engine and editor
+- Fast scrollings
+- Sprites manager
+- Physic
+- Collisions detections slopes water grounds air ropes
+- FileSystem
+- Font displays
+- Maths
  
 - [OpenGL ES2](https://www.khronos.org/opengles/)
 - [GLFM](https://github.com/brackeen/glfm)

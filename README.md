@@ -9,11 +9,27 @@ Send your game name and I will add it in the powered by ptk list.
 
 ### Features
 
-- [OpenGL ES2](https://www.khronos.org/opengles/)
-- [GLFM](https://github.com/brackeen/glfm)
-- [OpenAL](https://github.com/kcat/openal-soft)
-- [Freetype2](https://github.com/freetype/freetype)
-- [Box2D](https://github.com/erincatto/box2d)
+- Easily loads PNG, BMP, TGA, 24Bits, 32Bits, with or without alpha transparency
+- Easily loads Sound effects
+- Easily loads Music playing in background
+- [OpenGL ES2](https://www.khronos.org/opengles/) for fast graphics
+- [GLFM](https://github.com/brackeen/glfm) for fast maths
+- [OpenAL](https://github.com/kcat/openal-soft) for fast audios
+- [Freetype2](https://github.com/freetype/freetype) fast  Font text displays 
+- Splines and Nurbs
+- System fontes draw suppot
+- MultiTouch inputs support
+- Accelerometer support
+- EyeRetina supported
+- iOS18 support
+- Easily call HTTP requests
+- Portrait & landscape support
+- Tilemaps engine and editor
+- Fast scrollings
+- Sprites manager
+- Physic [Box2D](https://github.com/erincatto/box2d)
+- Collisions detections slopes water grounds air ropes
+- FileSystem
 
 
 ## PTK is very easy to use game sdk

@@ -9,27 +9,27 @@ Send your game name and I will add it in the powered by ptk list.
 
 ### Features
 
-	<Easily loads PNG, BMP, TGA, 24Bits, 32Bits, with or without alpha transparency<br />
-	<li>Easily loads Sound effects</li>
-	<li>Easily loads Music playing in background</li>
-	<li>OpenGL ES for fast graphics</li>
-	<li>OpenAL for fast audios</li>
-	<li>Splines and Nurbs</li>
-	<li>System fontes draw suppot</li>
-	<li>MultiTouch inputs support</li>
-	<li>Accelerometer support</li>
-	<li>EyeRetina supported</li>
-	<li>iPhone OS3, OS4, OS5 support</li>
-	<li>Easily call HTTP requests</li>
-	<li>Portrait & landscape support</li> 
-	<li>Tilemaps engine and editor</li>
-	<li>Fast scrollings</li>
-	<li>Sprites manager</li>
-	<li>Physic</li>
-	<li>Collisions detections slopes water grounds air ropes</li>
-	<li>FileSystem</li>
-	<li>Font displays</li>
-	<li>Maths</li>
+Easily loads PNG, BMP, TGA, 24Bits, 32Bits, with or without alpha transparency
+Easily loads Sound effects
+Easily loads Music playing in background
+OpenGL ES for fast graphics
+OpenAL for fast audios
+Splines and Nurbs
+System fontes draw suppot
+MultiTouch inputs support
+Accelerometer support
+EyeRetina supported
+iPhone OS18 support
+Easily call HTTP requests
+Portrait & landscape support
+Tilemaps engine and editor
+Fast scrollings
+Sprites manager
+Physic
+Collisions detections slopes water grounds air ropes
+FileSystem
+Font displays
+Maths
  
 - [OpenGL ES2](https://www.khronos.org/opengles/)
 - [GLFM](https://github.com/brackeen/glfm)

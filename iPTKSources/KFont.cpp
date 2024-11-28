@@ -133,7 +133,7 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 	}
 	
 	// debug
-	int x_copy = x;
+	//int x_copy = x;
     
     y = _gameH - y - scale;
     
@@ -177,89 +177,101 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 
 	float currentTextureID = 0;  // Track currently bound texture
 	bool needReturnLine = false;
-	
-	for (auto c : utf8Text)
-	{
-		Character ch = characters[c];
-		
-		float uWidth = 1.0f;
-		float vHeight = 1.0f;
-		
-		//float uWidth = static_cast<float>(ch.sizeX) / ch.sizeX;  // This results in 1.0f but validates each glyph’s size
-		//float vHeight = static_cast<float>(ch.sizeY) / ch.sizeY;
-		
-		float xpos = x + ch.bearingX * scale;
-		float ypos = y - (ch.sizeY - ch.bearingY) * scale;
-		float w = ch.sizeX * scale;
-		float h = ch.sizeY * scale;
 
-		// Set up vertices to sample only the glyph portion of the texture
-		GLfloat vertices[6][4] = {
-			{ xpos,     ypos + h,   0.0f, 0.0f },             // Bottom-left
-			{ xpos,     ypos,       0.0f, vHeight },          // Top-left
-			{ xpos + w, ypos,       uWidth, vHeight },        // Top-right
+	std::istringstream stream(utf8Text);
+	std::string word;
+	float x_copy = x; // Store initial x position for new lines
 
-			{ xpos,     ypos + h,   0.0f, 0.0f },             // Bottom-left
-			{ xpos + w, ypos,       uWidth, vHeight },        // Top-right
-			{ xpos + w, ypos + h,   uWidth, 0.0f }            // Bottom-right
-		};
-		
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	while (stream >> word) {
+		// Iterate over each character in the word
+		float wordWidth = 0.0f;
 
-		if (ch.textureID != 0) {
-			
-			glActiveTexture(GL_TEXTURE0);
-			
-			// Update texture only if different
-			if (ch.textureID != currentTextureID) {
-				glBindTexture(GL_TEXTURE_2D, ch.textureID);
-				currentTextureID = ch.textureID;
-			}
-			
-			
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-			
-			
-			
-			// Position attribute (first two floats: x, y)
-			GLint posAttrib = glGetAttribLocation(_fonteShaderProgram, "position");
-			if (posAttrib != -1) {
-				glEnableVertexAttribArray(posAttrib);
-				glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-			}
-			
-			// Texture coordinates attribute (last two floats: u, v)
-			GLint texAttrib = glGetAttribLocation(_fonteShaderProgram, "texCoords");
-			if (texAttrib != -1) {
-				glEnableVertexAttribArray(texAttrib);
-				glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-			}
-			
-			glDrawArrays(GL_TRIANGLES, 0, 6);
+		// Calculate word width
+		for (char c : word) {
+			Character ch = characters[c];
+			wordWidth += (ch.advance >> 6) * scale;
 		}
-		
-		x += (ch.advance >> 6) * scale;
 
-		if(_maxCharsBeforeNewLine > 0)
-		{
-			if (x - x_copy >= _maxCharsBeforeNewLine /* / (2*scale) */ )
-			{
-				needReturnLine = true;
-			}
+		// Check if adding this word exceeds the max width
+		if (_maxCharsBeforeNewLine > 0 && x + wordWidth - x_copy > _maxCharsBeforeNewLine) {
+			
+			needReturnLine = true;
 		}
 		if(needReturnLine == true)
 		{
-			if(ch.advance2 > 0)
-			{
-				x = x_copy;
-				y -= (ch.advance2 /*>> 6*/) * scale;
-				y -= scaleCopy;
-				needReturnLine = false;
+			for (char c : word) {
+				Character ch = characters[c];
+				if(ch.advance2 > 0)
+				{
+					x = x_copy;
+					y -= (ch.advance2) * scale;
+					y -= (ch.advance2) * 0.5f * scale;
+					//y -= scaleCopy * scale * 2;
+					needReturnLine = false;
+					break;
+				}
 			}
 		}
+
+		// Now render the word character by character
+		for (char c : word) {
+			Character ch = characters[c];
+
+			float xpos = x + ch.bearingX * scale;
+			float ypos = y - (ch.sizeY - ch.bearingY) * scale;
+			float w = ch.sizeX * scale;
+			float h = ch.sizeY * scale;
+
+			GLfloat vertices[6][4] = {
+				{ xpos,     ypos + h,   0.0f, 0.0f },
+				{ xpos,     ypos,       0.0f, 1.0f },
+				{ xpos + w, ypos,       1.0f, 1.0f },
+
+				{ xpos,     ypos + h,   0.0f, 0.0f },
+				{ xpos + w, ypos,       1.0f, 1.0f },
+				{ xpos + w, ypos + h,   1.0f, 0.0f }
+			};
+
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			if (ch.textureID != 0) {
+				glActiveTexture(GL_TEXTURE0);
+
+				// Update texture only if different
+				if (ch.textureID != currentTextureID) {
+					glBindTexture(GL_TEXTURE_2D, ch.textureID);
+					currentTextureID = ch.textureID;
+				}
+
+				glBindBuffer(GL_ARRAY_BUFFER, VBO);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+				// Position attribute (first two floats: x, y)
+				GLint posAttrib = glGetAttribLocation(_fonteShaderProgram, "position");
+				if (posAttrib != -1) {
+					glEnableVertexAttribArray(posAttrib);
+					glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+				}
+
+				// Texture coordinates attribute (last two floats: u, v)
+				GLint texAttrib = glGetAttribLocation(_fonteShaderProgram, "texCoords");
+				if (texAttrib != -1) {
+					glEnableVertexAttribArray(texAttrib);
+					glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+				}
+
+				glDrawArrays(GL_TRIANGLES, 0, 6);
+			}
+
+			x += (ch.advance >> 6) * scale;
+		}
+
+		// Add space between words
+		Character spaceChar = characters[' '];
+		x += (spaceChar.advance >> 6) * scale;
 	}
+
 
 //	glDisableVertexAttribArray(glGetAttribLocation(_fonteShaderProgram, "position"));
 //	glDisableVertexAttribArray(glGetAttribLocation(_fonteShaderProgram, "texCoords"));

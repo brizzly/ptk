@@ -4,6 +4,7 @@
 
 #include "KShader.h"
 #include <iostream>
+#include <sstream>
 #include <map>
 #include <string>
 #include <locale>

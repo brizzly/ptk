@@ -13,7 +13,8 @@
 #ifdef __ANDROID__
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#include <ft2build.h>
+//#include "ft2build.h"
+#import "ft2/ft2build.h"
 #include FT_FREETYPE_H
 #else
 #include <OpenGLES/ES2/gl.h>

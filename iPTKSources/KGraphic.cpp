@@ -7,6 +7,8 @@
 #include <cstdio> // printf
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#define STB_IMAGE_RESIZE_IMPLEMENTATION
+#include "stb_image_resize.h"
 
 KGraphic::~KGraphic()
 {
@@ -503,34 +505,102 @@ bool KGraphic::loadPicture(const char *filename)
     int width, height, nrChannels;
     int isBGR = 1;
     _eyeRetina = false;
-    
-#ifdef __ANDROID__
 
+#ifdef __ANDROID__
     if (this->g_assetManager == nullptr) {
         printf("AssetManager not set\n");
         return false;
     }
 
-    AAsset* asset = AAssetManager_open(g_assetManager, filename, AASSET_MODE_BUFFER);
-    if (asset == nullptr) {
-        printf("Failed to open asset: %s\n", filename);
+    // Determine if the device supports retina assets (dynamic or static logic)
+    bool deviceSupportsRetina = false; // Replace with DPI-based logic if needed
+    const char* retinaSuffix = "@2x";
+    std::string filenameToLoad = filename;
+
+    // Adjust filename for non-retina devices
+    std::string filenameStr(filename);
+    if (!deviceSupportsRetina) {
+        size_t pos = filenameStr.find(retinaSuffix);
+        if (pos != std::string::npos) {
+            filenameStr.erase(pos, strlen(retinaSuffix));
+        }
+        filenameToLoad = filenameStr.c_str();
+    }
+
+    // Load the asset from the asset manager
+
+    AAsset* asset = AAssetManager_open(g_assetManager, filenameToLoad.c_str(), AASSET_MODE_BUFFER);
+    if (!asset) {
+        printf("Failed to open asset: %s\n", filenameToLoad.c_str());
         return false;
     }
 
+// Ensure the asset is read completely
     off_t assetLength = AAsset_getLength(asset);
     unsigned char* assetBuffer = new unsigned char[assetLength];
-    AAsset_read(asset, assetBuffer, assetLength);
+    off_t bytesRead = 0;
+
+    while (bytesRead < assetLength) {
+        int result = AAsset_read(asset, assetBuffer + bytesRead, assetLength - bytesRead);
+        if (result <= 0) {
+            printf("Failed to read asset completely. Bytes read: %ld\n", bytesRead);
+            delete[] assetBuffer;
+            AAsset_close(asset);
+            return false;
+        }
+        bytesRead += result;
+    }
     AAsset_close(asset);
 
-    data = stbi_load_from_memory(assetBuffer, assetLength, &width, &height, &nrChannels, STBI_rgb_alpha);
+// Verify if the data is complete
+    printf("Asset length: %ld bytes\n", assetLength);
+
+// Decompress using stb_image
+    unsigned char* rawData = stbi_load_from_memory(assetBuffer, assetLength, &width, &height, &nrChannels, STBI_rgb_alpha);
     delete[] assetBuffer;
 
-    isBGR = 0;
 
+
+
+    if (rawData == nullptr) {
+        printf("Failed to load image: %s\n", filenameToLoad.c_str());
+        return false;
+    }
+
+    printf("Image loaded successfully: %dx%d, channels: %d\n", width, height, nrChannels);
+
+    printf("Asset length: %ld\n", assetLength);
+    printf("Expected length: %d\n", width * height * 4);
+    printf("Loaded image: width=%d, height=%d, channels=%d\n", width, height, nrChannels);
+
+    // Downscale retina images if needed
+    if (!deviceSupportsRetina && filenameStr.find("@2x") != std::string::npos) {
+        int newWidth = std::round(width / 2.0);
+        int newHeight = std::round(height / 2.0);
+        unsigned char* scaledData = new unsigned char[newWidth * newHeight * 4]; // RGBA
+
+        if (stbir_resize_uint8(rawData, width, height, 0, scaledData, newWidth, newHeight, 0, 4)) {
+            stbi_image_free(rawData); // Free the original image
+            rawData = scaledData;
+            width = newWidth;
+            height = newHeight;
+        } else {
+            printf("Failed to resize image.\n");
+            stbi_image_free(rawData);
+            delete[] scaledData;
+            return false;
+        }
+    }
+
+    data = rawData;
+    isBGR = 0;
+    _eyeRetina = deviceSupportsRetina;
+    _eyeRetina = true;
+    //height *= 2;
 #else
     GLTextureHelper helper;
     std::string modifiedFilename(filename);
-    
+
     size_t dotPosition = modifiedFilename.find_last_of(".");
     if (dotPosition != std::string::npos) {
         _eyeRetina = true;
@@ -542,13 +612,12 @@ bool KGraphic::loadPicture(const char *filename)
 
     if (!data) {
         printf("Failed to load @2x texture, trying standard version: %s\n", filename);
-        
+
         _eyeRetina = false;
-        
+
         retinaFilename = helper.loadFileDatas(filename);
         data = stbi_load(retinaFilename, &width, &height, &nrChannels, STBI_rgb_alpha);
     }
-
 #endif
 
     if (!data) {
@@ -556,12 +625,14 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
+// Correct texture size assignment
+    _textureSizeW = width;  // Full width of the loaded texture
+    _textureSizeH = height; // Full height of the loaded texture
+
     if (_eyeRetina) {
+        printf("Retina texture detected: Adjusting logical dimensions.\n");
         _textureSizeW = width / 2;
         _textureSizeH = height / 2;
-    } else {
-        _textureSizeW = width;
-        _textureSizeH = height;
     }
 
     if (isBGR) {
@@ -574,17 +645,17 @@ bool KGraphic::loadPicture(const char *filename)
     } else {
         printf("Detected RGB format: No swap needed.\n");
     }
-    
-    _blitColorChanged = false;
-    _imageWidth = width;
-    _imageHeight = height;
-    
+
+// OpenGL texture setup
     glDisable(GL_DEPTH_TEST);
     glGenTextures(1, &_texture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
-    printf("texture binded to: %d\n", _texture);
-    
+    printf("Texture bound to: %d\n", _texture);
+
+// Handle row alignment issues
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -594,8 +665,10 @@ bool KGraphic::loadPicture(const char *filename)
 
     stbi_image_free(data); // Free the image memory
 
+
     return true;
 }
+
 
 float KGraphic::getTextureWidth() {
     return static_cast<float>(_imageWidth);

@@ -125,45 +125,45 @@ void MainController::draw() {
 
     // FULL SCREEN IMAGE : 960x1440
 
-    testGraphic3->srcX = 0;
-    testGraphic3->srcY = 0;
-    testGraphic3->destX = 0;
-    testGraphic3->destY = 0;
-    testGraphic3->sizeW = 960;
-    testGraphic3->sizeH = 1440;
-    testGraphic3->angle = 0;
-    testGraphic3->zoom = 1.0;
-    testGraphic3->blend = 1.0;
-    testGraphic3->render();
+//    testGraphic3->srcX = 0;
+//    testGraphic3->srcY = 0;
+//    testGraphic3->destX = 0;
+//    testGraphic3->destY = 0;
+//    testGraphic3->sizeW = 960;
+//    testGraphic3->sizeH = 1440;
+//    testGraphic3->angle = 0;
+//    testGraphic3->zoom = 1.0;
+//    testGraphic3->blend = 1.0;
+    testGraphic3->drawEx(0, 0, 960, 1440, 0, 0, 0, 1, 1);
 
 
     // SQUARE 256x256
 
-    testGraphic->srcX = 0;
-    testGraphic->srcY = 0;
-    testGraphic->destX = 140;
-    testGraphic->destY = 80;
-    testGraphic->sizeW = 256;
-    testGraphic->sizeH = 256;
-    testGraphic->angle = a;
-    testGraphic->zoom = z;
-    testGraphic->blend = 1.0;
-    testGraphic->render();
+//    testGraphic->srcX = 0;
+//    testGraphic->srcY = 0;
+//    testGraphic->destX = 140;
+//    testGraphic->destY = 80;
+//    testGraphic->sizeW = 256;
+//    testGraphic->sizeH = 256;
+//    testGraphic->angle = a;
+//    testGraphic->zoom = z;
+//    testGraphic->blend = 1.0;
+    testGraphic->drawEx(0, 0, 256, 256, 140, 80, a, z, 1.0);
 
 
 
     // SQUARE 256x256
 
-    testGraphic2->srcX = 0;
-    testGraphic2->srcY = 0;
-    testGraphic2->destX = 420;
-    testGraphic2->destY = 850;
-    testGraphic2->sizeW = 256;
-    testGraphic2->sizeH = 256;
-    testGraphic2->angle = 360-a;
-    testGraphic2->zoom = 1.0;
-    testGraphic2->blend = 1.0;
-    testGraphic2->render();
+//    testGraphic2->srcX = 0;
+//    testGraphic2->srcY = 0;
+//    testGraphic2->destX = 420;
+//    testGraphic2->destY = 850;
+//    testGraphic2->sizeW = 256;
+//    testGraphic2->sizeH = 256;
+//    testGraphic2->angle = 360-a;
+//    testGraphic2->zoom = 1.0;
+//    testGraphic2->blend = 1.0;
+    testGraphic2->drawEx(0, 0, 256, 256, 420, 850, 360-a, 1.0, 1.0);
 
 }
 

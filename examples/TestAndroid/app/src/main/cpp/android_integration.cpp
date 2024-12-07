@@ -1,14 +1,14 @@
 #include "glfm.h"
 #include "MainController.h"
 #include <jni.h>
-#include <android/log.h>
 #include <cmath>
 //#include <android/asset_manager.h>
 #include <android/native_window_jni.h> // Required for native window integration
 #include <android/asset_manager_jni.h> // Include for AAssetManager_fromJava
-
+#include <android/log.h>
 
 #define LOG_TAG "NativeCode"
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "TAG", __VA_ARGS__))
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 

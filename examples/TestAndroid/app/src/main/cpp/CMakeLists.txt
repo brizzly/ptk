@@ -82,6 +82,43 @@ endforeach()
 
 
 
+# =============================================================================
+#               Chemin vers le répertoire Box2D
+# =============================================================================
+set(Box2D_SOURCE2_DIR "${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs")
+include_directories("${Box2D_SOURCE2_DIR}")
+set(Box2D_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs/Box2D")
+include_directories("${Box2D_SOURCE_DIR}")
+
+# Debug output
+message(STATUS "Box2D_SOURCE_DIR: ${Box2D_SOURCE_DIR}")
+
+# Add Box2D headers
+file(GLOB_RECURSE Box2D_HEADERS "${Box2D_SOURCE_DIR}/*.h")
+
+# Optional: Add Box2D sources if you're building Box2D from source
+file(GLOB_RECURSE Box2D_SOURCES "${Box2D_SOURCE_DIR}/*.cpp")
+
+# Add Box2D as a static library
+add_library(Box2D STATIC ${Box2D_SOURCES})
+target_include_directories(Box2D PUBLIC "${Box2D_SOURCE_DIR}")
+
+# =============================================================================
+#               Chemin vers le répertoire Freetype2
+# =============================================================================
+#set(FREETYPE_LIBRARY_PATH "${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs/ft2/libfreetype.a")
+set(FREETYPE_LIBRARY_PATH "${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs/ft2/libfreetype-${ANDROID_ABI}.a")
+
+set(Ft2_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs/ft2")
+include_directories(${Ft2_SOURCE_DIR} ${Ft2_SOURCE_DIR}/freetype)
+message(STATUS "Box2D_SOURCE_DIR: ${Ft2_SOURCE_DIR}")
+#file(GLOB_RECURSE Ft2_SOURCE_DIR
+#        ${Ft2_SOURCE_DIR}/*.cpp
+#        ${Ft2_SOURCE_DIR}/*.h
+#)
+#include_directories(${Ft2_SOURCE_DIR})
+
+
 
 # Specify source files
 set(SOURCE_FILES
@@ -139,6 +176,9 @@ target_link_libraries(
         android_game_lib PRIVATE glm
         c++_shared
         mpg123-lib
+        z
+        log
+        ${FREETYPE_LIBRARY_PATH}
         ${openal-lib}
         ${OPENSLES_LIB}
         ${log-lib}

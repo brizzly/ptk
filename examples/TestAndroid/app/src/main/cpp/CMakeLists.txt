@@ -126,6 +126,8 @@ set(SOURCE_FILES
         android_integration.cpp
         MainController.cpp
         MainController.h
+        game.cpp
+        game.h
         glfm_android.c
         glfm.h
         glfm_internal.h

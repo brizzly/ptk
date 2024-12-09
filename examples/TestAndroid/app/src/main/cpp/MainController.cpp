@@ -1,7 +1,9 @@
-// MainController.cpp (Fixed)
-// Implemented minor changes for code clarity, corrected improper singleton pattern usage.
 
 #include "MainController.h"
+#include "game.h"
+
+game gameInstance;
+
 
 // Singleton instance initialization
 MainController* MainController::instance = nullptr;
@@ -54,36 +56,7 @@ void MainController::initialize(int w, int h)
 
     KMiscTools::initMiscTools();
 
-
-    testGraphic = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);
-    testGraphic->loadPicture("box.png");
-
-    testGraphic2 = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);
-    testGraphic2->loadPicture("box2.png");
-
-    testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH, this->assetManager);
-    testGraphic3->loadPicture("960_1440.png");
-
-
-    sound1 = new KSound;
-    sound1->loadSample(KMiscTools::makeFilePath("boing2.wav"), this->assetManager);
-    //sound1->loadSample("boing2.wav", this->assetManager);
-    sound1->setVolume(1.0);
-    sound1->setLooping(false);
-    //sound1->playSample();
-
-    sound2 = new KSound;
-    sound2->loadSample(KMiscTools::makeFilePath("jump1.wav"), this->assetManager);
-    //sound2->loadSample("boing2.wav", this->assetManager);
-    sound2->setVolume(1.0);
-    sound2->setLooping(false);
-    //sound2->playSample();
-
-    music1 = new KMusic();
-    music1->load("menu.mp3", this->assetManager);
-    music1->setVolume(1.0);
-    music1->playMusic();
-
+    gameInstance.init(width, height, this->assetManager);
 }
 
 void MainController::update(double frameTime) {
@@ -95,6 +68,7 @@ void MainController::draw() {
     //glClearColor(1.0f, 0.5f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
     static auto lastTime = std::chrono::high_resolution_clock::now();
 
     // Calculate frame time
@@ -104,67 +78,7 @@ void MainController::draw() {
     lastTime = currentTime;
     //float frameTime = 16.666;
 
-    static float r = 0.0;
-    static float z = 0.0;
-    static float a = 0.0;
-
-
-    r += 10000.0f * (this->_framtime) * 0.0005f;
-    a += 10000.0f * (this->_framtime) * 0.0005f;
-
-    //r += (frameTime / 1000.0f) * 0.0005f;
-    //a += (frameTime / 1000.0f) * 0.0005f;
-
-    z = 1.0 + cos(a * M_PI / 180.0f); // (frameTime / 1000.0f)
-
-    static float debugval = 0.0;
-    debugval += 0.4f;
-
-    //KLogFile::logDebug("a: %f, z: %f", a, z);
-
-
-    // FULL SCREEN IMAGE : 960x1440
-
-//    testGraphic3->srcX = 0;
-//    testGraphic3->srcY = 0;
-//    testGraphic3->destX = 0;
-//    testGraphic3->destY = 0;
-//    testGraphic3->sizeW = 960;
-//    testGraphic3->sizeH = 1440;
-//    testGraphic3->angle = 0;
-//    testGraphic3->zoom = 1.0;
-//    testGraphic3->blend = 1.0;
-    testGraphic3->drawEx(0, 0, 960, 1440, 0, 0, 0, 1, 1);
-
-
-    // SQUARE 256x256
-
-//    testGraphic->srcX = 0;
-//    testGraphic->srcY = 0;
-//    testGraphic->destX = 140;
-//    testGraphic->destY = 80;
-//    testGraphic->sizeW = 256;
-//    testGraphic->sizeH = 256;
-//    testGraphic->angle = a;
-//    testGraphic->zoom = z;
-//    testGraphic->blend = 1.0;
-    testGraphic->drawEx(0, 0, 256, 256, 140, 80, a, z, 1.0);
-
-
-
-    // SQUARE 256x256
-
-//    testGraphic2->srcX = 0;
-//    testGraphic2->srcY = 0;
-//    testGraphic2->destX = 420;
-//    testGraphic2->destY = 850;
-//    testGraphic2->sizeW = 256;
-//    testGraphic2->sizeH = 256;
-//    testGraphic2->angle = 360-a;
-//    testGraphic2->zoom = 1.0;
-//    testGraphic2->blend = 1.0;
-    testGraphic2->drawEx(0, 0, 256, 256, 420, 850, 360-a, 1.0, 1.0);
-
+    gameInstance.draw(16.666 * 10000/*this->_framtime*/);
 }
 
 void MainController::touchEvent(int touch, int phase, double x, double y)
@@ -188,12 +102,7 @@ void MainController::touchEvent(int touch, int phase, double x, double y)
             printf("Touch %d started at (%.2f, %.2f)\n", touch, x, y);
             KInput::setScreenPressed(0, x, y);
             KInput::setFingerPosition(touch, x, y, true);
-            if(rand() % 100 < 50) {
-                sound1->playSample();
-            }
-            else {
-                sound2->playSample();
-            }
+            gameInstance.playSfx();
             break;
         case 1://GLFMTouchPhaseMoved:
             printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);

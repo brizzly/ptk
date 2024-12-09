@@ -512,30 +512,28 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
-    // Determine if the device supports retina assets (dynamic or static logic)
-    bool deviceSupportsRetina = false; // Replace with DPI-based logic if needed
+    // Détection du support "retina"
+    bool deviceSupportsRetina = false; // Logique basée sur la densité d'écran à implémenter si souhaité
     const char* retinaSuffix = "@2x";
-    std::string filenameToLoad = filename;
-
-    // Adjust filename for non-retina devices
     std::string filenameStr(filename);
+    std::string filenameToLoad = filenameStr;
+
+    // Si l'appareil ne supporte pas le retina, on enlève le suffixe @2x s'il existe
     if (!deviceSupportsRetina) {
         size_t pos = filenameStr.find(retinaSuffix);
         if (pos != std::string::npos) {
             filenameStr.erase(pos, strlen(retinaSuffix));
         }
-        filenameToLoad = filenameStr.c_str();
+        filenameToLoad = filenameStr;
     }
 
-    // Load the asset from the asset manager
-
+    // Chargement de l'asset
     AAsset* asset = AAssetManager_open(g_assetManager, filenameToLoad.c_str(), AASSET_MODE_BUFFER);
     if (!asset) {
         printf("Failed to open asset: %s\n", filenameToLoad.c_str());
         return false;
     }
 
-// Ensure the asset is read completely
     off_t assetLength = AAsset_getLength(asset);
     unsigned char* assetBuffer = new unsigned char[assetLength];
     off_t bytesRead = 0;
@@ -552,15 +550,8 @@ bool KGraphic::loadPicture(const char *filename)
     }
     AAsset_close(asset);
 
-// Verify if the data is complete
-    printf("Asset length: %ld bytes\n", assetLength);
-
-// Decompress using stb_image
     unsigned char* rawData = stbi_load_from_memory(assetBuffer, assetLength, &width, &height, &nrChannels, STBI_rgb_alpha);
     delete[] assetBuffer;
-
-
-
 
     if (rawData == nullptr) {
         printf("Failed to load image: %s\n", filenameToLoad.c_str());
@@ -569,18 +560,14 @@ bool KGraphic::loadPicture(const char *filename)
 
     printf("Image loaded successfully: %dx%d, channels: %d\n", width, height, nrChannels);
 
-    printf("Asset length: %ld\n", assetLength);
-    printf("Expected length: %d\n", width * height * 4);
-    printf("Loaded image: width=%d, height=%d, channels=%d\n", width, height, nrChannels);
-
-    // Downscale retina images if needed
+    // Redimensionnement si l'image est @2x mais que l'appareil ne supporte pas le retina
     if (!deviceSupportsRetina && filenameStr.find("@2x") != std::string::npos) {
         int newWidth = std::round(width / 2.0);
         int newHeight = std::round(height / 2.0);
         unsigned char* scaledData = new unsigned char[newWidth * newHeight * 4]; // RGBA
 
         if (stbir_resize_uint8(rawData, width, height, 0, scaledData, newWidth, newHeight, 0, 4)) {
-            stbi_image_free(rawData); // Free the original image
+            stbi_image_free(rawData);
             rawData = scaledData;
             width = newWidth;
             height = newHeight;
@@ -594,9 +581,9 @@ bool KGraphic::loadPicture(const char *filename)
 
     data = rawData;
     isBGR = 0;
+    // Ne pas forcer retina si l'appareil ne le supporte pas
     _eyeRetina = deviceSupportsRetina;
-    _eyeRetina = true;
-    //height *= 2;
+
 #else
     GLTextureHelper helper;
     std::string modifiedFilename(filename);
@@ -625,10 +612,11 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
-// Correct texture size assignment
-    _textureSizeW = width;  // Full width of the loaded texture
-    _textureSizeH = height; // Full height of the loaded texture
+    // Dimensions réelles de la texture
+    _textureSizeW = width;
+    _textureSizeH = height;
 
+    // Si retina est supporté (côté device ou code desktop), on ajuste les dimensions logiques
     if (_eyeRetina) {
         printf("Retina texture detected: Adjusting logical dimensions.\n");
         _textureSizeW = width / 2;
@@ -646,14 +634,13 @@ bool KGraphic::loadPicture(const char *filename)
         printf("Detected RGB format: No swap needed.\n");
     }
 
-// OpenGL texture setup
+    // Configuration OpenGL
     glDisable(GL_DEPTH_TEST);
     glGenTextures(1, &_texture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
     printf("Texture bound to: %d\n", _texture);
 
-// Handle row alignment issues
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -663,11 +650,11 @@ bool KGraphic::loadPicture(const char *filename)
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-    stbi_image_free(data); // Free the image memory
-
+    stbi_image_free(data);
 
     return true;
 }
+
 
 
 float KGraphic::getTextureWidth() {

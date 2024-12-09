@@ -11,6 +11,7 @@
 #include <codecvt>
 
 #ifdef __ANDROID__
+#include <android/asset_manager_jni.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 //#include "ft2build.h"
@@ -38,9 +39,14 @@ struct Character {
 class KFont {
 	
 public:
+#ifdef __ANDROID__
+    KFont(const char* fontPath, float gameWidth, float gameHeight, AAssetManager * value);
+#else
 	KFont(const char* fontPath, float gameWidth, float gameHeight);
+#endif
+
+    void init(const char* fontPath, float gameWidth, float gameHeight);
 	~KFont();
-	
 	void SetMaxCharBeforeLine(int value);
 	void UnsetMaxCharBeforeLine();
     void SetBackgroundColor(float r, float g, float b, float a);
@@ -65,6 +71,10 @@ private:
 	std::map<char, Character> characters;
 	GLuint VBO; // Only VBO, no VAO
 	int _maxCharsBeforeNewLine;
+
+#ifdef __ANDROID__
+    AAssetManager* g_assetManager = nullptr;
+#endif
 };
 
 #endif // KFONT_H

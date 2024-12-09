@@ -3,10 +3,22 @@
 
 KFont::~KFont()
 {
-    
 }
 
+#ifdef __ANDROID__
+KFont::KFont(const char* fontPath, float gameWidth, float gameHeight, AAssetManager * value)
+{
+    this->g_assetManager = value;
+    this->init(fontPath, gameWidth, gameHeight);
+}
+#else
 KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
+{
+    this->init(fontPath, gameWidth, gameHeight);
+}
+#endif
+
+void KFont::init(const char* fontPath, float gameWidth, float gameHeight)
 {
 	_fontSize = KFONT_SIZE;
 	_gameW = gameWidth;
@@ -29,10 +41,35 @@ KFont::KFont(const char* fontPath, float gameWidth, float gameHeight)
 		return;
 	}
 
+#if __ANDROID__
+    // Open the font asset
+    AAsset* asset = AAssetManager_open(g_assetManager, fontPath, AASSET_MODE_BUFFER);
+    if (!asset) {
+        std::cerr << "ERROR::ASSET: Could not open font asset" << std::endl;
+        return;
+    }
+
+    // Get the font data and size
+    size_t fontSize = AAsset_getLength(asset);
+    const void* fontData = AAsset_getBuffer(asset);
+    if (!fontData) {
+        std::cerr << "ERROR::ASSET: Could not read font data" << std::endl;
+        AAsset_close(asset);
+        return;
+    }
+
+    // Load the font face from memory
+    if (FT_New_Memory_Face(ft, reinterpret_cast<const FT_Byte*>(fontData), fontSize, 0, &face)) {
+        std::cerr << "ERROR::FREETYPE: Failed to load font from memory" << std::endl;
+        AAsset_close(asset);
+        return;
+    }
+#else
 	if (FT_New_Face(ft, fontPath, 0, &face)) {
 		std::cerr << "ERROR::FREETYPE: Failed to load font" << std::endl;
 		return;
 	}
+#endif
 
 	FT_Set_Pixel_Sizes(face, 0, _fontSize);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction

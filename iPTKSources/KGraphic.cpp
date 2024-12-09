@@ -513,7 +513,7 @@ bool KGraphic::loadPicture(const char *filename)
     }
 
     // Détection du support "retina"
-    bool deviceSupportsRetina = false; // Logique basée sur la densité d'écran à implémenter si souhaité
+    bool deviceSupportsRetina = !false; // Logique basée sur la densité d'écran à implémenter si souhaité
     const char* retinaSuffix = "@2x";
     std::string filenameStr(filename);
     std::string filenameToLoad = filenameStr;

@@ -32,6 +32,9 @@ void game::init(int width, int height, AAssetManager* assetManager)
 
 	testGraphic4 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
 	testGraphic4->loadPicture("box512.png");
+
+    testGraphic5 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
+    testGraphic5->loadPicture("title_1@2x.png");
 	
 	shapeGraphic = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
     shapeGraphic2 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
@@ -45,8 +48,19 @@ void game::init(int width, int height, AAssetManager* assetManager)
 	
 	buttonRight = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
 	buttonRight->loadPicture("border2_right.png");
-	
 
+#ifdef __ANDROID__
+    fonte = new KFont(KMiscTools::makeFilePath("neue.ttf"), gameW, gameH, assetManager);
+    fonte->SetTextColor(0, 0, 1.0);
+    fonte->SetBackgroundColor(1, 0, 0, 0.8f);
+
+    fonte2 = new KFont(KMiscTools::makeFilePath("pixel.ttf"), gameW, gameH, assetManager);
+    fonte2->SetBackgroundColor(1, 0, 0, 0.8f);
+
+
+    fonte3 = new KFont(KMiscTools::makeFilePath("chinese.ttf"), gameW, gameH, assetManager);
+    fonte3->SetTextColor(1, 0, 0);
+#else
 	fonte = new KFont(KMiscTools::makeFilePath("neue.ttf"), gameW, gameH);
 	fonte->SetTextColor(0, 0, 1.0);
 	fonte->SetBackgroundColor(1, 0, 0, 0.8f);
@@ -57,7 +71,8 @@ void game::init(int width, int height, AAssetManager* assetManager)
 	
 	fonte3 = new KFont(KMiscTools::makeFilePath("chinese.ttf"), gameW, gameH);
 	fonte3->SetTextColor(1, 0, 0);
-	
+#endif
+
 	// Ensure OpenALManager is initialized
 	OpenALManager& alManager = OpenALManager::getInstance();
 
@@ -272,6 +287,8 @@ void game::draw_scene4(float frameTime)
 	fonte->SetBackgroundColor(0, 0, 0, 0);
 	fonte->SetMaxCharBeforeLine(960-10);
 	fonte->RenderText(txt, 0, 0, 24 + z*20);
+
+    testGraphic5->draw(0, 0, 0, 1, 1);
 }
 
 void game::draw(float frameTime)
@@ -298,6 +315,8 @@ void game::draw(float frameTime)
     draw_scene2(frameTime);
     draw_scene3(frameTime);
 	draw_scene4(frameTime);
+
+
 }
 
 void game::playSfx()

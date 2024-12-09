@@ -550,7 +550,29 @@ bool KGraphic::loadPicture(const char *filename)
     }
     AAsset_close(asset);
 
-    unsigned char* rawData = stbi_load_from_memory(assetBuffer, assetLength, &width, &height, &nrChannels, STBI_rgb_alpha);
+    unsigned char* rawData = stbi_load_from_memory(assetBuffer, assetLength, &width, &height, &nrChannels, 0);
+
+    if (!rawData) {
+        printf("Failed to load image: %s\n", filenameToLoad.c_str());
+        delete[] assetBuffer;
+        return false;
+    }
+
+    // If the image has 3 channels (RGB), add an alpha channel
+    if (nrChannels == 3) {
+        printf("Image has 3 channels (RGB), adding alpha channel.\n");
+        unsigned char* rgbaData = new unsigned char[width * height * 4];
+        for (int i = 0; i < width * height; i++) {
+            rgbaData[i * 4 + 0] = rawData[i * 3 + 0]; // R
+            rgbaData[i * 4 + 1] = rawData[i * 3 + 1]; // G
+            rgbaData[i * 4 + 2] = rawData[i * 3 + 2]; // B
+            rgbaData[i * 4 + 3] = 255;               // A
+        }
+        stbi_image_free(rawData);
+        rawData = rgbaData;
+        nrChannels = 4;
+    }
+
     delete[] assetBuffer;
 
     if (rawData == nullptr) {

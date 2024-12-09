@@ -17,6 +17,7 @@ private:
 	KGraphic * testGraphic3;    // background
 	KGraphic * testGraphic4;    // box 3
     KGraphic * testGraphic5;    // retina image
+    KGraphic * testGraphic6;
 	KGraphic * shapeGraphic;
     KGraphic * shapeGraphic2;
     KGraphic * shapeGraphic3;

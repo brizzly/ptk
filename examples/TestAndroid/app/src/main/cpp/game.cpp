@@ -9,8 +9,8 @@ void game::init(int width, int height, AAssetManager* assetManager)
 {
 	KPTK::_screenW = width;
 	KPTK::_screenH = height;
-	//KPTK::_screenOrientation = K_320x568;
-	KPTK::_screenOrientation = K_960x1440;
+	KPTK::_screenOrientation = K_320x568;
+	//KPTK::_screenOrientation = K_960x1440;
 		
 	int gameW = KPTK::getGameW();
 	int gameH = KPTK::getGameH();
@@ -35,6 +35,10 @@ void game::init(int width, int height, AAssetManager* assetManager)
 
     testGraphic5 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
     testGraphic5->loadPicture("title_1@2x.png");
+
+    testGraphic6 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
+    testGraphic6->loadPicture("bg_pattern_separated_top.png");
+
 	
 	shapeGraphic = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
     shapeGraphic2 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
@@ -282,7 +286,9 @@ void game::draw_scene4(float frameTime)
 	//wchar_t * txt = L"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié.";
 	wchar_t * txt = L"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 	float yfontpos = 0;
-	
+
+
+
 	fonte->SetTextColor(1, 1, 1);
 	fonte->SetBackgroundColor(0, 0, 0, 0);
 	fonte->SetMaxCharBeforeLine(960-10);
@@ -308,13 +314,14 @@ void game::draw(float frameTime)
 	
 	int screenWidth = KPTK::_screenW;
 	int screenHeight = KPTK::_screenH;
-    
+
+    testGraphic6->draw(0, 0, 0, 1, 1);
 
     draw_scene0(frameTime);
     //draw_scene1(frameTime);
     draw_scene2(frameTime);
     draw_scene3(frameTime);
-	draw_scene4(frameTime);
+	//draw_scene4(frameTime);
 
 
 }

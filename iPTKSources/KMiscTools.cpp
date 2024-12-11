@@ -29,18 +29,19 @@ static inline unsigned int getCString(NSString * str, char * cstr, unsigned int 
 #endif
 
 //#################################################################################	
-unsigned long KMiscTools::getMilliseconds( void )
+unsigned long KMiscTools::getMilliseconds(void)
 {
 #ifdef __ANDROID__
     struct timespec ts;
     // Get the current time with CLOCK_MONOTONIC
     if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0) {
-        //printf("Seconds: %ld, Nanoseconds: %ld\n", ts.tv_sec, ts.tv_nsec);
-        return ts.tv_sec;
+        // Convert seconds and nanoseconds to milliseconds
+        return (ts.tv_sec * 1000UL) + (ts.tv_nsec / 1000000UL);
     }
-    return 0;
+    return 0;  // Fallback in case of error
 #else
-	return (unsigned long)(((float)(mach_absolute_time() - t0)) * ((float)timebase.numer) / ((float)timebase.denom) / 1000000.0f);
+    // Assuming `mach_absolute_time` and `timebase` are properly initialized elsewhere
+    return (unsigned long)(((float)(mach_absolute_time() - t0)) * ((float)timebase.numer) / ((float)timebase.denom) / 1000000.0f);
 #endif
 }
 

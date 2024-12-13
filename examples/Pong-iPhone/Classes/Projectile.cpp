@@ -4,7 +4,7 @@
 #include <cmath>
 
 Projectile::Projectile(float x, float y, float vx, float vy, float s)
-    : pos(x, y, 4.0f), size(s), velX(vx), velY(vy)
+    : pos(x, y, 1.0f), size(s), velX(vx), velY(vy)
 {}
 
 void Projectile::Update(float dt) {

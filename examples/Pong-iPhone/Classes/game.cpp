@@ -274,7 +274,7 @@ void game::SpawnProjectile() {
     dx /= len; dy /= len;
 
     float speed = 50.0f + (float)timeSurvived * 2.0f;
-    projectiles.emplace_back(x, y, dx * speed, dy * speed, 8.0f);
+    projectiles.emplace_back(x, y, dx * speed, dy * speed, 16.0f);
 }
 
 bool game::IsOffScreen(const Projectile &p) {

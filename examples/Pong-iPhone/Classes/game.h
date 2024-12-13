@@ -1,46 +1,76 @@
+#ifndef GAME_H
+#define GAME_H
 
-#import "KShader.h"
-#import "KGraphic.h"
-#import "KFont.h"
-#import "KSound.h"
-#import "KMusic.h"
-#import "KInput.h"
-#import "KPTK.h"
-#import "KMiscTools.h"
-#import "Vector.h"
-#import "List.h"
-#import "ball.h"
-#import "Game2.h"
+#include "KPTK.h"
+#include "KMiscTools.h"
+#include "KInput.h"
+#include "KGraphic.h"
+#include "KFont.h"
+#include "KSound.h"
+#include "KMusic.h"
+#include "ball.h"
+#include "Player.h"
+#include "Projectile.h"
+#include <vector>
+
+enum class GameState {
+    RUNNING,
+    GAME_OVER
+};
 
 class game
 {
-private:
-	KGraphic * testGraphic;     // box 1
-	KGraphic * testGraphic2;    // box 2
-	KGraphic * testGraphic3;    // background
-	KGraphic * testGraphic4;    // box 3
-	KGraphic * shapeGraphic;
-	KGraphic * buttonLeft;
-	KGraphic * buttonMiddle;
-	KGraphic * buttonRight;
-	KFont * fonte;
-	KFont * fonte2;
-	KFont * fonte3;
-	KSound * sound1;
-	KSound * sound2;
-	KMusic * music1;
-    
-    List ballsList;
-    
-    Game2 * gameinstance;
-	
 public:
-	game();
-	~game();
-	
-	void init(int width, int height);
+    game();
+    ~game();
+
+    void init(int width, int height);
+    void draw(float frameTime);
+    void playSfx();
     void addNewBall(int px, int py);
     void addBall(char * imagename, int px, int py);
-	void draw(float frameTime);
-	void playSfx();
+
+private:
+    // Ressources graphiques
+    KGraphic * testGraphic;
+    KGraphic * testGraphic2;
+    KGraphic * testGraphic3;
+    KGraphic * testGraphic4;
+    KGraphic * shapeGraphic;
+    KGraphic * buttonLeft;
+    KGraphic * buttonMiddle;
+    KGraphic * buttonRight;
+
+    KFont * fonte;
+    KFont * fonte2;
+    KFont * fonte3;
+
+    KSound * sound1;
+    KSound * sound2;
+    KMusic * music1;
+
+    List ballsList;
+
+    // Variables du jeu (fusion avec Game2)
+    Player player;
+    std::vector<Projectile> projectiles;
+
+    GameState gameState;
+    double gameStartTime;
+    double timeSurvived;
+    double finalSurvivalTime;
+    double gameOverTime;
+
+    float spawnTimer;
+    float spawnInterval;
+    unsigned long lastTime;
+
+    void Run(double frameTime);
+    void Update(float dt);
+    void DrawProjectilesAndPlayer();
+    void SpawnProjectile();
+    static bool IsOffScreen(const Projectile &p);
+    void ResetGame();
 };
+
+#endif // GAME_H

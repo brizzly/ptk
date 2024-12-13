@@ -128,8 +128,6 @@
 		FF3CCFEB2CEE4B020036DBFF /* libFreetype2-arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF3CCFB82CEE4B020036DBFF /* libFreetype2-arm.a */; };
 		FF43CB8F2D0C54DA00042757 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF43CB8E2D0C54DA00042757 /* Player.cpp */; };
 		FF43CB922D0C569D00042757 /* Projectile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF43CB912D0C569D00042757 /* Projectile.cpp */; };
-		FF43CB952D0C581400042757 /* Game2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF43CB942D0C581400042757 /* Game2.cpp */; };
-		FF43CB9A2D0C585C00042757 /* Game2.h in Sources */ = {isa = PBXBuildFile; fileRef = FF43CB932D0C581400042757 /* Game2.h */; };
 		FF43CB9B2D0C585C00042757 /* game.h in Sources */ = {isa = PBXBuildFile; fileRef = F92942512CDCA1F6003A2720 /* game.h */; };
 		FF43CB9C2D0C585C00042757 /* Projectile.h in Sources */ = {isa = PBXBuildFile; fileRef = FF43CB902D0C569D00042757 /* Projectile.h */; };
 		FF43CB9D2D0C585C00042757 /* Player.h in Sources */ = {isa = PBXBuildFile; fileRef = FF43CB8D2D0C54DA00042757 /* Player.h */; };
@@ -421,8 +419,6 @@
 		FF43CB8E2D0C54DA00042757 /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		FF43CB902D0C569D00042757 /* Projectile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Projectile.h; sourceTree = "<group>"; };
 		FF43CB912D0C569D00042757 /* Projectile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Projectile.cpp; sourceTree = "<group>"; };
-		FF43CB932D0C581400042757 /* Game2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game2.h; sourceTree = "<group>"; };
-		FF43CB942D0C581400042757 /* Game2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game2.cpp; sourceTree = "<group>"; };
 		FF43CB9F2D0C5ABC00042757 /* stb_image_resize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image_resize.h; sourceTree = "<group>"; };
 		FF4B990A2CB2013300DA591B /* Pong.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pong.entitlements; sourceTree = "<group>"; };
 		FF4C06162CB1CECA00BEC9CE /* MainController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
@@ -522,8 +518,6 @@
 			children = (
 				F92942522CDCA1F6003A2720 /* game.cpp */,
 				F92942512CDCA1F6003A2720 /* game.h */,
-				FF43CB942D0C581400042757 /* Game2.cpp */,
-				FF43CB932D0C581400042757 /* Game2.h */,
 				FF43CB912D0C569D00042757 /* Projectile.cpp */,
 				FF43CB902D0C569D00042757 /* Projectile.h */,
 				FF43CB8E2D0C54DA00042757 /* Player.cpp */,
@@ -1161,7 +1155,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF43CB9A2D0C585C00042757 /* Game2.h in Sources */,
 				FF43CB9B2D0C585C00042757 /* game.h in Sources */,
 				FF43CB9C2D0C585C00042757 /* Projectile.h in Sources */,
 				FF43CB9D2D0C585C00042757 /* Player.h in Sources */,
@@ -1228,7 +1221,6 @@
 				FF8BC2072CBB2AE000DE5C31 /* GLTextureHelper.mm in Sources */,
 				FF8BC2082CBB2AE000DE5C31 /* KGraphic.cpp in Sources */,
 				FF43CB922D0C569D00042757 /* Projectile.cpp in Sources */,
-				FF43CB952D0C581400042757 /* Game2.cpp in Sources */,
 				FF1CFF9C2CA606B2008CB8C2 /* glfm_emscripten.c in Sources */,
 				FF1CFF9D2CA606B2008CB8C2 /* glfm_apple.m in Sources */,
 				FF1390412CE525BA004DFCE8 /* Vector.cpp in Sources */,

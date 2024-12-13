@@ -2,21 +2,21 @@
 #define PROJECTILE_H
 
 #include "Vector.h"
-
 class KGraphic;
 class Player;
 
 class Projectile {
 public:
-    Vector pos;
-    Vector vel;
-    float size;
-
-    Projectile(float x, float y, float dx, float dy, float s);
+    Projectile(float x, float y, float vx, float vy, float s);
 
     void Update(float dt);
-    void Draw(KGraphic* gfx);
+    void Draw(KGraphic* gfx) const;
     bool Collides(const Player &p);
+
+    Vector pos;
+    float size;
+    float velX;
+    float velY;
 };
 
 #endif // PROJECTILE_H

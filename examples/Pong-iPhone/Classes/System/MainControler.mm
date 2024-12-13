@@ -30,10 +30,26 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     const GLubyte* version = glGetString(GL_VERSION);
     printf("OpenGL Version: %s\n", version);
     
+
+    gameInstance.init(width, height);
+    
+    /*
+    KPTK::_screenW = width;
+    KPTK::_screenH = height;
+
+    KPTK::_screenOrientation = K_320x568;
+    //KPTK::_screenOrientation = K_960x1440;
+        
+    int gameW = KPTK::getGameW();
+    int gameH = KPTK::getGameH();
+    int screenW = width;
+    int screenH = height;
+    
+    KMiscTools::initMiscTools();
+    */
+    
     // Set the viewport to match the screen size
     glViewport(0, 0, width, height);
-    
-	gameInstance.init(width, height);
 }
 
 // Rendering function
@@ -88,7 +104,7 @@ void glfmMain(GLFMDisplay *display)
 
 bool onTouch(GLFMDisplay *display, int touch, GLFMTouchPhase phase, double x, double y)
 {
-    float ratio = KPTK::_screenW / KPTK::_screenH;
+    float ratio = (float)KPTK::_screenW / (float)KPTK::_screenH;
     if(ratio > 1.0)
     {
         float offsetX = (KPTK::_screenW - KPTK::getGameW()*2) / 2.0f;
@@ -98,8 +114,8 @@ bool onTouch(GLFMDisplay *display, int touch, GLFMTouchPhase phase, double x, do
     }
     else
     {
-        x = x * (KPTK::getGameW() / KPTK::_screenW);
-        y = y * (KPTK::getGameH() / KPTK::_screenH);
+        x = x * ((float)KPTK::getGameW() / (float)KPTK::_screenW);
+        y = y * ((float)KPTK::getGameH() / (float)KPTK::_screenH);
     }
     
     switch (phase) {
@@ -107,8 +123,8 @@ bool onTouch(GLFMDisplay *display, int touch, GLFMTouchPhase phase, double x, do
             printf("Touch %d started at (%.2f, %.2f)\n", touch, x, y);
             KInput::setScreenPressed(0, x, y);
             KInput::setFingerPosition(touch, x, y, true);
-			gameInstance.playSfx();
-            gameInstance.addNewBall(x, y);
+			//gameInstance.playSfx();
+            //gameInstance.addNewBall(x, y);
             break;
         case GLFMTouchPhaseMoved:
             printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);

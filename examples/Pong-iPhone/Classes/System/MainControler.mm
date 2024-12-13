@@ -15,6 +15,7 @@
 
 game gameInstance;
 
+
 - (id) init {
     if (self = [super init]) {
         // Initialization code can go here if needed
@@ -45,6 +46,8 @@ void onFrame(GLFMDisplay *display, double frameTime)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
 	gameInstance.draw(frameTime);
+    
+
 }
 
 // Function to handle surface destruction (cleanup)

@@ -227,7 +227,7 @@ void ball::update(float frametime)
 
     float blocy = pos.y; //  pos->y / PTM_RATIO; //  //box2d_body->getPosY();
     
-    printf("blocy %f lv.y %f\n", blocy, lv.y);
+    //printf("blocy %f lv.y %f\n", blocy, lv.y);
     
     int ylimit = gameHeight-100;
     

@@ -10,6 +10,7 @@
 #import "Vector.h"
 #import "List.h"
 #import "ball.h"
+#import "Game2.h"
 
 class game
 {
@@ -30,6 +31,8 @@ private:
 	KMusic * music1;
     
     List ballsList;
+    
+    Game2 * gameinstance;
 	
 public:
 	game();

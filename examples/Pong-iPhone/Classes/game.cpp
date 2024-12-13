@@ -78,6 +78,9 @@ void game::init(int width, int height)
         int py = rand() % (KPTK::_screenH - 256);
         addNewBall(px, py);
     }
+    
+    gameinstance = new Game2();
+    
 }
 
 void game::addNewBall(int px, int py)
@@ -154,6 +157,8 @@ void game::draw(float frameTime)
 		b->kg->setDrawBounds(true);
         b->kg->draw(b->getPos().x, b->getPos().y, (i%2) ? 2*a : -a*10, 1, 1);
     }
+    
+    gameinstance->Run(frameTime);
 }
 
 void game::playSfx()

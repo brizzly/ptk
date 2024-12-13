@@ -141,16 +141,50 @@ static void glfm__updateUserInterfaceChrome(GLFMPlatformData *platformData);
         } \
     } while (0)
 
+
+
 static jmethodID glfm__getJavaMethodID(JNIEnv *jni, jobject object, const char *name, const char *sig) {
     if (!object) {
+        GLFM_LOG("Error: Null object passed to glfm__getJavaMethodID");
         return NULL;
     }
     jclass class = (*jni)->GetObjectClass(jni, object);
+    if (!class) {
+        GLFM_LOG("Error: Failed to get class for object in glfm__getJavaMethodID");
+        glfm__clearJavaException(jni);
+        return NULL;
+    }
     jmethodID methodID = (*jni)->GetMethodID(jni, class, name, sig);
+    if (!methodID) {
+        GLFM_LOG("Error: Method '%s' with signature '%s' not found in class", name, sig);
+        glfm__clearJavaException(jni);
+    }
     (*jni)->DeleteLocalRef(jni, class);
-    return glfm__wasJavaExceptionThrown(jni) ? NULL : methodID;
+    return methodID;
 }
 
+// Function to retrieve a field ID from a Java class
+static jfieldID glfm__getJavaFieldID(JNIEnv *jni, jobject object, const char *fieldName, const char *fieldSig) {
+    if (!object) {
+        GLFM_LOG("Error: Null object passed to glfm__getJavaFieldID");
+        return NULL;
+    }
+    jclass clazz = (*jni)->GetObjectClass(jni, object);
+    if (!clazz) {
+        GLFM_LOG("Error: Failed to get class for object in glfm__getJavaFieldID");
+        glfm__clearJavaException(jni);
+        return NULL;
+    }
+    jfieldID fieldID = (*jni)->GetFieldID(jni, clazz, fieldName, fieldSig);
+    if (!fieldID) {
+        GLFM_LOG("Error: Field '%s' with signature '%s' not found", fieldName, fieldSig);
+        glfm__clearJavaException(jni);
+    }
+    (*jni)->DeleteLocalRef(jni, clazz);
+    return fieldID;
+}
+
+/*
 static jfieldID glfm__getJavaFieldID(JNIEnv *jni, jobject object, const char *name, const char *sig) {
     if (!object) {
         return NULL;
@@ -159,7 +193,7 @@ static jfieldID glfm__getJavaFieldID(JNIEnv *jni, jobject object, const char *na
     jfieldID fieldID = (*jni)->GetFieldID(jni, class, name, sig);
     (*jni)->DeleteLocalRef(jni, class);
     return glfm__wasJavaExceptionThrown(jni) ? NULL : fieldID;
-}
+}*/
 
 static jmethodID glfm__getJavaStaticMethodID(JNIEnv *jni, jclass class, const char *name, const char *sig) {
     if (!class) {

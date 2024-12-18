@@ -1,6 +1,3 @@
-
-// https://github.com/brackeen/glfm
-
 #import <UIKit/UIKit.h>
 #import "SimpleTest-Bridging-Header.h"
 
@@ -89,8 +86,8 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     sound1->setVolume(50);
     
     music1 = new KMusic();
-    music1->playMusic(KMiscTools::makeFilePath("menu.mp3"));
-    
+    music1->load(KMiscTools::makeFilePath("menu.mp3"));
+    music1->playMusic();
 }
 
 // Rendering function
@@ -116,111 +113,23 @@ void onFrame(GLFMDisplay *display, double frameTime)
 
     
     // FULL SCREEN IMAGE : 640x480
-    
-    testGraphic7->srcX = 0;
-    testGraphic7->srcY = 0;
-    testGraphic7->destX = 0;
-    testGraphic7->destY = 0;
-    testGraphic7->sizeW = 640;
-    testGraphic7->sizeH = 480;
-    testGraphic7->angle = 0;
-    testGraphic7->zoom = 1.0;
-    testGraphic7->blend = 1.0;
-    testGraphic7->render();
-    
-    // SQUARE 256x256
-    
-    testGraphic6->srcX = 0;
-    testGraphic6->srcY = 0;
-    testGraphic6->destX = 128;
-    testGraphic6->destY = 128;
-    testGraphic6->sizeW = 256;
-    testGraphic6->sizeH = 256;
-    testGraphic6->angle = a;
-    testGraphic6->zoom = z;
-    testGraphic6->blend = 1.0;
-    testGraphic6->render();
-    
-    /*
-     // IMAGE DE 1024x1024 QUI CONTIENT UN BACKGROUND DE 640x480
-     
-     testGraphic5->srcX = 0;
-     testGraphic5->srcY = 0;
-     testGraphic5->destX = 0;
-     testGraphic5->destY = 0;
-     testGraphic5->sizeW = 640;
-     testGraphic5->sizeH = 480;
-     testGraphic5->angle = 0;
-     testGraphic5->zoom = 1.0;
-     testGraphic5->blend = 1.0;
-     testGraphic5->render();
-     
-    
-    
-     // FULL SCREEN IMAGE : 1704x960
-     
-     testGraphic3->srcX = 0;
-     testGraphic3->srcY = 0;//debugval;
-     testGraphic3->destX = 0;//+ debugval;  //34;//debugval;
-     testGraphic3->destY = 0;//+ debugval; // 0.0; //28;//debugval;
-     testGraphic3->sizeW = 1704; //640;// - debugval;//640;
-     testGraphic3->sizeH = 960; //480;//480;
-     testGraphic3->angle = 0;//a;    // Rotation angle in degrees
-     testGraphic3->zoom = 1.0;//z; //0.5f; //  z; //1.0;// + debugval;      // Scale (1.0 = no scaling)
-     testGraphic3->blend = 1.0;     // Alpha blending value (0.0 - 1.0)
-     testGraphic3->render();
-     
-     
-     
-     
-     // HALF FULL SCREEN IMAGE : 852x480
-     
-     testGraphic4->srcX = 0;
-     testGraphic4->srcY = 0;//debugval;
-     testGraphic4->destX = 0;//+ debugval;  //34;//debugval;
-     testGraphic4->destY = 0;//+ debugval; // 0.0; //28;//debugval;
-     testGraphic4->sizeW = 852; //640;// - debugval;//640;
-     testGraphic4->sizeH = 480; //480;//480;
-     testGraphic4->angle = 0;//a;    // Rotation angle in degrees
-     testGraphic4->zoom = 2-z; //0.5f; //  z; //1.0;// + debugval;      // Scale (1.0 = no scaling)
-     testGraphic4->blend = 1.0;     // Alpha blending value (0.0 - 1.0)
-     testGraphic4->render();
-     */
-     
+
+    testGraphic7->drawEx(0, 0, 640, 480, 0, 0, 0, 1.0, 1.0);
     
     
     // SQUARE 256x256
     
-    testGraphic->srcX = 0;
-    testGraphic->srcY = 0;
-    testGraphic->destX = 10;
-    testGraphic->destY = 10;
-    testGraphic->sizeW = 256;
-    testGraphic->sizeH = 256;
-    testGraphic->angle = 0;//a;
-    testGraphic->zoom = 1.0; //z;
-    testGraphic->blend = 1.0;
-    testGraphic->render();
+    testGraphic6->drawEx(0, 0, 256, 256, 128, 128, a, z, 1.0);
     
+    
+    // SQUARE 256x256
+    
+    testGraphic->drawEx(0, 0, 256, 256, 10, 10, 0, 1.0, 1.0);
     
 
      // SQUARE 256x256
      
-     testGraphic2->srcX = 0;
-     testGraphic2->srcY = 0;
-     testGraphic2->destX = 200;
-     testGraphic2->destY = 100;
-     testGraphic2->sizeW = 256;
-     testGraphic2->sizeH = 256;
-     testGraphic2->angle = 360-a;
-     testGraphic2->zoom = 1.0;
-     testGraphic2->blend = 1.0;
-     testGraphic2->render();
-
-    
-    
-    // Swap the buffers to display the rendered content
-    //glfmSwapBuffers(display);
+    testGraphic2->drawEx(0, 0, 256, 256, 200, 100, 360-a, 1.0, 1.0);
 }
 
 // Function to handle surface destruction (cleanup)

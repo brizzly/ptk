@@ -129,6 +129,16 @@ void KMusic::stopMusic()
     }
 }
 
+void KMusic::pauseMusic()
+{
+    
+}
+
+void KMusic::resumeMusic()
+{
+    
+}
+
 void KMusic::setLooping(bool loop)
 {
     isLooping = loop;

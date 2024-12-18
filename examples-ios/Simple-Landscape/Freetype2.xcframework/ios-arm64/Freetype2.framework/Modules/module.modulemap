@@ -1,5 +1,0 @@
-module Freetype2 [system] {
-    umbrella header "ft2build.h"
-    export *
-    module * { export * }
-}

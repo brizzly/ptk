@@ -78,7 +78,6 @@
 		FFCB41C42D12EC57004EAF28 /* OpenALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB41C32D12EC57004EAF28 /* OpenALManager.cpp */; };
 		FFCB42542D12F253004EAF28 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42532D12F253004EAF28 /* game.cpp */; };
 		FFCB42572D12F2FC004EAF28 /* KFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42562D12F2FC004EAF28 /* KFont.cpp */; };
-		FFCB42592D12F320004EAF28 /* Freetype2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCB42582D12F320004EAF28 /* Freetype2.xcframework */; };
 		FFCB42622D12F4B5004EAF28 /* RifficFree-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB42602D12F4B5004EAF28 /* RifficFree-Bold.ttf */; };
 		FFCB42632D12F4B5004EAF28 /* pixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425F2D12F4B5004EAF28 /* pixel.ttf */; };
 		FFCB42642D12F4B5004EAF28 /* neuebold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425E2D12F4B5004EAF28 /* neuebold.ttf */; };
@@ -98,6 +97,7 @@
 		FFCB42722D12F4DF004EAF28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424C2D12F236004EAF28 /* main.m */; };
 		FFCB42732D12F4DF004EAF28 /* MainControler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424D2D12F236004EAF28 /* MainControler.mm */; };
 		FFCB42742D12F4DF004EAF28 /* MainController.h in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424E2D12F236004EAF28 /* MainController.h */; };
+		FFCB42762D12F62E004EAF28 /* Freetype2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCB42752D12F62E004EAF28 /* Freetype2.xcframework */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
 		FFCBB2782CAC8B56000797B4 /* 1704_960.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2772CAC8B56000797B4 /* 1704_960.png */; };
 		FFCBB27A2CACB5F2000797B4 /* 852_480.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2792CACB5F2000797B4 /* 852_480.png */; };
@@ -205,7 +205,6 @@
 		FFCB42532D12F253004EAF28 /* game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
 		FFCB42552D12F2FC004EAF28 /* KFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFont.h; sourceTree = "<group>"; };
 		FFCB42562D12F2FC004EAF28 /* KFont.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KFont.cpp; sourceTree = "<group>"; };
-		FFCB42582D12F320004EAF28 /* Freetype2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Freetype2.xcframework; sourceTree = "<group>"; };
 		FFCB425A2D12F4B5004EAF28 /* chinese.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.ttf; sourceTree = "<group>"; };
 		FFCB425B2D12F4B5004EAF28 /* neue.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue.ttf; sourceTree = "<group>"; };
 		FFCB425C2D12F4B5004EAF28 /* neue_uncondensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed.ttf; sourceTree = "<group>"; };
@@ -213,6 +212,7 @@
 		FFCB425E2D12F4B5004EAF28 /* neuebold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neuebold.ttf; sourceTree = "<group>"; };
 		FFCB425F2D12F4B5004EAF28 /* pixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixel.ttf; sourceTree = "<group>"; };
 		FFCB42602D12F4B5004EAF28 /* RifficFree-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RifficFree-Bold.ttf"; sourceTree = "<group>"; };
+		FFCB42752D12F62E004EAF28 /* Freetype2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Freetype2.xcframework; path = /Volumes/MacMiniSSD/GIT/ptk/ExternalSDKs/ft2/Freetype2.xcframework; sourceTree = "<absolute>"; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFCBB2772CAC8B56000797B4 /* 1704_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1704_960.png; sourceTree = "<group>"; };
 		FFCBB2792CACB5F2000797B4 /* 852_480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 852_480.png; sourceTree = "<group>"; };
@@ -251,7 +251,7 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
-				FFCB42592D12F320004EAF28 /* Freetype2.xcframework in Frameworks */,
+				FFCB42762D12F62E004EAF28 /* Freetype2.xcframework in Frameworks */,
 				D71E47EA1130A53600105C50 /* StoreKit.framework in Frameworks */,
 				FF1CFFA32CA6079D008CB8C2 /* CoreMotion.framework in Frameworks */,
 				D71E48761130A7D900105C50 /* CoreAudio.framework in Frameworks */,
@@ -313,7 +313,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FFCB42582D12F320004EAF28 /* Freetype2.xcframework */,
 				FF37576A2CB45B7B0012C4B0 /* IOKit.framework */,
 				FF3757682CB45B730012C4B0 /* CoreServices.framework */,
 				FF3757642CB45B5A0012C4B0 /* Accelerate.framework */,
@@ -343,6 +342,7 @@
 				D71E48771130A7D900105C50 /* OpenAL.framework */,
 				D71E48791130A7D900105C50 /* OpenGLES.framework */,
 				D71E487B1130A7D900105C50 /* QuartzCore.framework */,
+				FFCB42752D12F62E004EAF28 /* Freetype2.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

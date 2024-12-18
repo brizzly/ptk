@@ -40,14 +40,6 @@
 		D71E48DB1130A7ED00105C50 /* rebon.caf in Resources */ = {isa = PBXBuildFile; fileRef = D71E48B01130A7ED00105C50 /* rebon.caf */; };
 		D71E48DC1130A7ED00105C50 /* rebon2.caf in Resources */ = {isa = PBXBuildFile; fileRef = D71E48B11130A7ED00105C50 /* rebon2.caf */; };
 		D71E48E01130A7ED00105C50 /* menu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D71E48B61130A7ED00105C50 /* menu.mp3 */; };
-		F929421B2CD5937C003A2720 /* KFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F929421A2CD5937C003A2720 /* KFont.cpp */; };
-		F92942272CD59700003A2720 /* neue.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942212CD59700003A2720 /* neue.ttf */; };
-		F92942282CD59700003A2720 /* neuebold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942242CD59700003A2720 /* neuebold.ttf */; };
-		F92942292CD59700003A2720 /* neue_uncondensed__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942232CD59700003A2720 /* neue_uncondensed__.ttf */; };
-		F929422A2CD59700003A2720 /* chinese.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942202CD59700003A2720 /* chinese.ttf */; };
-		F929422B2CD59700003A2720 /* pixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942252CD59700003A2720 /* pixel.ttf */; };
-		F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F92942222CD59700003A2720 /* neue_uncondensed.ttf */; };
-		F92942532CDCA1F6003A2720 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F92942522CDCA1F6003A2720 /* game.cpp */; };
 		F9458CD01D415AD900135BCA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9458CCF1D415AD900135BCA /* Media.xcassets */; };
 		F98E5AFA1D3CC92A00FC4879 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */; };
 		F98E5AFC1D3CC94100FC4879 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */; };
@@ -60,9 +52,6 @@
 		F98E5B0A1D3CCA3200FC4879 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98E5B091D3CCA3200FC4879 /* CoreMedia.framework */; };
 		F98E5B0B1D3CCA3900FC4879 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48711130A7D900105C50 /* AVFoundation.framework */; };
 		F98E5B0C1D3CCA3F00FC4879 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		FF1CFF9B2CA606B2008CB8C2 /* glfm_android.c in Sources */ = {isa = PBXBuildFile; fileRef = FF1CFF962CA606B2008CB8C2 /* glfm_android.c */; };
-		FF1CFF9C2CA606B2008CB8C2 /* glfm_emscripten.c in Sources */ = {isa = PBXBuildFile; fileRef = FF1CFF982CA606B2008CB8C2 /* glfm_emscripten.c */; };
-		FF1CFF9D2CA606B2008CB8C2 /* glfm_apple.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1CFF972CA606B2008CB8C2 /* glfm_apple.m */; };
 		FF1CFF9F2CA60723008CB8C2 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1CFF9E2CA60723008CB8C2 /* Metal.framework */; };
 		FF1CFFA12CA6076B008CB8C2 /* CoreHaptics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1CFFA02CA6076B008CB8C2 /* CoreHaptics.framework */; };
 		FF1CFFA32CA6079D008CB8C2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1CFFA22CA6079D008CB8C2 /* CoreMotion.framework */; };
@@ -74,30 +63,45 @@
 		FF37576B2CB45B7B0012C4B0 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF37576A2CB45B7B0012C4B0 /* IOKit.framework */; };
 		FF37576C2CB45B7F0012C4B0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48771130A7D900105C50 /* OpenAL.framework */; };
 		FF37576D2CB45B840012C4B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E487B1130A7D900105C50 /* QuartzCore.framework */; };
-		FF4C06182CB1CF5300BEC9CE /* MainControler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF4C06172CB1CF5300BEC9CE /* MainControler.mm */; };
-		FF76319F2CB1C39F006672CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF76319E2CB1C39A006672CE /* main.m */; };
-		FF8BC1FF2CBB2AE000DE5C31 /* KInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1EB2CBB2AE000DE5C31 /* KInput.cpp */; };
-		FF8BC2002CBB2AE000DE5C31 /* KLogFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1ED2CBB2AE000DE5C31 /* KLogFile.cpp */; };
-		FF8BC2012CBB2AE000DE5C31 /* KWeb.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1FB2CBB2AE000DE5C31 /* KWeb.mm */; };
-		FF8BC2032CBB2AE000DE5C31 /* KPTK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F32CBB2AE000DE5C31 /* KPTK.cpp */; };
-		FF8BC2042CBB2AE000DE5C31 /* KShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F52CBB2AE000DE5C31 /* KShader.cpp */; };
-		FF8BC2052CBB2AE000DE5C31 /* KWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1FD2CBB2AE000DE5C31 /* KWindow.cpp */; };
-		FF8BC2062CBB2AE000DE5C31 /* KSpline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F92CBB2AE000DE5C31 /* KSpline.cpp */; };
-		FF8BC2072CBB2AE000DE5C31 /* GLTextureHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1E72CBB2AE000DE5C31 /* GLTextureHelper.mm */; };
-		FF8BC2082CBB2AE000DE5C31 /* KGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1E92CBB2AE000DE5C31 /* KGraphic.cpp */; };
-		FF8BC20C2CBD011600DE5C31 /* KSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC20B2CBD011600DE5C31 /* KSound.cpp */; };
-		FF8BC20D2CBD05FE00DE5C31 /* KSound.h in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1F62CBB2AE000DE5C31 /* KSound.h */; };
-		FF8BC20F2CBD343800DE5C31 /* KMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC20E2CBD343800DE5C31 /* KMusic.cpp */; };
-		FF8BC2122CBD44FD00DE5C31 /* OpenALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */; };
-		FF8BC2162CBDCA7800DE5C31 /* KMiscTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC2152CBDCA7800DE5C31 /* KMiscTools.mm */; };
-		FFB190A32CD7DC3C005D7AEB /* Freetype2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */; };
-		FFB190A52CD7E080005D7AEB /* box512.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190A42CD7E080005D7AEB /* box512.png */; };
-		FFB190AB2CD8006C005D7AEB /* 960_1440.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AA2CD8006C005D7AEB /* 960_1440.png */; };
-		FFB190AD2CD80EAF005D7AEB /* 960_1440_Retina@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AC2CD80EAF005D7AEB /* 960_1440_Retina@2x.png */; };
-		FFB190B12CD82A9A005D7AEB /* border2_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190B02CD82A9A005D7AEB /* border2_right@2x.png */; };
-		FFB190B22CD82A9A005D7AEB /* border2_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AE2CD82A9A005D7AEB /* border2_left@2x.png */; };
-		FFB190B32CD82A9A005D7AEB /* border2_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB190AF2CD82A9A005D7AEB /* border2_middle@2x.png */; };
+		FF8BC1D92CBB2AA200DE5C31 /* KPTK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1CC2CBB2AA200DE5C31 /* KPTK.cpp */; };
+		FF8BC1DA2CBB2AA200DE5C31 /* KLogFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C62CBB2AA200DE5C31 /* KLogFile.cpp */; };
+		FF8BC1DB2CBB2AA200DE5C31 /* KGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C22CBB2AA200DE5C31 /* KGraphic.cpp */; };
+		FF8BC1DE2CBB2AA200DE5C31 /* KInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C42CBB2AA200DE5C31 /* KInput.cpp */; };
+		FF8BC1DF2CBB2AA200DE5C31 /* KSpline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1D32CBB2AA200DE5C31 /* KSpline.cpp */; };
+		FF8BC1E02CBB2AA200DE5C31 /* GLTextureHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C02CBB2AA200DE5C31 /* GLTextureHelper.mm */; };
+		FF8BC1E12CBB2AA200DE5C31 /* KWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1D72CBB2AA200DE5C31 /* KWindow.cpp */; };
+		FF8BC1E22CBB2AA200DE5C31 /* KMiscTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1C82CBB2AA200DE5C31 /* KMiscTools.mm */; };
+		FF8BC1E42CBB2AA200DE5C31 /* KWeb.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1D52CBB2AA200DE5C31 /* KWeb.mm */; };
+		FF8BC1E52CBB2AA200DE5C31 /* KShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF8BC1CF2CBB2AA200DE5C31 /* KShader.cpp */; };
+		FFCB41BE2D12EA55004EAF28 /* KMusic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB41BD2D12EA55004EAF28 /* KMusic.cpp */; };
+		FFCB41C02D12EA5D004EAF28 /* KSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB41BF2D12EA5D004EAF28 /* KSound.cpp */; };
+		FFCB41C42D12EC57004EAF28 /* OpenALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB41C32D12EC57004EAF28 /* OpenALManager.cpp */; };
+		FFCB42542D12F253004EAF28 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42532D12F253004EAF28 /* game.cpp */; };
+		FFCB42572D12F2FC004EAF28 /* KFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42562D12F2FC004EAF28 /* KFont.cpp */; };
+		FFCB42592D12F320004EAF28 /* Freetype2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCB42582D12F320004EAF28 /* Freetype2.xcframework */; };
+		FFCB42622D12F4B5004EAF28 /* RifficFree-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB42602D12F4B5004EAF28 /* RifficFree-Bold.ttf */; };
+		FFCB42632D12F4B5004EAF28 /* pixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425F2D12F4B5004EAF28 /* pixel.ttf */; };
+		FFCB42642D12F4B5004EAF28 /* neuebold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425E2D12F4B5004EAF28 /* neuebold.ttf */; };
+		FFCB42652D12F4B5004EAF28 /* neue_uncondensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425C2D12F4B5004EAF28 /* neue_uncondensed.ttf */; };
+		FFCB42662D12F4B5004EAF28 /* chinese.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425A2D12F4B5004EAF28 /* chinese.ttf */; };
+		FFCB42672D12F4B5004EAF28 /* neue_uncondensed__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425D2D12F4B5004EAF28 /* neue_uncondensed__.ttf */; };
+		FFCB42682D12F4B5004EAF28 /* neue.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCB425B2D12F4B5004EAF28 /* neue.ttf */; };
+		FFCB42692D12F4DF004EAF28 /* game.h in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42522D12F253004EAF28 /* game.h */; };
+		FFCB426A2D12F4DF004EAF28 /* SimpleTest_Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* SimpleTest_Prefix.pch */; };
+		FFCB426B2D12F4DF004EAF28 /* stb_image.h in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424F2D12F236004EAF28 /* stb_image.h */; };
+		FFCB426C2D12F4DF004EAF28 /* stb_image_resize.h in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42502D12F236004EAF28 /* stb_image_resize.h */; };
+		FFCB426D2D12F4DF004EAF28 /* glfm.h in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424B2D12F236004EAF28 /* glfm.h */; };
+		FFCB426E2D12F4DF004EAF28 /* glfm_android.c in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42462D12F236004EAF28 /* glfm_android.c */; };
+		FFCB426F2D12F4DF004EAF28 /* glfm_apple.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42472D12F236004EAF28 /* glfm_apple.m */; };
+		FFCB42702D12F4DF004EAF28 /* glfm_emscripten.c in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42482D12F236004EAF28 /* glfm_emscripten.c */; };
+		FFCB42712D12F4DF004EAF28 /* glfm_internal.h in Sources */ = {isa = PBXBuildFile; fileRef = FFCB42492D12F236004EAF28 /* glfm_internal.h */; };
+		FFCB42722D12F4DF004EAF28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424C2D12F236004EAF28 /* main.m */; };
+		FFCB42732D12F4DF004EAF28 /* MainControler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424D2D12F236004EAF28 /* MainControler.mm */; };
+		FFCB42742D12F4DF004EAF28 /* MainController.h in Sources */ = {isa = PBXBuildFile; fileRef = FFCB424E2D12F236004EAF28 /* MainController.h */; };
 		FFCBB2762CAB7406000797B4 /* box2.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2752CAB7406000797B4 /* box2.png */; };
+		FFCBB2782CAC8B56000797B4 /* 1704_960.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2772CAC8B56000797B4 /* 1704_960.png */; };
+		FFCBB27A2CACB5F2000797B4 /* 852_480.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB2792CACB5F2000797B4 /* 852_480.png */; };
+		FFCBB27E2CAED593000797B4 /* 640_480.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCBB27D2CAED593000797B4 /* 640_480.png */; };
 		FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71E48791130A7D900105C50 /* OpenGLES.framework */; };
 		FFF1BFF02CAB59D30093CA43 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF1BFEF2CAB59D30093CA43 /* box.png */; };
 /* End PBXBuildFile section */
@@ -141,17 +145,7 @@
 		D71E48B01130A7ED00105C50 /* rebon.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rebon.caf; sourceTree = "<group>"; };
 		D71E48B11130A7ED00105C50 /* rebon2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rebon2.caf; sourceTree = "<group>"; };
 		D71E48B61130A7ED00105C50 /* menu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menu.mp3; sourceTree = "<group>"; };
-		D71E49041130AC2200105C50 /* TestPortrait.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestPortrait.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F92942192CD5937C003A2720 /* KFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFont.h; sourceTree = "<group>"; };
-		F929421A2CD5937C003A2720 /* KFont.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KFont.cpp; sourceTree = "<group>"; };
-		F92942202CD59700003A2720 /* chinese.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.ttf; sourceTree = "<group>"; };
-		F92942212CD59700003A2720 /* neue.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue.ttf; sourceTree = "<group>"; };
-		F92942222CD59700003A2720 /* neue_uncondensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed.ttf; sourceTree = "<group>"; };
-		F92942232CD59700003A2720 /* neue_uncondensed__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed__.ttf; sourceTree = "<group>"; };
-		F92942242CD59700003A2720 /* neuebold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neuebold.ttf; sourceTree = "<group>"; };
-		F92942252CD59700003A2720 /* pixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixel.ttf; sourceTree = "<group>"; };
-		F92942512CDCA1F6003A2720 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
-		F92942522CDCA1F6003A2720 /* game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
+		D71E49041130AC2200105C50 /* TestLandscape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestLandscape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9458CCF1D415AD900135BCA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -162,10 +156,6 @@
 		F98E5B051D3CC98000FC4879 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F98E5B071D3CC99000FC4879 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		F98E5B091D3CCA3200FC4879 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		FF1CFF962CA606B2008CB8C2 /* glfm_android.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glfm_android.c; sourceTree = "<group>"; };
-		FF1CFF972CA606B2008CB8C2 /* glfm_apple.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = glfm_apple.m; sourceTree = "<group>"; };
-		FF1CFF982CA606B2008CB8C2 /* glfm_emscripten.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glfm_emscripten.c; sourceTree = "<group>"; };
-		FF1CFF992CA606B2008CB8C2 /* glfm_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm_internal.h; sourceTree = "<group>"; };
 		FF1CFF9E2CA60723008CB8C2 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		FF1CFFA02CA6076B008CB8C2 /* CoreHaptics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreHaptics.framework; path = System/Library/Frameworks/CoreHaptics.framework; sourceTree = SDKROOT; };
 		FF1CFFA22CA6079D008CB8C2 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -174,47 +164,59 @@
 		FF3757682CB45B730012C4B0 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		FF37576A2CB45B7B0012C4B0 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		FF4B990A2CB2013300DA591B /* SimpleTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleTest.entitlements; sourceTree = "<group>"; };
-		FF4C06162CB1CECA00BEC9CE /* MainController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
-		FF4C06172CB1CF5300BEC9CE /* MainControler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainControler.mm; sourceTree = "<group>"; };
-		FF5C8EE42CB3F32100D2F38C /* TestPortrait-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestPortrait-Bridging-Header.h"; sourceTree = "<group>"; };
-		FF76319E2CB1C39A006672CE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FF8BC1E62CBB2AE000DE5C31 /* GLTextureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLTextureHelper.h; sourceTree = "<group>"; };
-		FF8BC1E72CBB2AE000DE5C31 /* GLTextureHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GLTextureHelper.mm; sourceTree = "<group>"; };
-		FF8BC1E82CBB2AE000DE5C31 /* KGraphic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGraphic.h; sourceTree = "<group>"; };
-		FF8BC1E92CBB2AE000DE5C31 /* KGraphic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KGraphic.cpp; sourceTree = "<group>"; };
-		FF8BC1EA2CBB2AE000DE5C31 /* KInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KInput.h; sourceTree = "<group>"; };
-		FF8BC1EB2CBB2AE000DE5C31 /* KInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KInput.cpp; sourceTree = "<group>"; };
-		FF8BC1EC2CBB2AE000DE5C31 /* KLogFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLogFile.h; sourceTree = "<group>"; };
-		FF8BC1ED2CBB2AE000DE5C31 /* KLogFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KLogFile.cpp; sourceTree = "<group>"; };
-		FF8BC1EE2CBB2AE000DE5C31 /* KMiscTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMiscTools.h; sourceTree = "<group>"; };
-		FF8BC1F02CBB2AE000DE5C31 /* KMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMusic.h; sourceTree = "<group>"; };
-		FF8BC1F22CBB2AE000DE5C31 /* KPTK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPTK.h; sourceTree = "<group>"; };
-		FF8BC1F32CBB2AE000DE5C31 /* KPTK.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KPTK.cpp; sourceTree = "<group>"; };
-		FF8BC1F42CBB2AE000DE5C31 /* KShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KShader.h; sourceTree = "<group>"; };
-		FF8BC1F52CBB2AE000DE5C31 /* KShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KShader.cpp; sourceTree = "<group>"; };
-		FF8BC1F62CBB2AE000DE5C31 /* KSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSound.h; sourceTree = "<group>"; };
-		FF8BC1F82CBB2AE000DE5C31 /* KSpline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSpline.h; sourceTree = "<group>"; };
-		FF8BC1F92CBB2AE000DE5C31 /* KSpline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSpline.cpp; sourceTree = "<group>"; };
-		FF8BC1FA2CBB2AE000DE5C31 /* KWeb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWeb.h; sourceTree = "<group>"; };
-		FF8BC1FB2CBB2AE000DE5C31 /* KWeb.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KWeb.mm; sourceTree = "<group>"; };
-		FF8BC1FC2CBB2AE000DE5C31 /* KWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWindow.h; sourceTree = "<group>"; };
-		FF8BC1FD2CBB2AE000DE5C31 /* KWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KWindow.cpp; sourceTree = "<group>"; };
-		FF8BC20B2CBD011600DE5C31 /* KSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSound.cpp; sourceTree = "<group>"; };
-		FF8BC20E2CBD343800DE5C31 /* KMusic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KMusic.cpp; sourceTree = "<group>"; };
-		FF8BC2102CBD44FD00DE5C31 /* OpenALManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenALManager.h; sourceTree = "<group>"; };
-		FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALManager.cpp; sourceTree = "<group>"; };
-		FF8BC2152CBDCA7800DE5C31 /* KMiscTools.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMiscTools.mm; sourceTree = "<group>"; };
-		FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Freetype2.xcframework; path = ../../ExternalSDKs/ft2/Freetype2.xcframework; sourceTree = SOURCE_ROOT; };
-		FFB190A42CD7E080005D7AEB /* box512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box512.png; sourceTree = "<group>"; };
-		FFB190AA2CD8006C005D7AEB /* 960_1440.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 960_1440.png; sourceTree = "<group>"; };
-		FFB190AC2CD80EAF005D7AEB /* 960_1440_Retina@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "960_1440_Retina@2x.png"; sourceTree = "<group>"; };
-		FFB190AE2CD82A9A005D7AEB /* border2_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_left@2x.png"; sourceTree = "<group>"; };
-		FFB190AF2CD82A9A005D7AEB /* border2_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_middle@2x.png"; sourceTree = "<group>"; };
-		FFB190B02CD82A9A005D7AEB /* border2_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_right@2x.png"; sourceTree = "<group>"; };
-		FFCB41C52D12EDBC004EAF28 /* stb_image_resize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image_resize.h; sourceTree = "<group>"; };
+		FF5C8EE42CB3F32100D2F38C /* SimpleTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleTest-Bridging-Header.h"; sourceTree = "<group>"; };
+		FF8BC1BF2CBB2AA200DE5C31 /* GLTextureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLTextureHelper.h; sourceTree = "<group>"; };
+		FF8BC1C02CBB2AA200DE5C31 /* GLTextureHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GLTextureHelper.mm; sourceTree = "<group>"; };
+		FF8BC1C12CBB2AA200DE5C31 /* KGraphic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGraphic.h; sourceTree = "<group>"; };
+		FF8BC1C22CBB2AA200DE5C31 /* KGraphic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KGraphic.cpp; sourceTree = "<group>"; };
+		FF8BC1C32CBB2AA200DE5C31 /* KInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KInput.h; sourceTree = "<group>"; };
+		FF8BC1C42CBB2AA200DE5C31 /* KInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KInput.cpp; sourceTree = "<group>"; };
+		FF8BC1C52CBB2AA200DE5C31 /* KLogFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KLogFile.h; sourceTree = "<group>"; };
+		FF8BC1C62CBB2AA200DE5C31 /* KLogFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KLogFile.cpp; sourceTree = "<group>"; };
+		FF8BC1C72CBB2AA200DE5C31 /* KMiscTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMiscTools.h; sourceTree = "<group>"; };
+		FF8BC1C82CBB2AA200DE5C31 /* KMiscTools.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KMiscTools.mm; sourceTree = "<group>"; };
+		FF8BC1C92CBB2AA200DE5C31 /* KMusic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KMusic.h; sourceTree = "<group>"; };
+		FF8BC1CB2CBB2AA200DE5C31 /* KPTK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPTK.h; sourceTree = "<group>"; };
+		FF8BC1CC2CBB2AA200DE5C31 /* KPTK.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KPTK.cpp; sourceTree = "<group>"; };
+		FF8BC1CE2CBB2AA200DE5C31 /* KShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KShader.h; sourceTree = "<group>"; };
+		FF8BC1CF2CBB2AA200DE5C31 /* KShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KShader.cpp; sourceTree = "<group>"; };
+		FF8BC1D02CBB2AA200DE5C31 /* KSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSound.h; sourceTree = "<group>"; };
+		FF8BC1D22CBB2AA200DE5C31 /* KSpline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSpline.h; sourceTree = "<group>"; };
+		FF8BC1D32CBB2AA200DE5C31 /* KSpline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSpline.cpp; sourceTree = "<group>"; };
+		FF8BC1D42CBB2AA200DE5C31 /* KWeb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWeb.h; sourceTree = "<group>"; };
+		FF8BC1D52CBB2AA200DE5C31 /* KWeb.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KWeb.mm; sourceTree = "<group>"; };
+		FF8BC1D62CBB2AA200DE5C31 /* KWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KWindow.h; sourceTree = "<group>"; };
+		FF8BC1D72CBB2AA200DE5C31 /* KWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KWindow.cpp; sourceTree = "<group>"; };
+		FFCB41BD2D12EA55004EAF28 /* KMusic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KMusic.cpp; sourceTree = "<group>"; };
+		FFCB41BF2D12EA5D004EAF28 /* KSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KSound.cpp; sourceTree = "<group>"; };
+		FFCB41C22D12EC57004EAF28 /* OpenALManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenALManager.h; sourceTree = "<group>"; };
+		FFCB41C32D12EC57004EAF28 /* OpenALManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALManager.cpp; sourceTree = "<group>"; };
+		FFCB42462D12F236004EAF28 /* glfm_android.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glfm_android.c; sourceTree = "<group>"; };
+		FFCB42472D12F236004EAF28 /* glfm_apple.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = glfm_apple.m; sourceTree = "<group>"; };
+		FFCB42482D12F236004EAF28 /* glfm_emscripten.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = glfm_emscripten.c; sourceTree = "<group>"; };
+		FFCB42492D12F236004EAF28 /* glfm_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm_internal.h; sourceTree = "<group>"; };
+		FFCB424B2D12F236004EAF28 /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
+		FFCB424C2D12F236004EAF28 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FFCB424D2D12F236004EAF28 /* MainControler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainControler.mm; sourceTree = "<group>"; };
+		FFCB424E2D12F236004EAF28 /* MainController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
+		FFCB424F2D12F236004EAF28 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		FFCB42502D12F236004EAF28 /* stb_image_resize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image_resize.h; sourceTree = "<group>"; };
+		FFCB42522D12F253004EAF28 /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		FFCB42532D12F253004EAF28 /* game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
+		FFCB42552D12F2FC004EAF28 /* KFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFont.h; sourceTree = "<group>"; };
+		FFCB42562D12F2FC004EAF28 /* KFont.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KFont.cpp; sourceTree = "<group>"; };
+		FFCB42582D12F320004EAF28 /* Freetype2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Freetype2.xcframework; sourceTree = "<group>"; };
+		FFCB425A2D12F4B5004EAF28 /* chinese.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chinese.ttf; sourceTree = "<group>"; };
+		FFCB425B2D12F4B5004EAF28 /* neue.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue.ttf; sourceTree = "<group>"; };
+		FFCB425C2D12F4B5004EAF28 /* neue_uncondensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed.ttf; sourceTree = "<group>"; };
+		FFCB425D2D12F4B5004EAF28 /* neue_uncondensed__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neue_uncondensed__.ttf; sourceTree = "<group>"; };
+		FFCB425E2D12F4B5004EAF28 /* neuebold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = neuebold.ttf; sourceTree = "<group>"; };
+		FFCB425F2D12F4B5004EAF28 /* pixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixel.ttf; sourceTree = "<group>"; };
+		FFCB42602D12F4B5004EAF28 /* RifficFree-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RifficFree-Bold.ttf"; sourceTree = "<group>"; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
-		FFF185EB2CA57EFC008120DB /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
-		FFF1BFEB2CAB43840093CA43 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		FFCBB2772CAC8B56000797B4 /* 1704_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1704_960.png; sourceTree = "<group>"; };
+		FFCBB2792CACB5F2000797B4 /* 852_480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 852_480.png; sourceTree = "<group>"; };
+		FFCBB27D2CAED593000797B4 /* 640_480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 640_480.png; sourceTree = "<group>"; };
 		FFF1BFEF2CAB59D30093CA43 /* box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -249,7 +251,7 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				FFF1BF182CAADF930093CA43 /* OpenGLES.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
-				FFB190A32CD7DC3C005D7AEB /* Freetype2.xcframework in Frameworks */,
+				FFCB42592D12F320004EAF28 /* Freetype2.xcframework in Frameworks */,
 				D71E47EA1130A53600105C50 /* StoreKit.framework in Frameworks */,
 				FF1CFFA32CA6079D008CB8C2 /* CoreMotion.framework in Frameworks */,
 				D71E48761130A7D900105C50 /* CoreAudio.framework in Frameworks */,
@@ -266,10 +268,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				F92942522CDCA1F6003A2720 /* game.cpp */,
-				F92942512CDCA1F6003A2720 /* game.h */,
+				FFCB42532D12F253004EAF28 /* game.cpp */,
+				FFCB42522D12F253004EAF28 /* game.h */,
 				32CA4F630368D1EE00C91783 /* SimpleTest_Prefix.pch */,
-				F92942542CDCA1FF003A2720 /* System */,
+				FFCB42512D12F236004EAF28 /* System */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -277,7 +279,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D71E49041130AC2200105C50 /* TestPortrait.app */,
+				D71E49041130AC2200105C50 /* TestLandscape.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -287,8 +289,8 @@
 			children = (
 				FF4B990A2CB2013300DA591B /* SimpleTest.entitlements */,
 				F9458CCF1D415AD900135BCA /* Media.xcassets */,
-				F92942262CD59700003A2720 /* fonte */,
-				FF8BC1FE2CBB2AE000DE5C31 /* iPTKSources */,
+				FFCB42612D12F4B5004EAF28 /* fonte */,
+				FF8BC1D82CBB2AA200DE5C31 /* iPTKSources */,
 				D71E488B1130A7ED00105C50 /* assets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -301,7 +303,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FF5C8EE42CB3F32100D2F38C /* TestPortrait-Bridging-Header.h */,
+				FF5C8EE42CB3F32100D2F38C /* SimpleTest-Bridging-Header.h */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* SimpleTest-Info.plist */,
 			);
@@ -311,7 +313,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FFB190A22CD7DC3C005D7AEB /* Freetype2.xcframework */,
+				FFCB42582D12F320004EAF28 /* Freetype2.xcframework */,
 				FF37576A2CB45B7B0012C4B0 /* IOKit.framework */,
 				FF3757682CB45B730012C4B0 /* CoreServices.framework */,
 				FF3757642CB45B5A0012C4B0 /* Accelerate.framework */,
@@ -358,14 +360,11 @@
 		D71E488C1130A7ED00105C50 /* gfx */ = {
 			isa = PBXGroup;
 			children = (
-				FFB190AC2CD80EAF005D7AEB /* 960_1440_Retina@2x.png */,
-				FFB190AA2CD8006C005D7AEB /* 960_1440.png */,
+				FFCBB27D2CAED593000797B4 /* 640_480.png */,
+				FFCBB2792CACB5F2000797B4 /* 852_480.png */,
+				FFCBB2772CAC8B56000797B4 /* 1704_960.png */,
 				FFF1BFEF2CAB59D30093CA43 /* box.png */,
 				FFCBB2752CAB7406000797B4 /* box2.png */,
-				FFB190A42CD7E080005D7AEB /* box512.png */,
-				FFB190AE2CD82A9A005D7AEB /* border2_left@2x.png */,
-				FFB190AF2CD82A9A005D7AEB /* border2_middle@2x.png */,
-				FFB190B02CD82A9A005D7AEB /* border2_right@2x.png */,
 			);
 			path = gfx;
 			sourceTree = "<group>";
@@ -406,87 +405,88 @@
 			path = tracks;
 			sourceTree = "<group>";
 		};
-		F92942262CD59700003A2720 /* fonte */ = {
+		FF8BC1D82CBB2AA200DE5C31 /* iPTKSources */ = {
 			isa = PBXGroup;
 			children = (
-				F92942202CD59700003A2720 /* chinese.ttf */,
-				F92942212CD59700003A2720 /* neue.ttf */,
-				F92942222CD59700003A2720 /* neue_uncondensed.ttf */,
-				F92942232CD59700003A2720 /* neue_uncondensed__.ttf */,
-				F92942242CD59700003A2720 /* neuebold.ttf */,
-				F92942252CD59700003A2720 /* pixel.ttf */,
+				FF8BC1BF2CBB2AA200DE5C31 /* GLTextureHelper.h */,
+				FF8BC1C02CBB2AA200DE5C31 /* GLTextureHelper.mm */,
+				FF8BC1C12CBB2AA200DE5C31 /* KGraphic.h */,
+				FF8BC1C22CBB2AA200DE5C31 /* KGraphic.cpp */,
+				FF8BC1C32CBB2AA200DE5C31 /* KInput.h */,
+				FF8BC1C42CBB2AA200DE5C31 /* KInput.cpp */,
+				FF8BC1C52CBB2AA200DE5C31 /* KLogFile.h */,
+				FF8BC1C62CBB2AA200DE5C31 /* KLogFile.cpp */,
+				FFCB42552D12F2FC004EAF28 /* KFont.h */,
+				FFCB42562D12F2FC004EAF28 /* KFont.cpp */,
+				FF8BC1C72CBB2AA200DE5C31 /* KMiscTools.h */,
+				FF8BC1C82CBB2AA200DE5C31 /* KMiscTools.mm */,
+				FF8BC1C92CBB2AA200DE5C31 /* KMusic.h */,
+				FFCB41BD2D12EA55004EAF28 /* KMusic.cpp */,
+				FF8BC1CB2CBB2AA200DE5C31 /* KPTK.h */,
+				FF8BC1CC2CBB2AA200DE5C31 /* KPTK.cpp */,
+				FF8BC1CE2CBB2AA200DE5C31 /* KShader.h */,
+				FF8BC1CF2CBB2AA200DE5C31 /* KShader.cpp */,
+				FF8BC1D02CBB2AA200DE5C31 /* KSound.h */,
+				FFCB41BF2D12EA5D004EAF28 /* KSound.cpp */,
+				FF8BC1D22CBB2AA200DE5C31 /* KSpline.h */,
+				FF8BC1D32CBB2AA200DE5C31 /* KSpline.cpp */,
+				FF8BC1D42CBB2AA200DE5C31 /* KWeb.h */,
+				FF8BC1D52CBB2AA200DE5C31 /* KWeb.mm */,
+				FF8BC1D62CBB2AA200DE5C31 /* KWindow.h */,
+				FF8BC1D72CBB2AA200DE5C31 /* KWindow.cpp */,
+				FFCB41C22D12EC57004EAF28 /* OpenALManager.h */,
+				FFCB41C32D12EC57004EAF28 /* OpenALManager.cpp */,
 			);
-			name = fonte;
-			path = ../../fonte;
-			sourceTree = SOURCE_ROOT;
+			name = iPTKSources;
+			path = /Volumes/MacMiniSSD/GIT/ptk/iPTKSources;
+			sourceTree = "<absolute>";
 		};
-		F92942542CDCA1FF003A2720 /* System */ = {
+		FFCB424A2D12F236004EAF28 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				FFF1BFEB2CAB43840093CA43 /* stb_image.h */,
-				FFCB41C52D12EDBC004EAF28 /* stb_image_resize.h */,
-				FFF185EB2CA57EFC008120DB /* glfm.h */,
-				FF1CFF9A2CA606B2008CB8C2 /* src */,
-				FF76319E2CB1C39A006672CE /* main.m */,
-				FF4C06172CB1CF5300BEC9CE /* MainControler.mm */,
-				FF4C06162CB1CECA00BEC9CE /* MainController.h */,
-			);
-			path = System;
-			sourceTree = "<group>";
-		};
-		FF1CFF9A2CA606B2008CB8C2 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				FF1CFF962CA606B2008CB8C2 /* glfm_android.c */,
-				FF1CFF972CA606B2008CB8C2 /* glfm_apple.m */,
-				FF1CFF982CA606B2008CB8C2 /* glfm_emscripten.c */,
-				FF1CFF992CA606B2008CB8C2 /* glfm_internal.h */,
+				FFCB42462D12F236004EAF28 /* glfm_android.c */,
+				FFCB42472D12F236004EAF28 /* glfm_apple.m */,
+				FFCB42482D12F236004EAF28 /* glfm_emscripten.c */,
+				FFCB42492D12F236004EAF28 /* glfm_internal.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		FF8BC1FE2CBB2AE000DE5C31 /* iPTKSources */ = {
+		FFCB42512D12F236004EAF28 /* System */ = {
 			isa = PBXGroup;
 			children = (
-				FF8BC1E62CBB2AE000DE5C31 /* GLTextureHelper.h */,
-				FF8BC1E72CBB2AE000DE5C31 /* GLTextureHelper.mm */,
-				F92942192CD5937C003A2720 /* KFont.h */,
-				F929421A2CD5937C003A2720 /* KFont.cpp */,
-				FF8BC1E82CBB2AE000DE5C31 /* KGraphic.h */,
-				FF8BC1E92CBB2AE000DE5C31 /* KGraphic.cpp */,
-				FF8BC1EA2CBB2AE000DE5C31 /* KInput.h */,
-				FF8BC1EB2CBB2AE000DE5C31 /* KInput.cpp */,
-				FF8BC1EC2CBB2AE000DE5C31 /* KLogFile.h */,
-				FF8BC1ED2CBB2AE000DE5C31 /* KLogFile.cpp */,
-				FF8BC1EE2CBB2AE000DE5C31 /* KMiscTools.h */,
-				FF8BC2152CBDCA7800DE5C31 /* KMiscTools.mm */,
-				FF8BC1F02CBB2AE000DE5C31 /* KMusic.h */,
-				FF8BC20E2CBD343800DE5C31 /* KMusic.cpp */,
-				FF8BC1F22CBB2AE000DE5C31 /* KPTK.h */,
-				FF8BC1F32CBB2AE000DE5C31 /* KPTK.cpp */,
-				FF8BC1F42CBB2AE000DE5C31 /* KShader.h */,
-				FF8BC1F52CBB2AE000DE5C31 /* KShader.cpp */,
-				FF8BC1F62CBB2AE000DE5C31 /* KSound.h */,
-				FF8BC20B2CBD011600DE5C31 /* KSound.cpp */,
-				FF8BC1F82CBB2AE000DE5C31 /* KSpline.h */,
-				FF8BC1F92CBB2AE000DE5C31 /* KSpline.cpp */,
-				FF8BC1FA2CBB2AE000DE5C31 /* KWeb.h */,
-				FF8BC1FB2CBB2AE000DE5C31 /* KWeb.mm */,
-				FF8BC1FC2CBB2AE000DE5C31 /* KWindow.h */,
-				FF8BC1FD2CBB2AE000DE5C31 /* KWindow.cpp */,
-				FF8BC2102CBD44FD00DE5C31 /* OpenALManager.h */,
-				FF8BC2112CBD44FD00DE5C31 /* OpenALManager.cpp */,
+				FFCB424F2D12F236004EAF28 /* stb_image.h */,
+				FFCB42502D12F236004EAF28 /* stb_image_resize.h */,
+				FFCB424B2D12F236004EAF28 /* glfm.h */,
+				FFCB424A2D12F236004EAF28 /* src */,
+				FFCB424C2D12F236004EAF28 /* main.m */,
+				FFCB424D2D12F236004EAF28 /* MainControler.mm */,
+				FFCB424E2D12F236004EAF28 /* MainController.h */,
 			);
-			name = iPTKSources;
-			path = ../../iPTKSources;
-			sourceTree = SOURCE_ROOT;
+			path = System;
+			sourceTree = "<group>";
+		};
+		FFCB42612D12F4B5004EAF28 /* fonte */ = {
+			isa = PBXGroup;
+			children = (
+				FFCB425A2D12F4B5004EAF28 /* chinese.ttf */,
+				FFCB425B2D12F4B5004EAF28 /* neue.ttf */,
+				FFCB425C2D12F4B5004EAF28 /* neue_uncondensed.ttf */,
+				FFCB425D2D12F4B5004EAF28 /* neue_uncondensed__.ttf */,
+				FFCB425E2D12F4B5004EAF28 /* neuebold.ttf */,
+				FFCB425F2D12F4B5004EAF28 /* pixel.ttf */,
+				FFCB42602D12F4B5004EAF28 /* RifficFree-Bold.ttf */,
+			);
+			name = fonte;
+			path = /Volumes/MacMiniSSD/GIT/ptk/fonte;
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* TestPortrait */ = {
+		1D6058900D05DD3D006BFB54 /* TestLandscape */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestPortrait" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestLandscape" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -496,9 +496,9 @@
 			);
 			dependencies = (
 			);
-			name = TestPortrait;
+			name = TestLandscape;
 			productName = GrizzlyAdventure;
-			productReference = D71E49041130AC2200105C50 /* TestPortrait.app */;
+			productReference = D71E49041130AC2200105C50 /* TestLandscape.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -535,7 +535,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* TestPortrait */,
+				1D6058900D05DD3D006BFB54 /* TestLandscape */,
 			);
 		};
 /* End PBXProject section */
@@ -545,41 +545,39 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFB190B12CD82A9A005D7AEB /* border2_right@2x.png in Resources */,
-				FFB190B22CD82A9A005D7AEB /* border2_left@2x.png in Resources */,
-				FFB190B32CD82A9A005D7AEB /* border2_middle@2x.png in Resources */,
 				F9458CD01D415AD900135BCA /* Media.xcassets in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				FFCBB27A2CACB5F2000797B4 /* 852_480.png in Resources */,
+				FFCBB27E2CAED593000797B4 /* 640_480.png in Resources */,
 				D71E48C81130A7ED00105C50 /* banana.caf in Resources */,
 				D71E48C91130A7ED00105C50 /* bee1.caf in Resources */,
 				D71E48CA1130A7ED00105C50 /* boing2.caf in Resources */,
 				D71E48CB1130A7ED00105C50 /* breakjarre.caf in Resources */,
 				FFF1BFF02CAB59D30093CA43 /* box.png in Resources */,
 				D71E48CC1130A7ED00105C50 /* breakjarre2.caf in Resources */,
-				F92942272CD59700003A2720 /* neue.ttf in Resources */,
-				F92942282CD59700003A2720 /* neuebold.ttf in Resources */,
-				F92942292CD59700003A2720 /* neue_uncondensed__.ttf in Resources */,
-				F929422A2CD59700003A2720 /* chinese.ttf in Resources */,
-				F929422B2CD59700003A2720 /* pixel.ttf in Resources */,
-				F929422C2CD59700003A2720 /* neue_uncondensed.ttf in Resources */,
 				FFCBB2762CAB7406000797B4 /* box2.png in Resources */,
 				D71E48CD1130A7ED00105C50 /* click.caf in Resources */,
-				FFB190AD2CD80EAF005D7AEB /* 960_1440_Retina@2x.png in Resources */,
-				FFB190AB2CD8006C005D7AEB /* 960_1440.png in Resources */,
 				D71E48CE1130A7ED00105C50 /* explosion.caf in Resources */,
 				D71E48CF1130A7ED00105C50 /* fruit.caf in Resources */,
 				D71E48D01130A7ED00105C50 /* fruit2.caf in Resources */,
-				FFB190A52CD7E080005D7AEB /* box512.png in Resources */,
 				D71E48D11130A7ED00105C50 /* fruit3.caf in Resources */,
 				D71E48D21130A7ED00105C50 /* grizzly_abeille.caf in Resources */,
 				D71E48D31130A7ED00105C50 /* grizzly_chenille.caf in Resources */,
 				D71E48D41130A7ED00105C50 /* grizzly_clef.caf in Resources */,
 				D71E48D51130A7ED00105C50 /* grizzly_cochon.caf in Resources */,
+				FFCBB2782CAC8B56000797B4 /* 1704_960.png in Resources */,
 				D71E48D61130A7ED00105C50 /* grizzly_fantome.caf in Resources */,
 				D71E48D71130A7ED00105C50 /* jump1.caf in Resources */,
 				D71E48D81130A7ED00105C50 /* lifeup.caf in Resources */,
 				D71E48D91130A7ED00105C50 /* lost.caf in Resources */,
 				D71E48DA1130A7ED00105C50 /* menu.caf in Resources */,
+				FFCB42622D12F4B5004EAF28 /* RifficFree-Bold.ttf in Resources */,
+				FFCB42632D12F4B5004EAF28 /* pixel.ttf in Resources */,
+				FFCB42642D12F4B5004EAF28 /* neuebold.ttf in Resources */,
+				FFCB42652D12F4B5004EAF28 /* neue_uncondensed.ttf in Resources */,
+				FFCB42662D12F4B5004EAF28 /* chinese.ttf in Resources */,
+				FFCB42672D12F4B5004EAF28 /* neue_uncondensed__.ttf in Resources */,
+				FFCB42682D12F4B5004EAF28 /* neue.ttf in Resources */,
 				D71E48DB1130A7ED00105C50 /* rebon.caf in Resources */,
 				D71E48DC1130A7ED00105C50 /* rebon2.caf in Resources */,
 				D71E48E01130A7ED00105C50 /* menu.mp3 in Resources */,
@@ -593,27 +591,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF8BC20D2CBD05FE00DE5C31 /* KSound.h in Sources */,
-				FF8BC2162CBDCA7800DE5C31 /* KMiscTools.mm in Sources */,
-				F92942532CDCA1F6003A2720 /* game.cpp in Sources */,
-				FF1CFF9B2CA606B2008CB8C2 /* glfm_android.c in Sources */,
-				FF8BC1FF2CBB2AE000DE5C31 /* KInput.cpp in Sources */,
-				F929421B2CD5937C003A2720 /* KFont.cpp in Sources */,
-				FF8BC2002CBB2AE000DE5C31 /* KLogFile.cpp in Sources */,
-				FF8BC2012CBB2AE000DE5C31 /* KWeb.mm in Sources */,
-				FF8BC2032CBB2AE000DE5C31 /* KPTK.cpp in Sources */,
-				FF8BC2042CBB2AE000DE5C31 /* KShader.cpp in Sources */,
-				FF8BC2122CBD44FD00DE5C31 /* OpenALManager.cpp in Sources */,
-				FF8BC2052CBB2AE000DE5C31 /* KWindow.cpp in Sources */,
-				FF8BC2062CBB2AE000DE5C31 /* KSpline.cpp in Sources */,
-				FF8BC2072CBB2AE000DE5C31 /* GLTextureHelper.mm in Sources */,
-				FF8BC2082CBB2AE000DE5C31 /* KGraphic.cpp in Sources */,
-				FF1CFF9C2CA606B2008CB8C2 /* glfm_emscripten.c in Sources */,
-				FF1CFF9D2CA606B2008CB8C2 /* glfm_apple.m in Sources */,
-				FF8BC20C2CBD011600DE5C31 /* KSound.cpp in Sources */,
-				FF76319F2CB1C39F006672CE /* main.m in Sources */,
-				FF4C06182CB1CF5300BEC9CE /* MainControler.mm in Sources */,
-				FF8BC20F2CBD343800DE5C31 /* KMusic.cpp in Sources */,
+				FFCB42692D12F4DF004EAF28 /* game.h in Sources */,
+				FFCB426A2D12F4DF004EAF28 /* SimpleTest_Prefix.pch in Sources */,
+				FFCB426B2D12F4DF004EAF28 /* stb_image.h in Sources */,
+				FFCB426C2D12F4DF004EAF28 /* stb_image_resize.h in Sources */,
+				FFCB426D2D12F4DF004EAF28 /* glfm.h in Sources */,
+				FFCB426E2D12F4DF004EAF28 /* glfm_android.c in Sources */,
+				FFCB426F2D12F4DF004EAF28 /* glfm_apple.m in Sources */,
+				FFCB42702D12F4DF004EAF28 /* glfm_emscripten.c in Sources */,
+				FFCB42712D12F4DF004EAF28 /* glfm_internal.h in Sources */,
+				FFCB42722D12F4DF004EAF28 /* main.m in Sources */,
+				FFCB42732D12F4DF004EAF28 /* MainControler.mm in Sources */,
+				FFCB42742D12F4DF004EAF28 /* MainController.h in Sources */,
+				FF8BC1D92CBB2AA200DE5C31 /* KPTK.cpp in Sources */,
+				FF8BC1DA2CBB2AA200DE5C31 /* KLogFile.cpp in Sources */,
+				FFCB41C42D12EC57004EAF28 /* OpenALManager.cpp in Sources */,
+				FF8BC1DB2CBB2AA200DE5C31 /* KGraphic.cpp in Sources */,
+				FF8BC1DE2CBB2AA200DE5C31 /* KInput.cpp in Sources */,
+				FFCB41C02D12EA5D004EAF28 /* KSound.cpp in Sources */,
+				FF8BC1DF2CBB2AA200DE5C31 /* KSpline.cpp in Sources */,
+				FF8BC1E02CBB2AA200DE5C31 /* GLTextureHelper.mm in Sources */,
+				FF8BC1E12CBB2AA200DE5C31 /* KWindow.cpp in Sources */,
+				FFCB42572D12F2FC004EAF28 /* KFont.cpp in Sources */,
+				FFCB42542D12F253004EAF28 /* game.cpp in Sources */,
+				FF8BC1E22CBB2AA200DE5C31 /* KMiscTools.mm in Sources */,
+				FF8BC1E42CBB2AA200DE5C31 /* KWeb.mm in Sources */,
+				FF8BC1E52CBB2AA200DE5C31 /* KShader.cpp in Sources */,
+				FFCB41BE2D12EA55004EAF28 /* KMusic.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,7 +642,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.1",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -659,8 +662,8 @@
 					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.portrait;
-				PRODUCT_NAME = TestPortrait;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.landscape;
+				PRODUCT_NAME = TestLandscape;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(SWIFT_MODULE_NAME)-Bridging-Header.h";
@@ -689,7 +692,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.1",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/SimpleTest_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
@@ -708,8 +710,8 @@
 					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.portrait;
-				PRODUCT_NAME = TestPortrait;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.landscape;
+				PRODUCT_NAME = TestLandscape;
 				PROVISIONING_PROFILE = "21d71665-d311-4652-ac33-21572a864dbd";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
@@ -841,7 +843,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
-				CLANG_CXX_STANDARD_LIBRARY_HARDENING = none;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = SimpleTest.entitlements;
@@ -854,7 +855,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.1",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/SimpleTest_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
@@ -873,8 +873,8 @@
 					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.portrait;
-				PRODUCT_NAME = TestPortrait;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.landscape;
+				PRODUCT_NAME = TestLandscape;
 				PROVISIONING_PROFILE = "21d71665-d311-4652-ac33-21572a864dbd";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
@@ -888,7 +888,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestPortrait" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestLandscape" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,

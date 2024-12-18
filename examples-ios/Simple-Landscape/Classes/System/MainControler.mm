@@ -1,9 +1,7 @@
 
-// https://github.com/brackeen/glfm
-
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES2/gl.h>
-#import "TestPortrait-Bridging-Header.h"
+#import "SimpleTest-Bridging-Header.h"
 #import "game.h"
 #import "MainController.h"
 #import "glfm.h"
@@ -33,7 +31,7 @@ void onSurfaceCreated(GLFMDisplay *display, int width, int height)
     // Set the viewport to match the screen size
     glViewport(0, 0, width, height);
     
-	gameInstance.init(width, height);
+    gameInstance.init(width, height);
 }
 
 // Rendering function
@@ -45,7 +43,7 @@ void onFrame(GLFMDisplay *display, double frameTime)
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-	gameInstance.draw(frameTime);
+    gameInstance.draw(frameTime);
 }
 
 // Function to handle surface destruction (cleanup)
@@ -69,7 +67,7 @@ void glfmMain(GLFMDisplay *display)
     glfmSetDisplayConfig(display, GLFMRenderingAPIOpenGLES2, GLFMColorFormatRGBA8888, GLFMDepthFormat16, GLFMStencilFormatNone, GLFMMultisampleNone);
     
     // Lock orientation if necessary, e.g., Portrait
-    glfmSetSupportedInterfaceOrientation(display, GLFMInterfaceOrientationPortrait);
+    glfmSetSupportedInterfaceOrientation(display, GLFMInterfaceOrientationLandscapeLeft);
 
     glfmSetSurfaceCreatedFunc(display, onSurfaceCreated);
     glfmSetSurfaceDestroyedFunc(display, onSurfaceDestroyed);
@@ -102,7 +100,7 @@ bool onTouch(GLFMDisplay *display, int touch, GLFMTouchPhase phase, double x, do
             printf("Touch %d started at (%.2f, %.2f)\n", touch, x, y);
             KInput::setScreenPressed(0, x, y);
             KInput::setFingerPosition(touch, x, y, true);
-			gameInstance.playSfx();
+            gameInstance.playSfx();
             break;
         case GLFMTouchPhaseMoved:
             printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);

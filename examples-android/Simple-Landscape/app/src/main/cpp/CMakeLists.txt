@@ -7,8 +7,8 @@ project("android_game_project")
 # If GLM is directly downloaded in your project (libs/glm folder)
 # Add this line to set it up as an imported target
 add_library(glm INTERFACE)
-target_include_directories(glm INTERFACE ${CMAKE_SOURCE_DIR}/../../../libs/glm)
-
+#target_include_directories(glm INTERFACE ${CMAKE_SOURCE_DIR}/../../../libs/glm)
+target_include_directories(glm INTERFACE ${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs/glm)
 
 # Use ${ANDROID_ABI} to select the correct architecture version
 #set(OpenAL_DIR "${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}")
@@ -22,29 +22,18 @@ find_library(openal-lib openal PATHS ${OpenAL_DIR} NO_CMAKE_FIND_ROOT_PATH)
 
 
 # Include directories for libmpg123 headers
-include_directories(${CMAKE_SOURCE_DIR}/../../../../../../mpg123/include)
-
+#include_directories(${CMAKE_SOURCE_DIR}/../../../../../../mpg123/include)
+include_directories(${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs/mpg123/include)
 
 
 # Include the OpenAL directory for the headers
-include_directories(${CMAKE_SOURCE_DIR}/../../../../../../OpenAL/include)
+#include_directories(${CMAKE_SOURCE_DIR}/../../../../../../OpenAL/include)
+include_directories(${CMAKE_SOURCE_DIR}/../../../../../../../ptk/ExternalSDKs/OpenAL/include)
+
 #include_directories(${CMAKE_SOURCE_DIR}/../../../libs/openal/include)
 #include_directories(${CMAKE_SOURCE_DIR}/../../../libs/openal/common)
 #include_directories(${CMAKE_SOURCE_DIR}/../../../libs/openal/core)
 #include_directories(${CMAKE_SOURCE_DIR}/../../../libs/openal)
-
-
-# Collect OpenAL source files
-#file(GLOB_RECURSE OPENAL_SOURCES
-#        ${CMAKE_SOURCE_DIR}/../../../libs/openal/*
-#)
-
-# Set OpenAL Library Path
-#set(OPENAL_LIB_DIR ${CMAKE_SOURCE_DIR}/../../../../../../OpenAL)
-
-# Include the OpenAL library path
-#link_directories(${OPENAL_LIB_DIR})
-
 
 
 

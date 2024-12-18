@@ -128,7 +128,7 @@
 		D71E48B01130A7ED00105C50 /* rebon.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rebon.caf; sourceTree = "<group>"; };
 		D71E48B11130A7ED00105C50 /* rebon2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rebon2.caf; sourceTree = "<group>"; };
 		D71E48B61130A7ED00105C50 /* menu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menu.mp3; sourceTree = "<group>"; };
-		D71E49041130AC2200105C50 /* SimpleTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D71E49041130AC2200105C50 /* TestLandscape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestLandscape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9458CCF1D415AD900135BCA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		F98E5AF91D3CC92A00FC4879 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		F98E5AFB1D3CC94100FC4879 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -253,7 +253,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D71E49041130AC2200105C50 /* SimpleTest.app */,
+				D71E49041130AC2200105C50 /* TestLandscape.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,9 +425,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* SimpleTest */ = {
+		1D6058900D05DD3D006BFB54 /* TestLandscape */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "SimpleTest" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestLandscape" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -437,9 +437,9 @@
 			);
 			dependencies = (
 			);
-			name = SimpleTest;
+			name = TestLandscape;
 			productName = GrizzlyAdventure;
-			productReference = D71E49041130AC2200105C50 /* SimpleTest.app */;
+			productReference = D71E49041130AC2200105C50 /* TestLandscape.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -476,7 +476,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* SimpleTest */,
+				1D6058900D05DD3D006BFB54 /* TestLandscape */,
 			);
 		};
 /* End PBXProject section */
@@ -585,8 +585,8 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK;
-				PRODUCT_NAME = SimpleTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.landscape;
+				PRODUCT_NAME = TestLandscape;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(SWIFT_MODULE_NAME)-Bridging-Header.h";
@@ -631,8 +631,8 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK;
-				PRODUCT_NAME = SimpleTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.landscape;
+				PRODUCT_NAME = TestLandscape;
 				PROVISIONING_PROFILE = "21d71665-d311-4652-ac33-21572a864dbd";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
@@ -792,8 +792,8 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK;
-				PRODUCT_NAME = SimpleTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.landscape;
+				PRODUCT_NAME = TestLandscape;
 				PROVISIONING_PROFILE = "21d71665-d311-4652-ac33-21572a864dbd";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
@@ -807,7 +807,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "SimpleTest" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "TestLandscape" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,

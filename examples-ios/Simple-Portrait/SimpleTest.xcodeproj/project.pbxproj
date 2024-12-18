@@ -211,6 +211,7 @@
 		FFB190AE2CD82A9A005D7AEB /* border2_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_left@2x.png"; sourceTree = "<group>"; };
 		FFB190AF2CD82A9A005D7AEB /* border2_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_middle@2x.png"; sourceTree = "<group>"; };
 		FFB190B02CD82A9A005D7AEB /* border2_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "border2_right@2x.png"; sourceTree = "<group>"; };
+		FFCB41C52D12EDBC004EAF28 /* stb_image_resize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image_resize.h; sourceTree = "<group>"; };
 		FFCBB2752CAB7406000797B4 /* box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box2.png; sourceTree = "<group>"; };
 		FFF185EB2CA57EFC008120DB /* glfm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfm.h; sourceTree = "<group>"; };
 		FFF1BFEB2CAB43840093CA43 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -422,6 +423,7 @@
 		F92942542CDCA1FF003A2720 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				FFCB41C52D12EDBC004EAF28 /* stb_image_resize.h */,
 				FFF1BFEB2CAB43840093CA43 /* stb_image.h */,
 				FF1CFF9A2CA606B2008CB8C2 /* src */,
 				FF76319E2CB1C39A006672CE /* main.m */,
@@ -657,7 +659,7 @@
 					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.portrait;
 				PRODUCT_NAME = TestPortrait;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
@@ -706,7 +708,7 @@
 					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.portrait;
 				PRODUCT_NAME = TestPortrait;
 				PROVISIONING_PROFILE = "21d71665-d311-4652-ac33-21572a864dbd";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -871,7 +873,7 @@
 					"$(SRCROOT)/../../ExternalSDKs/ft2",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jadegame.PTK.portrait;
 				PRODUCT_NAME = TestPortrait;
 				PROVISIONING_PROFILE = "21d71665-d311-4652-ac33-21572a864dbd";
 				PROVISIONING_PROFILE_SPECIFIER = "";

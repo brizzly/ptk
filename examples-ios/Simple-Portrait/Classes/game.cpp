@@ -292,12 +292,12 @@ void game::draw(float frameTime)
 	int screenWidth = KPTK::_screenW;
 	int screenHeight = KPTK::_screenH;
     
-	/*
+	
     draw_scene0(frameTime);
     //draw_scene1(frameTime);
     draw_scene2(frameTime);
     draw_scene3(frameTime);
-	*/
+	
 	draw_scene4(frameTime);
 }
 

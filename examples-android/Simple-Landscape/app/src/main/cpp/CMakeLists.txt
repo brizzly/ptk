@@ -138,7 +138,7 @@ include_directories(${CMAKE_SOURCE_DIR}/openal_include)
 
 # Create shared library
 add_library(
-        android_game_lib
+        android_landscape_game_lib
         SHARED
         ${SOURCE_FILES}
         ${OPENAL_SOURCES}
@@ -164,7 +164,7 @@ set_target_properties(mpg123-lib PROPERTIES IMPORTED_LOCATION
 
 # Link libraries to the native library
 target_link_libraries(
-        android_game_lib PRIVATE glm
+        android_landscape_game_lib PRIVATE glm
         c++_shared
         mpg123-lib
         z

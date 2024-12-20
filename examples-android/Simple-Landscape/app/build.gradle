@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.jmapp.testandroid'
+    namespace 'com.jmapp.testandroid.landscape'
     compileSdk 34
 
     packagingOptions {
@@ -16,7 +16,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.jmapp.testandroid"
+        applicationId "com.jmapp.testandroid.landscape"
         minSdk 21
         targetSdk 34
         versionCode 1

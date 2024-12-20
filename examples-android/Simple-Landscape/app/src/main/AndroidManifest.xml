@@ -2,7 +2,7 @@
 <!-- AndroidManifest.xml -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:tools="http://schemas.android.com/tools" package="com.jmapp.testandroid">
+     xmlns:tools="http://schemas.android.com/tools" package="com.jmapp.testandroid.landscape">
 
 
     <!-- Permissions nécessaires -->
@@ -15,7 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.TestAndroid"
         tools:targetApi="31">
-        <activity android:name=".MainActivity"
+        <activity android:name="com.jmapp.testandroid.landscape.MainActivity"
             android:exported="true"
             android:configChanges="orientation|screenSize">
             <intent-filter>

@@ -1,4 +1,4 @@
-package com.jmapp.testandroid;
+package com.jmapp.testandroid.landscape;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLES20;

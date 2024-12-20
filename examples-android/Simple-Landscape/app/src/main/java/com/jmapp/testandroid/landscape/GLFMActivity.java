@@ -1,7 +1,7 @@
 // GLFMActivity.java (Fixed)
 // Fixed incorrect initialization and updated View handling.
 
-package com.jmapp.testandroid;
+package com.jmapp.testandroid.landscape;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -38,7 +38,7 @@ public class GLFMActivity {
 
     static {
         // Load the native library
-        System.loadLibrary("android_game_lib");
+        System.loadLibrary("android_landscape_game_lib");
     }
 }
 

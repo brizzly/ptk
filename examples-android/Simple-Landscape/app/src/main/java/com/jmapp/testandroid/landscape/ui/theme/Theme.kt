@@ -1,4 +1,4 @@
-package com.jmapp.testandroid.ui.theme
+package com.jmapp.testandroid.landscape.ui.theme
 
 import android.app.Activity
 import android.os.Build

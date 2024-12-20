@@ -37,7 +37,7 @@ void onAppInit(GLFMDisplay *display) {
 extern "C" {
 
     JNIEXPORT void JNICALL
-    Java_com_jmapp_testandroid_MainActivity_handleTouchEvent(JNIEnv* env, jobject /* this */, jint action, jfloat x, jfloat y) {
+    Java_com_jmapp_testandroid_landscape_MainActivity_handleTouchEvent(JNIEnv* env, jobject /* this */, jint action, jfloat x, jfloat y) {
         switch (action) {
             case AMOTION_EVENT_ACTION_DOWN:
                 LOGI("Touch down at (%f, %f)", x, y);
@@ -65,7 +65,7 @@ extern "C" {
 
 
     JNIEXPORT void JNICALL
-    Java_com_jmapp_testandroid_MainActivity_nativeSetAssetManager(JNIEnv* env, jobject obj, jobject assetManager) {
+    Java_com_jmapp_testandroid_landscape_MainActivity_nativeSetAssetManager(JNIEnv* env, jobject obj, jobject assetManager) {
         AAssetManager * g_assetManager = AAssetManager_fromJava(env, assetManager);
 
         MainController::getInstance()->setAssetManager(g_assetManager);
@@ -95,13 +95,13 @@ extern "C" {
 
 
     JNIEXPORT void JNICALL
-    Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceCreated(JNIEnv *env, jobject thiz) {
+    Java_com_jmapp_testandroid_landscape_GLFMActivity_nativeOnSurfaceCreated(JNIEnv *env, jobject thiz) {
         LOGE("nativeOnSurfaceCreated called");
         //MainController::getInstance()->initialize(thiz);
     }
 
     JNIEXPORT void JNICALL
-    Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceChanged(JNIEnv *env, jobject thiz, jint width, jint height) {
+    Java_com_jmapp_testandroid_landscape_GLFMActivity_nativeOnSurfaceChanged(JNIEnv *env, jobject thiz, jint width, jint height) {
         LOGE("nativeOnSurfaceChanged called with width: %d, height: %d", width, height);
 
         MainController::getInstance()->initialize(width, height);
@@ -113,7 +113,7 @@ extern "C" {
 
     // JNI function for rendering each frame
     JNIEXPORT void JNICALL
-    Java_com_jmapp_testandroid_GLFMActivity_nativeOnDrawFrame(JNIEnv *env, jobject obj) {
+    Java_com_jmapp_testandroid_landscape_GLFMActivity_nativeOnDrawFrame(JNIEnv *env, jobject obj) {
         //LOGE("nativeOnDrawFrame called");
         MainController::getInstance()->draw();
     }

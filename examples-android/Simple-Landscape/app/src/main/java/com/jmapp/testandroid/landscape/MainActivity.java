@@ -1,4 +1,4 @@
-package com.jmapp.testandroid;
+package com.jmapp.testandroid.landscape;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ public class MainActivity extends Activity {
 
     static {
         System.loadLibrary("openal");
-        System.loadLibrary("android_game_lib");
+        System.loadLibrary("android_landscape_game_lib");
     }
 
     @Override
@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // Load native library
-        System.loadLibrary("android_game_lib");
+        System.loadLibrary("android_landscape_game_lib");
 
         // Obtenez l'AssetManager et transmettez-le au code natif
         AssetManager assetManager = getAssets();

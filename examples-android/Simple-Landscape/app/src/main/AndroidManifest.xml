@@ -16,6 +16,7 @@
         android:theme="@style/Theme.TestAndroid"
         tools:targetApi="31">
         <activity android:name="com.jmapp.testandroid.landscape.MainActivity"
+
             android:exported="true"
             android:configChanges="orientation|screenSize">
             <intent-filter>

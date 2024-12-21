@@ -44,11 +44,12 @@ void MainController::initialize(int w, int h)
     // Set the viewport to match the screen size
     glViewport(0, 0, width, height);
 
-    //KPTK::_screenOrientation;
-    //KPTK::createKWindow(0); //K_960x1440
-
     KPTK::setScreenSize(width, height);
-    KPTK::setScreenOrientation(K_960x1440);
+
+    //KPTK::_screenOrientation;
+    //KPTK::createKWindow(K_2192x1080); //K_960x1440
+    KPTK::setScreenOrientation(K_2192x1080);
+    //KPTK::setScreenOrientation(K_568x320);
 
 
     int gameW = KPTK::getGameW();

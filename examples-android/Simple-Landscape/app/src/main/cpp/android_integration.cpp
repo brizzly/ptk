@@ -79,7 +79,21 @@ extern "C" {
             return;
         }
 
-        glfmSetUserInterfaceOrientation(display, GLFMUserInterfaceOrientationLandscape);
+/*
+        glfmSetSupportedInterfaceOrientation(display,
+                                             GLFMInterfaceOrientationLandscapeLeft |
+                                             GLFMInterfaceOrientationLandscapeRight);*/
+
+        //glfmSetUserInterfaceOrientation(display, GLFMUserInterfaceOrientationLandscape);
+
+        //glfmSetSupportedInterfaceOrientation(display, GLFMInterfaceOrientationLandscape);
+        //glfmSetSupportedInterfaceOrientation(display, GLFMInterfaceOrientationLandscapeLeft | GLFMInterfaceOrientationLandscapeRight);
+
+        glfmSetSupportedInterfaceOrientation(
+                display,
+                (GLFMInterfaceOrientation)(GLFMInterfaceOrientationLandscapeLeft | GLFMInterfaceOrientationLandscapeRight)
+        );
+
 
         // Configure display preferences
         glfmSetDisplayConfig(display,

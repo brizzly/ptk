@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.content.res.AssetManager;
 import android.view.MotionEvent;
+import android.content.pm.ActivityInfo;
 
 public class MainActivity extends Activity {
 
@@ -17,6 +18,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         // Disable the notification bar for full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

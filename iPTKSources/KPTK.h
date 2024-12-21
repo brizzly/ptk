@@ -36,38 +36,29 @@
 
 enum screenOrientation
 {
-	// ANDROID
+	// Landscape
 	
-	K_320x568,
-	K_568x320,
-	
-	// IPHONE
-	
-	K_320x480,
-	K_480x320,
-    
+    K_480x320,
+    K_480x852,  // IPHONE 12Pro
     K_640x480,
+    K_568x320,
+    K_667x375,  // IPHONE6
+    K_1104x621, // IPHONE 6P,7P,8P 1242x2208 -> 621x1104
+    K_1024x768, // IPAD
+    K_1440x960,
+    K_2192x1080, // modern ANDROID
+
+    
+    // Portrait
+    
+    K_320x480,
+    K_320x568,
+    K_375x667,  // IPHONE6
     K_640x1136,
+    K_621x1104, // IPHONE 6P,7P,8P 1242x2208 -> 621x1104
+    K_768x1024, // IPAD
     K_960x1440,
 	
-	// IPHONE6
-	
-	K_375x667,
-	K_667x375,
-	
-	// IPHONE 6P,7P,8P 1242x2208 -> 621x1104
-    
-	K_621x1104,
-	K_1104x621,
-    
-    // IPHONE 12Pro
-    
-    K_480x852,
-
-	// IPAD
-	
-	K_768x1024,
-	K_1024x768
 };
 
 

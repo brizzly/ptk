@@ -107,7 +107,7 @@ bool KSound::loadSample(const std::string &filename)
     // Read the "RIFF" chunk descriptor
     char riff[4];
     file.read(riff, 4);
-    printf("%s\n", riff);
+    //printf("%s\n", riff);
     if (!strncasecmp(riff, "RIFF", 4)) {
 
         buffer = this->loadWAVFile(filename, format, freq);

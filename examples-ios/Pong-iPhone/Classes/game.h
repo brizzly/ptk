@@ -13,6 +13,11 @@
 #include "Projectile.h"
 #include <vector>
 
+#ifdef __ANDROID__
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
+#endif
+
 enum class GameState {
     RUNNING,
     GAME_OVER
@@ -20,9 +25,18 @@ enum class GameState {
 
 class game
 {
+private:
+#ifdef __ANDROID__
+    AAssetManager   * assetManager_;
+#endif
+
 public:
     game();
     ~game();
+
+#ifdef __ANDROID__
+    void                setAssetManager(AAssetManager * value);
+#endif
 
     void init(int width, int height);
     void draw(float frameTime);

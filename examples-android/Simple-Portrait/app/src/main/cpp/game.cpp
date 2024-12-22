@@ -5,6 +5,14 @@ game::game()
 {
 }
 
+#ifdef __ANDROID__
+void game::setAssetManager(AAssetManager * value)
+{
+    assetManager_ = value;
+    //SetAAssets(value);
+}
+#endif
+
 void game::init(int width, int height, AAssetManager* assetManager)
 {
 	KPTK::_screenW = width;

@@ -14,7 +14,7 @@
 #import "vector.h"
 #import "KGraphic.h"
 
-#ifdef LF_ANDROID_BUILD
+#ifdef __ANDROID__
 #include "Box2D/Box2D.h"
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>

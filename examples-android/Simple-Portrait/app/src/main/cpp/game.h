@@ -7,11 +7,21 @@
 #include "KInput.h"
 #include "KPTK.h"
 #include "KMiscTools.h"
+
+#ifdef __ANDROID__
+#include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
+#endif
+
+
 
 class game
 {
 private:
+#ifdef __ANDROID__
+    AAssetManager   * assetManager_;
+#endif
+
 	KGraphic * testGraphic;     // box 1
 	KGraphic * testGraphic2;    // box 2
 	KGraphic * testGraphic3;    // background
@@ -34,7 +44,11 @@ private:
 public:
 	game();
 	~game();
-	
+
+#ifdef __ANDROID__
+    void                setAssetManager(AAssetManager * value);
+#endif
+
 	void init(int width, int height, AAssetManager* assetManager);
 	void draw(float frameTime);
     void draw_scene0(float frameTime);

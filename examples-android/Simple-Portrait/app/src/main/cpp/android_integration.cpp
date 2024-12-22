@@ -34,6 +34,27 @@ void onAppInit(GLFMDisplay *display) {
     //MainController::getInstance()->initialize(display);
 }
 
+// Main GLFM function
+void glfmMain(GLFMDisplay *display) {
+
+    if (!display) {
+        //KLogFile::logDebug(("GLFMDisplay is null");
+        return;
+    }
+
+    // Configure display preferences
+    glfmSetDisplayConfig(display,
+                         GLFMRenderingAPIOpenGLES2,
+                         GLFMColorFormatRGBA8888,
+                         GLFMDepthFormatNone,
+                         GLFMStencilFormatNone,
+                         GLFMMultisampleNone);
+
+    // Call the app initialization function
+    onAppInit(display);
+}
+
+
 extern "C" {
 
     JNIEXPORT void JNICALL
@@ -60,9 +81,7 @@ extern "C" {
                 MainController::getInstance()->touchEvent(1, action, x, y);
                 break;
         }
-
     }
-
 
     JNIEXPORT void JNICALL
     Java_com_jmapp_testandroid_MainActivity_nativeSetAssetManager(JNIEnv* env, jobject obj, jobject assetManager) {
@@ -70,27 +89,6 @@ extern "C" {
 
         MainController::getInstance()->setAssetManager(g_assetManager);
     }
-
-    // Main GLFM function
-    void glfmMain(GLFMDisplay *display) {
-
-        if (!display) {
-            //KLogFile::logDebug(("GLFMDisplay is null");
-            return;
-        }
-
-        // Configure display preferences
-        glfmSetDisplayConfig(display,
-                             GLFMRenderingAPIOpenGLES2,
-                             GLFMColorFormatRGBA8888,
-                             GLFMDepthFormatNone,
-                             GLFMStencilFormatNone,
-                             GLFMMultisampleNone);
-
-        // Call the app initialization function
-        onAppInit(display);
-    }
-
 
     JNIEXPORT void JNICALL
     Java_com_jmapp_testandroid_GLFMActivity_nativeOnSurfaceCreated(JNIEnv *env, jobject thiz) {
@@ -106,7 +104,6 @@ extern "C" {
 
         // Update the OpenGL viewport
         //glViewport(0, 0, width, height);
-
     }
 
     // JNI function for rendering each frame
@@ -115,5 +112,4 @@ extern "C" {
         //LOGE("nativeOnDrawFrame called");
         MainController::getInstance()->draw();
     }
-
 }

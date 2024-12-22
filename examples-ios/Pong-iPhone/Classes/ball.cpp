@@ -27,9 +27,9 @@ ball::ball(KGraphic * graphic, int posx, int posy, float vx, float vy, int w, in
     
     vec2 vertice[] = {
         {0, 0},
-        {0+w, 0},
-        {0+w, 0+h},
-        {0, 0+h}
+        {(float)w, 0.0f},
+        {(float)w, (float)h},
+        {0.0f, (float)h}
     };
     
     numberOfVertices = 4;

@@ -36,7 +36,7 @@ void game::init(int width, int height, AAssetManager* assetManager)
 	
 	testGraphic3 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
 	//testGraphic3->loadPicture("960_1440.png");
-	testGraphic3->loadPicture("960_1440_Retina.png");
+	testGraphic3->loadPicture("960_1440_Retina@2x.png");
 
 	testGraphic4 = new KGraphic(gameW, gameH, screenW, screenH, assetManager);
 	testGraphic4->loadPicture("box512.png");

@@ -32,31 +32,25 @@ void MainController::initialize(int w, int h)
     height = h;
     KLogFile::logDebug("Initialize with screen: %d %d", width, height);
 
-    //int width = 960;//1080;
-    //int height = 1440;//2192;
+    KPTK::_screenW = width;
+    KPTK::_screenH = height;
+    KPTK::_screenOrientation = K_960x1440;
 
-    //int gameW = 960;//width;
-    //int gameH = 1440;//height;
 
-    int screenW = width;
-    int screenH = height;
+    //int screenW = width;
+    //int screenH = height;
 
-    // Set the viewport to match the screen size
-    glViewport(0, 0, width, height);
-
-    //KPTK::_screenOrientation;
-    //KPTK::createKWindow(0); //K_960x1440
-
-    KPTK::setScreenSize(width, height);
-    KPTK::setScreenOrientation(K_960x1440);
+    //KPTK::setScreenSize(width, height);
+    //KPTK::setScreenOrientation(K_960x1440);
 
 
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
-
-    KMiscTools::initMiscTools();
+    KLogFile::logDebug("Initialize with game: %d %d", gameW, gameH);
 
     gameInstance.init(width, height, this->assetManager);
+
+    glViewport(0, 0, width, height);    // Set the viewport to match the screen size
 }
 
 void MainController::update(double frameTime) {

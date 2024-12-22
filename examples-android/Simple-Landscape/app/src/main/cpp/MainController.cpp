@@ -2,6 +2,11 @@
 #include "MainController.h"
 #include "game.h"
 
+#define LOG_TAG "NativeCode"
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "TAG", __VA_ARGS__))
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+
+
 game gameInstance;
 
 
@@ -32,30 +37,19 @@ void MainController::initialize(int w, int h)
     height = h;
     KLogFile::logDebug("Initialize with screen: %d %d", width, height);
 
-    //int width = 960;//1080;
-    //int height = 1440;//2192;
-
-    //int gameW = 960;//width;
-    //int gameH = 1440;//height;
-
-    int screenW = width;
-    int screenH = height;
 
     // Set the viewport to match the screen size
     glViewport(0, 0, width, height);
 
-    KPTK::setScreenSize(width, height);
 
-    //KPTK::_screenOrientation;
-    //KPTK::createKWindow(K_2192x1080); //K_960x1440
-    KPTK::setScreenOrientation(K_2192x1080);
-    //KPTK::setScreenOrientation(K_568x320);
+    KPTK::setScreenSize(width, height);
+    KPTK::setScreenOrientation(K_640x480);
 
 
     int gameW = KPTK::getGameW();
     int gameH = KPTK::getGameH();
+    KLogFile::logDebug("Initialize with game: %d %d", gameW, gameH);
 
-    KMiscTools::initMiscTools();
 
     gameInstance.init(width, height, this->assetManager);
 }
@@ -79,7 +73,7 @@ void MainController::draw() {
     lastTime = currentTime;
     //float frameTime = 16.666;
 
-    gameInstance.draw(16.666 * 10000/*this->_framtime*/);
+    gameInstance.draw(16.666 * 10000 /*this->_framtime*/);
 }
 
 void MainController::touchEvent(int touch, int phase, double x, double y)
@@ -100,22 +94,30 @@ void MainController::touchEvent(int touch, int phase, double x, double y)
 
     switch (phase) {
         case 0://AMOTION_EVENT_ACTION_DOWN:
-            printf("Touch %d started at (%.2f, %.2f)\n", touch, x, y);
+            //printf("Touch %d started at (%.2f, %.2f)\n", touch, x, y);
+            LOGI("Touch game (%f, %f)", x, y);
+
             KInput::setScreenPressed(0, x, y);
             KInput::setFingerPosition(touch, x, y, true);
             gameInstance.playSfx();
             break;
         case 1://GLFMTouchPhaseMoved:
-            printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);
+            //printf("Touch %d moved to (%.2f, %.2f)\n", touch, x, y);
+            LOGI("Touch moved game (%f, %f)", x, y);
+
             KInput::setScreenMoving(x, y);
             break;
         case 2://GLFMTouchPhaseEnded:
-            printf("Touch %d ended at (%.2f, %.2f)\n", touch, x, y);
+            //printf("Touch %d ended at (%.2f, %.2f)\n", touch, x, y);
+            LOGI("Touch ended game (%f, %f)", x, y);
+
             KInput::setScreenReleased();
             KInput::setFingerPosition(touch, x, y, false);
             break;
         case 3://GLFMTouchPhaseCancelled:
-            printf("Touch %d cancelled at (%.2f, %.2f)\n", touch, x, y);
+            //printf("Touch %d cancelled at (%.2f, %.2f)\n", touch, x, y);
+            LOGI("Touch cancelled game (%f, %f)", x, y);
+
             break;
         default:
             break;

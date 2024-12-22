@@ -2,7 +2,6 @@
 #include "MainController.h"
 #include <jni.h>
 #include <cmath>
-//#include <android/asset_manager.h>
 #include <android/native_window_jni.h> // Required for native window integration
 #include <android/asset_manager_jni.h> // Include for AAssetManager_fromJava
 #include <android/log.h>
@@ -33,6 +32,59 @@ void onAppInit(GLFMDisplay *display) {
     // Initialize the main controller
     //MainController::getInstance()->initialize(display);
 }
+
+
+// Main GLFM function
+void glfmMain(GLFMDisplay *display) {
+
+    if (!display) {
+        //KLogFile::logDebug(("GLFMDisplay is null");
+        return;
+    }
+
+    glfmSetUserInterfaceOrientation(display, GLFMUserInterfaceOrientationLandscape);
+
+/*
+    glfmSetSupportedInterfaceOrientation(
+            display,
+            (GLFMInterfaceOrientation)(GLFMInterfaceOrientationLandscapeLeft | GLFMInterfaceOrientationLandscapeRight)
+    );
+*/
+
+    // Configure display preferences
+    glfmSetDisplayConfig(display,
+                         GLFMRenderingAPIOpenGLES2,
+                         GLFMColorFormatRGBA8888,
+                         GLFMDepthFormatNone,
+                         GLFMStencilFormatNone,
+                         GLFMMultisampleNone);
+
+    // Call the app initialization function
+    onAppInit(display);
+}
+
+// Fonction pour obtenir le chemin de stockage interne
+std::string getInternalStoragePath(JNIEnv *env, jobject activity)
+{
+    // Obtenez la classe de l'activité
+    jclass activityClass = env->GetObjectClass(activity);
+
+    // Obtenez l'ID de la méthode Java getInternalStoragePath() qui retourne un String
+    jmethodID getInternalStoragePathMethod = env->GetMethodID(activityClass, "getInternalStoragePath", "()Ljava/lang/String;");
+
+    // Appelez la méthode sur l'objet activity pour obtenir le chemin
+    jstring pathString = (jstring)env->CallObjectMethod(activity, getInternalStoragePathMethod);
+
+    // Convertir jstring en std::string
+    const char *pathChars = env->GetStringUTFChars(pathString, nullptr);
+    std::string path(pathChars);
+
+    // Libérez la mémoire JNI
+    env->ReleaseStringUTFChars(pathString, pathChars);
+
+    return path;
+}
+
 
 extern "C" {
 
@@ -71,41 +123,6 @@ extern "C" {
         MainController::getInstance()->setAssetManager(g_assetManager);
     }
 
-    // Main GLFM function
-    void glfmMain(GLFMDisplay *display) {
-
-        if (!display) {
-            //KLogFile::logDebug(("GLFMDisplay is null");
-            return;
-        }
-
-/*
-        glfmSetSupportedInterfaceOrientation(display,
-                                             GLFMInterfaceOrientationLandscapeLeft |
-                                             GLFMInterfaceOrientationLandscapeRight);*/
-
-        //glfmSetUserInterfaceOrientation(display, GLFMUserInterfaceOrientationLandscape);
-
-        //glfmSetSupportedInterfaceOrientation(display, GLFMInterfaceOrientationLandscape);
-        //glfmSetSupportedInterfaceOrientation(display, GLFMInterfaceOrientationLandscapeLeft | GLFMInterfaceOrientationLandscapeRight);
-
-        glfmSetSupportedInterfaceOrientation(
-                display,
-                (GLFMInterfaceOrientation)(GLFMInterfaceOrientationLandscapeLeft | GLFMInterfaceOrientationLandscapeRight)
-        );
-
-
-        // Configure display preferences
-        glfmSetDisplayConfig(display,
-                             GLFMRenderingAPIOpenGLES2,
-                             GLFMColorFormatRGBA8888,
-                             GLFMDepthFormatNone,
-                             GLFMStencilFormatNone,
-                             GLFMMultisampleNone);
-
-        // Call the app initialization function
-        onAppInit(display);
-    }
 
 
     JNIEXPORT void JNICALL

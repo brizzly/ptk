@@ -7,9 +7,9 @@ game::game()
 
 void game::init(int width, int height, AAssetManager* assetManager)
 {
-	KPTK::_screenW = width;
-	KPTK::_screenH = height;
-	KPTK::_screenOrientation = K_320x568;
+	//KPTK::_screenW = width;
+	//KPTK::_screenH = height;
+	//KPTK::_screenOrientation = K_320x568;
 	//KPTK::_screenOrientation = K_960x1440;
 		
 	int gameW = KPTK::getGameW();

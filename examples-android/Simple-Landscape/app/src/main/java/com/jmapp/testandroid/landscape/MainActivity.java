@@ -2,6 +2,7 @@ package com.jmapp.testandroid.landscape;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.WindowManager;
 import android.content.res.AssetManager;
 import android.view.MotionEvent;
@@ -14,15 +15,22 @@ public class MainActivity extends Activity {
         System.loadLibrary("android_landscape_game_lib");
     }
 
+    private PowerManager.WakeLock wakeLock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         // Disable the notification bar for full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // Acquire a wake lock to prevent screen dimming
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "MyApp::MyWakeLock");
+        wakeLock.acquire();
 
         // Load native library
         System.loadLibrary("android_landscape_game_lib");
@@ -31,11 +39,26 @@ public class MainActivity extends Activity {
         AssetManager assetManager = getAssets();
         nativeSetAssetManager(assetManager);
 
+
         // Initialize GLFM
         GLFMActivity glfm = new GLFMActivity(this);
 
         // Set the content view
         setContentView(glfm.getView());
+    }
+
+    @Override
+    protected void onPause()
+    {
+/*
+        if (adView != null) {
+            adView.pause();
+        }
+*/
+        super.onPause();
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+        }
     }
 
     @Override
@@ -49,6 +72,24 @@ public class MainActivity extends Activity {
 
         return super.onTouchEvent(event);
     }
+
+    @Override
+    protected void onResume() {
+        /*if (adView != null) {
+            adView.resume();
+        }*/
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        /*if (adView != null) {
+            adView.destroy();
+        }*/
+        super.onDestroy();
+    }
+
+
 
     // Native methods declarations
     private native void nativeSetAssetManager(AssetManager assetManager);

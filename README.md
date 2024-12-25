@@ -109,6 +109,8 @@ if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 - METAL-ANGEL https://apps.apple.com/app/metal-angel-best-shootem-up/id287261924
 
 ## Android
+- GRIZZLY https://play.google.com/store/apps/details?id=com.jmapp.grizzlyandroid
+- TAPTURTLE https://play.google.com/store/apps/details?id=com.jmapp.tapturtleandroid
 - LIGHTFIELDS https://play.google.com/store/apps/details?id=com.jadegame.gl2jni
 - ULTRANIUM https://play.google.com/store/apps/details?id=com.jmapp.ultranium
 

@@ -1,0 +1,47 @@
+Create a new xcode project
+------------------------------
+
+File / New / Project / IOS / Application / App / Next
+
+Interface : Storyboard
+
+Language : Objectice-C
+
+Setup your project name, bundle, Save
+
+
+
+Go into your project directory , open project name subdirectory 
+
+Delete "main.m"
+Unzip "Classes-iOS.zip" into it, you should have /Classes directory
+Open /Classes/system/MainController.mm
+Rename "#import TestPortrait-Bridging-Header.h" to "#import "**YouProjectName**-Bridging-Header.h"
+Rename "SimpleTest_Prefix.pch" to "**YouProjectName**_Prefix.pch"
+Copy "TestPortrait-Bridging-Header.h" and rename to **YouProjectName**-Bridging-Header.h
+
+
+Clone ptk https://github.com/brizzly/ptk
+
+Drag iPTKSources into your project as Reference in the top root hierarchy
+Drag ExternalSDKs into your project as Reference in the top root hierarchy
+
+
+
+
+Go to Project Settings / Target / Build Settings
+
+Go to : "Search Paths / Header Search Paths" and add :
+$(SRCROOT)/../../fglm/
+$(SRCROOT)/../../ExternalSDKs/ft2
+$(SRCROOT)/../../ExternalSDKs/
+
+Go to : "Library Search Paths" and add : 
+$(PROJECT_DIR)
+$(SRCROOT)/../../ExternalSDKs/ft2
+
+Replace the relative paths to where your ptk repository is cloned
+Hit "All" instead of "Basic" if you dont see Paths
+
+
+

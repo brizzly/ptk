@@ -39,6 +39,8 @@ public:
 #endif
     void playMusic(/*char *filename*/);
     void stopMusic();
+    void pauseMusic();
+    void resumeMusic();
     void setLooping(bool loop);
     void setVolume(float volume);
 

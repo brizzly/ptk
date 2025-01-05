@@ -102,12 +102,16 @@ if(KInput::isScreenPressed(&hitX, &hitY) == true) {
 # Games made with PTK
 
 ## iPhone
+- LIGHTFIELDS https://apps.apple.com/app/id1658981526
 - ULTRANIUM https://apps.apple.com/app/space-breakout-ultranium/id6736717749
 - GRIZZLY https://apps.apple.com/app/grizzly-adventures-crazy-bear-platformer/id357410945
 - BARNEY https://apps.apple.com/app/barney-adventures/id502135523
 - METAL-ANGEL https://apps.apple.com/app/metal-angel-best-shootem-up/id287261924
 
 ## Android
+- GRIZZLY https://play.google.com/store/apps/details?id=com.jmapp.grizzlyandroid
+- TAPTURTLE https://play.google.com/store/apps/details?id=com.jmapp.tapturtleandroid
+- LIGHTFIELDS https://play.google.com/store/apps/details?id=com.jadegame.gl2jni
 - ULTRANIUM https://play.google.com/store/apps/details?id=com.jmapp.ultranium
 
 ## macOS

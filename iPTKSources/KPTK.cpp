@@ -1,6 +1,6 @@
 // Released under MIT License
 /*
- Copyright (c) 2010 by Julien Meyer. Web: http://www.jadegame.com
+ Copyright (c) 2010 by Julien Meyer. Web: http://www.jmapp.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -92,6 +92,13 @@ int KPTK::getGameW()
     else if ( _screenOrientation == K_480x852 ) {
         return 480;
     }
+    else if ( _screenOrientation == K_1440x960 ) {
+        return 1440;
+    }
+    else if ( _screenOrientation == K_2192x1080 ) {
+        return 2192;
+    }
+    
 	return 0;
 }
 
@@ -133,6 +140,13 @@ int KPTK::getGameH()
     else if ( _screenOrientation == K_480x852 ) {
         return 852;
     }
+    else if ( _screenOrientation == K_1440x960 ) {
+        return 960;
+    }
+    else if ( _screenOrientation == K_2192x1080 ) {
+        return 1080;
+    }
+    
 	return 0;
 }
 
@@ -145,7 +159,7 @@ KWindow * KPTK::createKWindow(screenOrientation orientation)
 	KPTK::_screenOrientation = orientation; // 4 avril 2016	
 	
 	KWindow * ptk_Window = new KWindow();
-	ptk_Window->createGameWindow(KPTK::getGameW(), KPTK::getGameH(), 32, false, (char*)"XEON");
+	ptk_Window->createGameWindow(KPTK::getGameW(), KPTK::getGameH(), 32, false, (char*)"PTK");
 	ptk_Window->setClearColor(0,0,0,0);
 	return ptk_Window;
 }

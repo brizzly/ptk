@@ -71,64 +71,69 @@ void KFont::init(const char* fontPath, float gameWidth, float gameHeight)
 	}
 #endif
 
-	FT_Set_Pixel_Sizes(face, 0, _fontSize);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
+    
+    // Sélection du mode Unicode
+    if (FT_Select_Charmap(face, FT_ENCODING_UNICODE)) {
+        std::cerr << "ERROR::FREETYPE: Failed to select Unicode charmap" << std::endl;
+        return;
+    }
+    
+    /*
+    if (FT_Select_Charmap(face, FT_ENCODING_ADOBE_LATIN_1)) {
+        std::cerr << "ERROR::FREETYPE: Failed to select Latin-1 charmap" << std::endl;
+        return;
+    }*/
 
-	for (unsigned char c = 0; c < 128; c++) {
-		if (FT_Load_Char(face, c, FT_LOAD_RENDER) != 0) {
-			std::cerr << "ERROR::FREETYPE: Failed to load Glyph for character '" << c << "'" << std::endl;
-			continue;
-		}
+    FT_Set_Pixel_Sizes(face, 0, _fontSize);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
 
-		// Generate texture only if bitmap data is valid
-		GLuint texture = 0;
-		if (face->glyph->bitmap.buffer != nullptr &&
-			face->glyph->bitmap.width > 0 &&
-			face->glyph->bitmap.rows > 0) {
+    // Charger les caractères de 32 à 255 (Latin-1 étendu)
+    for (unsigned int c = 32; c < 256; c++) {
+        if (FT_Load_Char(face, c, FT_LOAD_RENDER) != 0) {
+            std::cerr << "ERROR::FREETYPE: Failed to load Glyph for character '" << (char)c << "' (code: " << c << ")" << std::endl;
+            continue;
+        }
 
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
+        GLuint texture = 0;
+        if (face->glyph->bitmap.buffer != nullptr &&
+            face->glyph->bitmap.width > 0 &&
+            face->glyph->bitmap.rows > 0) {
 
-			glTexImage2D(
-				GL_TEXTURE_2D,
-				0,
-				GL_ALPHA,
-				face->glyph->bitmap.width,
-				face->glyph->bitmap.rows,
-				0,
-				GL_ALPHA,
-				GL_UNSIGNED_BYTE,
-				face->glyph->bitmap.buffer
-			);
+            glGenTextures(1, &texture);
+            glBindTexture(GL_TEXTURE_2D, texture);
 
-			// Texture parameters
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		}
-		
-//		int bbox_ymax = FT_MulFix(face->bbox.yMax, face->size->metrics.y_scale) >> 6;
-//		int bbox_ymin = FT_MulFix(face->bbox.yMin, face->size->metrics.y_scale) >> 6;
-//		int height = bbox_ymax - bbox_ymin;
+            glTexImage2D(
+                GL_TEXTURE_2D,
+                0,
+                GL_ALPHA,
+                face->glyph->bitmap.width,
+                face->glyph->bitmap.rows,
+                0,
+                GL_ALPHA,
+                GL_UNSIGNED_BYTE,
+                face->glyph->bitmap.buffer
+            );
 
-		// Calculate the glyph's bitmap height (from the rasterized data)
-		int bitmap_height = face->glyph->bitmap.rows;
+            // Paramètres texture
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        }
 
-		
-		// Store character metrics regardless of bitmap data
-		Character character = {
-			texture,
-			face->glyph->bitmap.width,
-			face->glyph->bitmap.rows,
-			face->glyph->bitmap_left,
-			face->glyph->bitmap_top,
-			static_cast<unsigned int>(face->glyph->advance.x),
-			static_cast<unsigned int>(bitmap_height)
-		};
+        int bitmap_height = face->glyph->bitmap.rows;
+        Character character = {
+            texture,
+            face->glyph->bitmap.width,
+            face->glyph->bitmap.rows,
+            face->glyph->bitmap_left,
+            face->glyph->bitmap_top,
+            static_cast<unsigned int>(face->glyph->advance.x),
+            static_cast<unsigned int>(bitmap_height)
+        };
 
-		characters.insert(std::pair<char, Character>(c, character));
-	}
+        characters.insert(std::pair<unsigned int, Character>(c, character));
+    }
 
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
@@ -162,158 +167,158 @@ void KFont::SetTextColor(float r, float g, float b)
     text_B = b;
 }
 
+void KFont::RenderTextCentered(const wchar_t* text, float posy, float offset_x, float scale)
+{
+    float text_width=0, text_height=0;
+    measure_text(text, &text_width, &text_height, scale);
+    float posx = (_gameW - text_width) / 2;
+    if(offset_x != 0) {
+        posx += offset_x;
+    }
+    RenderText(text, posx, posy, scale);
+}
+
 void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
 {
-	if (_fonteShaderProgram == 0) {
-		printf("Error: Shader program is invalid.\n");
-		return;
-	}
-	
-	// debug
-	//int x_copy = x;
-    
+    if (_fonteShaderProgram == 0) {
+        printf("Error: Shader program is invalid.\n");
+        return;
+    }
+
+    // Ajustement vertical
     y = _gameH - y - scale;
-    
+
     float r = _gameW / _gameH;
-	float scaleCopy = scale;
+    float scaleCopy = scale;
     scale = scale * r * 2.0f / KFONT_SIZE;
-    
 
-	setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
-	
+    setupOrthoProjection(0.0f, _gameW, 0.0f, _gameH);
 
-	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-	std::string utf8Text = converter.to_bytes(text);
+    glUseProgram(_fonteShaderProgram);
 
-	glUseProgram(_fonteShaderProgram);
-
-	// Set text color
-	GLint textColorLoc = glGetUniformLocation(_fonteShaderProgram, "textColor");
-	if (textColorLoc != -1) {
+    // Couleur du texte
+    GLint textColorLoc = glGetUniformLocation(_fonteShaderProgram, "textColor");
+    if (textColorLoc != -1) {
         glUniform3f(textColorLoc, text_R, text_G, text_B);
-	}
-    
-    // Set background color
+    }
+
+    // Couleur de fond
     GLint backgroundColorLoc = glGetUniformLocation(_fonteShaderProgram, "backgroundColor");
     if (backgroundColorLoc != -1) {
         glUniform4f(backgroundColorLoc, back_R, back_G, back_B, back_A);
     }
-    
-	GLint textUniform = glGetUniformLocation(_fonteShaderProgram, "text");
-	if (textUniform != -1) {
-		glUniform1i(textUniform, 0);  // Set the sampler to use texture unit 0
-	}
 
-	GLint matrixLoc = glGetUniformLocation(_fonteShaderProgram, "u_matrix");
-	if (matrixLoc != -1) {
-		glUniformMatrix4fv(matrixLoc, 1, GL_FALSE, orthoMatrix);
-	}
+    GLint textUniform = glGetUniformLocation(_fonteShaderProgram, "text");
+    if (textUniform != -1) {
+        glUniform1i(textUniform, 0);  // utilise l’unité de texture 0
+    }
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GLint matrixLoc = glGetUniformLocation(_fonteShaderProgram, "u_matrix");
+    if (matrixLoc != -1) {
+        glUniformMatrix4fv(matrixLoc, 1, GL_FALSE, orthoMatrix);
+    }
 
-	float currentTextureID = 0;  // Track currently bound texture
-	bool needReturnLine = false;
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	std::istringstream stream(utf8Text);
-	std::string word;
-	float x_copy = x; // Store initial x position for new lines
+    float currentTextureID = 0;
+    bool needReturnLine = false;
 
-	while (stream >> word) {
-		// Iterate over each character in the word
-		float wordWidth = 0.0f;
+    // Convertir le texte en wstring
+    std::wstring textStr(text);
+    std::wistringstream stream(textStr);
+    std::wstring word;
+    float x_copy = x; // position initiale pour retour à la ligne
 
-		// Calculate word width
-		for (char c : word) {
-			Character ch = characters[c];
-			wordWidth += (ch.advance >> 6) * scale;
-		}
+    while (stream >> word) {
+        float wordWidth = 0.0f;
 
-		// Check if adding this word exceeds the max width
-		if (_maxCharsBeforeNewLine > 0 && x + wordWidth - x_copy > _maxCharsBeforeNewLine) {
-			
-			needReturnLine = true;
-		}
-		if(needReturnLine == true)
-		{
-			for (char c : word) {
-				Character ch = characters[c];
-				if(ch.advance2 > 0)
-				{
-					x = x_copy;
-					y -= (ch.advance2) * scale;
-					y -= (ch.advance2) * 0.5f * scale;
-					//y -= scaleCopy * scale * 2;
-					needReturnLine = false;
-					break;
-				}
-			}
-		}
+        // Calcul de la largeur du mot
+        for (wchar_t wc : word) {
+            unsigned int c = (unsigned int)wc;
+            Character ch = characters[c];
+            wordWidth += (ch.advance >> 6) * scale;
+        }
 
-		// Now render the word character by character
-		for (char c : word) {
-			Character ch = characters[c];
+        // Vérifie si le mot dépasse la largeur max
+        if (_maxCharsBeforeNewLine > 0 && x + wordWidth - x_copy > _maxCharsBeforeNewLine) {
+            needReturnLine = true;
+        }
+        if (needReturnLine == true) {
+            for (wchar_t wc : word) {
+                unsigned int c = (unsigned int)wc;
+                Character ch = characters[c];
+                if (ch.advance2 > 0) {
+                    x = x_copy;
+                    y -= (ch.advance2) * scale;
+                    y -= (ch.advance2) * 0.5f * scale;
+                    needReturnLine = false;
+                    break;
+                }
+            }
+        }
 
-			float xpos = x + ch.bearingX * scale;
-			float ypos = y - (ch.sizeY - ch.bearingY) * scale;
-			float w = ch.sizeX * scale;
-			float h = ch.sizeY * scale;
+        // Rendu du mot caractère par caractère
+        for (wchar_t wc : word) {
+            unsigned int c = (unsigned int)wc;
+            Character ch = characters[c];
 
-			GLfloat vertices[6][4] = {
-				{ xpos,     ypos + h,   0.0f, 0.0f },
-				{ xpos,     ypos,       0.0f, 1.0f },
-				{ xpos + w, ypos,       1.0f, 1.0f },
+            float xpos = x + ch.bearingX * scale;
+            float ypos = y - (ch.sizeY - ch.bearingY) * scale;
+            float w = ch.sizeX * scale;
+            float h = ch.sizeY * scale;
 
-				{ xpos,     ypos + h,   0.0f, 0.0f },
-				{ xpos + w, ypos,       1.0f, 1.0f },
-				{ xpos + w, ypos + h,   1.0f, 0.0f }
-			};
+            GLfloat vertices[6][4] = {
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos,     ypos,       0.0f, 1.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
 
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos + w, ypos + h,   1.0f, 0.0f }
+            };
 
-			if (ch.textureID != 0) {
-				glActiveTexture(GL_TEXTURE0);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-				// Update texture only if different
-				if (ch.textureID != currentTextureID) {
-					glBindTexture(GL_TEXTURE_2D, ch.textureID);
-					currentTextureID = ch.textureID;
-				}
+            if (ch.textureID != 0) {
+                glActiveTexture(GL_TEXTURE0);
 
-				glBindBuffer(GL_ARRAY_BUFFER, VBO);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+                if (ch.textureID != currentTextureID) {
+                    glBindTexture(GL_TEXTURE_2D, ch.textureID);
+                    currentTextureID = ch.textureID;
+                }
 
-				// Position attribute (first two floats: x, y)
-				GLint posAttrib = glGetAttribLocation(_fonteShaderProgram, "position");
-				if (posAttrib != -1) {
-					glEnableVertexAttribArray(posAttrib);
-					glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-				}
+                glBindBuffer(GL_ARRAY_BUFFER, VBO);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
-				// Texture coordinates attribute (last two floats: u, v)
-				GLint texAttrib = glGetAttribLocation(_fonteShaderProgram, "texCoords");
-				if (texAttrib != -1) {
-					glEnableVertexAttribArray(texAttrib);
-					glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-				}
+                GLint posAttrib = glGetAttribLocation(_fonteShaderProgram, "position");
+                if (posAttrib != -1) {
+                    glEnableVertexAttribArray(posAttrib);
+                    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+                }
 
-				glDrawArrays(GL_TRIANGLES, 0, 6);
-			}
+                GLint texAttrib = glGetAttribLocation(_fonteShaderProgram, "texCoords");
+                if (texAttrib != -1) {
+                    glEnableVertexAttribArray(texAttrib);
+                    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+                }
 
-			x += (ch.advance >> 6) * scale;
-		}
+                glDrawArrays(GL_TRIANGLES, 0, 6);
+            }
 
-		// Add space between words
-		Character spaceChar = characters[' '];
-		x += (spaceChar.advance >> 6) * scale;
-	}
+            x += (ch.advance >> 6) * scale;
+        }
 
+        // Ajoute un espace entre les mots
+        Character spaceChar = characters[(unsigned int)' '];
+        x += (spaceChar.advance >> 6) * scale;
+    }
 
-//	glDisableVertexAttribArray(glGetAttribLocation(_fonteShaderProgram, "position"));
-//	glDisableVertexAttribArray(glGetAttribLocation(_fonteShaderProgram, "texCoords"));
-	glBindTexture(GL_TEXTURE_2D, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+
 
 void KFont::RenderTextCenteredButton(const wchar_t* text, float posx, float posy, float btn_width, float scale)
 {
@@ -329,18 +334,7 @@ void KFont::RenderTextCenteredButton(const wchar_t* text, float posx, float posy
 	RenderText(text, posx, posy, scale);
 }
 
-void KFont::RenderTextCentered(const wchar_t* text, float posy, float offset_x, float scale)
-{
-    float text_width=0, text_height=0;
-    measure_text(text, &text_width, &text_height, scale);
-    //printf("text w/h ; %f %f\n", text_width, text_height);
-    float posx = (_gameW - text_width) / 2;
-    //posx /= _scale;
-    if(offset_x != 0) {
-        posx += offset_x;
-    }
-    RenderText(text, posx, posy, scale);
-}
+
 
 void KFont::measure_text(const wchar_t* text, float* width, float* height, float scale)
 {

@@ -601,6 +601,25 @@ bool KGraphic::loadPicture(const char *filename)
         }
     }
 
+    // Redimensionnement si l'image est pas @2x mais que l'appareil supporte le retina
+    if (deviceSupportsRetina && filenameStr.find("@2x") == std::string::npos) {
+        int newWidth = std::round(width * 2.0);
+        int newHeight = std::round(height * 2.0);
+        unsigned char* scaledData = new unsigned char[newWidth * newHeight * 4]; // RGBA
+
+        if (stbir_resize_uint8(rawData, width, height, 0, scaledData, newWidth, newHeight, 0, 4)) {
+            stbi_image_free(rawData);
+            rawData = scaledData;
+            width = newWidth;
+            height = newHeight;
+        } else {
+            printf("Failed to resize image.\n");
+            stbi_image_free(rawData);
+            delete[] scaledData;
+            return false;
+        }
+    }
+
     data = rawData;
     isBGR = 0;
     // Ne pas forcer retina si l'appareil ne le supporte pas

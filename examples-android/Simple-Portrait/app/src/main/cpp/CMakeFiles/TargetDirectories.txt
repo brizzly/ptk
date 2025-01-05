@@ -1,0 +1,3 @@
+/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles/android_game_lib.dir
+/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles/edit_cache.dir
+/Volumes/MacMiniSSD/GIT/ptk/examples/TestAndroid/app/src/main/cpp/CMakeFiles/rebuild_cache.dir

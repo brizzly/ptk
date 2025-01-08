@@ -304,3 +304,8 @@ char * KMiscTools::concatePath(char * path1, char * path2)
     appendPath(resultPath, path2);
     return resultPath;
 }
+
+bool KMiscTools::iPad()
+{
+    return false;
+}

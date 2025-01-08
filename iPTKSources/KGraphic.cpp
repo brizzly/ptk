@@ -653,6 +653,7 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
+
     // Dimensions réelles de la texture
     _textureSizeW = width;
     _textureSizeH = height;
@@ -696,7 +697,13 @@ bool KGraphic::loadPicture(const char *filename)
     return true;
 }
 
-
+void KGraphic::hackForLightfields()
+{
+#ifdef __ANDROID__
+    _textureSizeW /= 2;
+    _textureSizeH /= 2;
+#endif
+}
 
 float KGraphic::getTextureWidth() {
     return static_cast<float>(_imageWidth);

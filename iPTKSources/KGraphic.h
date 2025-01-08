@@ -48,6 +48,7 @@ public:
     float getTextureSizeW();
     float getTextureSizeH();
     bool isRetina();
+    void hackForLightfields(); // clean this.
 
     void draw(int x, int y, float angle, float zoom, float blend);
     void drawEx(int x1, int y1, int x2, int y2, int destX, int destY, float angle = 0.0, float zoom = 1.0, float blend = 1.0);

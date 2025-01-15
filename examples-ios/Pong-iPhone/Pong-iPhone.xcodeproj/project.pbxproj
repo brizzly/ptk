@@ -546,7 +546,6 @@
 				F9458CCF1D415AD900135BCA /* Media.xcassets */,
 				FF3CCFBB2CEE4B020036DBFF /* ExternalSDKs */,
 				F92942262CD59700003A2720 /* fonte */,
-				FF1390402CE525BA004DFCE8 /* HelperSources */,
 				FF8BC1FE2CBB2AE000DE5C31 /* iPTKSources */,
 				D71E488B1130A7ED00105C50 /* assets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -702,7 +701,7 @@
 				FF13903F2CE525BA004DFCE8 /* Vector.cpp */,
 			);
 			name = HelperSources;
-			path = ../../HelperSources;
+			path = ../../iPTKSources/HelperSources;
 			sourceTree = SOURCE_ROOT;
 		};
 		FF1CFF9A2CA606B2008CB8C2 /* src */ = {
@@ -1009,6 +1008,7 @@
 		FF8BC1FE2CBB2AE000DE5C31 /* iPTKSources */ = {
 			isa = PBXGroup;
 			children = (
+				FF1390402CE525BA004DFCE8 /* HelperSources */,
 				FF8BC1E62CBB2AE000DE5C31 /* GLTextureHelper.h */,
 				FF8BC1E72CBB2AE000DE5C31 /* GLTextureHelper.mm */,
 				F92942192CD5937C003A2720 /* KFont.h */,

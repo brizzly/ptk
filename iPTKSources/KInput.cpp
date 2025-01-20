@@ -251,12 +251,14 @@ float KInput::getPinch() {
 void KInput::setPinch(float r) {
 	_pinch = r;
 	_pinch_end = false;
+    //printf("setPinch %f\n",r);
 }
 bool KInput::getPinchBegin() {
 	return _pinch_begin;
 }
 void KInput::setPinchBegin(bool value) {
 	_pinch_begin = value;
+    //printf("setPinchBegin %d\n", value ? 1 : 0);
 }
 
 bool KInput::getPinchEnd() {
@@ -264,8 +266,11 @@ bool KInput::getPinchEnd() {
 }
 void KInput::setPinchEnd(bool value) {
 	_pinch_end = value;
+    //printf("setPinchEnd %d\n", value ? 1 : 0);
+    
 	if(_pinch_end == true) {
 		_pinch_begin = false;
+        _pinch = 0;
 	}
 }
 

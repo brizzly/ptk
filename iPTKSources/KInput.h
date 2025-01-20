@@ -194,6 +194,7 @@ public:
 	static void		setPinchBegin(bool value);
 	static bool		getPinchEnd();
 	static void		setPinchEnd(bool value);
+    
 	static float	getForce();
 	static void		setForce(float value);
 	static bool		getForceAvailable();

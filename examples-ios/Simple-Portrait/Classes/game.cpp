@@ -45,6 +45,8 @@ void game::init(int width, int height)
 	shapeGraphic = new KGraphic(gameW, gameH, screenW, screenH);
     shapeGraphic2 = new KGraphic(gameW, gameH, screenW, screenH);
     shapeGraphic3 = new KGraphic(gameW, gameH, screenW, screenH);
+    
+    solidGraphic = new KGraphic(gameW, gameH, screenW, screenH);
 	
 	buttonLeft = new KGraphic(gameW, gameH, screenW, screenH);
 	buttonLeft->loadPicture("border2_left.png");
@@ -283,6 +285,11 @@ void game::draw_scene4(float frameTime)
 	fonte->RenderText(txt, 0, 0, 24 + z*20);
 }
 
+void game::draw_scene5(float frameTime)
+{
+    solidGraphic->drawSolidRectangle(10, 10, 200, 200, 1.0f, 0.0f, 0.0f, 1.0f);
+}
+
 void game::draw(float frameTime)
 {
 	static float r = 0.0;
@@ -301,13 +308,14 @@ void game::draw(float frameTime)
 	int screenWidth = KPTK::_screenW;
 	int screenHeight = KPTK::_screenH;
     
-	
+	/*
     draw_scene0(frameTime);
     //draw_scene1(frameTime);
     draw_scene2(frameTime);
     draw_scene3(frameTime);
-	
 	draw_scene4(frameTime);
+    */
+    draw_scene5(frameTime);
 }
 
 void game::playSfx()

@@ -56,6 +56,7 @@ public:
     void setLineWidth(short lineWidth);
     void drawLine(float x1, float y1, float x2, float y2, float r, float g, float b, float a, float linewidth=1.0);
     void drawShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a);
+    void drawSolidRectangle(float x, float y, float width, float height, float r, float g, float b, float a);
     
 public:
 
@@ -84,10 +85,11 @@ private:
     GLuint _shaderProgram;
     GLuint _lineShaderProgram;
     GLuint _shapeShaderProgram;
+    GLuint _solidShaderProgram;
 	bool _drawBoundings;
     
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
-    GLuint vertexBuffer_Line, vertexBuffer, indexBuffer, textureSamplerLoc, opacityLoc;
+    GLuint vertexBuffer_Solid, vertexBuffer_Line, vertexBuffer, indexBuffer, indexBuffer_Solid, textureSamplerLoc, opacityLoc;
     
     GLfloat projectionMatrix[16];
     GLuint blendColorLocation;

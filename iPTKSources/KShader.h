@@ -20,6 +20,8 @@ public:
 	GLuint createShader();
 	GLuint createLineShader();
 	GLuint createFonteShader();
+    GLuint createSolidColorShader();
+        
 
     
 private:

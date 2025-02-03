@@ -17,6 +17,9 @@ KGraphic::~KGraphic()
     
     glDeleteBuffers(1, &vertexBuffer_Line);
     vertexBuffer_Line = 0;
+
+    glDeleteBuffers(1, &vertexBuffer_Solid);
+    vertexBuffer_Solid = 0;
     
     glDeleteBuffers(1, &indexBuffer);
     indexBuffer = 0;
@@ -136,6 +139,12 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     // Shapes
     
     _shapeShaderProgram = shader->createLineShader();
+    
+    
+    // Solid rects
+    
+    glGenBuffers(1, &vertexBuffer_Solid);
+    _solidShaderProgram = shader->createSolidColorShader();
 }
 
 void KGraphic::setDrawBounds(bool value)
@@ -836,3 +845,90 @@ void KGraphic::drawShape(int numvertices, vec2* vertice, int destX, int destY, f
 
     printGLError("drawShape");
 }
+
+void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
+                                  float r, float g, float b, float a)
+{
+    if (_solidShaderProgram == 0) {
+        printf("Error: Solid shader program is invalid.\n");
+        return;
+    }
+
+    glUseProgram(_solidShaderProgram);
+
+    setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
+
+    GLfloat vertices[] = {
+        x,        y,         0.0f,
+        x + width, y,         0.0f,
+        x,        y + height, 0.0f,
+        x + width, y + height, 0.0f
+    };
+
+    GLushort indices[] = { 0, 1, 2, 1, 3, 2 };
+
+    GLuint matrixProjection = glGetUniformLocation(_solidShaderProgram, "u_projectionMatrix");
+    if (matrixProjection != -1) {
+        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
+    } else {
+        printf("Projection matrix uniform not found in shader!\n");
+    }
+
+    mat4 modelViewMatrix;
+    setIdentityMatrix(modelViewMatrix);
+
+    // Apply transformations
+    translateMatrix(modelViewMatrix, destX, destY);
+    translateMatrix(modelViewMatrix, shape_centerX, shape_centerX);
+
+    if (angle != 0.0f) {
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f); // Degrees -> radians
+    }
+
+    translateMatrix(modelViewMatrix, -shape_centerX, -shape_centerX);
+
+    GLuint matrixModelView = glGetUniformLocation(_solidShaderProgram, "u_matrix");
+    if (matrixModelView != -1) {
+        glUniformMatrix4fv(matrixModelView, 1, GL_FALSE, modelViewMatrix);
+    } else {
+        printf("Model-view matrix uniform not found in shader!\n");
+    }
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Vertex buffer
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_Solid);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+    // Index buffer
+    if (!indexBuffer_Solid) {
+        glGenBuffers(1, &indexBuffer_Solid);
+    }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer_Solid);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    GLint posAttrib = glGetAttribLocation(_solidShaderProgram, "a_position");
+    if (posAttrib == -1) {
+        printf("Error: Position attribute not found in shader.\n");
+        return;
+    }
+    glEnableVertexAttribArray(posAttrib);
+    glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    GLint colorUniform = glGetUniformLocation(_solidShaderProgram, "uColor");
+    if (colorUniform != -1) {
+        glUniform4f(colorUniform, r, g, b, a);
+    } else {
+        printf("Color uniform not found in shader!\n");
+    }
+
+    // Draw with index buffer (offset = 0)
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+
+    glDisableVertexAttribArray(posAttrib);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glUseProgram(0);
+}
+

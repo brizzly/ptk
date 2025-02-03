@@ -18,6 +18,7 @@ private:
 	KGraphic * shapeGraphic;
     KGraphic * shapeGraphic2;
     KGraphic * shapeGraphic3;
+    KGraphic * solidGraphic;
 	KGraphic * buttonLeft;
 	KGraphic * buttonMiddle;
 	KGraphic * buttonRight;
@@ -39,5 +40,6 @@ public:
     void draw_scene2(float frameTime);
     void draw_scene3(float frameTime);
 	void draw_scene4(float frameTime);
+    void draw_scene5(float frameTime);
 	void playSfx();
 };

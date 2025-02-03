@@ -169,3 +169,23 @@ GLuint KShader::createFonteShader()
 	return createShaderProgram(vertexSource, fragmentSource);
 }
 
+GLuint KShader::createSolidColorShader()
+{
+    const char* vertexSource =
+        "attribute vec4 a_position;"
+        "uniform mat4 u_matrix;"
+        "uniform mat4 u_projectionMatrix;"
+        "void main() {"
+        "    gl_Position = u_projectionMatrix * u_matrix * a_position;"
+        "}";
+        
+    const char* fragmentSource =
+        "precision mediump float;\n"
+        "uniform vec4 uColor;\n"
+        "void main() {\n"
+        "    gl_FragColor = uColor;\n"
+        "}";
+    
+    // Compile, link, and return the shader program
+    return createShaderProgram(vertexSource, fragmentSource);
+}

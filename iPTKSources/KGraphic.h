@@ -35,6 +35,7 @@ public:
     ~KGraphic();
 
     void init(int game_width, int game_height, int screen_width, int screen_height);
+    void setBackgroundColor(float r, float g, float b);
 	void setDrawBounds(bool value);
     void printGLError(const char * label);
     void setOrientation(bool isLandscape);  // Call this to switch between landscape and portrait
@@ -66,7 +67,7 @@ public:
 	
     
 private:
-	//mat4 transform;
+
     float _imageWidth;
     float _imageHeight;
     float _textureSizeW;
@@ -100,6 +101,8 @@ private:
     float img_src_y;
     float img_dst_x;
     float img_dst_y;
+    
+    float background_r, background_g, background_b = 0.0f;
 
     void render();
     void computOffset();

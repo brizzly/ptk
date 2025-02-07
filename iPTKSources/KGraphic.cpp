@@ -127,7 +127,7 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     glViewport(0, 0, _screenW, _screenH);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(background_r, background_g, background_b, 1.0f);
     
     
     // Lines
@@ -145,6 +145,13 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     
     glGenBuffers(1, &vertexBuffer_Solid);
     _solidShaderProgram = shader->createSolidColorShader();
+}
+
+void KGraphic::setBackgroundColor(float r, float g, float b)
+{
+    background_r = r;
+    background_g = g;
+    background_b = b;
 }
 
 void KGraphic::setDrawBounds(bool value)

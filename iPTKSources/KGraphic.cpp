@@ -386,6 +386,7 @@ void KGraphic::setOrthographicProjection(mat4& m, float left, float right, float
     m[15] = 1.0f;
 }
 
+
 void KGraphic::computOffset()
 {
     bool isPortrait = _screenH > _screenW;
@@ -417,6 +418,21 @@ void KGraphic::computOffset()
         _offsetY = (_screenH - _scaledGameH) / 2;
     }
 }
+
+/*
+void KGraphic::computOffset()
+{
+    float scaleX = static_cast<float>(_screenW) / _gameW;
+    float scaleY = static_cast<float>(_screenH) / _gameH;
+    // Changed: Use the minimum scale factor so the entire rect fits within the screen.
+    float scale_ = (scaleX < scaleY) ? scaleX : scaleY;
+
+    _scaledGameW = static_cast<int>(_gameW * scale_);
+    _scaledGameH = static_cast<int>(_gameH * scale_);
+    _offsetX = (_screenW - _scaledGameW) / 2;
+    _offsetY = (_screenH - _scaledGameH) / 2;
+}
+*/
 
 void KGraphic::render()
 {

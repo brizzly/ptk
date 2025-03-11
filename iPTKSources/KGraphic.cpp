@@ -1,3 +1,4 @@
+// KGraphic.cpp
 #include "KGraphic.h"
 #ifndef __ANDROID__
 #include "GLTextureHelper.h"
@@ -60,51 +61,66 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     _screenH = (float) screen_height;
     _drawBoundings = false;
 
-    if(_screenW == 0 || _screenH == 0) {
-        printf("KGraphic init error.");
+    if (_screenW == 0 || _screenH == 0) {
+        printf("[ERROR] KGraphic init error: Invalid screen dimensions.\n");
         return;
     }
-    
+
     computOffset();
 
     shader = new KShader();
     _shaderProgram = shader->createShader();
     if (!_shaderProgram) {
-        printf("Shader program linking failed!\n");
+        printf("[ERROR] Shader program linking failed!\n");
+        return;
     }
-    printf("Shader program linked successfully! Shader Id: %d\n\n", _shaderProgram);
-
+    printf("[DEBUG] Shader program linked successfully! Shader ID: %d\n", _shaderProgram);
+    
+    glUseProgram(_shaderProgram);
     printGLError("glUseProgram");
 
+    // Retrieve attribute locations
     positionAttribLocation = glGetAttribLocation(_shaderProgram, "a_position");
-    printf("Position Attribute Location: %d\n", positionAttribLocation);
-    printGLError("shader2");
-    
+    if (positionAttribLocation == -1) {
+        printf("[ERROR] Failed to get 'a_position' location!\n");
+    }
+    printGLError("shader - a_position");
+
     texCoordAttribLocation = glGetAttribLocation(_shaderProgram, "a_texCoord");
-    printf("Texture Coord Attribute Location: %d\n", texCoordAttribLocation);
-    printGLError("shader3");
-    
+    if (texCoordAttribLocation == -1) {
+        printf("[ERROR] Failed to get 'a_texCoord' location!\n");
+    }
+    printGLError("shader - a_texCoord");
+
     matrixUniformLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
-    printf("Matrix Uniform Location: %d\n", matrixUniformLocation);
-    printGLError("shader4");
-    
+    if (matrixUniformLocation == -1) {
+        printf("[ERROR] Failed to get 'u_matrix' location!\n");
+    }
+    printGLError("shader - u_matrix");
+
     matrixUniformProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
-    printf("Matrix Uniform Projection: %d\n", matrixUniformProjection);
-    printGLError("shader4bis");
-    
+    if (matrixUniformProjection == -1) {
+        printf("[ERROR] Failed to get 'u_projectionMatrix' location!\n");
+    }
+    printGLError("shader - u_projectionMatrix");
+
     opacityLoc = glGetUniformLocation(_shaderProgram, "u_opacity");
-    printf("Blend Location: %d\n", opacityLoc);
-    printGLError("shader5");
-                             
+    if (opacityLoc == -1) {
+        printf("[ERROR] Failed to get 'u_opacity' location!\n");
+    }
+    printGLError("shader - u_opacity");
+
     textureSamplerLoc = glGetUniformLocation(_shaderProgram, "u_texture");
-    printf("Texture Location: %d\n", textureSamplerLoc);
-    printGLError("shader6");
-    
+    if (textureSamplerLoc == -1) {
+        printf("[ERROR] Failed to get 'u_texture' location!\n");
+    }
+    printGLError("shader - u_texture");
+
+    // Set default uniforms
     GLfloat epsilon = 0.00001f;
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_epsilon"), epsilon);
 
-    GLfloat UV_EPSILON = 0;
-    
+    // Define vertex and index data
     GLfloat vertices[] = {
         // Positions          // UV Coordinates
         -0.5f, -0.5f,          0.0f, 0.0f,   // Bottom-left corner
@@ -112,39 +128,90 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
          0.5f,  0.5f,          1.0f, 1.0f,   // Top-right corner
         -0.5f,  0.5f,          0.0f, 1.0f    // Top-left corner
     };
-    
+
     GLuint indices[] = { 0, 1, 2, 2, 3, 0 };
-    
+
+    // Generate and bind vertex buffer
     glGenBuffers(1, &vertexBuffer);
+    if (vertexBuffer == 0) {
+        printf("[ERROR] Failed to generate vertex buffer!\n");
+    }
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    printGLError("vertexBuffer");
-    
+    printGLError("vertexBuffer - glBindBuffer");
+
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    printGLError("GL_STATIC_DRAW");
-    
+    printGLError("vertexBuffer - glBufferData");
+
+    // Generate and bind index buffer
     glGenBuffers(1, &indexBuffer);
+    if (indexBuffer == 0) {
+        printf("[ERROR] Failed to generate index buffer!\n");
+    }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    printGLError("indexBuffer - glBindBuffer");
+
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
+    printGLError("indexBuffer - glBufferData");
+
+    // Set viewport
     glViewport(0, 0, _screenW, _screenH);
     glClearColor(background_r, background_g, background_b, 1.0f);
-    
-    
-    // Lines
-    
+
+    // Generate buffers for lines, shapes, and solid rectangles
     glGenBuffers(1, &vertexBuffer_Line);
+    if (vertexBuffer_Line == 0) {
+        printf("[ERROR] Failed to generate vertexBuffer_Line!\n");
+    }
+    printGLError("vertexBuffer_Line - glGenBuffers");
+
+    glGenBuffers(1, &vertexBuffer_Solid);
+    if (vertexBuffer_Solid == 0) {
+        printf("[ERROR] Failed to generate vertexBuffer_Solid!\n");
+    }
+    printGLError("vertexBuffer_Solid - glGenBuffers");
+
+    // Create shader programs for different rendering types
     _lineShaderProgram = shader->createLineShader();
-    
-    
-    // Shapes
+    if (!_lineShaderProgram) {
+        printf("[ERROR] Line Shader program creation failed!\n");
+    }
     
     _shapeShaderProgram = shader->createLineShader();
-    
-    
-    // Solid rects
-    
-    glGenBuffers(1, &vertexBuffer_Solid);
+    if (!_shapeShaderProgram) {
+        printf("[ERROR] Shape Shader program creation failed!\n");
+    }
+
     _solidShaderProgram = shader->createSolidColorShader();
+    if (!_solidShaderProgram) {
+        printf("[ERROR] Solid Shader program creation failed!\n");
+    }
+    
+    _simpleProgram = shader->createSimpleProgram();
+    if (!_simpleProgram) {
+        printf("[ERROR] Simple Shader program creation failed!\n");
+    }
+    
+    quadVBO = createQuadVBO();
+
+    printf("[DEBUG] Initialization complete!\n");
+}
+
+// Creates a vertex buffer object for a fullscreen quad.
+GLuint KGraphic::createQuadVBO()
+{
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    GLfloat quadVertices[] = {
+        // Positions   // TexCoords
+        -1.0f, -1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
+        -1.0f,  1.0f,  0.0f, 1.0f,
+         1.0f,  1.0f,  1.0f, 1.0f,
+    };
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    return vbo;
 }
 
 void KGraphic::setBackgroundColor(float r, float g, float b)
@@ -288,32 +355,24 @@ void KGraphic::scaleMatrix(mat4 m, float scaleX, float scaleY)
 
 void KGraphic::scaleMatrix2(mat4 m, float scaleX, float scaleY)
 {
-    // Calculate the center of the model in model space.
-    // Since the quad vertices are from -0.5 to 0.5, the center is at (0, 0).
-    // If your model has different coordinates, adjust centerX and centerY accordingly.
-
     float centerX = 0.0f;
     float centerY = 0.0f;
 
-    // Create a translation matrix to move to the center point
     mat4 translationToCenter;
     setIdentityMatrix(translationToCenter);
     translationToCenter[12] = -centerX;
     translationToCenter[13] = -centerY;
 
-    // Create the scaling matrix
     mat4 scaling;
     setIdentityMatrix(scaling);
     scaling[0] = scaleX;
     scaling[5] = scaleY;
 
-    // Create a translation matrix to move back from the center point
     mat4 translationBack;
     setIdentityMatrix(translationBack);
     translationBack[12] = centerX;
     translationBack[13] = centerY;
 
-    // Multiply m = m * translationToCenter * scaling * translationBack
     mat4 temp1, temp2;
     multiplyMatrices(m, translationToCenter, temp1);
     multiplyMatrices(temp1, scaling, temp2);
@@ -323,18 +382,9 @@ void KGraphic::scaleMatrix2(mat4 m, float scaleX, float scaleY)
 
 void KGraphic::applyZoom(mat4& modelViewMatrix, float zoom, float modelWidth, float modelHeight)
 {
-    // Calculate the center of the model in model space
     float centerX = modelWidth / 2.0f;
     float centerY = modelHeight / 2.0f;
-
-    // Step 1: Translate to the origin
-//    translateMatrix(modelViewMatrix, -centerX, -centerY);
-
-    // Step 2: Apply scaling
     scaleMatrix2(modelViewMatrix, zoom, zoom);
-
-    // Step 3: Translate back to the original position
-//    translateMatrix(modelViewMatrix, centerX, centerY);
 }
 
 void KGraphic::rotateMatrix(mat4 m, float angle)
@@ -349,7 +399,6 @@ void KGraphic::rotateMatrix(mat4 m, float angle)
     rotation[4] = s;
     rotation[5] = c;
 
-    // Multiply rotation * m
     mat4 result;
     multiplyMatrices(rotation, m, result);
     copyMatrix(m, result);
@@ -378,21 +427,29 @@ void KGraphic::setOrthographicProjection(mat4& m, float left, float right, float
 {
     setIdentityMatrix(m);
 
-    m[0] =  2.0f / (right - left);           // Positive scaling on X-axis (no flip)
-    m[5] = -2.0f / (top - bottom);           // Negative scaling to flip vertically
+    m[0] =  2.0f / (right - left);
+    m[5] = -2.0f / (top - bottom);
     m[10] = -1.0f;
     m[12] = -(right + left) / (right - left);
     m[13] =  (top + bottom) / (top - bottom);
     m[15] = 1.0f;
 }
 
-
 void KGraphic::computOffset()
 {
+    printf("[DEBUG] computOffset - Incoming Values: _gameW=%f, _gameH=%f, _screenW=%f, _screenH=%f\n",
+           _gameW, _gameH, _screenW, _screenH);
+
+    if (_gameW <= 0 || _gameH <= 0 || _screenW <= 0 || _screenH <= 0) {
+        printf("[ERROR] Invalid game or screen dimensions! Skipping computOffset().\n");
+        return;
+    }
+
     bool isPortrait = _screenH > _screenW;
 
-    float scaleX = static_cast<float>(_screenW) / _gameW;
-    float scaleY = static_cast<float>(_screenH) / _gameH;
+    float scaleX = _screenW / _gameW;
+    float scaleY = _screenH / _gameH;
+    printf("[DEBUG] computOffset - scaleX=%f, scaleY=%f\n", scaleX, scaleY);
 
     float scale_;
     if (isPortrait) {
@@ -404,11 +461,24 @@ void KGraphic::computOffset()
     _scaledGameW = static_cast<int>(_gameW * scale_);
     _scaledGameH = static_cast<int>(_gameH * scale_);
 
+    printf("[DEBUG] computOffset - Computed Scale: scale_=%f, _scaledGameW=%f, _scaledGameH=%f\n",
+           scale_, _scaledGameW, _scaledGameH);
+
+    if (_scaledGameW == 0 || _scaledGameH == 0) {
+        printf("[ERROR] _scaledGameW or _scaledGameH is 0! Check calculations.\n");
+        return;
+    }
+
     _offsetX = (_screenW - _scaledGameW) / 2;
     _offsetY = (_screenH - _scaledGameH) / 2;
-   
-    if(_offsetX == 0 && _offsetY < 0)
+
+    printf("[DEBUG] computOffset - Initial Offset Calculation: OffsetX=%d, OffsetY=%d\n",
+           _offsetX, _offsetY);
+
+    if (_offsetX == 0 && _offsetY < 0)
     {
+        printf("[DEBUG] computOffset - Applying Offset Correction!\n");
+
         scale_ = (scaleX < scaleY) ? scaleX : scaleY;
 
         _scaledGameW = static_cast<int>(_gameW * scale_);
@@ -416,23 +486,15 @@ void KGraphic::computOffset()
 
         _offsetX = (_screenW - _scaledGameW) / 2;
         _offsetY = (_screenH - _scaledGameH) / 2;
+
+        printf("[DEBUG] computOffset - Corrected Scale: scale_=%f\n", scale_);
+        printf("[DEBUG] computOffset - Corrected Offset: OffsetX=%d, OffsetY=%d\n",
+               _offsetX, _offsetY);
     }
-}
 
-/*
-void KGraphic::computOffset()
-{
-    float scaleX = static_cast<float>(_screenW) / _gameW;
-    float scaleY = static_cast<float>(_screenH) / _gameH;
-    // Changed: Use the minimum scale factor so the entire rect fits within the screen.
-    float scale_ = (scaleX < scaleY) ? scaleX : scaleY;
-
-    _scaledGameW = static_cast<int>(_gameW * scale_);
-    _scaledGameH = static_cast<int>(_gameH * scale_);
-    _offsetX = (_screenW - _scaledGameW) / 2;
-    _offsetY = (_screenH - _scaledGameH) / 2;
+    printf("[DEBUG] computOffset - Final Scaled Game: %dx%d, Offset: (%d, %d)\n",
+           _scaledGameW, _scaledGameH, _offsetX, _offsetY);
 }
-*/
 
 void KGraphic::render()
 {
@@ -442,9 +504,6 @@ void KGraphic::render()
     
     glUseProgram(_shaderProgram);
     
-    
-
-    // Set Projection Matrix
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
 
     GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
@@ -452,27 +511,16 @@ void KGraphic::render()
         glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
     }
 
-    // Start with the identity matrix
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
 
-    // Apply transformations in the correct order
-
-    // 1. Translate to the destination position plus half the size (to center the model)
-    //translateMatrix(modelViewMatrix, destX + (sizeW * zoom) / 2.0f, destY + (sizeH * zoom) / 2.0f);
     translateMatrix(modelViewMatrix, destX + (sizeW ) / 2.0f, destY + (sizeH ) / 2.0f);
-
-    // 2. Apply scaling for size and zoom
     scaleMatrix(modelViewMatrix, sizeW * zoom, sizeH * zoom);
     
-    // 3. Apply rotation around the center
     if (angle != 0.0f) {
         rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
     }
     
-    
-
-    // Set the model-view matrix to the shader
     GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
     glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelViewMatrix);
 
@@ -503,9 +551,6 @@ void KGraphic::render()
 
     printGLError("render");
     
-
-
-    // Draw debug bounding box if needed
     if (_drawBoundings) {
         vec2 vertice[] = {
             {-sizeW * zoom / 2.0f, -sizeH * zoom / 2.0f},
@@ -544,13 +589,11 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
-    // Détection du support "retina"
-    bool deviceSupportsRetina = !false; // Logique basée sur la densité d'écran à implémenter si souhaité
+    bool deviceSupportsRetina = !false;
     const char* retinaSuffix = "@2x";
     std::string filenameStr(filename);
     std::string filenameToLoad = filenameStr;
 
-    // Si l'appareil ne supporte pas le retina, on enlève le suffixe @2x s'il existe
     if (!deviceSupportsRetina) {
         size_t pos = filenameStr.find(retinaSuffix);
         if (pos != std::string::npos) {
@@ -559,7 +602,6 @@ bool KGraphic::loadPicture(const char *filename)
         filenameToLoad = filenameStr;
     }
 
-    // Chargement de l'asset
     AAsset* asset = AAssetManager_open(g_assetManager, filenameToLoad.c_str(), AASSET_MODE_BUFFER);
     if (!asset) {
         printf("Failed to open asset: %s\n", filenameToLoad.c_str());
@@ -590,15 +632,14 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
-    // If the image has 3 channels (RGB), add an alpha channel
     if (nrChannels == 3) {
         printf("Image has 3 channels (RGB), adding alpha channel.\n");
         unsigned char* rgbaData = new unsigned char[width * height * 4];
         for (int i = 0; i < width * height; i++) {
-            rgbaData[i * 4 + 0] = rawData[i * 3 + 0]; // R
-            rgbaData[i * 4 + 1] = rawData[i * 3 + 1]; // G
-            rgbaData[i * 4 + 2] = rawData[i * 3 + 2]; // B
-            rgbaData[i * 4 + 3] = 255;               // A
+            rgbaData[i * 4 + 0] = rawData[i * 3 + 0];
+            rgbaData[i * 4 + 1] = rawData[i * 3 + 1];
+            rgbaData[i * 4 + 2] = rawData[i * 3 + 2];
+            rgbaData[i * 4 + 3] = 255;
         }
         stbi_image_free(rawData);
         rawData = rgbaData;
@@ -614,11 +655,10 @@ bool KGraphic::loadPicture(const char *filename)
 
     printf("Image loaded successfully: %dx%d, channels: %d\n", width, height, nrChannels);
 
-    // Redimensionnement si l'image est @2x mais que l'appareil ne supporte pas le retina
     if (!deviceSupportsRetina && filenameStr.find("@2x") != std::string::npos) {
         int newWidth = std::round(width / 2.0);
         int newHeight = std::round(height / 2.0);
-        unsigned char* scaledData = new unsigned char[newWidth * newHeight * 4]; // RGBA
+        unsigned char* scaledData = new unsigned char[newWidth * newHeight * 4];
 
         if (stbir_resize_uint8(rawData, width, height, 0, scaledData, newWidth, newHeight, 0, 4)) {
             stbi_image_free(rawData);
@@ -633,11 +673,10 @@ bool KGraphic::loadPicture(const char *filename)
         }
     }
 
-    // Redimensionnement si l'image est pas @2x mais que l'appareil supporte le retina
     if (deviceSupportsRetina && filenameStr.find("@2x") == std::string::npos) {
         int newWidth = std::round(width * 2.0);
         int newHeight = std::round(height * 2.0);
-        unsigned char* scaledData = new unsigned char[newWidth * newHeight * 4]; // RGBA
+        unsigned char* scaledData = new unsigned char[newWidth * newHeight * 4];
 
         if (stbir_resize_uint8(rawData, width, height, 0, scaledData, newWidth, newHeight, 0, 4)) {
             stbi_image_free(rawData);
@@ -654,7 +693,6 @@ bool KGraphic::loadPicture(const char *filename)
 
     data = rawData;
     isBGR = 0;
-    // Ne pas forcer retina si l'appareil ne le supporte pas
     _eyeRetina = deviceSupportsRetina;
 
 #else
@@ -685,12 +723,9 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
-
-    // Dimensions réelles de la texture
     _textureSizeW = width;
     _textureSizeH = height;
 
-    // Si retina est supporté (côté device ou code desktop), on ajuste les dimensions logiques
     if (_eyeRetina) {
         printf("Retina texture detected: Adjusting logical dimensions.\n");
         _textureSizeW = width / 2;
@@ -708,7 +743,6 @@ bool KGraphic::loadPicture(const char *filename)
         printf("Detected RGB format: No swap needed.\n");
     }
 
-    // Configuration OpenGL
     glDisable(GL_DEPTH_TEST);
     glGenTextures(1, &_texture);
     glActiveTexture(GL_TEXTURE0);
@@ -800,25 +834,17 @@ void KGraphic::drawShape(int numvertices, vec2* vertice, int destX, int destY, f
         printf("Projection matrix uniform not found in shader!\n");
     }
 
-    
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
 
-    // Apply transformations
     translateMatrix(modelViewMatrix, destX, destY);
-
-
-    
     translateMatrix(modelViewMatrix, shape_centerX, shape_centerX);
 
-    // Apply rotation if angle is non-zero
     if (angle != 0.0f) {
-        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f); // Convert angle to radians
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
     }
 
     translateMatrix(modelViewMatrix, -shape_centerX, -shape_centerX);
-    
-
     
     GLuint matrixModelView = glGetUniformLocation(_shapeShaderProgram, "u_matrix");
     if (matrixModelView != -1) {
@@ -900,12 +926,11 @@ void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
 
-    // Apply transformations
     translateMatrix(modelViewMatrix, destX, destY);
     translateMatrix(modelViewMatrix, shape_centerX, shape_centerX);
 
     if (angle != 0.0f) {
-        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f); // Degrees -> radians
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
     }
 
     translateMatrix(modelViewMatrix, -shape_centerX, -shape_centerX);
@@ -920,11 +945,9 @@ void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // Vertex buffer
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_Solid);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
-    // Index buffer
     if (!indexBuffer_Solid) {
         glGenBuffers(1, &indexBuffer_Solid);
     }
@@ -946,7 +969,6 @@ void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
         printf("Color uniform not found in shader!\n");
     }
 
-    // Draw with index buffer (offset = 0)
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
     glDisableVertexAttribArray(posAttrib);
@@ -955,3 +977,164 @@ void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
     glUseProgram(0);
 }
 
+void KGraphic::createRenderTexture(int width, int height)
+{
+    _fboWidth = width;
+    _fboHeight = height;
+
+    glGenFramebuffers(1, &_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    printf("[DEBUG] FBO Created: %d\n", _fbo);
+
+    glGenTextures(1, &_fboTexture);
+    glBindTexture(GL_TEXTURE_2D, _fboTexture);
+    printf("[DEBUG] FBO Texture Created: %d\n", _fboTexture);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                           GL_TEXTURE_2D, _fboTexture, 0);
+    
+    GLenum fbStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    printf("[DEBUG] createRenderTexture: FBO status = 0x%x (expected 0x8CD5), width=%d, height=%d, FBO=%d, FBOTexture=%d\n",
+           fbStatus, _fboWidth, _fboHeight, _fbo, _fboTexture);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    printf("createRenderTexture End\n");
+}
+
+void KGraphic::beginRenderToTexture() {
+    if (_fbo == 0) {
+        printf("[ERROR] Framebuffer not initialized! Call createRenderTexture first.\n");
+        return;
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glViewport(0, 0, _fboWidth, _fboHeight);
+    printf("[DEBUG] beginRenderToTexture: Set viewport to 0,0,%d,%d\n", _fboWidth, _fboHeight);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    printf("[DEBUG] beginRenderToTexture - Bound FBO: %d\n", _fbo);
+    printf("beginRenderToTexture\n");
+}
+
+void KGraphic::endRenderToTexture() {
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    if (_scaledGameW == 0 || _scaledGameH == 0) {
+        _scaledGameW = _screenW;
+        _scaledGameH = _screenH;
+    }
+
+    printf("[DEBUG] endRenderToTexture - Restoring viewport: offset(%f, %f), size(%f, %f)\n",
+           _offsetX, _offsetY, _scaledGameW, _scaledGameH);
+    
+    printf("[DEBUG] FBO Dimensions: %d x %d\n", _fboWidth, _fboHeight);
+    printf("[DEBUG] Screen Dimensions: %f x %f\n", _screenW, _screenH);
+    printf("[DEBUG] Game Dimensions: %f x %f\n", _gameW, _gameH);
+    printf("[DEBUG] Computed Offset: %f, %f\n", _offsetX, _offsetY);
+    printf("[DEBUG] Computed Scaled Size: %f, %f\n", _scaledGameW, _scaledGameH);
+
+    glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
+    
+    printGLError("endRenderToTexture - glViewport");
+}
+
+void KGraphic::drawRenderTexture(int destX, int destY, float angle, float zoom, float blend) {
+    glUseProgram(_shaderProgram);
+    
+    setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
+    GLuint matrixProjection = glGetUniformLocation(_shaderProgram, "u_projectionMatrix");
+    if (matrixProjection != -1) {
+        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
+    }
+    
+    mat4 modelViewMatrix;
+    setIdentityMatrix(modelViewMatrix);
+    translateMatrix(modelViewMatrix, destX + (_fboWidth * zoom) / 2.0f, destY + (_fboHeight * zoom) / 2.0f);
+    
+    if (angle != 0.0f) {
+        rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
+    }
+    scaleMatrix(modelViewMatrix, _fboWidth * zoom, _fboHeight * zoom);
+    
+    GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
+    glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelViewMatrix);
+    
+    printf("[DEBUG] drawRenderTexture: destX=%d, destY=%d, angle=%f, zoom=%f, blend=%f\n", destX, destY, angle, zoom, blend);
+    printf("[DEBUG] drawRenderTexture: ModelViewMatrix[0..3]=[%.2f, %.2f, %.2f, %.2f]\n",
+           modelViewMatrix[0], modelViewMatrix[1], modelViewMatrix[2], modelViewMatrix[3]);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _fboTexture);
+    glUniform1i(textureSamplerLoc, 0);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glEnableVertexAttribArray(positionAttribLocation);
+    glEnableVertexAttribArray(texCoordAttribLocation);
+    glVertexAttribPointer(positionAttribLocation, 2, GL_FLOAT, GL_FALSE,
+                          4 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(texCoordAttribLocation, 2, GL_FLOAT, GL_FALSE,
+                          4 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    
+    glDisableVertexAttribArray(positionAttribLocation);
+    glDisableVertexAttribArray(texCoordAttribLocation);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glUseProgram(0);
+}
+
+void KGraphic::drawOffscreenTexture(float tx, float ty, float scaleX, float scaleY)
+{
+    glUseProgram(_simpleProgram); // basic shader for textured quad
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _fboTexture);
+    GLint samplerLoc = glGetUniformLocation(_simpleProgram, "u_texture");
+    glUniform1i(samplerLoc, 0);
+
+    // Construct transformation matrix (translate + scale)
+    mat4 transform;
+    setIdentityMatrix(transform);             // Set matrix to identity
+    translateMatrix(transform, tx, ty);   // Apply translation
+    scaleMatrix(transform, scaleX, scaleY);// Apply scaling (zoom)
+
+    GLint transformLoc = glGetUniformLocation(_simpleProgram, "u_transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform);
+
+    // Fullscreen quad vertices: positions (xy) and texCoords (uv)
+    GLfloat quadVertices[] = {
+        -1.0f, -1.0f, 0.0f, 0.0f,
+         1.0f, -1.0f, 1.0f, 0.0f,
+        -1.0f,  1.0f, 0.0f, 1.0f,
+         1.0f,  1.0f, 1.0f, 1.0f,
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+    GLint posLoc = glGetAttribLocation(_simpleProgram, "a_position");
+    GLint texLoc = glGetAttribLocation(_simpleProgram, "a_texCoord");
+    glEnableVertexAttribArray(posLoc);
+    glVertexAttribPointer(posLoc, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void*)0);
+    glEnableVertexAttribArray(texLoc);
+    glVertexAttribPointer(texLoc, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
+
+    // Draw the quad
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    // Clean up
+    glDisableVertexAttribArray(posLoc);
+    glDisableVertexAttribArray(texLoc);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glUseProgram(0);
+}

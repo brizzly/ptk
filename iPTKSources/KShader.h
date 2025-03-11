@@ -21,7 +21,7 @@ public:
 	GLuint createLineShader();
 	GLuint createFonteShader();
     GLuint createSolidColorShader();
-        
+    GLuint createSimpleProgram();
 
     
 private:

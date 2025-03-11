@@ -189,3 +189,27 @@ GLuint KShader::createSolidColorShader()
     // Compile, link, and return the shader program
     return createShaderProgram(vertexSource, fragmentSource);
 }
+
+// Creates a minimal shader program for textured quad rendering.
+GLuint KShader::createSimpleProgram()
+{
+    const char* simpleVertexShaderSource =
+        "attribute vec4 a_position;\n"
+        "attribute vec2 a_texCoord;\n"
+        "uniform mat4 u_transform;\n"
+        "varying vec2 v_texCoord;\n"
+        "void main() {\n"
+        "    gl_Position = u_transform * a_position;\n"
+        "    v_texCoord = a_texCoord;\n"
+        "}\n";
+    
+    const char* simpleFragmentShaderSource =
+        "precision mediump float;\n"
+        "varying vec2 v_texCoord;\n"
+        "uniform sampler2D u_texture;\n"
+        "void main() {\n"
+        "    gl_FragColor = texture2D(u_texture, v_texCoord);\n"
+        "}\n";
+    
+    return createShaderProgram(simpleVertexShaderSource, simpleFragmentShaderSource);
+}

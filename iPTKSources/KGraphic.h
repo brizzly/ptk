@@ -1,4 +1,4 @@
-
+// KGraphic.h
 #ifndef KGRAPHIC_H
 #define KGRAPHIC_H
 
@@ -12,10 +12,8 @@
 #include <OpenGLES/ES2/gl.h>
 #endif
 
-
 typedef float mat4[16];
 typedef float vec2[2];
-
 
 class KGraphic {
 
@@ -35,8 +33,9 @@ public:
     ~KGraphic();
 
     void init(int game_width, int game_height, int screen_width, int screen_height);
+    GLuint createQuadVBO();
     void setBackgroundColor(float r, float g, float b);
-	void setDrawBounds(bool value);
+    void setDrawBounds(bool value);
     void printGLError(const char * label);
     void setOrientation(bool isLandscape);  // Call this to switch between landscape and portrait
 
@@ -59,12 +58,19 @@ public:
     void drawShape(int numvertices, vec2* vertice, int destX, int destY, float linewidth, float r, float g, float b, float a);
     void drawSolidRectangle(float x, float y, float width, float height, float r, float g, float b, float a);
     
+    // --- New methods for render-to-texture functionality ---
+    void createRenderTexture(int width, int height);
+    void beginRenderToTexture();
+    void endRenderToTexture();
+    void drawRenderTexture(int destX, int destY, float angle, float zoom, float blend);
+    void drawOffscreenTexture(float tx, float ty, float scaleX, float scaleY);
+    
 public:
 
     float srcX, srcY, destX, destY, sizeW, sizeH, angle, zoom, blend;
     float line_centerX, line_centerY;
     float shape_centerX, shape_centerY;
-	
+    
     
 private:
 
@@ -87,7 +93,8 @@ private:
     GLuint _lineShaderProgram;
     GLuint _shapeShaderProgram;
     GLuint _solidShaderProgram;
-	bool _drawBoundings;
+    GLuint _simpleProgram;
+    bool _drawBoundings;
     
     GLuint positionAttribLocation, texCoordAttribLocation, matrixUniformLocation, matrixUniformProjection;
     GLuint vertexBuffer_Solid, vertexBuffer_Line, vertexBuffer, indexBuffer, indexBuffer_Solid, textureSamplerLoc, opacityLoc;
@@ -103,6 +110,14 @@ private:
     float img_dst_y;
     
     float background_r, background_g, background_b = 0.0f;
+    
+    // --- New member variables ---
+    GLuint quadVBO;
+    GLuint _fbo;          // Framebuffer object for offscreen rendering
+    GLuint _fboTexture;   // Texture attached to the FBO
+    int _fboWidth, _fboHeight; // Dimensions of the render texture
+    
+    
 
     void render();
     void computOffset();
@@ -119,6 +134,5 @@ private:
     void multiplyMatrices(const mat4 a, const mat4 b, mat4 result);
 
 };
-
 
 #endif

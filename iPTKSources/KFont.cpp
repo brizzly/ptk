@@ -84,8 +84,10 @@ void KFont::init(const char* fontPath, float gameWidth, float gameHeight)
         return;
     }*/
 
-    FT_Set_Pixel_Sizes(face, 0, _fontSize);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
+    // --- Retina scaling update ---
+    const float retinaScaleFactor = 2.0f;
+    FT_Set_Pixel_Sizes(face, 0, _fontSize * retinaScaleFactor);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     // Charger les caractères de 32 à 255 (Latin-1 étendu)
     for (unsigned int c = 32; c < 256; c++) {
@@ -119,17 +121,29 @@ void KFont::init(const char* fontPath, float gameWidth, float gameHeight)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glGenerateMipmap(GL_TEXTURE_2D);
         }
 
-        int bitmap_height = face->glyph->bitmap.rows;
+
+        // Adjust glyph metrics to logical (non-retina) dimensions
+        int scaledWidth    = face->glyph->bitmap.width    / retinaScaleFactor;
+        int scaledRows     = face->glyph->bitmap.rows     / retinaScaleFactor;
+        int scaledBearingX = face->glyph->bitmap_left   / retinaScaleFactor;
+        int scaledBearingY = face->glyph->bitmap_top    / retinaScaleFactor;
+        // Advance is in 26.6 format; dividing retains fixed-point info for RenderText
+        unsigned int scaledAdvance = static_cast<unsigned int>(face->glyph->advance.x / retinaScaleFactor);
+
+        // Optionally, store bitmap height for line spacing adjustment
+        int scaledBitmapHeight = scaledRows;
+
         Character character = {
             texture,
-            face->glyph->bitmap.width,
-            face->glyph->bitmap.rows,
-            face->glyph->bitmap_left,
-            face->glyph->bitmap_top,
-            static_cast<unsigned int>(face->glyph->advance.x),
-            static_cast<unsigned int>(bitmap_height)
+            scaledWidth,
+            scaledRows,
+            scaledBearingX,
+            scaledBearingY,
+            scaledAdvance,
+            static_cast<unsigned int>(scaledBitmapHeight)
         };
 
         characters.insert(std::pair<unsigned int, Character>(c, character));

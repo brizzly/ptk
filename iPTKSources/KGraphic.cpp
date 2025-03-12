@@ -74,7 +74,7 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
         printf("[ERROR] Shader program linking failed!\n");
         return;
     }
-    printf("[DEBUG] Shader program linked successfully! Shader ID: %d\n", _shaderProgram);
+    //printf("[DEBUG] Shader program linked successfully! Shader ID: %d\n", _shaderProgram);
     
     glUseProgram(_shaderProgram);
     printGLError("glUseProgram");
@@ -193,7 +193,7 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     
     quadVBO = createQuadVBO();
 
-    printf("[DEBUG] Initialization complete!\n");
+    //printf("[DEBUG] Initialization complete!\n");
 }
 
 // Creates a vertex buffer object for a fullscreen quad.
@@ -437,8 +437,8 @@ void KGraphic::setOrthographicProjection(mat4& m, float left, float right, float
 
 void KGraphic::computOffset()
 {
-    printf("[DEBUG] computOffset - Incoming Values: _gameW=%f, _gameH=%f, _screenW=%f, _screenH=%f\n",
-           _gameW, _gameH, _screenW, _screenH);
+    //printf("[DEBUG] computOffset - Incoming Values: _gameW=%f, _gameH=%f, _screenW=%f, _screenH=%f\n",
+       //    _gameW, _gameH, _screenW, _screenH);
 
     if (_gameW <= 0 || _gameH <= 0 || _screenW <= 0 || _screenH <= 0) {
         printf("[ERROR] Invalid game or screen dimensions! Skipping computOffset().\n");
@@ -449,7 +449,7 @@ void KGraphic::computOffset()
 
     float scaleX = _screenW / _gameW;
     float scaleY = _screenH / _gameH;
-    printf("[DEBUG] computOffset - scaleX=%f, scaleY=%f\n", scaleX, scaleY);
+    //printf("[DEBUG] computOffset - scaleX=%f, scaleY=%f\n", scaleX, scaleY);
 
     float scale_;
     if (isPortrait) {
@@ -461,8 +461,8 @@ void KGraphic::computOffset()
     _scaledGameW = static_cast<int>(_gameW * scale_);
     _scaledGameH = static_cast<int>(_gameH * scale_);
 
-    printf("[DEBUG] computOffset - Computed Scale: scale_=%f, _scaledGameW=%f, _scaledGameH=%f\n",
-           scale_, _scaledGameW, _scaledGameH);
+    //printf("[DEBUG] computOffset - Computed Scale: scale_=%f, _scaledGameW=%f, _scaledGameH=%f\n",
+     //      scale_, _scaledGameW, _scaledGameH);
 
     if (_scaledGameW == 0 || _scaledGameH == 0) {
         printf("[ERROR] _scaledGameW or _scaledGameH is 0! Check calculations.\n");
@@ -472,8 +472,8 @@ void KGraphic::computOffset()
     _offsetX = (_screenW - _scaledGameW) / 2;
     _offsetY = (_screenH - _scaledGameH) / 2;
 
-    printf("[DEBUG] computOffset - Initial Offset Calculation: OffsetX=%d, OffsetY=%d\n",
-           _offsetX, _offsetY);
+    //printf("[DEBUG] computOffset - Initial Offset Calculation: OffsetX=%d, OffsetY=%d\n",
+      //     _offsetX, _offsetY);
 
     if (_offsetX == 0 && _offsetY < 0)
     {
@@ -487,13 +487,13 @@ void KGraphic::computOffset()
         _offsetX = (_screenW - _scaledGameW) / 2;
         _offsetY = (_screenH - _scaledGameH) / 2;
 
-        printf("[DEBUG] computOffset - Corrected Scale: scale_=%f\n", scale_);
-        printf("[DEBUG] computOffset - Corrected Offset: OffsetX=%d, OffsetY=%d\n",
-               _offsetX, _offsetY);
+        //printf("[DEBUG] computOffset - Corrected Scale: scale_=%f\n", scale_);
+        //printf("[DEBUG] computOffset - Corrected Offset: OffsetX=%d, OffsetY=%d\n",
+          //     _offsetX, _offsetY);
     }
 
-    printf("[DEBUG] computOffset - Final Scaled Game: %dx%d, Offset: (%d, %d)\n",
-           _scaledGameW, _scaledGameH, _offsetX, _offsetY);
+    //printf("[DEBUG] computOffset - Final Scaled Game: %dx%d, Offset: (%d, %d)\n",
+      //     _scaledGameW, _scaledGameH, _offsetX, _offsetY);
 }
 
 void KGraphic::render()
@@ -977,20 +977,22 @@ void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
     glUseProgram(0);
 }
 
+
+// Offscreen -----------------------------------------------------
+
 void KGraphic::createRenderTexture(int width, int height)
 {
-    _fboWidth = width;
-    _fboHeight = height;
+    const float retinaScaleFactor = 2.0f; // Added retina scale factor
+    _fboWidth = width * retinaScaleFactor;
+    _fboHeight = height * retinaScaleFactor;
 
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
-    printf("[DEBUG] FBO Created: %d\n", _fbo);
 
     glGenTextures(1, &_fboTexture);
     glBindTexture(GL_TEXTURE_2D, _fboTexture);
-    printf("[DEBUG] FBO Texture Created: %d\n", _fboTexture);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _fboWidth, _fboHeight, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -1002,14 +1004,11 @@ void KGraphic::createRenderTexture(int width, int height)
                            GL_TEXTURE_2D, _fboTexture, 0);
     
     GLenum fbStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    printf("[DEBUG] createRenderTexture: FBO status = 0x%x (expected 0x8CD5), width=%d, height=%d, FBO=%d, FBOTexture=%d\n",
-           fbStatus, _fboWidth, _fboHeight, _fbo, _fboTexture);
-
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    printf("createRenderTexture End\n");
 }
 
-void KGraphic::beginRenderToTexture() {
+void KGraphic::beginRenderToTexture()
+{
     if (_fbo == 0) {
         printf("[ERROR] Framebuffer not initialized! Call createRenderTexture first.\n");
         return;
@@ -1017,14 +1016,15 @@ void KGraphic::beginRenderToTexture() {
 
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     glViewport(0, 0, _fboWidth, _fboHeight);
-    printf("[DEBUG] beginRenderToTexture: Set viewport to 0,0,%d,%d\n", _fboWidth, _fboHeight);
+    //printf("[DEBUG] beginRenderToTexture: Set viewport to 0,0,%d,%d\n", _fboWidth, _fboHeight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    printf("[DEBUG] beginRenderToTexture - Bound FBO: %d\n", _fbo);
-    printf("beginRenderToTexture\n");
+    //printf("[DEBUG] beginRenderToTexture - Bound FBO: %d\n", _fbo);
+    //printf("beginRenderToTexture\n");
 }
 
-void KGraphic::endRenderToTexture() {
+void KGraphic::endRenderToTexture()
+{
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     if (_scaledGameW == 0 || _scaledGameH == 0) {
@@ -1032,21 +1032,24 @@ void KGraphic::endRenderToTexture() {
         _scaledGameH = _screenH;
     }
 
-    printf("[DEBUG] endRenderToTexture - Restoring viewport: offset(%f, %f), size(%f, %f)\n",
-           _offsetX, _offsetY, _scaledGameW, _scaledGameH);
+    //printf("[DEBUG] endRenderToTexture - Restoring viewport: offset(%f, %f), size(%f, %f)\n",
+     //      _offsetX, _offsetY, _scaledGameW, _scaledGameH);
     
-    printf("[DEBUG] FBO Dimensions: %d x %d\n", _fboWidth, _fboHeight);
-    printf("[DEBUG] Screen Dimensions: %f x %f\n", _screenW, _screenH);
-    printf("[DEBUG] Game Dimensions: %f x %f\n", _gameW, _gameH);
-    printf("[DEBUG] Computed Offset: %f, %f\n", _offsetX, _offsetY);
-    printf("[DEBUG] Computed Scaled Size: %f, %f\n", _scaledGameW, _scaledGameH);
+    //printf("[DEBUG] FBO Dimensions: %d x %d\n", _fboWidth, _fboHeight);
+    //printf("[DEBUG] Screen Dimensions: %f x %f\n", _screenW, _screenH);
+    //printf("[DEBUG] Game Dimensions: %f x %f\n", _gameW, _gameH);
+    //printf("[DEBUG] Computed Offset: %f, %f\n", _offsetX, _offsetY);
+    //printf("[DEBUG] Computed Scaled Size: %f, %f\n", _scaledGameW, _scaledGameH);
 
     glViewport(_offsetX, _offsetY, _scaledGameW, _scaledGameH);
     
     printGLError("endRenderToTexture - glViewport");
 }
 
-void KGraphic::drawRenderTexture(int destX, int destY, float angle, float zoom, float blend) {
+// Updated drawRenderTexture to adjust for retina scaling
+void KGraphic::drawRenderTexture(int destX, int destY, float angle, float zoom, float blend)
+{
+    const float retinaScaleFactor = 2.0f; // Must match createRenderTexture
     glUseProgram(_shaderProgram);
     
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
@@ -1057,19 +1060,18 @@ void KGraphic::drawRenderTexture(int destX, int destY, float angle, float zoom, 
     
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
-    translateMatrix(modelViewMatrix, destX + (_fboWidth * zoom) / 2.0f, destY + (_fboHeight * zoom) / 2.0f);
+    // Adjust position & scale by dividing by retinaScaleFactor
+    translateMatrix(modelViewMatrix, destX + ((_fboWidth / retinaScaleFactor) * zoom) / 2.0f,
+                                    destY + ((_fboHeight / retinaScaleFactor) * zoom) / 2.0f);
     
     if (angle != 0.0f) {
         rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
     }
-    scaleMatrix(modelViewMatrix, _fboWidth * zoom, _fboHeight * zoom);
+    scaleMatrix(modelViewMatrix, (_fboWidth / retinaScaleFactor) * zoom,
+                                   (_fboHeight / retinaScaleFactor) * zoom);
     
     GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
     glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelViewMatrix);
-    
-    printf("[DEBUG] drawRenderTexture: destX=%d, destY=%d, angle=%f, zoom=%f, blend=%f\n", destX, destY, angle, zoom, blend);
-    printf("[DEBUG] drawRenderTexture: ModelViewMatrix[0..3]=[%.2f, %.2f, %.2f, %.2f]\n",
-           modelViewMatrix[0], modelViewMatrix[1], modelViewMatrix[2], modelViewMatrix[3]);
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _fboTexture);
@@ -1095,6 +1097,12 @@ void KGraphic::drawRenderTexture(int destX, int destY, float angle, float zoom, 
 
 void KGraphic::drawOffscreenTexture(float tx, float ty, float scaleX, float scaleY)
 {
+    setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
+    
+    
+    float recalibrageX = 2.0f * tx / _gameW;
+    float recalibrageY = -2.0f * ty / _gameH;
+    
     glUseProgram(_simpleProgram); // basic shader for textured quad
 
     glActiveTexture(GL_TEXTURE0);
@@ -1105,9 +1113,13 @@ void KGraphic::drawOffscreenTexture(float tx, float ty, float scaleX, float scal
     // Construct transformation matrix (translate + scale)
     mat4 transform;
     setIdentityMatrix(transform);             // Set matrix to identity
-    translateMatrix(transform, tx, ty);   // Apply translation
+    translateMatrix(transform, recalibrageX, recalibrageY);   // Apply translation
     scaleMatrix(transform, scaleX, scaleY);// Apply scaling (zoom)
 
+    if (angle != 0.0f) {
+        rotateMatrix(transform, angle * M_PI / 180.0f);
+    }
+    
     GLint transformLoc = glGetUniformLocation(_simpleProgram, "u_transform");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform);
 

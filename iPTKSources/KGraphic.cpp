@@ -51,6 +51,9 @@ void KGraphic::init(int game_width, int game_height, int screen_width, int scree
     img_dst_x = 0;
     img_dst_y = 0;
     
+    _fboWidth = 0;
+    _fboHeight = 0;
+    
     _offsetX = 0;
     _offsetY = 0;
     line_centerX = line_centerY = 0;
@@ -982,6 +985,9 @@ void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
 
 void KGraphic::createRenderTexture(int width, int height)
 {
+    if(_fboWidth  > 0 && _fboHeight > 0) {
+        return;
+    }
     const float retinaScaleFactor = 2.0f; // Added retina scale factor
     _fboWidth = width * retinaScaleFactor;
     _fboHeight = height * retinaScaleFactor;

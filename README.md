@@ -16,6 +16,8 @@ Send your game name and I will add it in the powered by ptk list.
 - [GLFM](https://github.com/brackeen/glfm) for fast maths
 - [OpenAL](https://github.com/kcat/openal-soft) for fast audios
 - [Freetype2](https://github.com/freetype/freetype) fast  Font text displays 
+- [JSON](https://github.com/Tencent/rapidjson/) json format handling
+- Physic [Box2D](https://github.com/erincatto/box2d)
 - Splines and Nurbs
 - System fontes draw suppot
 - MultiTouch inputs support
@@ -27,7 +29,6 @@ Send your game name and I will add it in the powered by ptk list.
 - Tilemaps engine and editor
 - Fast scrollings
 - Sprites manager
-- Physic [Box2D](https://github.com/erincatto/box2d)
 - Collisions detections slopes water grounds air ropes
 - FileSystem
 

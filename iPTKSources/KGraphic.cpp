@@ -1106,8 +1106,8 @@ void KGraphic::drawOffscreenTexture(float tx, float ty, float scaleX, float scal
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
     
     
-    float recalibrageX = 2.0f * tx / _gameW;
-    float recalibrageY = -2.0f * ty / _gameH;
+    float recalibrageX = tx / (_gameW*2);
+    float recalibrageY = -ty / (_gameH*2);
     
     glUseProgram(_simpleProgram); // basic shader for textured quad
 

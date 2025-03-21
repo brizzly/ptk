@@ -1106,8 +1106,10 @@ void KGraphic::drawOffscreenTexture(float tx, float ty, float scaleX, float scal
     setOrthographicProjection(projectionMatrix, 0.0f, _gameW, 0.0f, _gameH);
     
     
-    float recalibrageX = tx / (_gameW*2);
-    float recalibrageY = -ty / (_gameH*2);
+    //float recalibrageX = tx / (_gameW*2);
+    //float recalibrageY = -ty / (_gameH*2);
+    float recalibrageX = tx / (_gameW);
+    float recalibrageY = -ty / (_gameH);
     
     glUseProgram(_simpleProgram); // basic shader for textured quad
 
@@ -1155,4 +1157,24 @@ void KGraphic::drawOffscreenTexture(float tx, float ty, float scaleX, float scal
     glDisableVertexAttribArray(texLoc);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glUseProgram(0);
+}
+
+GLuint KGraphic::getFbo()
+{
+    return _fbo;
+}
+
+GLuint KGraphic::getFboTexture()
+{
+    return _fboTexture;
+}
+
+int KGraphic::getFboWidth()
+{
+    return _fboWidth;
+}
+
+int KGraphic::getFboHeight()
+{
+    return _fboHeight;
 }

@@ -332,6 +332,106 @@ void KFont::RenderText(const wchar_t* text, float x, float y, float scale)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void KFont::RenderTextOffscreen(const wchar_t* text, float x, float y, float scale, GLuint fbo, GLuint texture, int fboWidth, int fboHeight)
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        printf("Error: Offscreen framebuffer is incomplete.\n");
+        return;
+    }
+
+    glViewport(0, 0, fboWidth, fboHeight);
+
+    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    if (_fonteShaderProgram == 0) {
+        printf("Error: Shader program is invalid.\n");
+        return;
+    }
+
+    y = fboHeight - y - scale;
+    float r = (float)fboWidth / (float)fboHeight;
+    scale = scale * r * 2.0f / KFONT_SIZE;
+
+    setupOrthoProjection(0.0f, fboWidth, 0.0f, fboHeight);
+
+    glUseProgram(_fonteShaderProgram);
+
+    GLint textColorLoc = glGetUniformLocation(_fonteShaderProgram, "textColor");
+    if (textColorLoc != -1) {
+        glUniform3f(textColorLoc, text_R, text_G, text_B);
+    }
+
+    GLint backgroundColorLoc = glGetUniformLocation(_fonteShaderProgram, "backgroundColor");
+    if (backgroundColorLoc != -1) {
+        //glUniform4f(backgroundColorLoc, back_R, back_G, back_B, back_A);
+    }
+
+    GLint textUniform = glGetUniformLocation(_fonteShaderProgram, "text");
+    if (textUniform != -1) {
+        glUniform1i(textUniform, 0);
+    }
+
+    GLint matrixLoc = glGetUniformLocation(_fonteShaderProgram, "u_matrix");
+    if (matrixLoc != -1) {
+        glUniformMatrix4fv(matrixLoc, 1, GL_FALSE, orthoMatrix);
+    }
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    float currentTextureID = 0;
+    std::wstring textStr(text);
+    for (wchar_t wc : textStr) {
+        Character ch = characters[(unsigned int)wc];
+
+        float xpos = x + ch.bearingX * scale;
+        float ypos = y - (ch.sizeY - ch.bearingY) * scale;
+        float w = ch.sizeX * scale;
+        float h = ch.sizeY * scale;
+
+        GLfloat vertices[6][4] = {
+            { xpos,     ypos + h,   0.0f, 0.0f },
+            { xpos,     ypos,       0.0f, 1.0f },
+            { xpos + w, ypos,       1.0f, 1.0f },
+
+            { xpos,     ypos + h,   0.0f, 0.0f },
+            { xpos + w, ypos,       1.0f, 1.0f },
+            { xpos + w, ypos + h,   1.0f, 0.0f }
+        };
+
+        glActiveTexture(GL_TEXTURE0);
+        if (ch.textureID != currentTextureID) {
+            glBindTexture(GL_TEXTURE_2D, ch.textureID);
+            currentTextureID = ch.textureID;
+        }
+
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+        GLint posAttrib = glGetAttribLocation(_fonteShaderProgram, "position");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+
+        GLint texAttrib = glGetAttribLocation(_fonteShaderProgram, "texCoords");
+        glEnableVertexAttribArray(texAttrib);
+        glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        x += (ch.advance >> 6) * scale;
+    }
+
+//    glBindTexture(GL_TEXTURE_2D, 0);
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+//    glViewport(0, 0, _gameW, _gameH);
+}
+
 
 
 void KFont::RenderTextCenteredButton(const wchar_t* text, float posx, float posy, float btn_width, float scale)

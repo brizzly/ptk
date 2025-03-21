@@ -57,6 +57,8 @@ public:
 	void measure_text(const wchar_t* text, float* width, float* height, float scale);
 	void printGLError(const char * label);
 	void setupOrthoProjection(float left, float right, float bottom, float top);
+    
+    void RenderTextOffscreen(const wchar_t* text, float x, float y, float scale, GLuint fbo, GLuint texture, int fboWidth, int fboHeight);
 
 private:
 	KShader *shader;

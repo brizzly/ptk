@@ -349,7 +349,7 @@ void KInput::setScreenPressed(int tapCount, int x, int y)
 
 void KInput::setScreenMoving(int x, int y)
 {
-	printf("setScreenMoving: %d %d\n", x, y);
+	//printf("setScreenMoving: %d %d\n", x, y);
 	_xScreenHit = x;
 	_yScreenHit = y;
 }

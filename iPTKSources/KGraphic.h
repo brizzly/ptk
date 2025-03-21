@@ -64,6 +64,11 @@ public:
     void endRenderToTexture();
     void drawRenderTexture(int destX, int destY, float angle, float zoom, float blend);
     void drawOffscreenTexture(float tx, float ty, float scaleX, float scaleY);
+    GLuint getFbo();
+    GLuint getFboTexture();
+    int getFboWidth();
+    int getFboHeight();
+
     
 public:
 

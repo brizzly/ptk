@@ -342,6 +342,9 @@ void KFont::RenderTextOffscreen(const wchar_t* text, float x, float y, float sca
         printf("Error: Offscreen framebuffer is incomplete.\n");
         return;
     }
+    
+    x *= 2;
+    y *= 2;
 
     glViewport(0, 0, fboWidth, fboHeight);
 
@@ -355,7 +358,8 @@ void KFont::RenderTextOffscreen(const wchar_t* text, float x, float y, float sca
 
     y = fboHeight - y - scale;
     float r = (float)fboWidth / (float)fboHeight;
-    scale = scale * r * 2.0f / KFONT_SIZE;
+    //scale = scale * r * 2.0f / KFONT_SIZE;
+    scale = scale * r / KFONT_SIZE;
 
     setupOrthoProjection(0.0f, fboWidth, 0.0f, fboHeight);
 
@@ -368,7 +372,7 @@ void KFont::RenderTextOffscreen(const wchar_t* text, float x, float y, float sca
 
     GLint backgroundColorLoc = glGetUniformLocation(_fonteShaderProgram, "backgroundColor");
     if (backgroundColorLoc != -1) {
-        //glUniform4f(backgroundColorLoc, back_R, back_G, back_B, back_A);
+        glUniform4f(backgroundColorLoc, back_R, back_G, back_B, back_A);
     }
 
     GLint textUniform = glGetUniformLocation(_fonteShaderProgram, "text");

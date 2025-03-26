@@ -85,7 +85,7 @@ void KFont::init(const char* fontPath, float gameWidth, float gameHeight)
     }*/
 
     // --- Retina scaling update ---
-    const float retinaScaleFactor = 2.0f;
+    retinaScaleFactor = 2.0f;
     FT_Set_Pixel_Sizes(face, 0, _fontSize * retinaScaleFactor);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -459,8 +459,8 @@ void KFont::measure_text(const wchar_t* text, float* width, float* height, float
 	*width = 0;
 	*height = 0;
     
-    float r = _gameW / _gameH;
-    float newScale = r * 2.0f / KFONT_SIZE;
+    float r = (float)_gameW / (float)_gameH;
+    float newScale = r * retinaScaleFactor / KFONT_SIZE;
     
     scale *= newScale;
 

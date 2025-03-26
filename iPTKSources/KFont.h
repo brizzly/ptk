@@ -66,6 +66,7 @@ private:
 	GLfloat orthoMatrix[16];
 	float _gameW, _gameH;
 	int _fontSize;
+    float retinaScaleFactor;
     float back_R, back_G, back_B, back_A;
     float text_R, text_G, text_B;
 	FT_Library ft;

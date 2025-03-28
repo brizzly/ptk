@@ -41,6 +41,8 @@ bool	KInput::_rotation_end = 0;
 float	KInput::_pinch = 0;
 bool	KInput::_pinch_begin = 0;
 bool	KInput::_pinch_end = 0;
+float   KInput::_pinch_centerx = 0;
+float   KInput::_pinch_centery = 0;
 float	KInput::_force = -1;
 bool	KInput::_force_available = false;
 bool	KInput::_needUpdate_Unpressed = false;
@@ -252,6 +254,18 @@ void KInput::setPinch(float r) {
 	_pinch = r;
 	_pinch_end = false;
     //printf("setPinch %f\n",r);
+}
+float KInput::getPinchCenterX() {
+    return _pinch_centerx;
+}
+float KInput::getPinchCenterY() {
+    return _pinch_centery;
+}
+void KInput::setPinchCenterX(float value) {
+    _pinch_centerx = value;
+}
+void KInput::setPinchCenterY(float value) {
+    _pinch_centery = value;
 }
 bool KInput::getPinchBegin() {
 	return _pinch_begin;

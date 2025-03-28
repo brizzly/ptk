@@ -157,6 +157,8 @@ private:
 	static float	_pinch;
 	static bool		_pinch_begin;
 	static bool		_pinch_end;
+    static float    _pinch_centerx;
+    static float    _pinch_centery;
 	static float	_force;
 	static bool		_force_available;
 	static bool		_needUpdate_Unpressed;
@@ -190,6 +192,10 @@ public:
 	
 	static float	getPinch();
 	static void		setPinch(float r);
+    static float    getPinchCenterX();
+    static float    getPinchCenterY();
+    static void     setPinchCenterX(float value);
+    static void     setPinchCenterY(float value);
 	static bool		getPinchBegin();
 	static void		setPinchBegin(bool value);
 	static bool		getPinchEnd();

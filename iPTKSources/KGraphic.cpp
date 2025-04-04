@@ -324,6 +324,84 @@ void KGraphic::drawLine(float x1, float y1, float x2, float y2, float r, float g
     printGLError("line");
 }
 
+void KGraphic::drawLine_Offscreen(float x1, float y1, float x2, float y2, float r, float g, float b, float a, float linewidth)
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _fboTexture, 0);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        printf("Error: Offscreen framebuffer is incomplete.\n");
+        return;
+    }
+
+    glViewport(0, 0, _fboWidth, _fboHeight); // use FBO size
+
+    if (_lineShaderProgram == 0) {
+        printf("Error: Shader program is invalid.\n");
+        return;
+    }
+
+    glUseProgram(_lineShaderProgram);
+
+    setOrthographicProjection(projectionMatrix, 0.0f, _fboWidth, 0.0f, _fboHeight);
+
+    GLuint matrixProjection = glGetUniformLocation(_lineShaderProgram, "u_projectionMatrix");
+    if (matrixProjection != -1) {
+        glUniformMatrix4fv(matrixProjection, 1, GL_FALSE, projectionMatrix);
+    }
+
+    glDisable(GL_CULL_FACE);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    mat4 modelMatrix;
+    setIdentityMatrix(modelMatrix);
+
+    translateMatrix(modelMatrix, line_centerX, line_centerY);
+    if (angle != 0.0f) {
+        rotateMatrix(modelMatrix, angle * M_PI / 180.0f);
+    }
+    translateMatrix(modelMatrix, -line_centerX, -line_centerY);
+
+    GLuint matrixLocation = glGetUniformLocation(_lineShaderProgram, "u_matrix");
+    if (matrixLocation != -1) {
+        glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelMatrix);
+    }
+
+    GLfloat lineCoords[] = {
+        x1, y1,
+        x2, y2
+    };
+
+    float color[] = { r, g, b, a };
+    glLineWidth(linewidth);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_Line);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(lineCoords), lineCoords, GL_DYNAMIC_DRAW);
+
+    GLint posAttrib = glGetAttribLocation(_lineShaderProgram, "a_position");
+    if (posAttrib == -1) {
+        printf("Error: Position attribute not found in shader.\n");
+        return;
+    }
+    glEnableVertexAttribArray(posAttrib);
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    GLint colorUniform = glGetUniformLocation(_lineShaderProgram, "color");
+    if (colorUniform == -1) {
+        printf("Error: Color uniform not found in shader.\n");
+        return;
+    }
+    glUniform4fv(colorUniform, 1, color);
+
+    glDrawArrays(GL_LINES, 0, 2);
+
+    glDisableVertexAttribArray(posAttrib);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glUseProgram(0);
+}
+
 void KGraphic::setIdentityMatrix(mat4 m) {
     for (int i = 0; i < 16; ++i) {
         m[i] = (i % 5 == 0) ? 1.0f : 0.0f;

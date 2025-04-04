@@ -348,9 +348,6 @@ void KFont::RenderTextOffscreen(const wchar_t* text, float x, float y, float sca
 
     glViewport(0, 0, fboWidth, fboHeight);
 
-    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     if (_fonteShaderProgram == 0) {
         printf("Error: Shader program is invalid.\n");
         return;
@@ -429,11 +426,6 @@ void KFont::RenderTextOffscreen(const wchar_t* text, float x, float y, float sca
 
         x += (ch.advance >> 6) * scale;
     }
-
-//    glBindTexture(GL_TEXTURE_2D, 0);
-//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-//    glViewport(0, 0, _gameW, _gameH);
 }
 
 

@@ -60,6 +60,7 @@ public:
     void drawSolidRectangle(float x, float y, float width, float height, float r, float g, float b, float a);
     
     // --- New methods for render-to-texture functionality ---
+    void clearRenderTexture(float r, float g, float b, float a);
     void createRenderTexture(int width, int height);
     void beginRenderToTexture();
     void endRenderToTexture();

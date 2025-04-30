@@ -1061,6 +1061,18 @@ void KGraphic::drawSolidRectangle(float x, float y, float width, float height,
 
 // Offscreen -----------------------------------------------------
 
+void KGraphic::clearRenderTexture(float r, float g, float b, float a)
+{
+    if (_fbo == 0)
+        return;
+
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glViewport(0, 0, _fboWidth, _fboHeight);
+    glClearColor(r, g, b, a);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
 void KGraphic::createRenderTexture(int width, int height)
 {
     if(_fboWidth  > 0 && _fboHeight > 0) {

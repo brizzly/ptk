@@ -25,6 +25,7 @@ private:
 
 public:
 
+
 #ifdef __ANDROID__
     KGraphic(int game_width, int game_height, int screen_width, int screen_height, AAssetManager * value);
 #else

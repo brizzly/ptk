@@ -670,6 +670,75 @@ bool KGraphic::loadPicture(const char *filename)
         return false;
     }
 
+    const bool deviceSupportsRetina = true;  // Replace with real check if needed
+    std::string filenameStr(filename);
+    std::string filenameToLoad = filenameStr;
+    AAsset* asset = nullptr;
+
+    const char* retinaSuffix = "@2x";
+
+    if (deviceSupportsRetina) {
+        size_t dotPos = filenameStr.find_last_of('.');
+        if (dotPos != std::string::npos) {
+            std::string retinaFilename = filenameStr.substr(0, dotPos) + "@2x" + filenameStr.substr(dotPos);
+            asset = AAssetManager_open(g_assetManager, retinaFilename.c_str(), AASSET_MODE_BUFFER);
+            if (asset) {
+                _eyeRetina = true;
+                filenameToLoad = retinaFilename;
+            }
+        }
+    }
+    else {
+        size_t pos = filenameStr.find(retinaSuffix);
+        if (pos != std::string::npos) {
+            filenameStr.erase(pos, strlen(retinaSuffix));
+        }
+        filenameToLoad = filenameStr;
+    }
+
+    if (!asset) {
+        asset = AAssetManager_open(g_assetManager, filenameStr.c_str(), AASSET_MODE_BUFFER);
+        if (!asset) {
+
+            if (deviceSupportsRetina) {
+
+                size_t pos = filenameStr.find(retinaSuffix);
+                if (pos != std::string::npos) {
+                    filenameStr.erase(pos, strlen(retinaSuffix));
+                }
+                filenameToLoad = filenameStr;
+
+
+                asset = AAssetManager_open(g_assetManager, filenameStr.c_str(), AASSET_MODE_BUFFER);
+                if (!asset) {
+
+                    printf("Failed to open asset: %s\n", filenameStr.c_str());
+                    return false;
+                }
+            }
+            else {
+                printf("Failed to open asset: %s\n", filenameStr.c_str());
+                return false;
+            }
+        }
+    }
+
+
+
+/*
+bool KGraphic::loadPicture(const char *filename)
+{
+    unsigned char *data = NULL;
+    int width, height, nrChannels;
+    int isBGR = 1;
+    _eyeRetina = false;
+
+#ifdef __ANDROID__
+    if (this->g_assetManager == nullptr) {
+        printf("AssetManager not set\n");
+        return false;
+    }
+
     bool deviceSupportsRetina = !false;
     const char* retinaSuffix = "@2x";
     std::string filenameStr(filename);
@@ -688,6 +757,9 @@ bool KGraphic::loadPicture(const char *filename)
         printf("Failed to open asset: %s\n", filenameToLoad.c_str());
         return false;
     }
+*/
+
+
 
     off_t assetLength = AAsset_getLength(asset);
     unsigned char* assetBuffer = new unsigned char[assetLength];

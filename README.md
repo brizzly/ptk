@@ -73,10 +73,31 @@ graphic->drawLine(x, y, x2, y2, R, G, B, A, 1.0f);
 ```
 
 - Display TTF text :
-```bash
-fonte = new KFont("neue.ttf", gameW, gameH);
-fonte->RenderText(L"This is so COOL", 0, 0, 32); 
-```
+	```bash
+	fonte = new KFont("neue.ttf", gameW, gameH);
+	fonte->RenderText(L"This is so COOL", 0, 0, 32);
+	```
+
+	- Render TTF text offscreen into a texture, then display it:
+	```bash
+	# create an offscreen render texture of desired size (texW x texH)
+	gpu = new KGraphic(texW, texH, gameW, gameH);
+	gpu->createRenderTexture(texW, texH);
+	gpu->beginRenderToTexture();
+
+	# draw text into the FBO-backed texture
+	fonte->RenderTextOffscreen(L"Offscreen Text", x, y, fontScale,
+	                           gpu->getFbo(), gpu->getFboTexture(),
+	                           gpu->getFboWidth(), gpu->getFboHeight());
+
+	gpu->endRenderToTexture();
+
+	# now draw the resulting texture to the screen
+	gpu->setTextureId(gpu->getFboTexture());
+	gpu->setTextureSize((float)gpu->getFboWidth(), (float)gpu->getFboHeight());
+	gpu->drawEx(destX, destY, gpu->getFboWidth(), gpu->getFboHeight(),
+	            rotation, blend, scaleX, scaleY);
+	```
 
 - Load and play a sound or music :
 ```bash

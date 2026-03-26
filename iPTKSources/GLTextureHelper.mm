@@ -149,6 +149,7 @@ bool GLTextureHelper::getDeviceRetina()
     #endif
 }
 
+#if !defined(USE_METAL)
 bool GLTextureHelper::LoadTexture(const char *szTextureFile)
 {
 	CGImageRef Image;
@@ -622,6 +623,7 @@ int GLTextureHelper::LoadFileTGA(JadeImage_t *textureObject)
 	textureObject->bpp = bpp;
 	textureObject->pixels = imageData;
 	
-	return 1;		
+	return 1;
 }
+#endif // !defined(USE_METAL)
 

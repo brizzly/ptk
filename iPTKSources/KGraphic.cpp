@@ -1,4 +1,5 @@
 // KGraphic.cpp
+#if !defined(USE_METAL)
 #include "KGraphic.h"
 #ifndef __ANDROID__
 #include "GLTextureHelper.h"
@@ -1337,3 +1338,4 @@ int KGraphic::getFboHeight()
 {
     return _fboHeight;
 }
+#endif // !defined(USE_METAL)

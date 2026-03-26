@@ -7,7 +7,7 @@
 #ifdef __ANDROID__
 #include <GLES2/gl2.h>
 #include <android/asset_manager_jni.h>
-#else
+#elif !defined(USE_METAL)
 #define GLES_SILENCE_DEPRECATION
 #include <OpenGLES/ES2/gl.h>
 #endif

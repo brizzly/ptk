@@ -1,4 +1,5 @@
 
+#if !defined(USE_METAL)
 #include "KShader.h"
 //#include <OpenGLES/ES2/gl.h>
 #include <cmath>
@@ -213,3 +214,4 @@ GLuint KShader::createSimpleProgram()
     
     return createShaderProgram(simpleVertexShaderSource, simpleFragmentShaderSource);
 }
+#endif // !defined(USE_METAL)

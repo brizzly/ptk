@@ -574,8 +574,6 @@ void KGraphic::computOffset()
           //     _offsetX, _offsetY);
     }
 
-    //printf("[DEBUG] computOffset - Final Scaled Game: %dx%d, Offset: (%d, %d)\n",
-      //     _scaledGameW, _scaledGameH, _offsetX, _offsetY);
 }
 
 void KGraphic::render()
@@ -596,12 +594,20 @@ void KGraphic::render()
     mat4 modelViewMatrix;
     setIdentityMatrix(modelViewMatrix);
 
+    // Order matters: these helpers effectively post-multiply, so we want
+    // M = Translate * Rotate * Scale (scale the unit quad to the sprite size
+    // FIRST, then rotate the rectangle, then translate). Doing scale AFTER
+    // rotate (the old order) rotated a unit quad and then scaled it
+    // non-uniformly (sizeW != sizeH) -> sheared/deformed rotated sprites
+    // (visible on the rotating serpent segments). Non-rotated sprites are
+    // unaffected (rotate = identity).
     translateMatrix(modelViewMatrix, destX + (sizeW ) / 2.0f, destY + (sizeH ) / 2.0f);
-    scaleMatrix(modelViewMatrix, sizeW * zoom, sizeH * zoom);
-    
+
     if (angle != 0.0f) {
         rotateMatrix(modelViewMatrix, angle * M_PI / 180.0f);
     }
+
+    scaleMatrix(modelViewMatrix, sizeW * zoom, sizeH * zoom);
     
     GLuint matrixLocation = glGetUniformLocation(_shaderProgram, "u_matrix");
     glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, modelViewMatrix);

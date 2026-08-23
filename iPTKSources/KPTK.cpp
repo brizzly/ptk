@@ -98,6 +98,16 @@ int KPTK::getGameW()
     else if ( _screenOrientation == K_2192x1080 ) {
         return 2192;
     }
+    else if ( _screenOrientation == K_ADAPTIVE_480 ) {
+        if ( _screenH <= 0 ) {
+            return 640; // taille ecran pas encore connue : on garde le 4:3
+        }
+        int w = (int)(((float)K_ADAPTIVE_HEIGHT * (float)_screenW) / (float)_screenH + 0.5f);
+        if ( w < K_ADAPTIVE_MIN_W ) {
+            w = K_ADAPTIVE_MIN_W;
+        }
+        return w & ~1; // largeur paire, evite les demi-pixels au centrage
+    }
     
 	return 0;
 }
@@ -145,6 +155,9 @@ int KPTK::getGameH()
     }
     else if ( _screenOrientation == K_2192x1080 ) {
         return 1080;
+    }
+    else if ( _screenOrientation == K_ADAPTIVE_480 ) {
+        return K_ADAPTIVE_HEIGHT;
     }
     
 	return 0;

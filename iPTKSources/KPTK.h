@@ -34,6 +34,11 @@
 //class KWindow;
 
 
+// K_ADAPTIVE_480 : hauteur logique du jeu, et garde-fou de largeur pour ne
+// jamais descendre sous le 4:3 historique.
+#define K_ADAPTIVE_HEIGHT   480
+#define K_ADAPTIVE_MIN_W    640
+
 enum screenOrientation
 {
 	// Landscape
@@ -58,6 +63,11 @@ enum screenOrientation
     K_621x1104, // IPHONE 6P,7P,8P 1242x2208 -> 621x1104
     K_768x1024, // IPAD
     K_960x1440,
+
+    // Landscape, hauteur logique fixe a 480 et largeur deduite du ratio de
+    // l'ecran physique : le jeu remplit la dalle, sans bandes noires laterales.
+    // Ajoute en fin d'enum pour ne pas decaler les valeurs existantes.
+    K_ADAPTIVE_480,
 	
 };
 

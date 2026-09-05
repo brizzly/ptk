@@ -624,6 +624,16 @@ void KGraphic::render()
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_sizeH"), sizeH);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_texWidth"), _textureSizeW);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_texHeight"), _textureSizeH);
+
+    // Rentre les UV d'un demi-texel dans le rectangle source. L'epsilon fixe de
+    // 0.00001 pose a l'initialisation est 50 fois trop petit pour une planche de
+    // 1024 (un demi-texel y vaut 0.000488) : en GL_NEAREST, une UV pile sur la
+    // frontiere bascule sur la ligne voisine de la planche et laisse un lisere du
+    // sprite d'a cote sous les pommes et les tuiles.
+    glUniform1f(glGetUniformLocation(_shaderProgram, "u_epsilon"),
+                _textureSizeW > 0.0f ? 0.5f / (float)_textureSizeW : 0.0f);
+    glUniform1f(glGetUniformLocation(_shaderProgram, "u_epsilonY"),
+                _textureSizeH > 0.0f ? 0.5f / (float)_textureSizeH : 0.0f);
     glUniform1f(glGetUniformLocation(_shaderProgram, "u_opacity"), blend);
 
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);

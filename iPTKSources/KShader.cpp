@@ -91,15 +91,16 @@ GLuint KShader::createShader()
 		"uniform float u_sizeH;"
 		"uniform float u_texWidth;"
 		"uniform float u_texHeight;"
-		"uniform float u_epsilon;"  // UV epsilon offset
+		"uniform float u_epsilon;"   // demi-texel horizontal
+		"uniform float u_epsilonY;"  // demi-texel vertical (planches non carrees)
 		"void main() {"
 		"    gl_Position = u_projectionMatrix * u_matrix * a_position;"
 
 		// Calculate tex coordinates with added epsilon
 		"    float texLeft = (u_srcX / u_texWidth) + u_epsilon;"
 		"    float texRight = ((u_srcX + u_sizeW) / u_texWidth) - u_epsilon;"
-		"    float texBottom = ((u_srcY + u_sizeH) / u_texHeight) - u_epsilon;"
-		"    float texTop = (u_srcY / u_texHeight) + u_epsilon;"
+		"    float texBottom = ((u_srcY + u_sizeH) / u_texHeight) - u_epsilonY;"
+		"    float texTop = (u_srcY / u_texHeight) + u_epsilonY;"
 
 		// Use mix to interpolate between the adjusted UVs based on a_texCoord
 		"    v_texCoord = mix(vec2(texLeft, texTop), vec2(texRight, texBottom), a_texCoord);"

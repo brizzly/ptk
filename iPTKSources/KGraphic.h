@@ -117,7 +117,9 @@ private:
     float img_dst_x;
     float img_dst_y;
     
-    float background_r, background_g, background_b = 0.0f;
+    // Les trois à 0 : « r, g, b = 0.0f » n'initialisait que b, et la couleur de fond
+    // (bandes hors zone de jeu) sortait au hasard de la mémoire, en vert sur Space Breakout.
+    float background_r = 0.0f, background_g = 0.0f, background_b = 0.0f;
     
     // --- New member variables ---
     GLuint quadVBO;

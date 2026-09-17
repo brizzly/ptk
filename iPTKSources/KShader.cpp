@@ -108,7 +108,14 @@ GLuint KShader::createShader()
 
 
 	const char * fragmentShaderSource =
-		"precision mediump float;"
+		// highp: on iOS mediump is a 16-bit float, whose step above 0.5 is about
+		// half a texel of a 1024 px atlas -> edge samples bled into the next cell
+		// (thin coloured line around sprites) even with the half-texel inset.
+		"#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
+		"precision highp float;\n"
+		"#else\n"
+		"precision mediump float;\n"
+		"#endif\n"
 		"varying vec2 v_texCoord;"
 		"uniform sampler2D u_texture;"
 		"uniform float u_opacity;"
